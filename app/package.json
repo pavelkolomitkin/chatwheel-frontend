@@ -25,7 +25,6 @@
     "@ngx-translate/core": "^14.0.0",
     "moment": "^2.29.1",
     "ngx-infinite-scroll": "^10.0.1",
-    "ngx-moment": "^6.0.2",
     "ngx-permissions": "^13.0.1",
     "ngx-socket-io": "^4.1.0",
     "ol": "^6.12.0",
