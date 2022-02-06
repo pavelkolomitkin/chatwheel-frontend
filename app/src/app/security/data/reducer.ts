@@ -4,14 +4,18 @@ import {User} from "./models/user.model";
 export interface State
 {
   token: string,
-  loginErrors: {};
-  user: User
+  loginErrors: {},
+  user: User,
+
+  registerErrors: {},
 }
 
 const initialState: State = {
   token: null,
   loginErrors: {},
-  user: null
+  user: null,
+
+  registerErrors: {}
 };
 
 export function reducer(state = initialState, action: actions.SecurityActions): State {
@@ -56,6 +60,20 @@ export function reducer(state = initialState, action: actions.SecurityActions): 
         ...state,
         user: null,
         token: null,
+      };
+
+    case actions.USER_REGISTER_SUCCESS:
+
+      return {
+        ...state,
+        registerErrors: {}
+      };
+
+    case actions.USER_REGISTER_ERROR:
+
+      return {
+        ...state,
+        registerErrors: action.errors
       };
 
     default:

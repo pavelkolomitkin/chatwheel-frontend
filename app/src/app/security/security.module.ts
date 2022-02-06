@@ -10,6 +10,7 @@ import {SecurityService} from './services/security.service';
 import {ProfileService} from './services/profile.service';
 import {SharedModule} from "../shared/shared.module";
 import {LayoutComponent} from "./components/layout/layout.component";
+import { RegisterSuccessComponent } from './components/pages/register-success/register-success.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import {LayoutComponent} from "./components/layout/layout.component";
     RestorePasswordComponent,
     RegisterComponent,
     RegisterConfirmComponent,
+    RegisterSuccessComponent,
 
   ],
   providers: [

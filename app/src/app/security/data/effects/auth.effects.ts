@@ -31,6 +31,7 @@ export class AuthEffects
       tap(() => {
         this.permissionService.loadPermissions([]);
         this.localStorage.remove(LocalStorageService.TOKEN_KEY);
+        this.store.dispatch(new GlobalProgressShow());
       }),
       mergeMap((action: UserLoginStart) => {
         const { credentials } = action;
@@ -46,6 +47,9 @@ export class AuthEffects
             return of(new UserLoginError(errors.error.errors));
           })
         )
+      }),
+      tap((action) => {
+        this.store.dispatch(new GlobalProgressHide());
       })
     )
   });

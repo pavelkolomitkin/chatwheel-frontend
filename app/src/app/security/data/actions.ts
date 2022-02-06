@@ -1,10 +1,16 @@
 import { Action } from '@ngrx/store';
 import {LoginCredentials} from "./models/login-credentials.model";
 import {User} from "./models/user.model";
+import {RegisterData} from "./models/register-data.model";
 
 export const USER_LOGIN_START = 'USER_LOGIN_START';
 export const USER_LOGIN_SUCCESS = 'USER_LOGIN_SUCCESS';
 export const USER_LOGIN_ERROR = 'USER_LOGIN_ERROR';
+
+export const USER_REGISTER_START = 'USER_REGISTER_START';
+export const USER_REGISTER_SUCCESS = 'USER_REGISTER_SUCCESS';
+export const USER_REGISTER_ERROR = 'USER_REGISTER_ERROR';
+
 
 export const USER_INITIALIZATION_START = 'USER_INITIALIZATION_START';
 export const USER_INITIALIZATION_SUCCESS = 'USER_INITIALIZATION_SUCCESS';
@@ -31,6 +37,25 @@ export class UserLoginSuccess implements Action
 export class UserLoginError implements Action
 {
   readonly type = USER_LOGIN_ERROR;
+
+  constructor(public errors: Object) { }
+}
+
+export class UserRegisterStart implements Action
+{
+  readonly type = USER_REGISTER_START;
+
+  constructor(public data: RegisterData) {}
+}
+
+export class UserRegisterSuccess implements Action
+{
+  readonly type = USER_REGISTER_SUCCESS;
+}
+
+export class UserRegisterError implements Action
+{
+  readonly type = USER_REGISTER_ERROR;
 
   constructor(public errors: Object) { }
 }
@@ -68,6 +93,10 @@ export type SecurityActions =
   UserLoginStart
   | UserLoginSuccess
   | UserLoginError
+
+  | UserRegisterStart
+  | UserRegisterSuccess
+  | UserRegisterError
 
   | UserInitializationStart
   | UserInitializationSuccess

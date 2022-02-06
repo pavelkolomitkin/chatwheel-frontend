@@ -5,8 +5,17 @@
   "FORGOT_PASSWORD": "Forgot Password ?",
   "SIGN_IN": "Sign In",
   "CREATE_AN_ACCOUNT": "Create an account",
+  "CREATE_ACCOUNT" :  "Create account",
   "EMAIL": "Email",
   "PASSWORD": "Password",
 
-  "LOGIN_ERROR": "Bad credentials"
+  "LOGIN_ERROR": "Bad credentials",
+
+  "REGISTER_FORM_HEADER": "Create Account",
+  "REGISTER_FORM_SUBTITLE": "Welcome to ChatWheel!",
+  "CONFIRM_PASSWORD": "Confirm password",
+  "ALREADY_HAVE_AN_ACCOUNT": "Already have an account?",
+  "YOUR_NAME_VISIBLE_FOR_OTHERS": "Your name",
+  "ACCOUNT_CREATED": "Account created!",
+  "YOUR_ACCOUNT_SUCCESSFULLY_HAS_BEEN_CREATED": "Your account has successfully been created! Please, confirm it with the link sent on your email!"
 }

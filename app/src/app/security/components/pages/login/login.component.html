@@ -1,66 +1,62 @@
-<div class="auth-wrapper">
-
-  <div class="authentication-form mx-auto">
-    <div class="card">
-      <div class="card-header">
-        <h3 class="m0 m-auto">{{ 'LOGIN_FORM_HEADER' | translate }}</h3>
-      </div>
-      <div class="card-body">
-        <p>{{ 'LOGIN_FORM_SUBTITLE' | translate }}</p>
-        <form (ngSubmit)="onSubmit(form)" #form="ngForm">
-          <div class="form-group">
-            <input
-              ngModel
-              name="email"
-              email
-              type="email"
-              class="form-control"
-              placeholder="{{ 'EMAIL' | translate }}"
-              required
-            >
-            <i class="ik ik-user"></i>
-            <ng-container *ngIf="(errors | async )">
-              <app-form-field-error-list [field]="'email'" [errors]="{ email: ('LOGIN_ERROR' | translate) }"></app-form-field-error-list>
-            </ng-container>
-          </div>
-          <div class="form-group">
-            <input
-              ngModel
-              name="password"
-              type="password"
-              autocomplete
-              class="form-control"
-              placeholder="{{ 'PASSWORD' | translate }}"
-              required
-            >
-            <i class="ik ik-lock"></i>
-          </div>
-          <div class="row">
-            <div class="col text-left">
-              <label class="custom-control custom-checkbox">
-                <input type="checkbox"
-                       class="custom-control-input"
-                       id="item_checkbox"
-                       ngModel
-                       name="rememberMe"
-                >
-                <span class="custom-control-label">&nbsp;{{ 'LOGIN_FORM_REMEMBER_ME' | translate }}</span>
-              </label>
-            </div>
-            <div class="col text-right">
-              <a href="#">{{ 'FORGOT_PASSWORD' | translate }}</a>
-            </div>
-          </div>
-          <div class="sign-btn text-center">
-            <button type="submit" class="btn btn-theme" [disabled]="!form.valid">{{ 'SIGN_IN' | translate }}</button>
-          </div>
-        </form>
-        <div class="register">
-          <p><a href="#" class="btn btn-success">{{ 'CREATE_AN_ACCOUNT' | translate }}</a></p>
+<div class="authentication-form mx-auto">
+  <div class="card">
+    <div class="card-header">
+      <h3 class="m0 m-auto">{{ 'LOGIN_FORM_HEADER' | translate }}</h3>
+    </div>
+    <div class="card-body">
+      <p>{{ 'LOGIN_FORM_SUBTITLE' | translate }}</p>
+      <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+        <div class="form-group">
+          <input
+            ngModel
+            name="email"
+            email
+            type="email"
+            class="form-control"
+            placeholder="{{ 'EMAIL' | translate }}"
+            required
+          >
+          <i class="ik ik-mail"></i>
+          <ng-container *ngIf="(errors | async )">
+            <app-form-field-error-list [field]="'email'" [errors]="{ email: ('LOGIN_ERROR' | translate) }"></app-form-field-error-list>
+          </ng-container>
         </div>
+        <div class="form-group">
+          <input
+            ngModel
+            name="password"
+            type="password"
+            autocomplete
+            class="form-control"
+            placeholder="{{ 'PASSWORD' | translate }}"
+            required
+          >
+          <i class="ik ik-lock"></i>
+        </div>
+        <div class="row">
+          <div class="col text-left">
+            <label class="custom-control custom-checkbox">
+              <input type="checkbox"
+                     class="custom-control-input"
+                     id="item_checkbox"
+                     ngModel
+                     name="rememberMe"
+              >
+              <span class="custom-control-label">&nbsp;{{ 'LOGIN_FORM_REMEMBER_ME' | translate }}</span>
+            </label>
+          </div>
+          <div class="col text-right">
+            <a href="#">{{ 'FORGOT_PASSWORD' | translate }}</a>
+          </div>
+        </div>
+        <div class="sign-btn text-center">
+          <button type="submit" class="btn btn-theme" [disabled]="!form.valid">{{ 'SIGN_IN' | translate }}</button>
+        </div>
+      </form>
+      <div class="register">
+        <p><a routerLink="/security/register" class="btn btn-success">{{ 'CREATE_AN_ACCOUNT' | translate }}</a></p>
       </div>
     </div>
-
   </div>
 
 </div>

@@ -27,13 +27,14 @@ import {AppInitEffect} from "./data/effects/app-init.effect";
 import {AuthEffects} from "../security/data/effects/auth.effects";
 import {SecurityService} from "../security/services/security.service";
 import {ProfileService} from "../security/services/profile.service";
+import {RegisterEffects} from "../security/data/effects/register.effects";
 
 
 const httpInterceptorProviders = [
   { provide: HTTP_INTERCEPTORS, useClass: BaseApiUrlInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: DefaultHttpHeadersInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: AuthTokenInjectorInterceptor, multi: true },
-  //{ provide: HTTP_INTERCEPTORS, useClass: ErrorResponseHandlerInterceptor, multi: true },
+  { provide: HTTP_INTERCEPTORS, useClass: ErrorResponseHandlerInterceptor, multi: true },
 ];
 
 @NgModule({
@@ -52,6 +53,7 @@ const httpInterceptorProviders = [
     }),
     EffectsModule.forRoot([
       AuthEffects,
+      RegisterEffects,
       AppInitEffect,
     ]),
     RouterModule

@@ -1,1 +1,89 @@
-<p>register works!</p>
+<div class="authentication-form mx-auto">
+  <div class="card">
+    <div class="card-header">
+      <h3 class="m0 m-auto">{{ 'REGISTER_FORM_HEADER' | translate }}</h3>
+    </div>
+    <div class="card-body">
+      <p>{{ 'REGISTER_FORM_SUBTITLE' | translate }}</p>
+      <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+        <div class="form-group">
+          <input
+            ngModel
+            name="email"
+            email
+            type="email"
+            class="form-control"
+            placeholder="{{ 'EMAIL' | translate }}"
+            required
+          >
+          <i class="ik ik-mail"></i>
+          <ng-container *ngIf="(errors | async )">
+            <app-form-field-error-list [field]="'email'" [errors]="errors"></app-form-field-error-list>
+          </ng-container>
+        </div>
+
+        <div class="form-group">
+          <input
+            ngModel
+            name="fullName"
+            type="text"
+            class="form-control"
+            placeholder="{{ 'YOUR_NAME_VISIBLE_FOR_OTHERS' | translate }}"
+            required
+          />
+          <i class="ik ik-user"></i>
+          <ng-container *ngIf="(errors | async )">
+            <app-form-field-error-list [field]="'fullName'" [errors]="errors"></app-form-field-error-list>
+          </ng-container>
+        </div>
+        <div class="form-group">
+          <input
+            ngModel
+            name="password"
+            type="password"
+            autocomplete
+            class="form-control"
+            placeholder="{{ 'PASSWORD' | translate }}"
+            required
+          >
+          <i class="ik ik-lock"></i>
+          <ng-container *ngIf="(errors | async )">
+            <app-form-field-error-list [field]="'password'" [errors]="errors"></app-form-field-error-list>
+          </ng-container>
+        </div>
+        <div class="form-group">
+          <input
+            ngModel
+            name="passwordRepeat"
+            type="password"
+            class="form-control"
+            placeholder="{{ 'CONFIRM_PASSWORD' | translate }}"
+            required
+          >
+          <i class="ik ik-eye-off"></i>
+          <ng-container *ngIf="(errors | async )">
+            <app-form-field-error-list [field]="'passwordRepeat'" [errors]="errors"></app-form-field-error-list>
+          </ng-container>
+        </div>
+<!--        <div class="row">-->
+<!--          <div class="col-12 text-left">-->
+<!--            <label class="custom-control custom-checkbox">-->
+<!--              <input type="checkbox" class="custom-control-input" id="item_checkbox" name="item_checkbox" value="option1">-->
+<!--              <span class="custom-control-label">&nbsp;I Accept <a href="#">Terms and Conditions</a></span>-->
+<!--            </label>-->
+<!--          </div>-->
+<!--        </div>-->
+
+        <div class="sign-btn text-center">
+          <button type="submit" class="btn btn-theme" [disabled]="!form.valid">{{ 'CREATE_ACCOUNT' | translate }}</button>
+        </div>
+      </form>
+      <div class="register">
+        <p>{{ 'ALREADY_HAVE_AN_ACCOUNT' | translate }} <a routerLink="/security/login">{{ 'SIGN_IN' | translate }}</a></p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+

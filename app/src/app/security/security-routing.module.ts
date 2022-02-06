@@ -9,6 +9,7 @@ import {RestorePasswordComponent} from "./components/pages/restore-password/rest
 import {RegisterComponent} from "./components/pages/register/register.component";
 import {RegisterConfirmComponent} from "./components/pages/register-confirm/register-confirm.component";
 import {LayoutComponent} from "./components/layout/layout.component";
+import {RegisterSuccessComponent} from "./components/pages/register-success/register-success.component";
 
 
 const routes: Routes = [
@@ -19,6 +20,7 @@ const routes: Routes = [
       { path: 'restore-password/:key', component: RestorePasswordComponent },
       { path: 'register', component: RegisterComponent },
       { path: 'register-confirm/:key', component: RegisterConfirmComponent },
+      { path: 'register-success', component: RegisterSuccessComponent }
     ]
   }
 ];
