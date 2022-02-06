@@ -1,4 +1,7 @@
 export class LocalStorageService {
+
+  static TOKEN_KEY = 'token';
+
   public get(key: string, defaultValue: any = null): string
   {
     const result = (sessionStorage.getItem(key) !== null) ? sessionStorage.getItem(key) : localStorage.getItem(key);

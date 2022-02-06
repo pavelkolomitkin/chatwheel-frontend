@@ -8,14 +8,13 @@ import { RegisterComponent } from './components/pages/register/register.componen
 import { RegisterConfirmComponent } from './components/pages/register-confirm/register-confirm.component';
 import {SecurityService} from './services/security.service';
 import {ProfileService} from './services/profile.service';
-import {StoreModule} from "@ngrx/store";
-import {reducer} from "./data/reducer";
-import {EffectsModule} from "@ngrx/effects";
-import {AuthEffects} from "./data/effects/auth.effects";
 import {SharedModule} from "../shared/shared.module";
+import {LayoutComponent} from "./components/layout/layout.component";
 
 @NgModule({
   declarations: [
+
+    LayoutComponent,
 
     LoginComponent,
     RestorePasswordRequestComponent,
@@ -25,23 +24,14 @@ import {SharedModule} from "../shared/shared.module";
 
   ],
   providers: [
-    SecurityService,
-    ProfileService
   ],
   imports: [
     CommonModule,
     SharedModule,
     SecurityRoutingModule,
-
-    StoreModule.forFeature('security', reducer),
-    EffectsModule.forFeature([
-      AuthEffects
-    ])
   ],
   exports: [
     SharedModule,
-    StoreModule,
-    EffectsModule,
   ]
 })
 export class SecurityModule { }

@@ -10,10 +10,10 @@ export class AuthTokenInjectorInterceptor implements HttpInterceptor
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>>
   {
-    const token = this.localStorageService.get('token');
+    const token = this.localStorageService.get(LocalStorageService.TOKEN_KEY);
     if (token !== null) {
       const tokenizedRequest = req.clone({
-        headers: req.headers.set('Authorization', 'Bearer ' + this.localStorageService.get('token'))
+        headers: req.headers.set('Authorization', 'Bearer ' + token)
       });
       return next.handle(tokenizedRequest);
     }

@@ -4,8 +4,8 @@ import {Observable} from 'rxjs';
 import {Store} from "@ngrx/store";
 import {State} from "../../../app.state";
 import {tap} from "rxjs/operators";
-import {GlobalNotifyErrorMessage} from "../../data/actions";
-import {NotifyMessage} from "../../data/model/notify-message.model";
+//import {GlobalNotifyErrorMessage} from "../../data/actions";
+//import {NotifyMessage} from "../../data/model/notify-message.model";
 import {UserLogout} from '../../../security/data/actions';
 
 @Injectable()
@@ -37,7 +37,8 @@ export class ErrorResponseHandlerInterceptor implements HttpInterceptor
 
             if (error.status >= 500)
             {
-              this.store.dispatch(new GlobalNotifyErrorMessage(new NotifyMessage('Application error. Please try later.')));
+              console.log(error);
+              //this.store.dispatch(new GlobalNotifyErrorMessage(new NotifyMessage('Application error. Please try later.')));
             }
           }
         })

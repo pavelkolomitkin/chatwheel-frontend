@@ -8,11 +8,12 @@ import {
 import {RestorePasswordComponent} from "./components/pages/restore-password/restore-password.component";
 import {RegisterComponent} from "./components/pages/register/register.component";
 import {RegisterConfirmComponent} from "./components/pages/register-confirm/register-confirm.component";
+import {LayoutComponent} from "./components/layout/layout.component";
 
 
 const routes: Routes = [
   {
-    path: '', children: [
+    path: '', component: LayoutComponent, children: [
       { path: 'login', component: LoginComponent},
       { path: 'restore-password-request', component: RestorePasswordRequestComponent },
       { path: 'restore-password/:key', component: RestorePasswordComponent },
