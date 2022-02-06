@@ -1,0 +1,12 @@
+{
+  "LOGIN_FORM_HEADER": "Sign In to ChatWheel!",
+  "LOGIN_FORM_SUBTITLE": "Happy to see you again!",
+  "LOGIN_FORM_REMEMBER_ME": "Remember Me",
+  "FORGOT_PASSWORD": "Forgot Password ?",
+  "SIGN_IN": "Sign In",
+  "CREATE_AN_ACCOUNT": "Create an account",
+  "EMAIL": "Email",
+  "PASSWORD": "Password",
+
+  "LOGIN_ERROR": "Bad credentials"
+}

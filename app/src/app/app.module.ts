@@ -6,6 +6,8 @@ import {CoreModule} from "./core/core.module";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {LayoutComponent as SecurityLayoutComponent} from "./security/components/layout/layout.component";
 import { LayoutComponent as AdminLayoutComponent } from './admin/components/layout/layout.component';
+import {StoreDevtoolsModule} from "@ngrx/store-devtools";
+import {environment} from "../environments/environment";
 
 @NgModule({
   declarations: [
@@ -17,7 +19,13 @@ import { LayoutComponent as AdminLayoutComponent } from './admin/components/layo
     CoreModule,
     BrowserModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    StoreDevtoolsModule.instrument(
+      {
+        maxAge: 25,
+        logOnly: !environment.production
+      }
+    )
   ],
   providers: [],
   bootstrap: [AppComponent]

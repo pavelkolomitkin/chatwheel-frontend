@@ -1,0 +1,6 @@
+FROM node:16.13.2-stretch
+
+RUN npm install -g typescript \
+    && npm install -g @angular/cli
+
+CMD [ "node" ]
