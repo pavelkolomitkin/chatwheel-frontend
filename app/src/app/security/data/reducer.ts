@@ -1,5 +1,13 @@
 import * as actions from './actions';
 import {User} from "./models/user.model";
+import {USER_REGISTER_CONFIRM_ERROR, USER_REGISTER_CONFIRM_SUCCESS} from "./actions";
+import {ValueTypes} from "ol/style/expressions";
+
+export enum AccountConfirmationActions {
+  NONE,
+  SUCCESS,
+  ERROR
+}
 
 export interface State
 {
@@ -8,6 +16,7 @@ export interface State
   user: User,
 
   registerErrors: {},
+  accountActivationAction: AccountConfirmationActions,
 }
 
 const initialState: State = {
@@ -15,7 +24,8 @@ const initialState: State = {
   loginErrors: {},
   user: null,
 
-  registerErrors: {}
+  registerErrors: {},
+  accountActivationAction: AccountConfirmationActions.NONE
 };
 
 export function reducer(state = initialState, action: actions.SecurityActions): State {
@@ -35,7 +45,8 @@ export function reducer(state = initialState, action: actions.SecurityActions): 
       return {
         ...state,
         token: action.token,
-        loginErrors: {}
+        loginErrors: {},
+        accountActivationAction: AccountConfirmationActions.NONE
       }
 
     case actions.USER_LOGIN_ERROR:
@@ -43,7 +54,8 @@ export function reducer(state = initialState, action: actions.SecurityActions): 
       return {
         ...state,
         token: null,
-        loginErrors: action.errors
+        loginErrors: action.errors,
+        accountActivationAction: AccountConfirmationActions.NONE
       };
 
 
@@ -66,14 +78,30 @@ export function reducer(state = initialState, action: actions.SecurityActions): 
 
       return {
         ...state,
-        registerErrors: {}
+        registerErrors: {},
+        accountActivationAction: AccountConfirmationActions.NONE
       };
 
     case actions.USER_REGISTER_ERROR:
 
       return {
         ...state,
-        registerErrors: action.errors
+        registerErrors: action.errors,
+        accountActivationAction: AccountConfirmationActions.NONE
+      };
+
+    case actions.USER_REGISTER_CONFIRM_SUCCESS:
+
+      return {
+        ...state,
+        accountActivationAction: AccountConfirmationActions.SUCCESS
+      };
+
+    case actions.USER_REGISTER_CONFIRM_ERROR:
+
+      return {
+        ...state,
+        accountActivationAction: AccountConfirmationActions.ERROR
       };
 
     default:

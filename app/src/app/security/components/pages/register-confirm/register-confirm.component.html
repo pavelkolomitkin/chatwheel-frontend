@@ -1,1 +1,19 @@
-<p>register-confirm works!</p>
+<div class="authentication-form mx-auto">
+  <div class="card">
+    <div class="card-header">
+      <h3 class="m0 m-auto">{{ 'CHECKING_ACCOUNT' | translate }}</h3>
+    </div>
+    <div class="card-body">
+
+      <div class="alert alert-success" *ngIf="action === 'SUCCESS'">
+        {{ 'YOUR_ACCOUNT_HAS_BEEN_ACTIVATED' | translate }}
+      </div>
+      <div class="alert alert-danger" *ngIf="action === 'ERROR'">
+        {{ 'CANNOT_ACTIVATE_YOUR_ACCOUNT_WITH_THE_LINK' | translate }}
+      </div>
+      <div class="alert alert-secondary" role="alert" *ngIf="action === 'NONE'">
+        {{ 'THE_ACCOUNT_IS_BEING_CHECKED' | translate }}
+      </div>
+    </div>
+  </div>
+</div>

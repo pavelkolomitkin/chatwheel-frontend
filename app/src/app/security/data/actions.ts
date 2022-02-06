@@ -11,6 +11,9 @@ export const USER_REGISTER_START = 'USER_REGISTER_START';
 export const USER_REGISTER_SUCCESS = 'USER_REGISTER_SUCCESS';
 export const USER_REGISTER_ERROR = 'USER_REGISTER_ERROR';
 
+export const USER_REGISTER_CONFIRM_START = 'USER_REGISTER_CONFIRM_START';
+export const USER_REGISTER_CONFIRM_SUCCESS = 'USER_REGISTER_CONFIRM_SUCCESS';
+export const USER_REGISTER_CONFIRM_ERROR = 'USER_REGISTER_CONFIRM_ERROR';
 
 export const USER_INITIALIZATION_START = 'USER_INITIALIZATION_START';
 export const USER_INITIALIZATION_SUCCESS = 'USER_INITIALIZATION_SUCCESS';
@@ -60,6 +63,25 @@ export class UserRegisterError implements Action
   constructor(public errors: Object) { }
 }
 
+export class UserRegisterConfirmStart implements Action
+{
+  readonly type = USER_REGISTER_CONFIRM_START;
+
+  constructor(public key: string) {}
+}
+
+export class UserRegisterConfirmSuccess implements Action
+{
+  readonly type = USER_REGISTER_CONFIRM_SUCCESS;
+
+  constructor(public token: string) { }
+}
+
+export class UserRegisterConfirmError implements Action
+{
+  readonly type = USER_REGISTER_CONFIRM_ERROR;
+}
+
 export class UserInitializationStart implements Action
 {
   readonly type = USER_INITIALIZATION_START;
@@ -97,6 +119,10 @@ export type SecurityActions =
   | UserRegisterStart
   | UserRegisterSuccess
   | UserRegisterError
+
+  | UserRegisterConfirmStart
+  | UserRegisterConfirmSuccess
+  | UserRegisterConfirmError
 
   | UserInitializationStart
   | UserInitializationSuccess

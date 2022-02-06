@@ -17,5 +17,9 @@
   "ALREADY_HAVE_AN_ACCOUNT": "Already have an account?",
   "YOUR_NAME_VISIBLE_FOR_OTHERS": "Your name",
   "ACCOUNT_CREATED": "Account created!",
-  "YOUR_ACCOUNT_SUCCESSFULLY_HAS_BEEN_CREATED": "Your account has successfully been created! Please, confirm it with the link sent on your email!"
+  "YOUR_ACCOUNT_SUCCESSFULLY_HAS_BEEN_CREATED": "Your account has successfully been created! Please, confirm it with the link sent on your email!",
+  "CHECKING_ACCOUNT": "Checking",
+  "THE_ACCOUNT_IS_BEING_CHECKED": "Verifying the account...",
+  "YOUR_ACCOUNT_HAS_BEEN_ACTIVATED": "Your account has successfully been activated!",
+  "CANNOT_ACTIVATE_YOUR_ACCOUNT_WITH_THE_LINK": "Cannot activate the account with this link!"
 }

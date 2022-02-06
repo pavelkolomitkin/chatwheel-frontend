@@ -5,15 +5,21 @@ import {State} from "../reducer";
 import {Router} from "@angular/router";
 import {Observable, of} from "rxjs";
 import {
+  USER_REGISTER_CONFIRM_START, USER_REGISTER_CONFIRM_SUCCESS,
   USER_REGISTER_START,
-  USER_REGISTER_SUCCESS, UserInitializationStart,
+  USER_REGISTER_SUCCESS,
+  UserInitializationStart,
+  UserRegisterConfirmError,
+  UserRegisterConfirmStart,
+  UserRegisterConfirmSuccess,
   UserRegisterError,
   UserRegisterStart,
-  UserRegisterSuccess
+  UserRegisterSuccess, UserTokenInitializesStore
 } from "../actions";
-import {catchError, map, mergeMap, tap} from "rxjs/operators";
+import {catchError, map, mergeMap, switchMap, tap} from "rxjs/operators";
 import {SecurityService} from "../../services/security.service";
 import {GlobalProgressHide, GlobalProgressShow} from "../../../core/data/actions";
+import {LocalStorageService} from "../../../core/services/local-storage.service";
 
 @Injectable()
 export class RegisterEffects
@@ -30,7 +36,7 @@ export class RegisterEffects
             return new UserRegisterSuccess();
           }),
           catchError((errors) => {
-            debugger
+            //debugger
             return of(new UserRegisterError(errors.error.errors));
           })
         )
@@ -50,11 +56,53 @@ export class RegisterEffects
     )
   }, { dispatch: false })
 
+
+  registerConfirmStart = createEffect(() => {
+    return this.actions.pipe(
+      ofType(USER_REGISTER_CONFIRM_START),
+      tap(() => {
+        this.store.dispatch(new GlobalProgressShow());
+      }),
+      mergeMap(({ key }: UserRegisterConfirmStart) => {
+        //debugger
+        return this.service.registerConfirm(key).pipe(
+          map((token: string) => {
+            //debugger
+            return new UserRegisterConfirmSuccess(token);
+          }),
+          catchError(() => {
+            //debugger
+            return of(new UserRegisterConfirmError());
+          })
+        );
+      }),
+      tap(() => {
+        this.store.dispatch(new GlobalProgressHide());
+      })
+    )
+  })
+
+  registerConfirmSuccess = createEffect(() => {
+    return this.actions.pipe(
+      ofType(USER_REGISTER_CONFIRM_SUCCESS),
+      tap((action: UserRegisterConfirmSuccess) => {
+        //debugger
+
+        const { token } = action;
+
+        this.localStorage.set(LocalStorageService.TOKEN_KEY, token)
+        this.store.dispatch(new UserTokenInitializesStore(token));
+        this.store.dispatch(new UserInitializationStart());
+      })
+    )
+  }, { dispatch: false })
+
   constructor(
     private actions: Actions,
     private store: Store<State>,
     private router: Router,
-    private service: SecurityService
+    private service: SecurityService,
+    private localStorage: LocalStorageService
   ) {
   }
 }
