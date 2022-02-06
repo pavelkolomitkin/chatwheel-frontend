@@ -21,5 +21,9 @@
   "CHECKING_ACCOUNT": "Checking",
   "THE_ACCOUNT_IS_BEING_CHECKED": "Verifying the account...",
   "YOUR_ACCOUNT_HAS_BEEN_ACTIVATED": "Your account has successfully been activated!",
-  "CANNOT_ACTIVATE_YOUR_ACCOUNT_WITH_THE_LINK": "Cannot activate the account with this link!"
+  "CANNOT_ACTIVATE_YOUR_ACCOUNT_WITH_THE_LINK": "Cannot activate the account with this link!",
+  "RESTORE_PASSWORD": "Restore Password",
+  "SEND_RECOVERY_LINK": "Send Link",
+  "YOU_MAY_REQUEST_A_NEW_LINK_IN": "We have sent a recovery link on your email. You may request a new link in",
+  "SECONDS": "second(s)"
 }

@@ -37,9 +37,9 @@ export class SecurityService extends BaseService
       .pipe(map(result => result.token));
   }
 
-  passwordRestoreRequest(email: string)
+  passwordRestoreRequest(email: string): Observable<{secondsLeft: number}>
   {
-    return this.httpClient.post<void | {}>('/security/login/restore-password-request', { email });
+    return this.httpClient.post<{secondsLeft: number}>('/security/login/restore-password-request', { email });
   }
 
   restorePasswordKeyVerify(key: string)
