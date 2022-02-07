@@ -1,9 +1,14 @@
 import * as actions from './actions';
 import {User} from "./models/user.model";
 import {USER_REGISTER_CONFIRM_ERROR, USER_REGISTER_CONFIRM_SUCCESS} from "./actions";
-import {ValueTypes} from "ol/style/expressions";
 
 export enum AccountConfirmationActions {
+  NONE,
+  SUCCESS,
+  ERROR
+}
+
+export enum PasswordChangeActions {
   NONE,
   SUCCESS,
   ERROR
@@ -17,6 +22,10 @@ export interface State
 
   registerErrors: {},
   accountActivationAction: AccountConfirmationActions,
+
+  changePasswordErrors: {},
+
+  passwordChangeAction: PasswordChangeActions
 }
 
 const initialState: State = {
@@ -25,7 +34,11 @@ const initialState: State = {
   user: null,
 
   registerErrors: {},
-  accountActivationAction: AccountConfirmationActions.NONE
+  accountActivationAction: AccountConfirmationActions.NONE,
+
+  changePasswordErrors: {},
+
+  passwordChangeAction: PasswordChangeActions.NONE
 };
 
 export function reducer(state = initialState, action: actions.SecurityActions): State {
@@ -102,6 +115,30 @@ export function reducer(state = initialState, action: actions.SecurityActions): 
       return {
         ...state,
         accountActivationAction: AccountConfirmationActions.ERROR
+      };
+
+    case actions.USER_CHANGE_PASSWORD_START:
+
+      return {
+        ...state,
+        changePasswordErrors: {},
+        passwordChangeAction: PasswordChangeActions.NONE,
+      };
+
+    case actions.USER_CHANGE_PASSWORD_SUCCESS:
+
+      return {
+        ...state,
+        changePasswordErrors: {},
+        passwordChangeAction: PasswordChangeActions.SUCCESS
+      };
+
+    case actions.USER_CHANGE_PASSWORD_ERROR:
+
+      return {
+        ...state,
+        changePasswordErrors: action.errors,
+        passwordChangeAction: PasswordChangeActions.ERROR
       };
 
     default:

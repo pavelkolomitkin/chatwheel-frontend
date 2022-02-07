@@ -25,5 +25,10 @@
   "RESTORE_PASSWORD": "Restore Password",
   "SEND_RECOVERY_LINK": "Send Link",
   "YOU_MAY_REQUEST_A_NEW_LINK_IN": "We have sent a recovery link on your email. You may request a new link in",
-  "SECONDS": "second(s)"
+  "SECONDS": "second(s)",
+
+  "PASSWORD_STORE_HEADER": "Change Password",
+  "CHANGE_PASSWORD": "Change password",
+  "CHECKING_THE_LINK": "Checking the link...",
+  "PASSWORD_SUCCESSFULLY_CHANGED": "Your password was successfully changed!"
 }

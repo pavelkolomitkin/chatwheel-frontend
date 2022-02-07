@@ -2,6 +2,7 @@ import { Action } from '@ngrx/store';
 import {LoginCredentials} from "./models/login-credentials.model";
 import {User} from "./models/user.model";
 import {RegisterData} from "./models/register-data.model";
+import {RestorePasswordData} from "./models/restore-password-data.model";
 
 export const USER_LOGIN_START = 'USER_LOGIN_START';
 export const USER_LOGIN_SUCCESS = 'USER_LOGIN_SUCCESS';
@@ -18,6 +19,10 @@ export const USER_REGISTER_CONFIRM_ERROR = 'USER_REGISTER_CONFIRM_ERROR';
 export const USER_INITIALIZATION_START = 'USER_INITIALIZATION_START';
 export const USER_INITIALIZATION_SUCCESS = 'USER_INITIALIZATION_SUCCESS';
 export const USER_INITIALIZATION_ERROR = 'USER_INITIALIZATION_ERROR';
+
+export const USER_CHANGE_PASSWORD_START = 'USER_CHANGE_PASSWORD_START';
+export const USER_CHANGE_PASSWORD_SUCCESS = 'USER_CHANGE_PASSWORD_SUCCESS';
+export const USER_CHANGE_PASSWORD_ERROR = 'USER_CHANGE_PASSWORD_ERROR';
 
 export const USER_TOKEN_INITIALIZE_STORE = 'USER_TOKEN_INITIALIZE_STORE';
 
@@ -111,6 +116,25 @@ export class UserLogout implements Action
   readonly type = USER_LOGOUT;
 }
 
+export class UserChangePasswordStart implements Action
+{
+  readonly type = USER_CHANGE_PASSWORD_START;
+
+  constructor(public data: RestorePasswordData) { }
+}
+
+export class UserChangePasswordSuccess implements Action
+{
+  readonly type = USER_CHANGE_PASSWORD_SUCCESS;
+}
+
+export class UserChangePasswordError implements Action
+{
+  readonly type = USER_CHANGE_PASSWORD_ERROR;
+
+  constructor(public errors: Object) { }
+}
+
 export type SecurityActions =
   UserLoginStart
   | UserLoginSuccess
@@ -131,4 +155,8 @@ export type SecurityActions =
   | UserTokenInitializesStore
 
   | UserLogout
+
+  | UserChangePasswordStart
+  | UserChangePasswordSuccess
+  | UserChangePasswordError
   ;

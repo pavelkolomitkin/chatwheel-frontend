@@ -37,7 +37,7 @@ export class RegisterConfirmComponent implements OnInit, OnDestroy {
     });
 
     this.confirmationActionSubscription = this.store.pipe(
-      select(store => store.security.accountActivationAction),
+      select(state => state.security.accountActivationAction),
       filter(action => action !== AccountConfirmationActions.NONE)
     ).subscribe((action) => {
       // debugger

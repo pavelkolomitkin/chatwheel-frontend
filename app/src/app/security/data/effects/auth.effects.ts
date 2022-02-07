@@ -8,14 +8,24 @@ import {Router} from "@angular/router";
 import {LocalStorageService} from "../../../core/services/local-storage.service";
 import {NgxPermissionsService} from "ngx-permissions";
 import {
+  USER_CHANGE_PASSWORD_START,
   USER_INITIALIZATION_ERROR,
-  USER_INITIALIZATION_START, USER_INITIALIZATION_SUCCESS,
+  USER_INITIALIZATION_START,
+  USER_INITIALIZATION_SUCCESS,
   USER_LOGIN_START,
-  USER_LOGIN_SUCCESS, USER_LOGOUT, USER_TOKEN_INITIALIZE_STORE, UserInitializationError,
-  UserInitializationStart, UserInitializationSuccess,
+  USER_LOGIN_SUCCESS,
+  USER_LOGOUT,
+  USER_TOKEN_INITIALIZE_STORE, UserChangePasswordError,
+  UserChangePasswordStart,
+  UserChangePasswordSuccess,
+  UserInitializationError,
+  UserInitializationStart,
+  UserInitializationSuccess,
   UserLoginError,
   UserLoginStart,
-  UserLoginSuccess, UserLogout, UserTokenInitializesStore
+  UserLoginSuccess,
+  UserLogout,
+  UserTokenInitializesStore
 } from "../actions";
 import {catchError, map, mergeMap, tap} from "rxjs/operators";
 import {ProfileService} from "../../services/profile.service";
@@ -118,6 +128,28 @@ export class AuthEffects
       })
     )
   }, { dispatch: false });
+
+  changePasswordStart: Observable<Action> = createEffect(() => {
+    return this.actions.pipe(
+      ofType(USER_CHANGE_PASSWORD_START),
+      tap((action: UserChangePasswordStart) => {
+        this.store.dispatch(new GlobalProgressShow());
+      }),
+      mergeMap((action: UserChangePasswordStart) => {
+        return this.service.restorePassword(action.data).pipe(
+          map(() => {
+            return new UserChangePasswordSuccess();
+          }),
+          catchError((errors) => {
+            return of(new UserChangePasswordError(errors.error.errors));
+          })
+        );
+      }),
+      tap(() => {
+        this.store.dispatch(new GlobalProgressHide());
+      }),
+    )
+  })
 
   constructor(
     private actions: Actions,
