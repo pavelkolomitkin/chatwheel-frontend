@@ -28,6 +28,7 @@ import {AuthEffects} from "../security/data/effects/auth.effects";
 import {SecurityService} from "../security/services/security.service";
 import {ProfileService} from "../security/services/profile.service";
 import {RegisterEffects} from "../security/data/effects/register.effects";
+import { FooterComponent } from '../shared/components/footer/footer.component';
 
 
 const httpInterceptorProviders = [
@@ -80,7 +81,7 @@ const httpInterceptorProviders = [
 
     GlobalProgressComponent,
     LayoutComponent,
-    NotFoundPageComponent
+    NotFoundPageComponent,
   ]
 })
 export class CoreModule {}

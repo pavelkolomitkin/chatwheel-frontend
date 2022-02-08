@@ -6,12 +6,14 @@ import {environment} from "../../environments/environment";
 import {FormsModule} from "@angular/forms";
 import {FormFieldErrorListComponent} from "./components/forms/form-field-error-list/form-field-error-list.component";
 import {HttpClientModule} from "@angular/common/http";
+import {FooterComponent} from "./components/footer/footer.component";
 
 
 
 @NgModule({
   declarations: [
-    FormFieldErrorListComponent
+    FormFieldErrorListComponent,
+    FooterComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +29,9 @@ import {HttpClientModule} from "@angular/common/http";
   exports: [
     FormFieldErrorListComponent,
     TranslateModule,
-    FormsModule
+    FormsModule,
+
+    FooterComponent
   ]
 })
 export class SharedModule {

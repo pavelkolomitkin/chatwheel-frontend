@@ -1,4 +1,26 @@
+body
+{
+  background: #F6F7FB;
+}
+
+.header-menu
+{
+  padding-left: 10px;
+}
+
+.header-menu .left-menu-item
+{
+  padding-right: 15px;
+}
+
 .authentication-form
 {
   width: 100% !important;
+  padding-top: 50px !important;
+}
+
+.header-menu .left-menu-item.nav-link.active
+{
+  background: rgb(221, 221, 221);
+  /*color: white;*/
 }
