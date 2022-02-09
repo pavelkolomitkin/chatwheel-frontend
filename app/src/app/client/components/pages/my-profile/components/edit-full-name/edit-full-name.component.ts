@@ -14,6 +14,8 @@ import {Notification, NotificationType} from "../../../../../../core/data/models
 })
 export class EditFullNameComponent implements OnInit {
 
+  @Input() customView: boolean;
+
   name: string;
 
   isSaving: boolean = false;
@@ -45,10 +47,6 @@ export class EditFullNameComponent implements OnInit {
       this.name = user.fullName;
 
       this.store.dispatch(new UserUpdated(user));
-
-      this.store.dispatch(new GlobalNotification(new Notification(
-        NotificationType.SUCCESS, 'Your name has been edited!', 'Name edited'
-      )));
     }
     catch (error)
     {

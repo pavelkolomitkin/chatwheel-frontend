@@ -13,6 +13,9 @@ import {ProfileComponent} from "./components/pages/my-profile/profile/profile.co
 import { EditableFieldComponent } from './components/pages/my-profile/components/editable-field/editable-field.component';
 import { EditFullNameComponent } from './components/pages/my-profile/components/edit-full-name/edit-full-name.component';
 import {ProfileService} from "./services/profile.service";
+import { EditAboutComponent } from './components/pages/my-profile/components/edit-about/edit-about.component';
+import { EditResidenceCountryComponent } from './components/pages/my-profile/components/edit-residence-country/edit-residence-country.component';
+import { EditSearchCountryComponent } from './components/pages/my-profile/components/edit-search-country/edit-search-country.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +29,9 @@ import {ProfileService} from "./services/profile.service";
     CallsComponent,
     EditableFieldComponent,
     EditFullNameComponent,
+    EditAboutComponent,
+    EditResidenceCountryComponent,
+    EditSearchCountryComponent,
   ],
   providers: [
     ProfileService

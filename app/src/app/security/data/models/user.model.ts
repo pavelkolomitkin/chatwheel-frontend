@@ -1,3 +1,4 @@
+import {Country} from "../../../core/data/models/country.model";
 
 export class User
 {
@@ -21,7 +22,11 @@ export class User
 
   geoLocation?: {};
 
-  about: string;
+  about?: string;
+
+  residenceCountry?: Country;
+
+  searchCountry?: Country;
 
   static createFromRawData(data: any)
   {

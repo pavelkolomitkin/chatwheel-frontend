@@ -18,30 +18,30 @@
 </div>
 
 <hr />
-<h4 class="mt-30">About</h4>
+<app-edit-about [user]="(user | async)"></app-edit-about>
 <hr />
-
-<p class="mt-30">{{ (user | async).about }}</p>
-
 <!--<hr />-->
 <!--<h4 class="mt-30">Residence country</h4>-->
 <!--<hr />-->
+<app-edit-residence-country [user]="(user | async)"></app-edit-residence-country>
+<hr />
+<app-edit-search-country [user]="(user | async)"></app-edit-search-country>
 
 <div>
-  <form class="form-horizontal">
-    <div class="form-group">
-      <label for="residence-country">Residence country</label>
-      <select id="residence-country" class="form-control">
-        <option>Russia</option>
-        <option>US</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="search-country">Search country</label>
-      <select id="search-country" class="form-control">
-        <option>Russia</option>
-        <option>US</option>
-      </select>
-    </div>
-  </form>
+<!--  <form class="form-horizontal">-->
+<!--    <div class="form-group">-->
+<!--      <label for="residence-country">Residence country</label>-->
+<!--      <select id="residence-country" class="form-control">-->
+<!--        <option>Russia</option>-->
+<!--        <option>US</option>-->
+<!--      </select>-->
+<!--    </div>-->
+<!--    <div class="form-group">-->
+<!--      <label for="search-country">Search country</label>-->
+<!--      <select id="search-country" class="form-control">-->
+<!--        <option>Russia</option>-->
+<!--        <option>US</option>-->
+<!--      </select>-->
+<!--    </div>-->
+<!--  </form>-->
 </div>

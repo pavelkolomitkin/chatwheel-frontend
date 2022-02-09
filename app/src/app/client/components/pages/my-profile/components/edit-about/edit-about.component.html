@@ -1,0 +1,26 @@
+<app-editable-field
+  (onCancel)="onCancelEditHandler($event)"
+  (onInit)="onEditInitHandler($event)"
+  (onCommit)="onEditCommitHandler($event)"
+  [saving]="isSaving"
+>
+  <p class="mt-30" view-area>
+    <span class="text-muted" *ngIf="!user.about; else aboutYourself;">(About you)</span>
+    <ng-template #aboutYourself>{{ user.about }}</ng-template>
+  </p>
+
+  <div edit-area>
+    <form class="form-horizontal">
+      <div class="form-group">
+        <textarea
+          class="form-control"
+          placeholder="About yourself"
+          [(ngModel)]="about"
+          name="about"
+          required
+        ></textarea>
+      </div>
+    </form>
+  </div>
+
+</app-editable-field>

@@ -1,0 +1,37 @@
+<app-editable-field
+  (onCancel)="onCancelEditHandler($event)"
+  (onInit)="onEditInitHandler($event)"
+  (onCommit)="onEditCommitHandler($event)"
+  [saving]="isSaving"
+>
+
+  <div view-area>
+    <span>Residence Country: </span>
+    <span *ngIf="!!user.residenceCountry;else noCountry">&nbsp;<b>{{ user.residenceCountry.name }}</b>
+      <span class="text-muted">{{ !!user.residenceCountry.region ? '(' + user.residenceCountry.region.name + ')' : '' }}</span>
+    </span>
+    <ng-template #noCountry>
+      <span class="text-muted">Not Selected</span>
+    </ng-template>
+  </div>
+
+  <div edit-area>
+    <form class="form-horizontal">
+      <div class="form-group">
+        <label for="residence-country">Residence Country</label>
+        <select
+          [(ngModel)]="country"
+          [compareWith]="compareEntity"
+          [required]="true"
+          name="country"
+          id="residence-country"
+          class="form-control"
+        >
+          <option *ngFor="let currentCountry of countries | async" [ngValue]="currentCountry">{{ currentCountry.name }}</option>
+        </select>
+      </div>
+    </form>
+  </div>
+
+
+</app-editable-field>

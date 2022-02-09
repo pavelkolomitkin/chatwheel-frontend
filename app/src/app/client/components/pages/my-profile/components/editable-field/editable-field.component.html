@@ -1,21 +1,25 @@
 <div class="editable-field-container">
-  <ng-container *ngIf="!isEditing && !isSaving">
-    <div class="controls">
-      <span class="btn" (click)="onEditClickHandler($event)">
-        <i class="ik ik-edit"></i>
-      </span>
-    </div>
-  </ng-container>
 
-  <span class="progress" [ngClass]="isSaving ? 'visible': 'hidden'">
-    <img src="../../../../../../../assets/ajax-loader.gif" />
-  </span>
+
+
 
   <div class="view-area" [ngClass]="isEditing ? 'hidden' : 'visible'">
     <ng-content select="[view-area]"></ng-content>
+    <ng-container *ngIf="!isEditing && !isSaving">
+      <div class="controls">
+      <span class="btn" (click)="onEditClickHandler($event)">
+        <i class="ik ik-edit"></i>
+      </span>
+      </div>
+    </ng-container>
+    <span class="progress" [ngClass]="isSaving ? 'visible': 'hidden'">
+      <img src="../../../../../../../assets/ajax-loader.gif" />
+    </span>
   </div>
 
   <div #formArea class="form-area" [ngClass]="isEditing ? 'visible' : 'hidden'">
     <ng-content select="[edit-area]"></ng-content>
   </div>
+
+
 </div>

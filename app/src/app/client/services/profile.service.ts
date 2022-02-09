@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs/operators";
 import {User} from "../../security/data/models/user.model";
 import {Observable} from "rxjs";
+import {Country} from "../../core/data/models/country.model";
 
 @Injectable()
 export class ProfileService
@@ -15,6 +16,30 @@ export class ProfileService
   updateFullName(name: string): Observable<User>
   {
     return this.http.put<{ user: User }>('/client/profile/fullname', { fullName: name })
+      .pipe(
+        map(data => User.createFromRawData(data.user))
+      );
+  }
+
+  updateAbout(about: string): Observable<User>
+  {
+    return this.http.put<{ user: User }>('/client/profile/about', { about })
+      .pipe(
+        map(data => User.createFromRawData(data.user))
+      );
+  }
+
+  updateResidenceCountry(country: Country)
+  {
+    return this.http.put<{ user: User }>('/client/profile/update-residence-country', { id: country.id })
+      .pipe(
+        map(data => User.createFromRawData(data.user))
+      );
+  }
+
+  updateSearchCountry(country: Country)
+  {
+    return this.http.put<{ user: User }>('/client/profile/update-search-country', { id: country.id })
       .pipe(
         map(data => User.createFromRawData(data.user))
       );

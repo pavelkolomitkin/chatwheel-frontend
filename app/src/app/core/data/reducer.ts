@@ -1,17 +1,21 @@
 import * as actions from './actions';
 import {Notification} from "./models/notification.model";
+import {Country} from "./models/country.model";
 
 export interface State
 {
   isStoreInitialized: boolean;
   globalProgressLoaders: number;
   lastNotification: Notification;
+  countries: Country[];
 }
 
 export const initialState: State = {
   isStoreInitialized: false,
   globalProgressLoaders: 0,
   lastNotification: null,
+
+  countries: [],
 }
 
 export function reducer(state: State = initialState, action: actions.CoreActions): State
@@ -50,6 +54,13 @@ export function reducer(state: State = initialState, action: actions.CoreActions
       return {
         ...state,
         lastNotification: action.notification
+      };
+
+    case actions.COUNTRY_LIST_LOADED:
+
+      return {
+        ...state,
+        countries: action.list
       };
 
     default:

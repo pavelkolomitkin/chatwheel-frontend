@@ -30,6 +30,7 @@ import {ProfileService} from "../security/services/profile.service";
 import {RegisterEffects} from "../security/data/effects/register.effects";
 import { FooterComponent } from '../shared/components/footer/footer.component';
 import { MessageNotifierComponent } from './components/message-notifier/message-notifier.component';
+import {CountryService} from "./services/country.service";
 
 
 const httpInterceptorProviders = [
@@ -66,6 +67,7 @@ const httpInterceptorProviders = [
     LocalStorageService,
     AuthUserGuardService,
     DefaultRedirectGuard,
+    CountryService,
     SecurityService,
     ProfileService,
     ApplicationInitializerService,

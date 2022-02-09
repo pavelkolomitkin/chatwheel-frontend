@@ -4,12 +4,15 @@
       <div class="card-body">
         <div class="text-center">
           <img src="../img/user.jpg" class="rounded-circle" width="150">
-          <h4 class="card-title mt-10">John Doe</h4>
-          <p class="card-subtitle">Front End Developer</p>
-          <div class="row text-center justify-content-md-center">
-            <div class="col-4"><a href="javascript:void(0)" class="link"><i class="ik ik-user"></i> <font class="font-medium">254</font></a></div>
-            <div class="col-4"><a href="javascript:void(0)" class="link"><i class="ik ik-image"></i> <font class="font-medium">54</font></a></div>
-          </div>
+          <app-edit-full-name [user]="(user | async)" [customView]="true">
+            <h4 class="card-title mt-10" view-area>{{ (user | async).fullName }}</h4>
+          </app-edit-full-name>
+<!--          <h4 class="card-title mt-10">John Doe</h4>-->
+<!--          <p class="card-subtitle">Front End Developer</p>-->
+<!--          <div class="row text-center justify-content-md-center">-->
+<!--            <div class="col-4"><a href="javascript:void(0)" class="link"><i class="ik ik-user"></i> <font class="font-medium">254</font></a></div>-->
+<!--            <div class="col-4"><a href="javascript:void(0)" class="link"><i class="ik ik-image"></i> <font class="font-medium">54</font></a></div>-->
+<!--          </div>-->
         </div>
       </div>
       <hr class="mb-0">

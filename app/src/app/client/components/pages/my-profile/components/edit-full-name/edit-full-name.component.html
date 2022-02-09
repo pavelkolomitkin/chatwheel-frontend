@@ -4,9 +4,15 @@
   (onCommit)="onEditCommitHandler($event)"
   [saving]="isSaving"
 >
-  <p class="text-muted" view-area>
-    {{ user.fullName }}
-  </p>
+  <ng-container *ngIf="customView; else defaultTemplate" view-area>
+    <ng-content select="[view-area]"></ng-content>
+  </ng-container>
+  <ng-template #defaultTemplate>
+    <p class="text-muted" view-area>
+      {{ user.fullName }}
+    </p>
+  </ng-template>
+
   <div edit-area>
     <form class="form-horizontal">
       <div class="form-group">
