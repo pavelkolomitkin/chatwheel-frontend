@@ -7,13 +7,15 @@ import {FormsModule} from "@angular/forms";
 import {FormFieldErrorListComponent} from "./components/forms/form-field-error-list/form-field-error-list.component";
 import {HttpClientModule} from "@angular/common/http";
 import {FooterComponent} from "./components/footer/footer.component";
+import { UserAvatarComponent } from './components/pictures/user-avatar/user-avatar.component';
 
 
 
 @NgModule({
   declarations: [
     FormFieldErrorListComponent,
-    FooterComponent
+    FooterComponent,
+    UserAvatarComponent
   ],
   imports: [
     CommonModule,
@@ -31,7 +33,8 @@ import {FooterComponent} from "./components/footer/footer.component";
     TranslateModule,
     FormsModule,
 
-    FooterComponent
+    FooterComponent,
+    UserAvatarComponent
   ]
 })
 export class SharedModule {

@@ -24,6 +24,8 @@ export class User
 
   about?: string;
 
+  avatarThumbs: any = {};
+
   residenceCountry?: Country;
 
   searchCountry?: Country;

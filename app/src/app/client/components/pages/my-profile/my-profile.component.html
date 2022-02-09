@@ -3,7 +3,10 @@
     <div class="card">
       <div class="card-body">
         <div class="text-center">
-          <img src="../img/user.jpg" class="rounded-circle" width="150">
+          <div class="avatar-wrapper">
+            <app-user-avatar [user]="(user | async)" [size]="'medium'"></app-user-avatar>
+          </div>
+<!--          <img src="../img/user.jpg" class="rounded-circle" width="150">-->
           <app-edit-full-name [user]="(user | async)" [customView]="true">
             <h4 class="card-title mt-10" view-area>{{ (user | async).fullName }}</h4>
           </app-edit-full-name>
