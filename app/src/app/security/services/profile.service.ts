@@ -16,7 +16,7 @@ export class ProfileService extends BaseService
   {
     return this.httpClient.get<{ user: User }>('/security/profile')
       .pipe(
-        map(result => result.user)
+        map(result => User.createFromRawData(result.user))
       );
   }
 }

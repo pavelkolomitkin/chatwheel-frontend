@@ -1,14 +1,17 @@
 import * as actions from './actions';
+import {Notification} from "./models/notification.model";
 
 export interface State
 {
   isStoreInitialized: boolean;
   globalProgressLoaders: number;
+  lastNotification: Notification;
 }
 
 export const initialState: State = {
   isStoreInitialized: false,
   globalProgressLoaders: 0,
+  lastNotification: null,
 }
 
 export function reducer(state: State = initialState, action: actions.CoreActions): State
@@ -40,6 +43,13 @@ export function reducer(state: State = initialState, action: actions.CoreActions
       return {
         ...state,
         globalProgressLoaders: currentGlobalLoaderNumber
+      };
+
+    case actions.GLOBAL_NOTIFICATION:
+
+      return {
+        ...state,
+        lastNotification: action.notification
       };
 
     default:

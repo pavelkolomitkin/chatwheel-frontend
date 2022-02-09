@@ -1,0 +1,23 @@
+<app-editable-field
+  (onCancel)="onCancelEditHandler($event)"
+  (onInit)="onEditInitHandler($event)"
+  (onCommit)="onEditCommitHandler($event)"
+  [saving]="isSaving"
+>
+  <p class="text-muted" view-area>
+    {{ user.fullName }}
+  </p>
+  <div edit-area>
+    <form class="form-horizontal">
+      <div class="form-group">
+        <input
+          class="form-control"
+          placeholder="Your Name"
+          [(ngModel)]="name"
+          name="name"
+          required
+        />
+      </div>
+    </form>
+  </div>
+</app-editable-field>

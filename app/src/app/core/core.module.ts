@@ -29,6 +29,7 @@ import {SecurityService} from "../security/services/security.service";
 import {ProfileService} from "../security/services/profile.service";
 import {RegisterEffects} from "../security/data/effects/register.effects";
 import { FooterComponent } from '../shared/components/footer/footer.component';
+import { MessageNotifierComponent } from './components/message-notifier/message-notifier.component';
 
 
 const httpInterceptorProviders = [
@@ -42,7 +43,8 @@ const httpInterceptorProviders = [
   declarations: [
     GlobalProgressComponent,
     LayoutComponent,
-    NotFoundPageComponent
+    NotFoundPageComponent,
+    MessageNotifierComponent
   ],
   imports: [
     CommonModule,
@@ -82,6 +84,7 @@ const httpInterceptorProviders = [
     GlobalProgressComponent,
     LayoutComponent,
     NotFoundPageComponent,
+    MessageNotifierComponent,
   ]
 })
 export class CoreModule {}
