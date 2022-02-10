@@ -8,6 +8,7 @@ import {FormFieldErrorListComponent} from "./components/forms/form-field-error-l
 import {HttpClientModule} from "@angular/common/http";
 import {FooterComponent} from "./components/footer/footer.component";
 import { UserAvatarComponent } from './components/pictures/user-avatar/user-avatar.component';
+import { EditableUserAvatarComponent } from './components/pictures/editable-user-avatar/editable-user-avatar.component';
 
 
 
@@ -15,7 +16,8 @@ import { UserAvatarComponent } from './components/pictures/user-avatar/user-avat
   declarations: [
     FormFieldErrorListComponent,
     FooterComponent,
-    UserAvatarComponent
+    UserAvatarComponent,
+    EditableUserAvatarComponent
   ],
   imports: [
     CommonModule,
@@ -34,7 +36,8 @@ import { UserAvatarComponent } from './components/pictures/user-avatar/user-avat
     FormsModule,
 
     FooterComponent,
-    UserAvatarComponent
+    UserAvatarComponent,
+    EditableUserAvatarComponent
   ]
 })
 export class SharedModule {

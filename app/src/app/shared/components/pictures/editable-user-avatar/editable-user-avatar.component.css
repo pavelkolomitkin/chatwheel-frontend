@@ -1,0 +1,43 @@
+.editable-avatar-container {
+  position: relative;
+}
+
+.editable-avatar-container .controls {
+  position: absolute;
+  bottom: 0;
+  right: -20px;
+}
+
+.editable-avatar-container .controls {
+  display: none;
+}
+.editable-avatar-container:hover .controls {
+  display: block;
+}
+
+.editable-avatar-container .controls .edit-wrapper
+{
+  display: inline;
+}
+
+.dropdown-item
+{
+  cursor: pointer;
+  position: relative;
+}
+
+.editable-avatar-container input[type="file"]
+{
+  position: absolute;
+  display: block;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.editable-avatar-container input[type=file], /* FF, IE7+, chrome (except button) */
+.editable-avatar-container input[type=file]::-webkit-file-upload-button { /* chromes and blink button */
+  cursor: pointer;
+}

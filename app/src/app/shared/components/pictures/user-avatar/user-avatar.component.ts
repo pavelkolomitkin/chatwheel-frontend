@@ -1,5 +1,6 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {User} from "../../../../security/data/models/user.model";
+import {environment} from "../../../../../environments/environment";
 
 @Component({
   selector: 'app-user-avatar',
@@ -21,9 +22,10 @@ export class UserAvatarComponent implements OnInit {
     this._user = user;
     let avatar = '';
 
+
     if (this._user.avatarThumbs && (this._user.avatarThumbs[this.size]))
     {
-      avatar = this._user.avatarThumbs[this.size];
+      avatar = environment.baseApiUrl + this._user.avatarThumbs[this.size];
     }
     else {
       avatar = 'assets/picture/default_avatar.png';

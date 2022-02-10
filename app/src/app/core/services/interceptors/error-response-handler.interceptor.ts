@@ -1,4 +1,4 @@
-import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse} from '@angular/common/http';
+import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Store} from "@ngrx/store";
@@ -7,11 +7,14 @@ import {tap} from "rxjs/operators";
 //import {GlobalNotifyErrorMessage} from "../../data/actions";
 //import {NotifyMessage} from "../../data/model/notify-message.model";
 import {UserLogout} from '../../../security/data/actions';
+import {GlobalNotification} from "../../data/actions";
+import {Notification, NotificationType} from "../../data/models/notification.model";
 
 @Injectable()
 export class ErrorResponseHandlerInterceptor implements HttpInterceptor
 {
   static UNAUTHORIZE_ERROR_CODE = 401;
+  static PAYLOAD_TO_LARGE = 413;
 
   constructor(
     private store: Store<State>
@@ -35,10 +38,28 @@ export class ErrorResponseHandlerInterceptor implements HttpInterceptor
               return;
             }
 
+            if (error.status === ErrorResponseHandlerInterceptor.PAYLOAD_TO_LARGE)
+            {
+              this.store.dispatch(new GlobalNotification(
+                new Notification(
+                  NotificationType.ERROR,
+                  'This file is too large!',
+                  'Error'
+                )));
+
+              return;
+            }
+
             if (error.status >= 500)
             {
-              console.log(error);
-              //this.store.dispatch(new GlobalNotifyErrorMessage(new NotifyMessage('Application error. Please try later.')));
+              this.store.dispatch(new GlobalNotification(
+                new Notification(
+                  NotificationType.ERROR,
+                  'Application error. Please try later',
+                  'Error'
+                )));
+
+              return;
             }
           }
         })

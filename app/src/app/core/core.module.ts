@@ -5,13 +5,8 @@ import {BaseApiUrlInterceptor} from "./services/interceptors/base-api-url.interc
 import {DefaultHttpHeadersInterceptor} from "./services/interceptors/default-http-headers.interceptor";
 import {LocalStorageService} from "./services/local-storage.service";
 import {NgxPermissionsModule} from "ngx-permissions";
-import {TranslateLoader, TranslateModule, TranslateService} from '@ngx-translate/core';
-import {TranslationLoaderService} from "./services/translation-loader.service";
-import {environment} from "../../environments/environment";
 import {StoreModule} from "@ngrx/store";
 import {EffectsModule} from "@ngrx/effects";
-// import {AuthTokenInjectorInterceptor} from "./services/interceptors/auth-token-injector.interceptor";
-// import {ErrorResponseHandlerInterceptor} from "./services/interceptors/error-response-handler.interceptor";
 import { reducer as coreReducer } from './data/reducer';
 import { reducer as securityReducer } from '../security/data/reducer';
 import {GlobalProgressComponent} from "./components/global-progress/global-progress.component";
@@ -28,9 +23,11 @@ import {AuthEffects} from "../security/data/effects/auth.effects";
 import {SecurityService} from "../security/services/security.service";
 import {ProfileService} from "../security/services/profile.service";
 import {RegisterEffects} from "../security/data/effects/register.effects";
-import { FooterComponent } from '../shared/components/footer/footer.component';
 import { MessageNotifierComponent } from './components/message-notifier/message-notifier.component';
 import {CountryService} from "./services/country.service";
+import {UploadFileService} from "./services/upload/upload-file.service";
+import {UploadUserPictureEffects} from "./data/effects/upload-user-picture.effects";
+import {UserPictureService} from "./services/user-picture.service";
 
 
 const httpInterceptorProviders = [
@@ -59,17 +56,20 @@ const httpInterceptorProviders = [
       AuthEffects,
       RegisterEffects,
       AppInitEffect,
+      UploadUserPictureEffects
     ]),
     RouterModule
   ],
   providers: [
     httpInterceptorProviders,
+    UploadFileService,
     LocalStorageService,
     AuthUserGuardService,
     DefaultRedirectGuard,
     CountryService,
     SecurityService,
     ProfileService,
+    UserPictureService,
     ApplicationInitializerService,
     {
       provide: APP_INITIALIZER,

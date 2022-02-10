@@ -1,6 +1,7 @@
 import * as actions from './actions';
 import {Notification} from "./models/notification.model";
 import {Country} from "./models/country.model";
+import {UploadFile} from "./models/upload-file.model";
 
 export interface State
 {
@@ -8,6 +9,10 @@ export interface State
   globalProgressLoaders: number;
   lastNotification: Notification;
   countries: Country[];
+
+  uploadingUserPicture: UploadFile;
+  uploadedUserPicture: UploadFile;
+  uploadingUserPictureErrors: {};
 }
 
 export const initialState: State = {
@@ -16,6 +21,10 @@ export const initialState: State = {
   lastNotification: null,
 
   countries: [],
+
+  uploadingUserPicture: null,
+  uploadedUserPicture: null,
+  uploadingUserPictureErrors: null,
 }
 
 export function reducer(state: State = initialState, action: actions.CoreActions): State
@@ -61,6 +70,20 @@ export function reducer(state: State = initialState, action: actions.CoreActions
       return {
         ...state,
         countries: action.list
+      };
+
+    case actions.UPLOAD_USER_AVATAR_COMPLETE:
+
+      return {
+        ...state,
+        uploadedUserPicture: action.item
+      };
+
+    case actions.UPLOAD_USER_AVATAR_ERROR:
+
+      return {
+        ...state,
+        uploadingUserPictureErrors: action.errors
       };
 
     default:

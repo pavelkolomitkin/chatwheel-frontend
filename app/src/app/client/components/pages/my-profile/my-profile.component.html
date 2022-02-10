@@ -4,7 +4,8 @@
       <div class="card-body">
         <div class="text-center">
           <div class="avatar-wrapper">
-            <app-user-avatar [user]="(user | async)" [size]="'medium'"></app-user-avatar>
+            <app-editable-user-avatar [size]="'medium'" [user]="(user | async)" ></app-editable-user-avatar>
+<!--            <app-user-avatar [user]="(user | async)" [size]="'medium'"></app-user-avatar>-->
           </div>
 <!--          <img src="../img/user.jpg" class="rounded-circle" width="150">-->
           <app-edit-full-name [user]="(user | async)" [customView]="true">

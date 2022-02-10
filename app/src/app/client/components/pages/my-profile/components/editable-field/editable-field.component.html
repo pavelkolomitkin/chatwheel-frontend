@@ -7,9 +7,9 @@
     <ng-content select="[view-area]"></ng-content>
     <ng-container *ngIf="!isEditing && !isSaving">
       <div class="controls">
-      <span class="btn" (click)="onEditClickHandler($event)">
-        <i class="ik ik-edit"></i>
-      </span>
+        <span class="btn" (click)="onEditClickHandler($event)">
+          <i class="ik ik-edit"></i>
+        </span>
       </div>
     </ng-container>
     <span class="progress" [ngClass]="isSaving ? 'visible': 'hidden'">
