@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {User} from "../../../../security/data/models/user.model";
 import {environment} from "../../../../../environments/environment";
 import {Store} from "@ngrx/store";
@@ -13,6 +13,8 @@ import {UploadFile} from "../../../../core/data/models/upload-file.model";
   styleUrls: ['./editable-user-avatar.component.css']
 })
 export class EditableUserAvatarComponent implements OnInit {
+
+  @ViewChild('fileInput') fileInput: ElementRef;
 
   maxUploadFileSize: number = environment.maxUploadFileSize;
   maxUploadFileSizeLabel: string = environment.maxUploadFileSizeLabel;
@@ -43,6 +45,7 @@ export class EditableUserAvatarComponent implements OnInit {
     }
 
     const file: File = files[0];
+    this.fileInput.nativeElement.value = '';
 
     try {
       this.validateFile(file);

@@ -3,6 +3,7 @@ import {select, Store} from "@ngrx/store";
 import {State} from "../../../app.state";
 import {Observable} from "rxjs";
 import {User} from "../../../security/data/models/user.model";
+import {UserLogout} from "../../../security/data/actions";
 
 @Component({
   selector: 'app-page-header',
@@ -21,4 +22,8 @@ export class PageHeaderComponent implements OnInit {
     this.user = this.store.pipe(select(state => state.security.user))
   }
 
+  onLogoutClickHandler(event)
+  {
+    this.store.dispatch(new UserLogout());
+  }
 }
