@@ -5,11 +5,9 @@ import {TranslationLoaderService} from "../core/services/translation-loader.serv
 import {environment} from "../../environments/environment";
 import {FormsModule} from "@angular/forms";
 import {FormFieldErrorListComponent} from "./components/forms/form-field-error-list/form-field-error-list.component";
-import {HttpClientModule} from "@angular/common/http";
 import {FooterComponent} from "./components/footer/footer.component";
 import { UserAvatarComponent } from './components/pictures/user-avatar/user-avatar.component';
 import { EditableUserAvatarComponent } from './components/pictures/editable-user-avatar/editable-user-avatar.component';
-
 
 
 @NgModule({
@@ -34,7 +32,6 @@ import { EditableUserAvatarComponent } from './components/pictures/editable-user
     FormFieldErrorListComponent,
     TranslateModule,
     FormsModule,
-
     FooterComponent,
     UserAvatarComponent,
     EditableUserAvatarComponent

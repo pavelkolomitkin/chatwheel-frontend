@@ -1,4 +1,5 @@
 import {Country} from "../../../core/data/models/country.model";
+import {UserInterest} from "../../../client/data/model/user-interest.model";
 
 export class User
 {
@@ -29,6 +30,8 @@ export class User
   residenceCountry?: Country;
 
   searchCountry?: Country;
+
+  interests?: UserInterest[];
 
   static createFromRawData(data: any)
   {

@@ -24,3 +24,14 @@ body
   background: rgb(221, 221, 221);
   /*color: white;*/
 }
+
+.select2
+{
+  display: block;
+}
+
+.bootstrap-tagsinput .tag
+{
+  text-transform: none !important;
+  /*background-color: #007bff;*/
+}

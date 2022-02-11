@@ -1,0 +1,35 @@
+<app-editable-field
+  (onCancel)="onCancelEditHandler($event)"
+  (onInit)="onEditInitHandler($event)"
+  (onCommit)="onEditCommitHandler($event)"
+  [isEditingCustom]="customEditing"
+>
+
+  <div view-area>
+    <div>
+      <span>Interests: </span>
+    </div>
+    <div>
+      <ng-container *ngIf="user.interests.length > 0; else noInterest">
+        <span
+          *ngFor="let interest of user.interests"
+          class="badge badge-pill badge-secondary mb-1 mr-1"
+        >{{ interest.name }}</span>
+      </ng-container>
+      <ng-template #noInterest>
+        <span class="text-muted">Describe your interests so that people know you better!</span>
+      </ng-template>
+    </div>
+  </div>
+
+  <div edit-area>
+    <form>
+      <div class="form-group">
+        <label>Interests</label>
+        <input type="text" id="interests" class="form-control" data-role="tagsinput">
+      </div>
+    </form>
+
+  </div>
+
+</app-editable-field>

@@ -1,5 +1,7 @@
 import {Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild} from '@angular/core';
 
+declare var $: any;
+
 @Component({
   selector: 'app-editable-field',
   templateUrl: './editable-field.component.html',
@@ -7,15 +9,14 @@ import {Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output
 })
 export class EditableFieldComponent implements OnInit {
 
+  @Input()
   isEditing: boolean = false;
 
   @Input('saving')
   isSaving: boolean = false;
 
-  // set saving(value: boolean)
-  // {
-  //   this.isSaving = value;
-  // }
+  @Input()
+  isEditingCustom: boolean = false;
 
   @ViewChild('formArea') formArea: ElementRef;
 
@@ -34,6 +35,11 @@ export class EditableFieldComponent implements OnInit {
   @HostListener('document:keydown.escape', ['$event'])
   onDocumentKeydownEscapeHandler(event)
   {
+    if (this.isEditingCustom)
+    {
+      return;
+    }
+
     this.editCancelEmitter.emit();
     this.isEditing = false;
   }
@@ -41,9 +47,13 @@ export class EditableFieldComponent implements OnInit {
   @HostListener('document:click', ['$event'])
   onDocumentClickHandler(event)
   {
+    if (this.isEditingCustom)
+    {
+      return;
+    }
+
     if (
-      this.formArea.nativeElement.contains(event.target) ||
-      !this.isEditing
+      this.formArea.nativeElement.contains(event.target)
     )
     {
       return;
@@ -52,10 +62,11 @@ export class EditableFieldComponent implements OnInit {
 
     //debugger
     //console.log('CLICK ON THE DOCUMENT!');
-    //debugger
-
-    this.isEditing = false;
-    this.editCommitEmitter.emit();
+    if (this.isEditing)
+    {
+      this.isEditing = false;
+      this.editCommitEmitter.emit();
+    }
   }
 
   onEditClickHandler(event)

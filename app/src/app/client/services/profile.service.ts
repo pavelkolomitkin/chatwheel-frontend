@@ -4,6 +4,7 @@ import {map} from "rxjs/operators";
 import {User} from "../../security/data/models/user.model";
 import {Observable} from "rxjs";
 import {Country} from "../../core/data/models/country.model";
+import {UserInterest} from "../data/model/user-interest.model";
 
 @Injectable()
 export class ProfileService
@@ -42,6 +43,22 @@ export class ProfileService
     return this.http.put<{ user: User }>('/client/profile/update-search-country', { id: country.id })
       .pipe(
         map(data => User.createFromRawData(data.user))
+      );
+  }
+
+  addInterest(name: string)
+  {
+    return this.http.put<{ interest: UserInterest }>('/client/profile/add-interest', { name })
+      .pipe(
+        map( data => data.interest )
+      );
+  }
+
+  removeInterest(name: string)
+  {
+    return this.http.put<{interest: UserInterest}>('/client/profile/remove-interest', { name })
+      .pipe(
+        map(data => data.interest)
       );
   }
 }

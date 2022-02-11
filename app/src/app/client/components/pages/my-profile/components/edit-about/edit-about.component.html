@@ -4,10 +4,12 @@
   (onCommit)="onEditCommitHandler($event)"
   [saving]="isSaving"
 >
-  <p class="mt-30" view-area>
-    <span class="text-muted" *ngIf="!user.about; else aboutYourself;">(About you)</span>
+
+  <div view-area>
+    <h5>About you</h5>
+    <span class="text-muted" *ngIf="!user.about; else aboutYourself;">Tell people about yourself...</span>
     <ng-template #aboutYourself>{{ user.about }}</ng-template>
-  </p>
+  </div>
 
   <div edit-area>
     <form class="form-horizontal">

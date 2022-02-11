@@ -17,6 +17,7 @@ import { EditAboutComponent } from './components/pages/my-profile/components/edi
 import { EditResidenceCountryComponent } from './components/pages/my-profile/components/edit-residence-country/edit-residence-country.component';
 import { EditSearchCountryComponent } from './components/pages/my-profile/components/edit-search-country/edit-search-country.component';
 import { EditUserPickComponent } from './components/pages/my-profile/components/edit-user-pick/edit-user-pick.component';
+import { EditInterestsComponent } from './components/pages/my-profile/components/edit-interests/edit-interests.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { EditUserPickComponent } from './components/pages/my-profile/components/
     EditResidenceCountryComponent,
     EditSearchCountryComponent,
     EditUserPickComponent,
+    EditInterestsComponent,
   ],
   providers: [
     ProfileService
