@@ -1,5 +1,6 @@
 import {Country} from "../../../core/data/models/country.model";
 import {UserInterest} from "../../../client/data/model/user-interest.model";
+import {Geolocation} from "../../../core/data/models/geolocation.model";
 
 export class User
 {
@@ -21,7 +22,7 @@ export class User
 
   isBlocked: boolean;
 
-  geoLocation?: {};
+  geoLocation?: Geolocation;
 
   about?: string;
 

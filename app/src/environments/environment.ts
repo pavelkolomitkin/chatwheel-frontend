@@ -8,6 +8,10 @@ export const environment = {
   lang: 'en',
   maxUploadFileSize: 7340032,
   maxUploadFileSizeLabel: '7M',
+
+  geoLocationUpdateInterval: 10000,
+
+  geoLocationInfoUri: 'https://nominatim.openstreetmap.org/reverse?format=json&namedetails=1'
 };
 
 /*

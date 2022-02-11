@@ -28,6 +28,7 @@ import {CountryService} from "./services/country.service";
 import {UploadFileService} from "./services/upload/upload-file.service";
 import {UploadUserPictureEffects} from "./data/effects/upload-user-picture.effects";
 import {UserPictureService} from "./services/user-picture.service";
+import {GeoLocationDeviceService} from "./services/geo-location-device.service";
 
 
 const httpInterceptorProviders = [
@@ -42,7 +43,7 @@ const httpInterceptorProviders = [
     GlobalProgressComponent,
     LayoutComponent,
     NotFoundPageComponent,
-    MessageNotifierComponent
+    MessageNotifierComponent,
   ],
   imports: [
     CommonModule,
@@ -70,6 +71,7 @@ const httpInterceptorProviders = [
     SecurityService,
     ProfileService,
     UserPictureService,
+    GeoLocationDeviceService,
     ApplicationInitializerService,
     {
       provide: APP_INITIALIZER,

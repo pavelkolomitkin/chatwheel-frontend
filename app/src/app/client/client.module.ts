@@ -18,6 +18,12 @@ import { EditResidenceCountryComponent } from './components/pages/my-profile/com
 import { EditSearchCountryComponent } from './components/pages/my-profile/components/edit-search-country/edit-search-country.component';
 import { EditUserPickComponent } from './components/pages/my-profile/components/edit-user-pick/edit-user-pick.component';
 import { EditInterestsComponent } from './components/pages/my-profile/components/edit-interests/edit-interests.component';
+import {EffectsModule} from "@ngrx/effects";
+import {GeolocationEffects} from "./data/effects/geolocation.effects";
+import { TextLocationViewComponent } from './components/pages/profile/geo-location/text-location-view/text-location-view.component';
+import { TextLocationViewComponent as TextMyLocationViewComponent } from './components/pages/my-profile/components/geo-location/text-location-view/text-location-view.component';
+import {StoreModule} from "@ngrx/store";
+import { reducer } from './data/reducer'
 
 @NgModule({
   declarations: [
@@ -36,6 +42,8 @@ import { EditInterestsComponent } from './components/pages/my-profile/components
     EditSearchCountryComponent,
     EditUserPickComponent,
     EditInterestsComponent,
+    TextLocationViewComponent,
+    TextMyLocationViewComponent
   ],
   providers: [
     ProfileService
@@ -43,7 +51,15 @@ import { EditInterestsComponent } from './components/pages/my-profile/components
   imports: [
     CommonModule,
     SharedModule,
-    ClientRoutingModule
+    ClientRoutingModule,
+    StoreModule.forFeature('client', reducer),
+    EffectsModule.forFeature([
+      GeolocationEffects
+    ])
+  ],
+
+  exports: [
+    EffectsModule
   ]
 })
-export class ClientModule { }
+export class ClientModule {}

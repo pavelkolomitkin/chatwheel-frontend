@@ -1,0 +1,9 @@
+<app-text-location-view [user]="user"></app-text-location-view>
+<ng-container *ngIf="!(isGeolocationTurnedOn | async) && !!user.geoLocation">
+  <span class="text-muted small">(latest)</span>
+</ng-container>
+<ng-container *ngIf="!(isGeolocationTurnedOn | async)">
+  <br/>
+  <span class="btn btn-info mb-1" (click)="onUpdateRequestLocationClickHandler($event)">Update</span>
+<!--  <span class="badge badge-blue" (click)="onUpdateRequestLocationClickHandler($event)">Update</span>-->
+</ng-container>

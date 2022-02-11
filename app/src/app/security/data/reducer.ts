@@ -148,6 +148,14 @@ export function reducer(state = initialState, action: actions.SecurityActions): 
         user: action.user
       };
 
+    case actions.USER_LOGOUT:
+
+      return {
+        ...state,
+        user: null,
+        token: null
+      };
+
     default:
 
       return state;

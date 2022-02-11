@@ -9,13 +9,12 @@ import {FooterComponent} from "./components/footer/footer.component";
 import { UserAvatarComponent } from './components/pictures/user-avatar/user-avatar.component';
 import { EditableUserAvatarComponent } from './components/pictures/editable-user-avatar/editable-user-avatar.component';
 
-
 @NgModule({
   declarations: [
     FormFieldErrorListComponent,
     FooterComponent,
     UserAvatarComponent,
-    EditableUserAvatarComponent
+    EditableUserAvatarComponent,
   ],
   imports: [
     CommonModule,
@@ -34,7 +33,7 @@ import { EditableUserAvatarComponent } from './components/pictures/editable-user
     FormsModule,
     FooterComponent,
     UserAvatarComponent,
-    EditableUserAvatarComponent
+    EditableUserAvatarComponent,
   ]
 })
 export class SharedModule {

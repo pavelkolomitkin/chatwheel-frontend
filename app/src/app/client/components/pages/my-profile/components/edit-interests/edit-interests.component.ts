@@ -111,10 +111,4 @@ export class EditInterestsComponent implements OnInit {
 
     this.store.dispatch(new UserUpdated(newUser));
   }
-
-  onInterestSelectedHandler(event)
-  {
-    //debugger
-  }
-
 }
