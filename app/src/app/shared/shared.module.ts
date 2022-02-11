@@ -8,6 +8,7 @@ import {FormFieldErrorListComponent} from "./components/forms/form-field-error-l
 import {FooterComponent} from "./components/footer/footer.component";
 import { UserAvatarComponent } from './components/pictures/user-avatar/user-avatar.component';
 import { EditableUserAvatarComponent } from './components/pictures/editable-user-avatar/editable-user-avatar.component';
+import { LightboxModule } from 'ngx-lightbox';
 
 @NgModule({
   declarations: [
@@ -25,15 +26,18 @@ import { EditableUserAvatarComponent } from './components/pictures/editable-user
         useClass: TranslationLoaderService
       },
       useDefaultLang: true
-    })
+    }),
+    LightboxModule
   ],
   exports: [
-    FormFieldErrorListComponent,
     TranslateModule,
     FormsModule,
+    LightboxModule,
+
     FooterComponent,
     UserAvatarComponent,
     EditableUserAvatarComponent,
+    FormFieldErrorListComponent,
   ]
 })
 export class SharedModule {

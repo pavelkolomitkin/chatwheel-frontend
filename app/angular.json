@@ -42,6 +42,7 @@
               "lib/BootstrapAdmin-master/plugins/jquery-toast-plugin/dist/jquery.toast.min.css",
               "lib/BootstrapAdmin-master/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css",
               "lib/BootstrapAdmin-master/dist/css/theme.min.css",
+              "node_modules/ngx-lightbox/lightbox.css",
               "src/styles.css"
             ],
             "scripts": [

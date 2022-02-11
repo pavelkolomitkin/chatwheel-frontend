@@ -28,6 +28,7 @@
     "bootstrap": "^4.5.0",
     "moment": "^2.29.1",
     "ngx-infinite-scroll": "^10.0.1",
+    "ngx-lightbox": "^2.5.2",
     "ngx-permissions": "^8.1.1",
     "ngx-socket-io": "^4.1.0",
     "ol": "^6.12.0",

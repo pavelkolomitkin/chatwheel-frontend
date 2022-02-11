@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {User} from "../../../../security/data/models/user.model";
 import {environment} from "../../../../../environments/environment";
+import {Lightbox} from "ngx-lightbox";
 
 @Component({
   selector: 'app-user-avatar',
@@ -13,6 +14,8 @@ export class UserAvatarComponent implements OnInit {
   _avatarUrl: string = null;
 
   _user: User;
+
+  @Input() isLightBox: boolean = false;
 
   @Input() size: string;
 
@@ -36,8 +39,25 @@ export class UserAvatarComponent implements OnInit {
     this.changeDetector.markForCheck();
   }
 
-  constructor(private changeDetector: ChangeDetectorRef) { }
+  constructor(
+    private changeDetector: ChangeDetectorRef,
+    private lightBox: Lightbox
+    ) { }
 
   ngOnInit() {
+  }
+
+  onImageClickHandler(event)
+  {
+    if (!this.isLightBox || !this._user.avatar)
+    {
+      return;
+    }
+
+    this.lightBox.open([{
+      src: environment.baseApiUrl + this._user.avatarThumbs['original'],
+      caption: '',
+      thumb: environment.baseApiUrl + this._user.avatarThumbs['small']
+    }]);
   }
 }
