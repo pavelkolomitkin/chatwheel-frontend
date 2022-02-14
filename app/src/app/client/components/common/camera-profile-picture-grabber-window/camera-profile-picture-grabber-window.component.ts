@@ -14,8 +14,6 @@ export class CameraProfilePictureGrabberWindowComponent implements OnInit, OnDes
 
   @ViewChild('grabberWindow') contentWindowTemplate: TemplateRef<any>;
 
-  isGrabberInit: boolean = false;
-
   window: NgbModalRef = null
 
   grabbingPictureWindowStateSubscription: Subscription = null;
@@ -64,8 +62,6 @@ export class CameraProfilePictureGrabberWindowComponent implements OnInit, OnDes
       .catch((error) => {
         this.store.dispatch(new UserGrabPictureFromCameraWindow(false));
       });
-
-    this.isGrabberInit = true;
   }
 
   closeWindow()
@@ -75,8 +71,6 @@ export class CameraProfilePictureGrabberWindowComponent implements OnInit, OnDes
       this.window.close();
       this.window = null;
     }
-
-    this.isGrabberInit = false;
   }
 
   onCompleteHandler(event)

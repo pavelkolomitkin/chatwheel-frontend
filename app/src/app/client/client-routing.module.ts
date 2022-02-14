@@ -7,13 +7,15 @@ import {MyProfileComponent} from "./components/pages/my-profile/my-profile.compo
 import {ProfileComponent} from "./components/pages/my-profile/profile/profile.component";
 import {MessagesComponent} from "./components/pages/my-profile/messages/messages.component";
 import {CallsComponent} from "./components/pages/my-profile/calls/calls.component";
+import {SettingsComponent} from "./components/pages/my-profile/settings/settings.component";
 
 const routes: Routes = [
   { path: '', component: LayoutComponent, children: [
       { path: 'profile', component: MyProfileComponent, children: [
           { path: '', component: ProfileComponent },
           { path: 'messages', component: MessagesComponent },
-          { path: 'calls', component: CallsComponent }
+          { path: 'calls', component: CallsComponent },
+          { path: 'settings', component: SettingsComponent }
         ] },
       { path: 'chatwheel', component: ChatwheelComponent},
       { path: 'nearby', component: NearbyComponent },

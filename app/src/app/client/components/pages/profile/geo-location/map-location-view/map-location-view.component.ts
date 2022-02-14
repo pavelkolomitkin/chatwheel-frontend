@@ -1,7 +1,4 @@
 import {
-  AfterContentChecked,
-  AfterContentInit,
-  AfterViewChecked,
   AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -37,6 +34,8 @@ export class MapLocationViewComponent implements OnInit, AfterViewInit
     {
       this.markComponent.instance.user = this._user;
     }
+
+    this.changeDetector.markForCheck();
   }
 
   markComponent: ComponentRef<UserMapMarkComponent>;

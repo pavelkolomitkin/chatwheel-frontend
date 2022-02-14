@@ -28,6 +28,8 @@ import { MapLocationViewComponent } from './components/pages/profile/geo-locatio
 import { CameraProfilePictureGrabberWindowComponent } from './components/common/camera-profile-picture-grabber-window/camera-profile-picture-grabber-window.component'
 import {NgbModalModule} from "@ng-bootstrap/ng-bootstrap";
 import { CameraProfilePictureGrabberComponent } from './components/common/camera-profile-picture-grabber/camera-profile-picture-grabber.component';
+import { SettingsComponent } from './components/pages/my-profile/settings/settings.component';
+import {ProfileEffects} from "./data/effects/profile.effects";
 
 @NgModule({
   declarations: [
@@ -51,6 +53,7 @@ import { CameraProfilePictureGrabberComponent } from './components/common/camera
     MapLocationViewComponent,
     CameraProfilePictureGrabberWindowComponent,
     CameraProfilePictureGrabberComponent,
+    SettingsComponent,
   ],
   providers: [
     ProfileService
@@ -61,7 +64,8 @@ import { CameraProfilePictureGrabberComponent } from './components/common/camera
     ClientRoutingModule,
     StoreModule.forFeature('client', reducer),
     EffectsModule.forFeature([
-      GeolocationEffects
+      GeolocationEffects,
+      ProfileEffects
     ]),
     NgbModalModule,
   ],

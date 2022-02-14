@@ -70,4 +70,12 @@ export class ProfileService
         map(data => User.createFromRawData(data.user))
       );
   }
+
+  deleteAccount()
+  {
+    return this.http.delete<{ user: User }>('/client/profile/remove-account')
+      .pipe(
+        map(data => User.createFromRawData(data.user))
+      );
+  }
 }
