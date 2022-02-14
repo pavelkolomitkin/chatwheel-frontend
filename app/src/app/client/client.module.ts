@@ -24,7 +24,10 @@ import { TextLocationViewComponent } from './components/pages/profile/geo-locati
 import { TextLocationViewComponent as TextMyLocationViewComponent } from './components/pages/my-profile/components/geo-location/text-location-view/text-location-view.component';
 import {StoreModule} from "@ngrx/store";
 import { reducer } from './data/reducer';
-import { MapLocationViewComponent } from './components/pages/profile/geo-location/map-location-view/map-location-view.component'
+import { MapLocationViewComponent } from './components/pages/profile/geo-location/map-location-view/map-location-view.component';
+import { CameraProfilePictureGrabberWindowComponent } from './components/common/camera-profile-picture-grabber-window/camera-profile-picture-grabber-window.component'
+import {NgbModalModule} from "@ng-bootstrap/ng-bootstrap";
+import { CameraProfilePictureGrabberComponent } from './components/common/camera-profile-picture-grabber/camera-profile-picture-grabber.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +49,8 @@ import { MapLocationViewComponent } from './components/pages/profile/geo-locatio
     TextLocationViewComponent,
     TextMyLocationViewComponent,
     MapLocationViewComponent,
+    CameraProfilePictureGrabberWindowComponent,
+    CameraProfilePictureGrabberComponent,
   ],
   providers: [
     ProfileService
@@ -57,7 +62,8 @@ import { MapLocationViewComponent } from './components/pages/profile/geo-locatio
     StoreModule.forFeature('client', reducer),
     EffectsModule.forFeature([
       GeolocationEffects
-    ])
+    ]),
+    NgbModalModule,
   ],
 
   exports: [

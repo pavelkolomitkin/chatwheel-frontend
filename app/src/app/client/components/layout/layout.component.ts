@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {Store} from "@ngrx/store";
 import {State} from "../../../app.state";
 import {UserRequestUpdateGeoLocation} from "../../data/actions";

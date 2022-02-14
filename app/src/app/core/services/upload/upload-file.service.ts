@@ -2,7 +2,6 @@ import {UploadService} from "./upload.service";
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
 import {HttpEventType, HttpHeaders, HttpRequest, HttpResponse} from "@angular/common/http";
-import {UploadFile} from "../../data/models/upload-file.model";
 
 @Injectable()
 export class UploadFileService extends UploadService

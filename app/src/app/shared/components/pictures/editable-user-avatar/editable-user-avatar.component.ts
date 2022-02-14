@@ -6,6 +6,7 @@ import {State} from "../../../../app.state";
 import {GlobalNotification, RemoveUserAvatarStart, UploadUserAvatarStart} from "../../../../core/data/actions";
 import {Notification, NotificationType} from "../../../../core/data/models/notification.model";
 import {UploadFile} from "../../../../core/data/models/upload-file.model";
+import {UserGrabPictureFromCameraWindow} from "../../../../client/data/actions";
 
 @Component({
   selector: 'app-editable-user-avatar',
@@ -80,5 +81,10 @@ export class EditableUserAvatarComponent implements OnInit {
     {
       throw 'The file is to big! Maximum is ' + this.maxUploadFileSizeLabel;
     }
+  }
+
+  onFromCameraClickHandler(event)
+  {
+    this.store.dispatch(new UserGrabPictureFromCameraWindow(true));
   }
 }

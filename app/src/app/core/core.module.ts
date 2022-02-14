@@ -29,6 +29,8 @@ import {UploadFileService} from "./services/upload/upload-file.service";
 import {UploadUserPictureEffects} from "./data/effects/upload-user-picture.effects";
 import {UserPictureService} from "./services/user-picture.service";
 import {GeoLocationDeviceService} from "./services/geo-location-device.service";
+import {UserMediaService} from "./services/user-media.service";
+import {UploadDataService} from "./services/upload/upload-data.service";
 
 
 const httpInterceptorProviders = [
@@ -72,6 +74,8 @@ const httpInterceptorProviders = [
     ProfileService,
     UserPictureService,
     GeoLocationDeviceService,
+    UserMediaService,
+    UploadDataService,
     ApplicationInitializerService,
     {
       provide: APP_INITIALIZER,

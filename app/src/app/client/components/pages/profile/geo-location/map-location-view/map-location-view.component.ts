@@ -1,4 +1,16 @@
-import {AfterViewInit, Component, ComponentRef, Input, OnInit, ViewChild} from '@angular/core';
+import {
+  AfterContentChecked,
+  AfterContentInit,
+  AfterViewChecked,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ComponentRef,
+  Input,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import {User} from "../../../../../../security/data/models/user.model";
 import {MapComponent} from "../../../../../../shared/components/geo/map/map.component";
 import {UserMapMarkComponent} from "../../../../../../shared/components/geo/user-map-mark/user-map-mark.component";
@@ -6,11 +18,14 @@ import {UserMapMarkComponent} from "../../../../../../shared/components/geo/user
 @Component({
   selector: 'app-map-location-view',
   templateUrl: './map-location-view.component.html',
-  styleUrls: ['./map-location-view.component.css']
+  styleUrls: ['./map-location-view.component.css'],
+  changeDetection:ChangeDetectionStrategy.OnPush
 })
-export class MapLocationViewComponent implements OnInit, AfterViewInit {
+export class MapLocationViewComponent implements OnInit, AfterViewInit
+{
 
-  @ViewChild('mapComponent') map: MapComponent;
+
+  @ViewChild(MapComponent) map: MapComponent;
 
   _user: User;
 
@@ -26,16 +41,15 @@ export class MapLocationViewComponent implements OnInit, AfterViewInit {
 
   markComponent: ComponentRef<UserMapMarkComponent>;
 
-  constructor() { }
+  constructor(private changeDetector: ChangeDetectorRef) { }
+
 
   ngOnInit(): void {
     //debugger
+
   }
 
   ngAfterViewInit(): void {
-
-    //debugger
-
     const { geoLocation } = this._user;
 
     this.markComponent = this.map.addMark(UserMapMarkComponent, geoLocation);
@@ -44,14 +58,16 @@ export class MapLocationViewComponent implements OnInit, AfterViewInit {
 
     this.map.setCenter(geoLocation);
 
-  }
+    this.changeDetector.detectChanges();
 
+  }
 
   onMapReadyHandler(event)
   {
-    //debugger
+//debugger
 
   }
+
 
 
   onLocationSelectedHandler(event)

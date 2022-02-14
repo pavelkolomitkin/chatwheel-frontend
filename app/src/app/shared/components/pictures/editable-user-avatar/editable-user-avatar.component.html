@@ -24,7 +24,7 @@
                  (change)="onFilesSelectHandler($event)">
           <i class="ik ik-upload"></i> Upload File <span class="text-muted">(up to {{ maxUploadFileSizeLabel }})</span>
         </span>
-        <span class="dropdown-item"><i class="ik ik-camera"></i> From the camera</span>
+        <span class="dropdown-item" (click)="onFromCameraClickHandler($event)"><i class="ik ik-video"></i> From Camera</span>
         <div class="dropdown-divider"></div>
         <span class="dropdown-item" [ngClass]="(user.avatar === null) ? 'disabled' : ''" (click)="onRemoveClickHandler($event)"><i class="ik ik-delete"></i> Remove</span>
       </div>
