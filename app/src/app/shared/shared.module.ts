@@ -9,6 +9,10 @@ import {FooterComponent} from "./components/footer/footer.component";
 import { UserAvatarComponent } from './components/pictures/user-avatar/user-avatar.component';
 import { EditableUserAvatarComponent } from './components/pictures/editable-user-avatar/editable-user-avatar.component';
 import { LightboxModule } from 'ngx-lightbox';
+import { MapComponent } from './components/geo/map/map.component';
+import { UserMapMarkComponent } from './components/geo/user-map-mark/user-map-mark.component';
+import { MapComponentBaseComponent } from './components/geo/map-component-base/map-component-base.component';
+import {RouterModule} from "@angular/router";
 
 @NgModule({
   declarations: [
@@ -16,6 +20,9 @@ import { LightboxModule } from 'ngx-lightbox';
     FooterComponent,
     UserAvatarComponent,
     EditableUserAvatarComponent,
+    MapComponent,
+    UserMapMarkComponent,
+    MapComponentBaseComponent,
   ],
   imports: [
     CommonModule,
@@ -27,7 +34,8 @@ import { LightboxModule } from 'ngx-lightbox';
       },
       useDefaultLang: true
     }),
-    LightboxModule
+    LightboxModule,
+    RouterModule
   ],
   exports: [
     TranslateModule,
@@ -38,6 +46,7 @@ import { LightboxModule } from 'ngx-lightbox';
     UserAvatarComponent,
     EditableUserAvatarComponent,
     FormFieldErrorListComponent,
+    MapComponent,
   ]
 })
 export class SharedModule {

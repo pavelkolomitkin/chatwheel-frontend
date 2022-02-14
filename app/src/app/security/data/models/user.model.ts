@@ -18,7 +18,7 @@ export class User
 
   avatar?: {};
 
-  lastActivity: string
+  lastActivity: Date
 
   isBlocked: boolean;
 
@@ -37,6 +37,8 @@ export class User
   static createFromRawData(data: any)
   {
     const result: User = Object.assign(new User(), data);
+
+    result.lastActivity = new Date(data.lastActivity);
 
     return result;
   }

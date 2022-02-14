@@ -1,7 +1,7 @@
 <img
   class="user-avatar rounded-circle"
   [src]="_avatarUrl"
-  [ngStyle]="{ width: '100%', cursor: (isLightBox && !!_user.avatar) ? 'pointer': 'default' }"
+  [ngStyle]="getStyles()"
   title="{{ _user.fullName }}"
   (click)="onImageClickHandler($event)"
 >

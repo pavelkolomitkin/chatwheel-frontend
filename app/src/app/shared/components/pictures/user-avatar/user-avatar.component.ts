@@ -15,6 +15,27 @@ export class UserAvatarComponent implements OnInit {
 
   _user: User;
 
+  _styles: Object = {
+    width: '100%',
+
+  }
+
+  getStyles()
+  {
+    //debugger
+    const result = {
+      ...this._styles,
+      cursor: (this.isLightBox && !!this._user.avatar) ? 'pointer': 'default',
+      ...this.additionalStyles
+    };
+
+    return result;
+  }
+
+  @Input() additionalStyles: Object = {};
+
+  @Input() rotateDegrees: Number = 0;
+
   @Input() isLightBox: boolean = false;
 
   @Input() size: string;

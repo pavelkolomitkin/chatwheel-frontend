@@ -6,8 +6,11 @@ export class GeoLocationDeviceService
   {
     return new Promise<Geolocation>((resolve, reject) => {
 
-      navigator.geolocation.getCurrentPosition(
+
+      let watchPositionId = navigator.geolocation.watchPosition(
         (position: GeolocationPosition) => {
+
+          navigator.geolocation.clearWatch(watchPositionId);
 
           const { coords: { latitude, longitude } } = position;
 
@@ -15,10 +18,14 @@ export class GeoLocationDeviceService
 
         },
         (error: GeolocationPositionError) => {
+
+          navigator.geolocation.clearWatch(watchPositionId);
           reject(error);
         },
         {
-          enableHighAccuracy: true
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 0
         }
       )
     });

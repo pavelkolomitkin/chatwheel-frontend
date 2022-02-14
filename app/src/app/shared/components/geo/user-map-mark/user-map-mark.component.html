@@ -1,0 +1,14 @@
+<div class="pin">
+  <a [routerLink]="'client/profile/' + user.id">
+    <app-user-avatar
+      [size]="'extraSmall'"
+      [user]="user"
+
+      [additionalStyles]="{
+        transform: 'rotate(45deg)',
+        cursor: 'pointer'
+      }"
+
+    ></app-user-avatar>
+  </a>
+</div>

@@ -23,7 +23,8 @@ import {GeolocationEffects} from "./data/effects/geolocation.effects";
 import { TextLocationViewComponent } from './components/pages/profile/geo-location/text-location-view/text-location-view.component';
 import { TextLocationViewComponent as TextMyLocationViewComponent } from './components/pages/my-profile/components/geo-location/text-location-view/text-location-view.component';
 import {StoreModule} from "@ngrx/store";
-import { reducer } from './data/reducer'
+import { reducer } from './data/reducer';
+import { MapLocationViewComponent } from './components/pages/profile/geo-location/map-location-view/map-location-view.component'
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { reducer } from './data/reducer'
     EditUserPickComponent,
     EditInterestsComponent,
     TextLocationViewComponent,
-    TextMyLocationViewComponent
+    TextMyLocationViewComponent,
+    MapLocationViewComponent,
   ],
   providers: [
     ProfileService

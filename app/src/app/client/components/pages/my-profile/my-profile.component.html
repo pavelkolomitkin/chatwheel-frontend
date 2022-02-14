@@ -23,6 +23,7 @@
       <div class="card-body">
         <small class="text-muted d-block">Email address </small>
         <h6>{{ ( user | async ).email ? (user | async).email : '-' }}</h6>
+        <app-map-location-view [user]="user | async"></app-map-location-view>
 <!--        <small class="text-muted d-block pt-10">Phone</small>-->
 <!--        <h6>(123) 456 7890</h6>-->
 <!--        <small class="text-muted d-block pt-10">Address</small>-->
@@ -60,21 +61,13 @@
 
       <div class="tab-content" id="pills-tabContent">
 
-
-
         <div class="tab-pane fade active show" id="current-month" role="tabpanel" aria-labelledby="pills-timeline-tab">
           <div class="card-body">
             <router-outlet></router-outlet>
           </div>
         </div>
 
-
-
-
-
       </div>
-
-
 
     </div>
   </div>
