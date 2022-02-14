@@ -7,5 +7,8 @@ export const environment = {
 
   geoLocationUpdateInterval: 60000,
 
-  geoLocationInfoUri: 'https://nominatim.openstreetmap.org/reverse?format=json&namedetails=1'
+  geoLocationInfoUri: 'https://nominatim.openstreetmap.org/reverse?format=json&namedetails=1',
+
+  onlineActivitySeconds: 60,
+  recentOnlineActivitySeconds: 300,
 };

@@ -13,6 +13,7 @@ import { MapComponent } from './components/geo/map/map.component';
 import { UserMapMarkComponent } from './components/geo/user-map-mark/user-map-mark.component';
 import { MapComponentBaseComponent } from './components/geo/map-component-base/map-component-base.component';
 import {RouterModule} from "@angular/router";
+import { UserActivityStatusDirective } from './directives/user-activity-status.directive';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import {RouterModule} from "@angular/router";
     MapComponent,
     UserMapMarkComponent,
     MapComponentBaseComponent,
+    UserActivityStatusDirective,
   ],
   imports: [
     CommonModule,
@@ -47,6 +49,8 @@ import {RouterModule} from "@angular/router";
     EditableUserAvatarComponent,
     FormFieldErrorListComponent,
     MapComponent,
+
+    UserActivityStatusDirective
   ]
 })
 export class SharedModule {

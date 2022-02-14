@@ -1,4 +1,4 @@
-<div class="pin">
+<div class="pin" appUserActivityStatus [user]="user">
   <a [routerLink]="'client/profile/' + user.id">
     <app-user-avatar
       [size]="'extraSmall'"

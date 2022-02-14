@@ -35,3 +35,21 @@ body
   text-transform: none !important;
   /*background-color: #007bff;*/
 }
+
+.user-status.bg-active
+{
+  background-color: #2dce89 !important;
+  border-color: #2dce89 !important;;
+}
+
+.user-status.bg-was-recently
+{
+  background-color: #ffc107 !important;
+  border-color: #ffc107 !important;
+}
+
+.user-status.bg-offline
+{
+  background-color: #e2e3e5 !important;
+  border-color: #e2e3e5 !important;
+}
