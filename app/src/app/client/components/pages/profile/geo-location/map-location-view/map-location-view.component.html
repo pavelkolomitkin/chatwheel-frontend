@@ -1,0 +1,14 @@
+
+<!--<h6>71 Pilgrim Avenue Chevy Chase, MD 20815</h6>-->
+<ng-container *ngIf="!!_user">
+  <div class="map-box map-container">
+    <app-map
+      #mapComponent
+      (onSelectLocation)="onLocationSelectedHandler($event)"
+      (onMove)="onMapMoveHandler($event)"
+      (onReady)="onMapReadyHandler($event)"
+      [defaultCenter]="_user.geoLocation"
+      [defaultZoom]="14"
+    ></app-map>
+  </div>
+</ng-container>

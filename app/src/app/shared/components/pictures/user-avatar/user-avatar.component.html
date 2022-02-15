@@ -1,0 +1,7 @@
+<img
+  class="user-avatar rounded-circle"
+  [src]="_avatarUrl"
+  [ngStyle]="getStyles()"
+  title="{{ _user.fullName }}"
+  (click)="onImageClickHandler($event)"
+>

@@ -1,0 +1,79 @@
+<div class="video-container">
+
+  <ng-container *ngIf="mediaInitState === 'inProgress'">
+    <div class="issue">
+
+      <div class="media-progress">
+        <div class="spinner-border text-light" role="status">
+          <span class="sr-only"></span>
+        </div>
+      </div>
+
+    </div>
+  </ng-container>
+
+
+
+  <ng-container *ngIf="mediaInitState === 'error'">
+    <div class="issue">
+
+      <div class="no-video-container">
+        <div class="icon">
+          <i class="ik ik-video-off"></i>
+        </div>
+        <div class="control">
+          <span class="btn btn-info" (click)="onTurnOnClickHandler($event)">Turn On</span>
+        </div>
+      </div>
+
+    </div>
+  </ng-container>
+
+  <div class="stream-container" [ngClass]="(mediaInitState === 'success') ? '' : 'hidden'">
+
+    <video #video
+           [autoplay]="true"
+           [muted]="'muted'"
+
+    ></video>
+
+    <canvas
+      #takenPicturePreview
+      class="taken-picture"
+      [ngClass]="!isPictureTaken ? 'hidden': ''"
+      width="640"
+      height="480"
+    ></canvas>
+
+    <div class="controls">
+      <button type="button"
+              class="btn btn-icon btn-outline-dark"
+              [ngClass]="isPictureTaken ? 'hidden': ''"
+              (click)="onTakePictureHandler($event)"
+      >
+        <i class="ik ik-image"></i>
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-icon btn-outline-dark mr-5"
+        [ngClass]="!isPictureTaken ? 'hidden': ''"
+        (click)="onTakenPictureApproveClickHandler($event)"
+      >
+        <i class="ik ik-check"></i>
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-icon btn-outline-dark"
+        [ngClass]="!isPictureTaken ? 'hidden': ''"
+        (click)="onTakenPictureRejectClickHandler($event)"
+      >
+        <i class="ik ik-x"></i>
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

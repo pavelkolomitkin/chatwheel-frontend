@@ -1,0 +1,46 @@
+.editable-field-container {
+  position: relative;
+}
+
+.editable-field-container .progress {
+  position: absolute;
+  top: 0px;
+  right: -20px;
+}
+
+.editable-field-container .controls {
+  top: -7px;
+  right: -40px;
+  display: none;
+  position: absolute;
+}
+
+.editable-field-container:hover .controls {
+  display: inline-block;
+}
+
+.editable-field-container .view-area {
+  position: relative;
+  display: inline-block;
+}
+
+.editable-field-container .view-area.hidden,
+.editable-field-container .controls.hidden,
+.editable-field-container .progress.hidden {
+  display: none;
+}
+
+.editable-field-container .form-area {
+  display: none;
+}
+
+.editable-field-container .view-area.visible,
+.editable-field-container .progress.visible
+{
+  display: inline-block;
+}
+
+.editable-field-container .form-area.visible
+{
+  display: block;
+}

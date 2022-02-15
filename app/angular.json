@@ -39,7 +39,10 @@
               "lib/BootstrapAdmin-master/plugins/c3/c3.min.css",
               "lib/BootstrapAdmin-master/plugins/owl.carousel/dist/assets/owl.carousel.min.css",
               "lib/BootstrapAdmin-master/plugins/owl.carousel/dist/assets/owl.theme.default.min.css",
+              "lib/BootstrapAdmin-master/plugins/jquery-toast-plugin/dist/jquery.toast.min.css",
+              "lib/BootstrapAdmin-master/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css",
               "lib/BootstrapAdmin-master/dist/css/theme.min.css",
+              "node_modules/ngx-lightbox/lightbox.css",
               "src/styles.css"
             ],
             "scripts": [
@@ -54,7 +57,10 @@
               "lib/BootstrapAdmin-master/plugins/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js",
               "lib/BootstrapAdmin-master/plugins/jvectormap/jquery-jvectormap.min.js",
               "lib/BootstrapAdmin-master/plugins/d3/dist/d3.min.js",
-              "lib/BootstrapAdmin-master/plugins/c3/c3.min.js"
+              "lib/BootstrapAdmin-master/plugins/c3/c3.min.js",
+              "lib/BootstrapAdmin-master/plugins/jquery-toast-plugin/dist/jquery.toast.min.js",
+              "node_modules/typeahead.js/dist/typeahead.bundle.min.js",
+              "lib/BootstrapAdmin-master/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"
             ]
           },
           "configurations": {

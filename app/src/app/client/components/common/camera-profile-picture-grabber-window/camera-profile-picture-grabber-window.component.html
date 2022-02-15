@@ -1,0 +1,16 @@
+<ng-template #grabberWindow let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Picture From Camera</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="grabber-container">
+      <app-camera-profile-picture-grabber (onComplete)="onCompleteHandler($event)"></app-camera-profile-picture-grabber>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close()">Cancel</button>
+  </div>
+</ng-template>

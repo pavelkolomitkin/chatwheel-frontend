@@ -11,6 +11,9 @@ import {
 import {filter} from "rxjs/operators";
 import {ProfileService} from "../../security/services/profile.service";
 import {User} from "../../security/data/models/user.model";
+import {CountryService} from "./country.service";
+import {Country} from "../data/models/country.model";
+import {CountryListLoaded} from "../data/actions";
 
 export function appInitializeHandler(initializer: ApplicationInitializerService)
 {
@@ -26,6 +29,7 @@ export class ApplicationInitializerService
   constructor(
     private localStorage: LocalStorageService,
     private profileService: ProfileService,
+    private countryService: CountryService,
     private store: Store<State>
   ) {
   }
@@ -33,6 +37,9 @@ export class ApplicationInitializerService
   public initialize(): Promise<void>
   {
     return new Promise<void>(async (resolve, reject) => {
+
+      const countries: Country[] = await this.countryService.getList().toPromise();
+      this.store.dispatch(new CountryListLoaded(countries));
 
       const token = this.localStorage.get(LocalStorageService.TOKEN_KEY);
       if (token === null)
@@ -52,20 +59,6 @@ export class ApplicationInitializerService
       }
 
       resolve();
-
-      // this.store.pipe(select(state => state.core.isStoreInitialized),
-      //   filter(result => result === true)
-      // ).subscribe((result) => {
-      //
-      //   const token: string = this.localStorage.get(LocalStorageService.TOKEN_KEY);
-      //   if (token !== null)
-      //   {
-      //     this.store.dispatch(new UserTokenInitializesStore(token));
-      //   }
-      //
-      // });
-      //
-      // resolve();
     });
   }
 }

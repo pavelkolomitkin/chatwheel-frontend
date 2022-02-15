@@ -1,0 +1,33 @@
+<div class="editable-avatar-container">
+
+  <app-user-avatar [size]="size" [user]="user" [isLightBox]="true"></app-user-avatar>
+
+  <div class="controls">
+    <div class="edit-wrapper">
+      <span
+        class="btn dropdown"
+        (click)="onEditClickHandler($event)"
+        data-toggle="dropdown"
+        role="button"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        <i class="ik ik-edit"></i>
+      </span>
+      <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 35px, 0px);">
+        <span class="dropdown-item">
+          <input #fileInput type="file"
+                 id="file"
+                 accept=".jpg, .png"
+                 [multiple]="false"
+                 name="imageFile"
+                 (change)="onFilesSelectHandler($event)">
+          <i class="ik ik-upload"></i> Upload File <span class="text-muted">(up to {{ maxUploadFileSizeLabel }})</span>
+        </span>
+        <span class="dropdown-item" (click)="onFromCameraClickHandler($event)"><i class="ik ik-video"></i> From Camera</span>
+        <div class="dropdown-divider"></div>
+        <span class="dropdown-item" [ngClass]="(user.avatar === null) ? 'disabled' : ''" (click)="onRemoveClickHandler($event)"><i class="ik ik-delete"></i> Remove</span>
+      </div>
+    </div>
+  </div>
+</div>

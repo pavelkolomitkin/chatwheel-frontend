@@ -5,13 +5,26 @@ import {TranslationLoaderService} from "../core/services/translation-loader.serv
 import {environment} from "../../environments/environment";
 import {FormsModule} from "@angular/forms";
 import {FormFieldErrorListComponent} from "./components/forms/form-field-error-list/form-field-error-list.component";
-import {HttpClientModule} from "@angular/common/http";
-
-
+import {FooterComponent} from "./components/footer/footer.component";
+import { UserAvatarComponent } from './components/pictures/user-avatar/user-avatar.component';
+import { EditableUserAvatarComponent } from './components/pictures/editable-user-avatar/editable-user-avatar.component';
+import { LightboxModule } from 'ngx-lightbox';
+import { MapComponent } from './components/geo/map/map.component';
+import { UserMapMarkComponent } from './components/geo/user-map-mark/user-map-mark.component';
+import { MapComponentBaseComponent } from './components/geo/map-component-base/map-component-base.component';
+import {RouterModule} from "@angular/router";
+import { UserActivityStatusDirective } from './directives/user-activity-status.directive';
 
 @NgModule({
   declarations: [
-    FormFieldErrorListComponent
+    FormFieldErrorListComponent,
+    FooterComponent,
+    UserAvatarComponent,
+    EditableUserAvatarComponent,
+    MapComponent,
+    UserMapMarkComponent,
+    MapComponentBaseComponent,
+    UserActivityStatusDirective,
   ],
   imports: [
     CommonModule,
@@ -22,12 +35,22 @@ import {HttpClientModule} from "@angular/common/http";
         useClass: TranslationLoaderService
       },
       useDefaultLang: true
-    })
+    }),
+    LightboxModule,
+    RouterModule
   ],
   exports: [
-    FormFieldErrorListComponent,
     TranslateModule,
-    FormsModule
+    FormsModule,
+    LightboxModule,
+
+    FooterComponent,
+    UserAvatarComponent,
+    EditableUserAvatarComponent,
+    FormFieldErrorListComponent,
+    MapComponent,
+
+    UserActivityStatusDirective
   ]
 })
 export class SharedModule {

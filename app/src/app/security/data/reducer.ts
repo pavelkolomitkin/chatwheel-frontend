@@ -141,6 +141,21 @@ export function reducer(state = initialState, action: actions.SecurityActions): 
         passwordChangeAction: PasswordChangeActions.ERROR
       };
 
+    case actions.USER_UPDATED:
+
+      return {
+        ...state,
+        user: action.user
+      };
+
+    case actions.USER_LOGOUT:
+
+      return {
+        ...state,
+        user: null,
+        token: null
+      };
+
     default:
 
       return state;

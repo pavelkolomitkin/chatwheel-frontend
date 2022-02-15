@@ -25,7 +25,7 @@ import {
   UserLoginStart,
   UserLoginSuccess,
   UserLogout,
-  UserTokenInitializesStore
+  UserTokenInitializesStore, UserUpdated
 } from "../actions";
 import {catchError, map, mergeMap, tap} from "rxjs/operators";
 import {ProfileService} from "../../services/profile.service";

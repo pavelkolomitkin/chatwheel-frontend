@@ -28,6 +28,8 @@ export const USER_TOKEN_INITIALIZE_STORE = 'USER_TOKEN_INITIALIZE_STORE';
 
 export const USER_LOGOUT = 'USER_LOGOUT';
 
+export const USER_UPDATED = 'USER_UPDATED';
+
 export class UserLoginStart implements Action
 {
   readonly type = USER_LOGIN_START;
@@ -135,6 +137,13 @@ export class UserChangePasswordError implements Action
   constructor(public errors: Object) { }
 }
 
+export class UserUpdated implements Action
+{
+  readonly type = USER_UPDATED;
+
+  constructor(public user: User) { }
+}
+
 export type SecurityActions =
   UserLoginStart
   | UserLoginSuccess
@@ -159,4 +168,6 @@ export type SecurityActions =
   | UserChangePasswordStart
   | UserChangePasswordSuccess
   | UserChangePasswordError
+
+  | UserUpdated
   ;

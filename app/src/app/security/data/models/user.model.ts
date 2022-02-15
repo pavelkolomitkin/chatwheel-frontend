@@ -1,7 +1,12 @@
+import {Country} from "../../../core/data/models/country.model";
+import {UserInterest} from "../../../client/data/model/user-interest.model";
+import {Geolocation} from "../../../core/data/models/geolocation.model";
 
 export class User
 {
   id: string;
+
+  email?: string;
 
   fullName: string;
 
@@ -13,7 +18,28 @@ export class User
 
   avatar?: {};
 
-  lastActivity: string
+  lastActivity: Date
 
   isBlocked: boolean;
+
+  geoLocation?: Geolocation;
+
+  about?: string;
+
+  avatarThumbs: any = {};
+
+  residenceCountry?: Country;
+
+  searchCountry?: Country;
+
+  interests?: UserInterest[];
+
+  static createFromRawData(data: any)
+  {
+    const result: User = Object.assign(new User(), data);
+
+    result.lastActivity = new Date(data.lastActivity);
+
+    return result;
+  }
 }
