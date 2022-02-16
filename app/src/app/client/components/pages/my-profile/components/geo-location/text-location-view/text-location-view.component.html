@@ -4,6 +4,8 @@
 </ng-container>
 <ng-container *ngIf="!(isGeolocationTurnedOn | async)">
   <br/>
-  <span class="btn btn-info mb-1" (click)="onUpdateRequestLocationClickHandler($event)">Update</span>
+  <span class="btn btn-primary mb-1" (click)="onUpdateRequestLocationClickHandler($event)">
+    <i class="ik ik-map-pin"></i> Update
+  </span>
 <!--  <span class="badge badge-blue" (click)="onUpdateRequestLocationClickHandler($event)">Update</span>-->
 </ng-container>

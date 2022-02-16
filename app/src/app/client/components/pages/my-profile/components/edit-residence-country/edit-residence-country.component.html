@@ -6,13 +6,11 @@
 >
 
   <div view-area>
-    <span>Residence Country: </span>
-    <span *ngIf="!!user.residenceCountry;else noCountry">&nbsp;<b>{{ user.residenceCountry.name }}</b>
-      <span class="text-muted">{{ !!user.residenceCountry.region ? '(' + user.residenceCountry.region.name + ')' : '' }}</span>
-    </span>
-    <ng-template #noCountry>
-      <span class="text-muted">Not Selected</span>
-    </ng-template>
+    <app-selected-country-view
+      [country]="user.residenceCountry"
+      [label]="'Residence Country'"
+      [noSelectedMessage]="'Not Selected'"
+    ></app-selected-country-view>
   </div>
 
   <div edit-area>

@@ -6,13 +6,18 @@
 >
 
   <div view-area>
-    <span>Search Country: </span>
-    <span *ngIf="!!user.searchCountry;else noCountry">&nbsp;<b>{{ user.searchCountry.name }}</b>
-      <span class="text-muted">{{ !!user.searchCountry.region ? '(' + user.searchCountry.region.name + ')' : '' }}</span>
-    </span>
-    <ng-template #noCountry>
-      <span class="text-muted">Not Selected</span>
-    </ng-template>
+    <app-selected-country-view
+      [country]="user.searchCountry"
+      [label]="'Search Country'"
+      [noSelectedMessage]="'Not Selected'"
+    ></app-selected-country-view>
+<!--    <span>Search Country: </span>-->
+<!--    <span *ngIf="!!user.searchCountry;else noCountry">&nbsp;<b>{{ user.searchCountry.name }}</b>-->
+<!--      <span class="text-muted">{{ !!user.searchCountry.region ? '(' + user.searchCountry.region.name + ')' : '' }}</span>-->
+<!--    </span>-->
+<!--    <ng-template #noCountry>-->
+<!--      <span class="text-muted">Not Selected</span>-->
+<!--    </ng-template>-->
   </div>
 
   <div edit-area>

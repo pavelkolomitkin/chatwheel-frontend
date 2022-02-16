@@ -9,7 +9,8 @@ import { NearbyComponent } from './components/pages/search/nearby/nearby.compone
 import { MyProfileComponent } from './components/pages/my-profile/my-profile.component';
 import { MessagesComponent } from './components/pages/my-profile/messages/messages.component';
 import { CallsComponent } from './components/pages/my-profile/calls/calls.component';
-import {ProfileComponent} from "./components/pages/my-profile/profile/profile.component";
+import {ProfileComponent as MyProfilePageComponent} from "./components/pages/my-profile/profile/profile.component";
+import { ProfileComponent as UserProfileComponent } from './components/pages/profile/profile.component';
 import { EditableFieldComponent } from './components/pages/my-profile/components/editable-field/editable-field.component';
 import { EditFullNameComponent } from './components/pages/my-profile/components/edit-full-name/edit-full-name.component';
 import {ProfileService} from "./services/profile.service";
@@ -30,15 +31,20 @@ import {NgbModalModule} from "@ng-bootstrap/ng-bootstrap";
 import { CameraProfilePictureGrabberComponent } from './components/common/camera-profile-picture-grabber/camera-profile-picture-grabber.component';
 import { SettingsComponent } from './components/pages/my-profile/settings/settings.component';
 import {ProfileEffects} from "./data/effects/profile.effects";
+import {UserProfileService} from "./services/user-profile.service";
+import { UserInterestsViewComponent } from './components/pages/profile/user-interests-view/user-interests-view.component';
+import { SelectedCountryViewComponent } from './components/pages/profile/selected-country-view/selected-country-view.component';
+import { EditMapLocationComponent } from './components/pages/my-profile/components/geo-location/edit-map-location/edit-map-location.component';
 
 @NgModule({
   declarations: [
     LayoutComponent,
-    ProfileComponent,
+    MyProfilePageComponent,
     PageHeaderComponent,
     ChatwheelComponent,
     NearbyComponent,
     MyProfileComponent,
+    UserProfileComponent,
     MessagesComponent,
     CallsComponent,
     EditableFieldComponent,
@@ -54,9 +60,13 @@ import {ProfileEffects} from "./data/effects/profile.effects";
     CameraProfilePictureGrabberWindowComponent,
     CameraProfilePictureGrabberComponent,
     SettingsComponent,
+    UserInterestsViewComponent,
+    SelectedCountryViewComponent,
+    EditMapLocationComponent,
   ],
   providers: [
-    ProfileService
+    ProfileService,
+    UserProfileService
   ],
   imports: [
     CommonModule,
