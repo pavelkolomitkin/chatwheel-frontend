@@ -1,0 +1,25 @@
+<div class="right-icon-control">
+  <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+
+    <div class="input-group input-group-button">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Your message..."
+        [(ngModel)]="inputText"
+        name="inputText"
+        (keydown.enter)="onSubmit(form)"
+        required
+        [maxlength]="1000"
+        [disabled]="!isEnabled"
+        autocomplete="off"
+      >
+      <div class="input-group-append">
+        <button class="btn btn-primary" type="submit" [disabled]="!form.valid || !isEnabled"><i class="ik ik-message-square"></i></button>
+      </div>
+
+    </div>
+
+  </form>
+
+</div>

@@ -1,0 +1,19 @@
+<div class="list-container">
+
+  <ng-container *ngIf="list !== null">
+    <app-message-list-item
+      *ngFor="let message of list;"
+      [message]="message"
+    ></app-message-list-item>
+
+  </ng-container>
+
+  <ng-container *ngIf="isLoading">
+    <div class="loading-container">
+      <div>
+        <img src="../../../../../../../../../assets/ajax-loader.gif" />
+      </div>
+    </div>
+  </ng-container>
+
+</div>

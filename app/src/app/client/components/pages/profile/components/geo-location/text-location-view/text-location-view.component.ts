@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {User} from "../../../../../../security/data/models/user.model";
+import {User} from "../../../../../../../security/data/models/user.model";
 import {HttpClient} from "@angular/common/http";
-import {environment} from "../../../../../../../environments/environment";
-import {Geolocation} from "../../../../../../core/data/models/geolocation.model";
+import {environment} from "../../../../../../../../environments/environment";
+import {Geolocation} from "../../../../../../../core/data/models/geolocation.model";
 
 @Component({
   selector: 'app-text-location-view',

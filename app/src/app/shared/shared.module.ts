@@ -14,6 +14,7 @@ import { UserMapMarkComponent } from './components/geo/user-map-mark/user-map-ma
 import { MapComponentBaseComponent } from './components/geo/map-component-base/map-component-base.component';
 import {RouterModule} from "@angular/router";
 import { UserActivityStatusDirective } from './directives/user-activity-status.directive';
+import {InfiniteScrollModule} from "ngx-infinite-scroll";
 
 @NgModule({
   declarations: [
@@ -37,12 +38,14 @@ import { UserActivityStatusDirective } from './directives/user-activity-status.d
       useDefaultLang: true
     }),
     LightboxModule,
-    RouterModule
+    RouterModule,
+    InfiniteScrollModule
   ],
   exports: [
     TranslateModule,
     FormsModule,
     LightboxModule,
+    InfiniteScrollModule,
 
     FooterComponent,
     UserAvatarComponent,

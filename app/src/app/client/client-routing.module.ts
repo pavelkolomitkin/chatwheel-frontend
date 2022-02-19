@@ -9,12 +9,21 @@ import {MessagesComponent} from "./components/pages/my-profile/messages/messages
 import {CallsComponent} from "./components/pages/my-profile/calls/calls.component";
 import {SettingsComponent} from "./components/pages/my-profile/settings/settings.component";
 import { ProfileComponent as UserProfileComponent } from './components/pages/profile/profile.component';
+import {ConversationComponent} from "./components/pages/my-profile/messages/conversation/conversation.component";
+import {
+  ConversationListPageComponent
+} from "./components/pages/my-profile/messages/conversation-list-page/conversation-list-page.component";
 
 const routes: Routes = [
   { path: '', component: LayoutComponent, children: [
       { path: 'profile/me', component: MyProfileComponent, children: [
           { path: '', component: MyProfilePageComponent },
-          { path: 'messages', component: MessagesComponent },
+          { path: 'messages', component: MessagesComponent, children: [
+              { path: 'conversations', component: ConversationListPageComponent },
+              { path: 'conversation/user/:addresseeId', component: ConversationComponent },
+              { path: 'conversation/:conversationId', component: ConversationComponent },
+              { path: '', redirectTo: 'conversations', pathMatch: 'full' }
+            ] },
           { path: 'calls', component: CallsComponent },
           { path: 'settings', component: SettingsComponent }
         ] },

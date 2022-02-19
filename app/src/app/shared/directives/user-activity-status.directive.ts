@@ -28,19 +28,23 @@ export class UserActivityStatusDirective implements OnInit{
   {
     let result: string = '';
 
-    const timeDifference = +this.user.lastActivity - (+new Date());
+    const activity: string = this.user.getActivityStatus();
+    switch (activity)
+    {
+      case User.ACTIVITY_ONLINE:
 
-    if (timeDifference < environment.onlineActivitySeconds)
-    {
-      result = UserActivityStatusDirective.ONLINE_STATUS_CLASS;
-    }
-    else if (timeDifference < environment.recentOnlineActivitySeconds)
-    {
-      result = UserActivityStatusDirective.RECENTLY_STATUS_CLASS
-    }
-    else
-    {
-      result = UserActivityStatusDirective.OFFLINE_STATUS_CLASS;
+        result = UserActivityStatusDirective.ONLINE_STATUS_CLASS;
+        break;
+
+      case User.ACTIVITY_WAS_RECENTLY:
+
+        result = UserActivityStatusDirective.RECENTLY_STATUS_CLASS;
+        break;
+
+      default:
+
+        result = UserActivityStatusDirective.OFFLINE_STATUS_CLASS;
+        break;
     }
 
     return result;

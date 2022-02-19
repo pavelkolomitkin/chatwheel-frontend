@@ -21,20 +21,31 @@ import { EditUserPickComponent } from './components/pages/my-profile/components/
 import { EditInterestsComponent } from './components/pages/my-profile/components/edit-interests/edit-interests.component';
 import {EffectsModule} from "@ngrx/effects";
 import {GeolocationEffects} from "./data/effects/geolocation.effects";
-import { TextLocationViewComponent } from './components/pages/profile/geo-location/text-location-view/text-location-view.component';
+import { TextLocationViewComponent } from './components/pages/profile/components/geo-location/text-location-view/text-location-view.component';
 import { TextLocationViewComponent as TextMyLocationViewComponent } from './components/pages/my-profile/components/geo-location/text-location-view/text-location-view.component';
 import {StoreModule} from "@ngrx/store";
 import { reducer } from './data/reducer';
-import { MapLocationViewComponent } from './components/pages/profile/geo-location/map-location-view/map-location-view.component';
+import { MapLocationViewComponent } from './components/pages/profile/components/geo-location/map-location-view/map-location-view.component';
 import { CameraProfilePictureGrabberWindowComponent } from './components/common/camera-profile-picture-grabber-window/camera-profile-picture-grabber-window.component'
 import {NgbModalModule} from "@ng-bootstrap/ng-bootstrap";
 import { CameraProfilePictureGrabberComponent } from './components/common/camera-profile-picture-grabber/camera-profile-picture-grabber.component';
 import { SettingsComponent } from './components/pages/my-profile/settings/settings.component';
 import {ProfileEffects} from "./data/effects/profile.effects";
 import {UserProfileService} from "./services/user-profile.service";
-import { UserInterestsViewComponent } from './components/pages/profile/user-interests-view/user-interests-view.component';
-import { SelectedCountryViewComponent } from './components/pages/profile/selected-country-view/selected-country-view.component';
+import { UserInterestsViewComponent } from './components/pages/profile/components/user-interests-view/user-interests-view.component';
+import { SelectedCountryViewComponent } from './components/pages/profile/components/selected-country-view/selected-country-view.component';
 import { EditMapLocationComponent } from './components/pages/my-profile/components/geo-location/edit-map-location/edit-map-location.component';
+import { ConversationComponent } from './components/pages/my-profile/messages/conversation/conversation.component';
+import { MessageListComponent } from './components/pages/my-profile/messages/conversation/components/message-list/message-list.component';
+import { MessageListItemComponent } from './components/pages/my-profile/messages/conversation/components/message-list/message-list-item/message-list-item.component';
+import { ConversationUserInputComponent } from './components/pages/my-profile/messages/conversation/components/conversation-user-input/conversation-user-input.component';
+import { ConversationListPageComponent } from './components/pages/my-profile/messages/conversation-list-page/conversation-list-page.component';
+import { ActionMenuComponent } from './components/pages/profile/components/action-menu/action-menu.component';
+import {UserConversationService} from "./services/user-conversation.service";
+import {
+  ConversationListItemComponent
+} from "./components/pages/my-profile/messages/conversation-list-page/conversation-list-item/conversation-list-item.component";
+import {ConversationMessageService} from "./services/conversation-message.service";
 
 @NgModule({
   declarations: [
@@ -63,10 +74,21 @@ import { EditMapLocationComponent } from './components/pages/my-profile/componen
     UserInterestsViewComponent,
     SelectedCountryViewComponent,
     EditMapLocationComponent,
+    ConversationComponent,
+    MessageListComponent,
+    MessageListItemComponent,
+    ConversationUserInputComponent,
+    ConversationListPageComponent,
+    ActionMenuComponent,
+    ConversationListItemComponent,
+
+
   ],
   providers: [
     ProfileService,
-    UserProfileService
+    UserProfileService,
+    UserConversationService,
+    ConversationMessageService
   ],
   imports: [
     CommonModule,

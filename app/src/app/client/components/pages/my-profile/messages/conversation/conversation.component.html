@@ -1,0 +1,52 @@
+<div class="chat-card">
+  <div class="card-header">
+    <div class="addressee-block" *ngIf="!!addressee">
+
+      <div class="picture-container d-inline-block">
+        <a [routerLink]="'/client/profile/' + addressee.id">
+          <app-user-avatar
+            [size]="'mediumSmall'"
+            [user]="addressee"
+            [isActivityVisible]="true"
+            [additionalStyles]="{ cursor: 'pointer' }"
+          ></app-user-avatar>
+        </a>
+      </div>
+      <div class="name-block d-inline-block pl-10">
+        <h6>
+          <a [routerLink]="'/client/profile/' + addressee.id">{{ addressee.fullName }}</a>
+        </h6>
+        <div class="interests" *ngIf="addressee.interests.length > 0">
+          <span class="badge badge-pill badge-primary mr-1" *ngFor="let interest of addressee.interests.slice(0, 10)">{{ interest.name }}</span>
+          <ng-container *ngIf="addressee.interests.length > 10">
+            <span class="text-muted small">and many more...</span>
+          </ng-container>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="card-header-right controls">
+
+        <span class="btn btn-danger" >
+          <i class="ik ik-alert-circle"></i>Report Abuse
+        </span>
+
+    </div>
+
+
+  </div>
+  <div class="card-block">
+
+    <app-message-list
+      [isLoading]="false"
+      [list]="messages"
+    ></app-message-list>
+
+    <app-conversation-user-input
+      (onSubmit)="onMessageSubmitHandler($event)"
+      [isEnabled]="isInitialized || (!!addressee && addressee.hasBannedUser)"
+    ></app-conversation-user-input>
+
+  </div>
+</div>

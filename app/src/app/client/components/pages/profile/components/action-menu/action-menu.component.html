@@ -1,0 +1,22 @@
+<div class="p-4 border-top mt-15">
+  <div class="row text-center">
+    <ng-container *ngIf="!user.hasBannedUser; else bannedUserActions">
+      <div class="col-4 border-right">
+        <a [routerLink]="'/client/profile/me/messages/conversation/user/' + user.id" class="link d-flex align-items-center justify-content-center btn pl-0 pr-0 pt-0 pb-0">
+          <i class="ik ik-message-square f-20 mr-5"></i>Message
+        </a>
+      </div>
+      <div class="col-4 border-right">
+        <span class="link d-flex align-items-center justify-content-center btn pl-0 pr-0 pt-0 pb-0"><i class="ik ik-video f-20 mr-5"></i>Call</span>
+      </div>
+      <div class="col-4">
+        <span class="link d-flex align-items-center justify-content-center text-danger btn pl-0 pr-0 pt-0 pb-0"><i class="ik ik-alert-circle f-20 mr-5"></i>Report Abuse</span>
+      </div>
+    </ng-container>
+    <ng-template #bannedUserActions>
+      <div class="call-12">
+        <span class="text-muted">You've been banned by this user!</span>
+      </div>
+    </ng-template>
+  </div>
+</div>

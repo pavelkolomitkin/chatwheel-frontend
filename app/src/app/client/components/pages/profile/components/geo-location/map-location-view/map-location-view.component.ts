@@ -8,9 +8,9 @@ import {
   OnInit,
   ViewChild
 } from '@angular/core';
-import {User} from "../../../../../../security/data/models/user.model";
-import {MapComponent} from "../../../../../../shared/components/geo/map/map.component";
-import {UserMapMarkComponent} from "../../../../../../shared/components/geo/user-map-mark/user-map-mark.component";
+import {User} from "../../../../../../../security/data/models/user.model";
+import {MapComponent} from "../../../../../../../shared/components/geo/map/map.component";
+import {UserMapMarkComponent} from "../../../../../../../shared/components/geo/user-map-mark/user-map-mark.component";
 
 @Component({
   selector: 'app-map-location-view',

@@ -10,12 +10,14 @@
             <h4 class="card-title mt-10">{{ user.fullName }}</h4>
           </div>
         </div>
+        <app-action-menu [user]="user"></app-action-menu>
         <hr class="mb-0">
         <div class="card-body">
           <ng-container *ngIf="!!user.geoLocation">
             <app-map-location-view [user]="user"></app-map-location-view>
           </ng-container>
         </div>
+
       </div>
     </div>
 

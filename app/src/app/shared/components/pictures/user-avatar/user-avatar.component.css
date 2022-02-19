@@ -1,4 +1,16 @@
-.user-avatar
+.image-container
+{
+  position: relative;
+  margin: 0 !important;
+}
+
+.image-container .user-avatar
 {
 
+}
+
+.image-container:after
+{
+  top: calc(50% + 15px) !important;
+  left: 5px;
 }

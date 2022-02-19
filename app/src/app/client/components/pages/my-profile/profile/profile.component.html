@@ -1,33 +1,36 @@
-<ng-container *ngIf="(user | async)">
-  <div class="row">
-    <div class="col-md-3 col-6"> <strong>Full Name</strong>
-      <br>
-      <app-edit-full-name [user]="(user | async)"></app-edit-full-name>
+<div class="p20">
+  <ng-container *ngIf="(user | async)">
+    <div class="row">
+      <div class="col-md-3 col-6"> <strong>Full Name</strong>
+        <br>
+        <app-edit-full-name [user]="(user | async)"></app-edit-full-name>
+      </div>
+      <div class="col-md-3 col-6"> <strong>Email</strong>
+        <br>
+        <p class="text-muted">{{ (user | async).email ? (user | async).email : 'none' }}</p>
+      </div>
+      <div class="col-md-3 col-6"> <strong>Location</strong>
+        <br>
+        <app-my-text-location-view [user]="user | async"></app-my-text-location-view>
+
+      </div>
     </div>
-    <div class="col-md-3 col-6"> <strong>Email</strong>
-      <br>
-      <p class="text-muted">{{ (user | async).email ? (user | async).email : 'none' }}</p>
-    </div>
-    <div class="col-md-3 col-6"> <strong>Location</strong>
-      <br>
-      <app-my-text-location-view [user]="user | async"></app-my-text-location-view>
+
+    <hr />
+    <app-edit-about [user]="(user | async)"></app-edit-about>
+    <hr />
+    <app-edit-interests [user]="(user | async)"></app-edit-interests>
+    <hr />
+
+    <app-edit-residence-country [user]="(user | async)"></app-edit-residence-country>
+    <hr />
+    <app-edit-search-country [user]="(user | async)"></app-edit-search-country>
+
+    <div>
 
     </div>
-  </div>
+  </ng-container>
+</div>
 
-  <hr />
-  <app-edit-about [user]="(user | async)"></app-edit-about>
-  <hr />
-  <app-edit-interests [user]="(user | async)"></app-edit-interests>
-  <hr />
-
-  <app-edit-residence-country [user]="(user | async)"></app-edit-residence-country>
-  <hr />
-  <app-edit-search-country [user]="(user | async)"></app-edit-search-country>
-
-  <div>
-
-  </div>
-</ng-container>
 
 

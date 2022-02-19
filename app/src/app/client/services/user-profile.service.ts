@@ -13,9 +13,14 @@ export class UserProfileService
 
   get(id: string)
   {
-    return this.http.get<{ user: User }>('/client/user-profile/' + id)
+    return this.http.get<{ user: User, isBanned: boolean }>('/client/user-profile/' + id)
       .pipe(
-        map(data => User.createFromRawData(data.user))
+        map(data => {
+          const user: User = User.createFromRawData(data.user);
+          user.hasBannedUser = data.isBanned;
+
+          return user;
+        })
       )
       ;
   }
