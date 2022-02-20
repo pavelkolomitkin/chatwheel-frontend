@@ -20,8 +20,8 @@ const routes: Routes = [
           { path: '', component: MyProfilePageComponent },
           { path: 'messages', component: MessagesComponent, children: [
               { path: 'conversations', component: ConversationListPageComponent },
-              { path: 'conversation/user/:addresseeId', component: ConversationComponent },
               { path: 'conversation/:conversationId', component: ConversationComponent },
+              { path: 'conversation/user/:addresseeId', component: ConversationComponent },
               { path: '', redirectTo: 'conversations', pathMatch: 'full' }
             ] },
           { path: 'calls', component: CallsComponent },

@@ -15,6 +15,8 @@ import { MapComponentBaseComponent } from './components/geo/map-component-base/m
 import {RouterModule} from "@angular/router";
 import { UserActivityStatusDirective } from './directives/user-activity-status.directive';
 import {InfiniteScrollModule} from "ngx-infinite-scroll";
+import {MultiLinePipe} from "./pipes/multi-line.pipe";
+import {TextTrimPipe} from "./pipes/text-trim.pipe";
 
 @NgModule({
   declarations: [
@@ -26,6 +28,8 @@ import {InfiniteScrollModule} from "ngx-infinite-scroll";
     UserMapMarkComponent,
     MapComponentBaseComponent,
     UserActivityStatusDirective,
+    MultiLinePipe,
+    TextTrimPipe
   ],
   imports: [
     CommonModule,
@@ -53,7 +57,9 @@ import {InfiniteScrollModule} from "ngx-infinite-scroll";
     FormFieldErrorListComponent,
     MapComponent,
 
-    UserActivityStatusDirective
+    UserActivityStatusDirective,
+    MultiLinePipe,
+    TextTrimPipe
   ]
 })
 export class SharedModule {

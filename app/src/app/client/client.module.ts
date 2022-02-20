@@ -36,8 +36,7 @@ import { UserInterestsViewComponent } from './components/pages/profile/component
 import { SelectedCountryViewComponent } from './components/pages/profile/components/selected-country-view/selected-country-view.component';
 import { EditMapLocationComponent } from './components/pages/my-profile/components/geo-location/edit-map-location/edit-map-location.component';
 import { ConversationComponent } from './components/pages/my-profile/messages/conversation/conversation.component';
-import { MessageListComponent } from './components/pages/my-profile/messages/conversation/components/message-list/message-list.component';
-import { MessageListItemComponent } from './components/pages/my-profile/messages/conversation/components/message-list/message-list-item/message-list-item.component';
+import { MessageListItemComponent } from './components/pages/my-profile/messages/conversation/components/message-list-item/message-list-item.component';
 import { ConversationUserInputComponent } from './components/pages/my-profile/messages/conversation/components/conversation-user-input/conversation-user-input.component';
 import { ConversationListPageComponent } from './components/pages/my-profile/messages/conversation-list-page/conversation-list-page.component';
 import { ActionMenuComponent } from './components/pages/profile/components/action-menu/action-menu.component';
@@ -75,7 +74,6 @@ import {ConversationMessageService} from "./services/conversation-message.servic
     SelectedCountryViewComponent,
     EditMapLocationComponent,
     ConversationComponent,
-    MessageListComponent,
     MessageListItemComponent,
     ConversationUserInputComponent,
     ConversationListPageComponent,

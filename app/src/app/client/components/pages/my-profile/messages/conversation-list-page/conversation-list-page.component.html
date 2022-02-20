@@ -15,10 +15,13 @@
 
           <tbody>
 
-          <app-conversation-list-item
+          <tr
+            class="conversation-item"
+            app-conversation-list-item
             *ngFor="let conversation of list"
             [conversation]="conversation"
-          ></app-conversation-list-item>
+            (click)="onConversationClickHandler(conversation)"
+          ></tr>
 
           </tbody>
         </table>

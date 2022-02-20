@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {select, Store} from "@ngrx/store";
 import {State} from "../../../../../../app.state";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -10,6 +10,8 @@ import {UserConversationService} from "../../../../../services/user-conversation
 import {ConversationMessageList} from "../../../../../../core/data/models/messages/conversation-message-list.model";
 import {ConversationMessageService} from "../../../../../services/conversation-message.service";
 import {ConversationMessage} from "../../../../../../core/data/models/messages/conversation-message.model";
+import {GlobalNotification} from "../../../../../../core/data/actions";
+import {Notification, NotificationType} from "../../../../../../core/data/models/notification.model";
 
 @Component({
   selector: 'app-conversation',
@@ -18,6 +20,7 @@ import {ConversationMessage} from "../../../../../../core/data/models/messages/c
 })
 export class ConversationComponent implements OnInit, OnDestroy {
 
+  @ViewChild('messageListContainer') messageListContainer: ElementRef;
 
   paramSubscription: Subscription = null;
 
@@ -44,6 +47,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
 
     this.paramSubscription = this.route.params.subscribe( async (params) => {
 
+     // //  debugger
       this.isInitialized = false;
 
       if (typeof params['addresseeId'] !== 'undefined')
@@ -71,14 +75,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
 
         // if it does exist
           // load last messages from the list
-        if (!!this.messageList)
-        {
-          try {
-            this.messages = await this.messageService.getList(this.messageList).toPromise();
-          }
-          catch (error) { }
-
-        }
+        await this.loadInitMessageList();
 
         // get the page initialized
         this.isInitialized = true;
@@ -89,13 +86,15 @@ export class ConversationComponent implements OnInit, OnDestroy {
           // it should contain information about the addressee as well(in general, about all members a group conversation)
 
         try {
-          const conversationData = await this.conversationService.get(params['conversationId']).toPromise();
-          debugger
+          this.messageList = await this.conversationService.get(params['conversationId']).toPromise();
+          //debugger
 
-          this.messageList = conversationData.messageList;
-          this.addressee = conversationData.members.find(item => item.id !== this.user.id);
+          //this.messageList = conversationData.messageList;
+          //this.addressee = conversationData.members.find(item => item.id !== this.user.id);
+          const addresseeItem = this.messageList.members.find(item => item.member.id !== this.user.id);
+          this.addressee = addresseeItem.member;
 
-          debugger;
+          //debugger;
 
         }
         catch (error)
@@ -108,15 +107,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
           // navigate to 404
 
         // load last messages from the conversation list
-        if (!!this.messageList)
-        {
-          try {
-            const messages = await this.messageService.getList(this.messageList).toPromise();
-            //debugger
-          }
-          catch (error) { }
-
-        }
+        await this.loadInitMessageList();
 
         // get the page initialized
         this.isInitialized = true;
@@ -126,6 +117,24 @@ export class ConversationComponent implements OnInit, OnDestroy {
       }
     });
 
+  }
+
+  async loadInitMessageList()
+  {
+    if (!!this.messageList)
+    {
+      try {
+        const messages = await this.messageService.getList(this.messageList).toPromise();
+        this.messages = messages.reverse();
+
+        this.scrollDownList();
+      }
+      catch (error) {
+        this.store.dispatch(new GlobalNotification(
+          new Notification(NotificationType.ERROR, 'The conversation is not available!', 'Error'))
+        );
+      }
+    }
   }
 
   ngOnDestroy(): void {
@@ -140,7 +149,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
 
   async onMessageSubmitHandler(text: string)
   {
-    debugger
+    //debugger
     if (this.messageList === null)
     {
       // send directly to the addressee
@@ -154,13 +163,24 @@ export class ConversationComponent implements OnInit, OnDestroy {
       // send to the conversation
       try {
         const message = await this.messageService.sendToConversation(this.messageList, text).toPromise();
-        debugger;
+        //debugger;
+        this.messages.unshift(message);
       }
       catch (error)
       {
-        debugger;
+        this.store.dispatch(new GlobalNotification(new Notification(NotificationType.ERROR, 'Cannot send message. Try it later...', 'Error')));
       }
     }
 
+    this.scrollDownList();
+  }
+
+  scrollDownList()
+  {
+    setTimeout(() => {
+      const { nativeElement } = this.messageListContainer;
+
+      nativeElement.scrollTop = nativeElement.scrollHeight;
+    }, 10);
   }
 }

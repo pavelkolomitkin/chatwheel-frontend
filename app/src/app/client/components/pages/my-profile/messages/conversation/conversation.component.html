@@ -38,10 +38,25 @@
   </div>
   <div class="card-block">
 
-    <app-message-list
-      [isLoading]="false"
-      [list]="messages"
-    ></app-message-list>
+    <div class="list-container" #messageListContainer>
+
+      <ng-container *ngIf="messages !== null">
+        <app-message-list-item
+          *ngFor="let message of messages;"
+          [message]="message"
+        ></app-message-list-item>
+
+      </ng-container>
+
+      <ng-container *ngIf="false">
+        <div class="loading-container">
+          <div>
+            <img src="../../../../../../../../../assets/ajax-loader.gif" />
+          </div>
+        </div>
+      </ng-container>
+
+    </div>
 
     <app-conversation-user-input
       (onSubmit)="onMessageSubmitHandler($event)"

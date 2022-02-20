@@ -56,13 +56,13 @@ export class ConversationMessageService extends BaseService
 
   sendToConversation(conversation: ConversationMessageList, text: string)
   {
-    return this.http.post('/client/message/send-conversation', {
+    return this.http.post<{ message: ConversationMessage }>('/client/message/send-conversation', {
       conversationId: conversation.id,
       text: text
     }).pipe(
-      map(data => {
-        debugger;
-        return data;
+      map(({ message }) => {
+        //debugger;
+        return ConversationMessage.createFromRawData(message);
       })
     );
   }

@@ -1,13 +1,15 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {UserConversationService} from "../../../../../services/user-conversation.service";
 import {Store} from "@ngrx/store";
 import {State} from "../../../../../../app.state";
 import {ConversationMessageList} from "../../../../../../core/data/models/messages/conversation-message-list.model";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-conversation-list-page',
   templateUrl: './conversation-list-page.component.html',
-  styleUrls: ['./conversation-list-page.component.css']
+  styleUrls: ['./conversation-list-page.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ConversationListPageComponent implements OnInit, OnDestroy {
 
@@ -21,7 +23,8 @@ export class ConversationListPageComponent implements OnInit, OnDestroy {
 
   constructor(
     private service: UserConversationService,
-    private store: Store<State>
+    private store: Store<State>,
+    private router: Router
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -47,7 +50,7 @@ export class ConversationListPageComponent implements OnInit, OnDestroy {
 
     if (list.length > 0)
     {
-      this.list = [...this.list, ...list];
+      this.list = this.list.concat(list);
       this.latest = list[list.length - 1];
       // @ts-ignore
       this.latestUpdatedAt = this.latest.updateddAt;
@@ -61,6 +64,12 @@ export class ConversationListPageComponent implements OnInit, OnDestroy {
   async onScroll()
   {
     await this.loadList();
+  }
+
+
+  async onConversationClickHandler(conversation: ConversationMessageList)
+  {
+    await this.router.navigateByUrl('/client/profile/me/messages/conversation/' + conversation.id);
   }
 
 }

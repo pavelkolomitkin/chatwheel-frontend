@@ -30,7 +30,7 @@ export class UserConversationService extends BaseService
       map(data => {
 
         //debugger;
-        return data.list;
+        return data.list.map(item => ConversationMessageList.createFromRawData(item));
       })
     );
   }
@@ -48,15 +48,8 @@ export class UserConversationService extends BaseService
   {
     return this.http.get<{ messageList: ConversationMessageList, members: any }>('/client/conversation/' + id).pipe(
       map(data => {
-        debugger
 
-        data.messageList = Object.assign(new ConversationMessageList(), data.messageList);
-        data.members = data.members.map(item => {
-          item.member = User.createFromRawData(item.member);
-          return item;
-        });
-
-        return data;
+        return ConversationMessageList.createFromRawData(data);
       })
     );
   }

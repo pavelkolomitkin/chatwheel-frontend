@@ -8,7 +8,7 @@
   <div view-area>
     <h5>About you</h5>
     <span class="text-muted" *ngIf="!user.about; else aboutYourself;">Tell people about yourself...</span>
-    <ng-template #aboutYourself>{{ user.about }}</ng-template>
+    <ng-template #aboutYourself>{{ user.about | multiLine }}</ng-template>
   </div>
 
   <div edit-area>
