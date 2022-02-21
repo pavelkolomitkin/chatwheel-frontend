@@ -51,9 +51,7 @@
 
               <hr />
               <ng-container *ngIf="!!user.about">
-                <p class="mt-30" >
-                  {{ user.about | multiLine }}
-                </p>
+                <p class="mt-30" [innerHTML]="user.about | multiLine"></p>
                 <hr />
               </ng-container>
 
