@@ -1,5 +1,4 @@
 import {User} from "../../../../security/data/models/user.model";
-import {Timestampable} from "../../../lib/timestampable.mixin";
 
 export enum MessageType
 {
@@ -9,7 +8,6 @@ export enum MessageType
   CALL_UNANSWERED
 }
 
-@Timestampable
 export class Message
 {
   id: string;
@@ -20,13 +18,15 @@ export class Message
 
   type: string;
 
+  createdAt: string;
+
+  updatedAt: string;
+
   static createFromRawData(data: any): Message
   {
     const result: Message = Object.assign(new Message(), data);
 
     result.author = User.createFromRawData(data.author);
-    // @ts-ignore
-    result.transformTimestamps();
 
     return result;
   }

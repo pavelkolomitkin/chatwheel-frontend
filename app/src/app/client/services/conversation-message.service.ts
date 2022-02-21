@@ -11,8 +11,8 @@ import {ConversationMessage} from "../../core/data/models/messages/conversation-
 export class ConversationMessageService extends BaseService
 {
   getList(messageList: ConversationMessageList,
-          lastDate: Date = null,
-          latest: Message = null)
+          lastDate: string = null,
+          latest: ConversationMessage = null)
   {
     const data: Object = {};
 

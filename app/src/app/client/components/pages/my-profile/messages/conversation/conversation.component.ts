@@ -12,6 +12,8 @@ import {ConversationMessageService} from "../../../../../services/conversation-m
 import {ConversationMessage} from "../../../../../../core/data/models/messages/conversation-message.model";
 import {GlobalNotification} from "../../../../../../core/data/actions";
 import {Notification, NotificationType} from "../../../../../../core/data/models/notification.model";
+import {Message} from "../../../../../../core/data/models/messages/message.model";
+import {PAGE_NOT_FOUND_ROUTE} from "../../../../../client-routing.module";
 
 @Component({
   selector: 'app-conversation',
@@ -30,7 +32,12 @@ export class ConversationComponent implements OnInit, OnDestroy {
   messageList: ConversationMessageList = null;
   messages: ConversationMessage[] = [];
 
+  latestDate: string = null;
+  latestLoaded: ConversationMessage = null;
+
   isInitialized: boolean = false;
+  isLoading: boolean = false;
+  infinityScrollDisabled: boolean = true;
 
   constructor(
     private store: Store<State>,
@@ -47,98 +54,86 @@ export class ConversationComponent implements OnInit, OnDestroy {
 
     this.paramSubscription = this.route.params.subscribe( async (params) => {
 
-     // //  debugger
       this.isInitialized = false;
 
       if (typeof params['addresseeId'] !== 'undefined')
       {
         const addresseeId = params['addresseeId'];
-        // get the addressee profile info
-        // if addressee doesn't exist
-          // navigate to 404
+
         try {
           this.addressee = await this.userProfileService.get(addresseeId).toPromise();
         }
         catch (error)
         {
-          await this.router.navigateByUrl('404');
+          await this.router.navigateByUrl(PAGE_NOT_FOUND_ROUTE);
           return;
         }
-
-        // get a ConversationMessageList of an individual conversation with the addressee if it exists
 
         try {
           this.messageList = await this.conversationService.getIndividual(this.addressee).toPromise();
-          //debugger
         }
         catch (error) { }
 
-        // if it does exist
-          // load last messages from the list
-        await this.loadInitMessageList();
-
-        // get the page initialized
-        this.isInitialized = true;
       }
       else if (typeof params['conversationId'] !== 'undefined')
       {
-        // get the ConversationMessageList by conversationId
-          // it should contain information about the addressee as well(in general, about all members a group conversation)
-
         try {
           this.messageList = await this.conversationService.get(params['conversationId']).toPromise();
-          //debugger
 
-          //this.messageList = conversationData.messageList;
-          //this.addressee = conversationData.members.find(item => item.id !== this.user.id);
           const addresseeItem = this.messageList.members.find(item => item.member.id !== this.user.id);
           this.addressee = addresseeItem.member;
-
-          //debugger;
-
         }
         catch (error)
         {
-          await this.router.navigateByUrl('404');
+          await this.router.navigateByUrl(PAGE_NOT_FOUND_ROUTE);
           return;
         }
-
-        // if it doesn't exist
-          // navigate to 404
-
-        // load last messages from the conversation list
-        await this.loadInitMessageList();
-
-        // get the page initialized
-        this.isInitialized = true;
-
-
-        // get the page initialized
       }
+
+      await this.scrollDownList();
+      await this.loadMessages();
+
+      this.isInitialized = true;
     });
 
   }
 
-  async loadInitMessageList()
+  async loadMessages()
   {
-    if (!!this.messageList)
+    if (!this.messageList)
     {
-      try {
-        const messages = await this.messageService.getList(this.messageList).toPromise();
-        this.messages = messages.reverse();
+      return;
+    }
 
-        this.scrollDownList();
-      }
-      catch (error) {
-        this.store.dispatch(new GlobalNotification(
-          new Notification(NotificationType.ERROR, 'The conversation is not available!', 'Error'))
-        );
+    this.infinityScrollDisabled = true;
+    this.isLoading = true;
+
+    try {
+      const messages = await this.messageService.getList(this.messageList, this.latestDate, this.latestLoaded).toPromise();
+
+      if (messages.length > 0)
+      {
+        this.latestLoaded = messages[messages.length - 1];
+        // @ts-ignore
+        this.latestDate = this.latestLoaded.message.createdAt;
+
+        this.messages = this.messages.concat(messages);
+
+        this.infinityScrollDisabled = false;
       }
     }
+    catch (error) {
+      this.store.dispatch(new GlobalNotification(
+        new Notification(NotificationType.ERROR, 'The conversation is not available!', 'Error'))
+      );
+
+      await this.router.navigateByUrl('/client/profile/me');
+    }
+
+    this.isLoading = false;
   }
 
   ngOnDestroy(): void {
-
 
     if (this.paramSubscription !== null)
     {
@@ -172,15 +167,36 @@ export class ConversationComponent implements OnInit, OnDestroy {
       }
     }
 
-    this.scrollDownList();
+    const wasScrollDisabled: boolean = this.infinityScrollDisabled;
+
+    this.infinityScrollDisabled = true;
+    await this.scrollDownList();
+    this.infinityScrollDisabled = wasScrollDisabled;
   }
 
   scrollDownList()
   {
-    setTimeout(() => {
-      const { nativeElement } = this.messageListContainer;
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        const { nativeElement } = this.messageListContainer;
 
-      nativeElement.scrollTop = nativeElement.scrollHeight;
-    }, 10);
+        //nativeElement.scrollTop = nativeElement.scrollHeight;
+        nativeElement.scrollTop = 0;
+
+        resolve(null);
+      }, 10);
+    });
+  }
+
+  async onScroll()
+  {
+    //debugger
+    console.log('SCROLL...');
+
+    const { nativeElement } = this.messageListContainer;
+    console.log('nativeElement.scrollTop: ' + nativeElement.scrollTop.toString());
+    console.log('nativeElement.scrollHeight: ' + nativeElement.scrollHeight.toString());
+
+    await this.loadMessages();
   }
 }

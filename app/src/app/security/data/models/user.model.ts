@@ -26,7 +26,7 @@ export class User
 
   avatar?: {};
 
-  lastActivity: Date
+  lastActivity: string
 
   isBlocked: boolean;
 
@@ -48,8 +48,6 @@ export class User
   {
     const result: User = Object.assign(new User(), data);
 
-    result.lastActivity = new Date(data.lastActivity);
-
     return result;
   }
 
@@ -58,7 +56,9 @@ export class User
 
     let result: string = User.ACTIVITY_OFFLINE;
 
-    const timeDifference = Math.round(((+new Date()) - (+this.lastActivity)) / 1000);
+    const lastActivity: Date = new Date(this.lastActivity);
+
+    const timeDifference = Math.round(((+new Date()) - (+lastActivity)) / 1000);
 
     if (timeDifference < environment.onlineActivitySeconds)
     {

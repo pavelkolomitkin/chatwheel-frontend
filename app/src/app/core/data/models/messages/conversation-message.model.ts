@@ -1,5 +1,4 @@
 import {Message} from "./message.model";
-import {Timestampable} from "../../../lib/timestampable.mixin";
 
 export class ConversationMessage
 {

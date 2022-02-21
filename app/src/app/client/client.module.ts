@@ -45,6 +45,7 @@ import {
   ConversationListItemComponent
 } from "./components/pages/my-profile/messages/conversation-list-page/conversation-list-item/conversation-list-item.component";
 import {ConversationMessageService} from "./services/conversation-message.service";
+import { PageNotFoundComponent } from './components/pages/page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -79,6 +80,7 @@ import {ConversationMessageService} from "./services/conversation-message.servic
     ConversationListPageComponent,
     ActionMenuComponent,
     ConversationListItemComponent,
+    PageNotFoundComponent,
 
 
   ],

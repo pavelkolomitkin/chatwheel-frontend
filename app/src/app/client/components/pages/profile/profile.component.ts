@@ -7,6 +7,7 @@ import {User} from "../../../../security/data/models/user.model";
 import {first} from "rxjs/operators";
 import {UserProfileService} from "../../../services/user-profile.service";
 import {GlobalProgressHide, GlobalProgressShow} from "../../../../core/data/actions";
+import {PAGE_NOT_FOUND_ROUTE} from "../../../client-routing.module";
 
 @Component({
   selector: 'app-profile',
@@ -49,7 +50,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       }
       catch (error)
       {
-        await this.router.navigateByUrl('/404');
+        await this.router.navigateByUrl(PAGE_NOT_FOUND_ROUTE);
         return;
       }
       finally {

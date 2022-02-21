@@ -38,7 +38,23 @@
   </div>
   <div class="card-block">
 
-    <div class="list-container" #messageListContainer>
+    <div class="list-container" #messageListContainer
+
+         infiniteScroll
+         [scrollWindow]="false"
+         [infiniteScrollThrottle]="50"
+         [infiniteScrollUpDistance]="-8"
+         [infiniteScrollDisabled]="infinityScrollDisabled"
+         (scrolledUp)="onScroll()"
+    >
+
+      <ng-container *ngIf="isLoading">
+        <div class="loading-container">
+          <div>
+            <img src="../../../../../../../assets/ajax-loader.gif" />
+          </div>
+        </div>
+      </ng-container>
 
       <ng-container *ngIf="messages !== null">
         <app-message-list-item
@@ -46,14 +62,6 @@
           [message]="message"
         ></app-message-list-item>
 
-      </ng-container>
-
-      <ng-container *ngIf="false">
-        <div class="loading-container">
-          <div>
-            <img src="../../../../../../../../../assets/ajax-loader.gif" />
-          </div>
-        </div>
       </ng-container>
 
     </div>

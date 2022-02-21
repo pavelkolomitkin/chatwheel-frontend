@@ -13,6 +13,9 @@ import {ConversationComponent} from "./components/pages/my-profile/messages/conv
 import {
   ConversationListPageComponent
 } from "./components/pages/my-profile/messages/conversation-list-page/conversation-list-page.component";
+import {PageNotFoundComponent} from "./components/pages/page-not-found/page-not-found.component";
+
+export const PAGE_NOT_FOUND_ROUTE = '/client/404';
 
 const routes: Routes = [
   { path: '', component: LayoutComponent, children: [
@@ -26,10 +29,12 @@ const routes: Routes = [
             ] },
           { path: 'calls', component: CallsComponent },
           { path: 'settings', component: SettingsComponent }
-        ] },
+        ]
+      },
       { path: 'profile/:id', component: UserProfileComponent },
       { path: 'chatwheel', component: ChatwheelComponent},
       { path: 'nearby', component: NearbyComponent },
+      { path: '404', component: PageNotFoundComponent },
       { path: '', redirectTo: 'chatwheel', pathMatch: 'full' },
 
     ] }

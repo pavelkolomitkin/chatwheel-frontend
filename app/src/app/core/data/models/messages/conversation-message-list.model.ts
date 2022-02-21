@@ -1,8 +1,6 @@
-import {Timestampable} from "../../../lib/timestampable.mixin";
 import {ConversationMessage} from "./conversation-message.model";
 import {User} from "../../../../security/data/models/user.model";
 
-@Timestampable
 export class ConversationMessageList
 {
   id: string;
@@ -12,6 +10,10 @@ export class ConversationMessageList
   lastMessage?: ConversationMessage;
 
   newMessageNumber: number = 0;
+
+  createdAt: string;
+
+  updatedAt: string;
 
   static createFromRawData(data: any): ConversationMessageList
   {
@@ -32,8 +34,6 @@ export class ConversationMessageList
       });
     }
 
-    // @ts-ignore
-    result.transformTimestamps();
 
     return result;
   }
