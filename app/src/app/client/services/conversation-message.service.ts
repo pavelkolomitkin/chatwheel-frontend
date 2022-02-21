@@ -43,9 +43,6 @@ export class ConversationMessageService extends BaseService
       text: text
     }).pipe(
       map(data => {
-
-        debugger;
-
         return {
           message: ConversationMessage.createFromRawData(data.message),
           conversation: ConversationMessageList.createFromRawData(data.conversation)

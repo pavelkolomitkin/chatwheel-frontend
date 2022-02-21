@@ -16,3 +16,7 @@
 .conversation-item:hover .message-number {
   display: none;
 }
+
+.conversation-item.has-new-messages {
+  background-color: #e9e9e9;
+}

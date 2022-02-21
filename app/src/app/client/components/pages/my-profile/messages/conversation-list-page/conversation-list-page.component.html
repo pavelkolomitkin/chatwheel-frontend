@@ -17,10 +17,12 @@
 
           <tr
             class="conversation-item"
+            [ngClass]="conversation.newMessageNumber > 0 ? 'has-new-messages' : ''"
             app-conversation-list-item
             *ngFor="let conversation of list"
             [conversation]="conversation"
             (click)="onConversationClickHandler(conversation)"
+            (onRemoved)="onRemoveConversationHandler(conversation)"
           ></tr>
 
           </tbody>

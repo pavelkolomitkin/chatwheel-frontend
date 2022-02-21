@@ -53,4 +53,9 @@ export class UserConversationService extends BaseService
       })
     );
   }
+
+  remove(messageList: ConversationMessageList)
+  {
+    return this.http.delete('/client/conversation/' + messageList.id);
+  }
 }

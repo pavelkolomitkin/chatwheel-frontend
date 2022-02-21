@@ -19,6 +19,7 @@ import {MultiLinePipe} from "./pipes/multi-line.pipe";
 import {TextTrimPipe} from "./pipes/text-trim.pipe";
 import {MomentModule} from "ngx-moment";
 import {DateTimeViewComponent} from "./components/date-time-view/date-time-view.component";
+import { AlertWindowComponent } from './components/alert-window/alert-window.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import {DateTimeViewComponent} from "./components/date-time-view/date-time-view.
     DateTimeViewComponent,
     UserActivityStatusDirective,
     MultiLinePipe,
-    TextTrimPipe
+    TextTrimPipe,
+    AlertWindowComponent
   ],
   imports: [
     CommonModule,
@@ -61,6 +63,7 @@ import {DateTimeViewComponent} from "./components/date-time-view/date-time-view.
     FormFieldErrorListComponent,
     MapComponent,
     DateTimeViewComponent,
+    AlertWindowComponent,
 
     UserActivityStatusDirective,
     MultiLinePipe,

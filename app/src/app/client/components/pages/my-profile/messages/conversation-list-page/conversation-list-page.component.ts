@@ -42,12 +42,13 @@ export class ConversationListPageComponent implements OnInit, OnDestroy {
 
     this.isLoading = true;
 
-    const list = await this.service.getList(this.latest, this.latestUpdatedAt).toPromise();
+    let list = await this.service.getList(this.latest, this.latestUpdatedAt).toPromise();
     if (!this.list)
     {
       this.list = [];
     }
 
+    list = this.filterReceived(list);
     if (list.length > 0)
     {
       this.list = this.list.concat(list);
@@ -61,6 +62,22 @@ export class ConversationListPageComponent implements OnInit, OnDestroy {
     this.isLoading = false;
   }
 
+  filterReceived(lists: ConversationMessageList[])
+  {
+    const result: ConversationMessageList[] = [];
+
+    for (let list of lists)
+    {
+      const index = this.list.findIndex(item => item.id === list.id);
+      if (index === -1)
+      {
+        result.push(list);
+      }
+    }
+
+    return result;
+  }
+
   async onScroll()
   {
     await this.loadList();
@@ -70,6 +87,15 @@ export class ConversationListPageComponent implements OnInit, OnDestroy {
   async onConversationClickHandler(conversation: ConversationMessageList)
   {
     await this.router.navigateByUrl('/client/profile/me/messages/conversation/' + conversation.id);
+  }
+
+  onRemoveConversationHandler(conversation: ConversationMessageList)
+  {
+    const index = this.list.findIndex(item => item.id === conversation.id);
+    if (index !== -1)
+    {
+      this.list.splice(index, 1);
+    }
   }
 
 }
