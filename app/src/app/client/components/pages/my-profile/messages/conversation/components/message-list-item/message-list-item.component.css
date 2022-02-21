@@ -1,0 +1,35 @@
+.my-message-container {
+
+}
+
+.my-message-container .text-container
+{
+  position: relative;
+}
+
+.my-message-container .text-container .controls {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  display: none;
+}
+
+.my-message-container .text-container .controls {
+  cursor: pointer;
+}
+
+.my-message-container .text-container:hover .controls
+{
+  display: block;
+}
+
+form {
+  position: relative;
+}
+
+form .loader
+{
+  position: absolute;
+  top: 0;
+  left: 0;
+}

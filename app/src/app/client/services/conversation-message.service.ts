@@ -66,4 +66,31 @@ export class ConversationMessageService extends BaseService
       })
     );
   }
+
+  readLastMessage(list: ConversationMessageList)
+  {
+    return this.http.put('/client/message/read-last/' + list.id, {});
+  }
+
+  edit(message: ConversationMessage, text: string)
+  {
+    return this.http.put<{ message: ConversationMessage }>('/client/message/edit', {
+      messageId: message.id,
+      text: text
+    })
+      .pipe(
+        map(({ message }) => {
+          return ConversationMessage.createFromRawData(message);
+        })
+      );
+  }
+
+  remove(message: ConversationMessage, removeFromOthers: boolean)
+  {
+    const params = this.getHttpParamsFromObject({
+      removeFromOthers
+    });
+
+    return this.http.delete('/client/message/' + message.id, { params });
+  }
 }

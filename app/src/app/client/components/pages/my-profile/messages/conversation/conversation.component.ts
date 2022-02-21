@@ -92,6 +92,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
 
       await this.scrollDownList();
       await this.loadMessages();
+      await this.readLastMessages();
 
       this.isInitialized = true;
     });
@@ -109,7 +110,8 @@ export class ConversationComponent implements OnInit, OnDestroy {
     this.isLoading = true;
 
     try {
-      const messages = await this.messageService.getList(this.messageList, this.latestDate, this.latestLoaded).toPromise();
+      let messages = await this.messageService.getList(this.messageList, this.latestDate, this.latestLoaded).toPromise();
+      messages = this.filterReceived(messages);
 
       if (messages.length > 0)
       {
@@ -131,6 +133,30 @@ export class ConversationComponent implements OnInit, OnDestroy {
     }
 
     this.isLoading = false;
+  }
+
+  filterReceived(newMessages: ConversationMessage[])
+  {
+    const result: ConversationMessage[] = [];
+
+    for (let newMessage of newMessages)
+    {
+      const index = this.messages.findIndex(item => item.id === newMessage.id);
+      if (index === -1)
+      {
+        result.push(newMessage);
+      }
+    }
+
+    return result;
+  }
+
+  async readLastMessages()
+  {
+    if (!!this.messageList)
+    {
+      await this.messageService.readLastMessage(this.messageList).toPromise();
+    }
   }
 
   ngOnDestroy(): void {
@@ -198,5 +224,14 @@ export class ConversationComponent implements OnInit, OnDestroy {
     console.log('nativeElement.scrollHeight: ' + nativeElement.scrollHeight.toString());
 
     await this.loadMessages();
+  }
+
+  onMessageRemovedHandler(message: ConversationMessage)
+  {
+    const index = this.messages.findIndex(item => item.id === message.id);
+    if (index !== -1)
+    {
+      this.messages.splice(index, 1);
+    }
   }
 }
