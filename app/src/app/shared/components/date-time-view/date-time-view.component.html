@@ -1,0 +1,8 @@
+<span [title]="_value | amLocal">
+  <ng-container *ngIf="displayFormat === 'ago'">
+    {{ _value | amTimeAgo }}
+  </ng-container>
+  <ng-container *ngIf="displayFormat === 'normal'">
+    {{ _value | amLocal | amDateFormat: 'YYYY-MM-DD HH:mm' }}
+  </ng-container>
+</span>

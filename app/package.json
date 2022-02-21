@@ -30,6 +30,7 @@
     "moment": "^2.29.1",
     "ngx-infinite-scroll": "^10.0.1",
     "ngx-lightbox": "^2.5.2",
+    "ngx-moment": "^5.0.0",
     "ngx-permissions": "^8.1.1",
     "ngx-socket-io": "^4.1.0",
     "ol": "^6.0.0",

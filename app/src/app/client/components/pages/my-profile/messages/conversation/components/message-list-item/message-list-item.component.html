@@ -17,7 +17,10 @@
             </div>
 
           </div>
-          <p class="text-muted mb-0"><i class="fa fa-clock-o mr-10"></i>{{ message.message.createdAt }}</p>
+          <p class="text-muted mb-0"><i class="fa fa-clock-o mr-10"></i>
+            <span app-date-time [value]="message.message.createdAt"></span>
+            <span class="text-muted small" *ngIf="message.message.createdAt !== message.message.updatedAt">(edited)</span>
+          </p>
         </div>
         <div class="col-auto pl-0">
           <app-user-avatar
@@ -98,7 +101,10 @@
         <div class="msg">
           <p class="mb-0" [innerHTML]="message.message.text | multiLine"></p>
         </div>
-        <p class="text-muted mb-0"><i class="fa fa-clock-o mr-10"></i>{{ message.message.createdAt }}</p>
+        <p class="text-muted mb-0"><i class="fa fa-clock-o mr-10"></i>
+          <span app-date-time [value]="message.message.createdAt"></span>
+          <span class="text-muted small" *ngIf="message.message.createdAt !== message.message.updatedAt">(edited)</span>
+        </p>
       </div>
     </div>
   </ng-template>

@@ -17,6 +17,8 @@ import { UserActivityStatusDirective } from './directives/user-activity-status.d
 import {InfiniteScrollModule} from "ngx-infinite-scroll";
 import {MultiLinePipe} from "./pipes/multi-line.pipe";
 import {TextTrimPipe} from "./pipes/text-trim.pipe";
+import {MomentModule} from "ngx-moment";
+import {DateTimeViewComponent} from "./components/date-time-view/date-time-view.component";
 
 @NgModule({
   declarations: [
@@ -27,6 +29,7 @@ import {TextTrimPipe} from "./pipes/text-trim.pipe";
     MapComponent,
     UserMapMarkComponent,
     MapComponentBaseComponent,
+    DateTimeViewComponent,
     UserActivityStatusDirective,
     MultiLinePipe,
     TextTrimPipe
@@ -43,7 +46,8 @@ import {TextTrimPipe} from "./pipes/text-trim.pipe";
     }),
     LightboxModule,
     RouterModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    MomentModule
   ],
   exports: [
     TranslateModule,
@@ -56,10 +60,12 @@ import {TextTrimPipe} from "./pipes/text-trim.pipe";
     EditableUserAvatarComponent,
     FormFieldErrorListComponent,
     MapComponent,
+    DateTimeViewComponent,
 
     UserActivityStatusDirective,
     MultiLinePipe,
-    TextTrimPipe
+    TextTrimPipe,
+    MomentModule
   ]
 })
 export class SharedModule {
