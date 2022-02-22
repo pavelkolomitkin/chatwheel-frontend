@@ -28,7 +28,7 @@
 
     <div class="card-header-right controls">
 
-        <span class="btn btn-danger" >
+        <span class="btn btn-danger" (click)="onReportAbuseClickHandler($event)">
           <i class="ik ik-alert-circle"></i>Report Abuse
         </span>
 
@@ -69,7 +69,7 @@
 
     <app-conversation-user-input
       (onSubmit)="onMessageSubmitHandler($event)"
-      [isEnabled]="isInitialized || (!!addressee && addressee.hasBannedUser)"
+      [isEnabled]="isInitialized"
     ></app-conversation-user-input>
 
   </div>

@@ -22,6 +22,7 @@ export class AlertWindowComponent implements OnInit, OnDestroy {
   @ViewChild('confirmationWindow') template: TemplateRef<any>;
 
   @Output() isShownChange: EventEmitter<any> = new EventEmitter<any>();
+  @Output('onClose') closeEmitter: EventEmitter<any> = new EventEmitter<any>();
 
   @Input() title: string;
 
@@ -65,14 +66,17 @@ export class AlertWindowComponent implements OnInit, OnDestroy {
 
   openWindow()
   {
-    this.closeWindow();
     this.window = this.modal.open(this.template, { centered: true });
     this.window.result.then(() => {
       this._isShown = false
       this.isShownChange.emit(this._isShown);
+
+       this.closeEmitter.emit();
     }).catch(() => {
       this._isShown = false
       this.isShownChange.emit(this._isShown);
+
+      this.closeEmitter.emit();
     });
   }
 
@@ -82,6 +86,7 @@ export class AlertWindowComponent implements OnInit, OnDestroy {
     {
       this.window.close();
       this.window = null;
+      //this.closeEmitter.emit();
     }
     this._isShown = false
     this.isShownChange.emit(this._isShown);

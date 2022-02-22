@@ -13,11 +13,13 @@ export class UserProfileService
 
   get(id: string)
   {
-    return this.http.get<{ user: User, isBanned: boolean }>('/client/user-profile/' + id)
+    return this.http.get<{ user: User, isBanned: boolean, amIBanned: boolean }>('/client/user-profile/' + id)
       .pipe(
         map(data => {
+
           const user: User = User.createFromRawData(data.user);
-          user.hasBannedUser = data.isBanned;
+          user.isBanned = data.isBanned;
+          user.amIBanned = data.amIBanned
 
           return user;
         })

@@ -17,7 +17,6 @@
           <small class="text-muted d-block">Email address </small>
           <h6>{{ ( user | async ).email ? (user | async).email : '-' }}</h6>
           <app-edit-map-location [user]="(user | async)"></app-edit-map-location>
-<!--          <app-map-location-view [user]="(user | async)"></app-map-location-view>-->
         </div>
       </div>
     </div>
@@ -31,7 +30,9 @@
             <a routerLink="./" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active" class="nav-link show" data-toggle="pill" role="tab">Profile</a>
           </li>
           <li class="nav-item">
-            <a routerLink="messages" routerLinkActive="active" class="nav-link show" data-toggle="pill" role="tab">Messages</a>
+            <a routerLink="messages" routerLinkActive="active" class="nav-link show" data-toggle="pill" role="tab">Messages
+              <span class="badge badge-pill badge-danger mb-1 menu-badge" *ngIf="(newMessageNumber | async) > 0">{{ newMessageNumber | async }}</span>
+            </a>
           </li>
           <li class="nav-item">
             <a routerLink="calls" routerLinkActive="active" class="nav-link show" data-toggle="pill" role="tab">Calls</a>

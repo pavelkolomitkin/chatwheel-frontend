@@ -70,7 +70,7 @@
 
           <a class="nav-link ml-10" routerLink="./profile/me/messages" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
             <i class="ik ik-message-square"></i>
-            <!--          <span class="badge bg-success">3</span>-->
+            <span class="badge bg-success" *ngIf="(newMessageNumber | async) > 0">{{ newMessageNumber | async }}</span>
           </a>
           <!--        <button type="button" class="nav-link ml-10 right-sidebar-toggle active"><i class="ik ik-message-square"></i><span class="badge bg-success">3</span></button>-->
 

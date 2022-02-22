@@ -31,6 +31,7 @@ import {UserPictureService} from "./services/user-picture.service";
 import {GeoLocationDeviceService} from "./services/geo-location-device.service";
 import {UserMediaService} from "./services/user-media.service";
 import {UploadDataService} from "./services/upload/upload-data.service";
+import {AbuseReportTypeService} from "./services/abuse-report-type.service";
 
 
 const httpInterceptorProviders = [
@@ -76,6 +77,7 @@ const httpInterceptorProviders = [
     GeoLocationDeviceService,
     UserMediaService,
     UploadDataService,
+    AbuseReportTypeService,
     ApplicationInitializerService,
     {
       provide: APP_INITIALIZER,

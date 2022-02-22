@@ -14,6 +14,7 @@ import {GlobalNotification} from "../../../../../../core/data/actions";
 import {Notification, NotificationType} from "../../../../../../core/data/models/notification.model";
 import {Message} from "../../../../../../core/data/models/messages/message.model";
 import {PAGE_NOT_FOUND_ROUTE} from "../../../../../client-routing.module";
+import {UserReportAbuseInit} from "../../../../../data/actions";
 
 @Component({
   selector: 'app-conversation',
@@ -233,5 +234,10 @@ export class ConversationComponent implements OnInit, OnDestroy {
     {
       this.messages.splice(index, 1);
     }
+  }
+
+  onReportAbuseClickHandler(event)
+  {
+    this.store.dispatch(new UserReportAbuseInit(this.addressee));
   }
 }

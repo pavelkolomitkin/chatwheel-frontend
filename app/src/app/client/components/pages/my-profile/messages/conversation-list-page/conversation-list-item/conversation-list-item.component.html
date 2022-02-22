@@ -10,24 +10,32 @@
       </div>
       <div class="d-inline-block last-message-block">
         <h6 class="mb-0" *ngIf="!!addressee">{{ addressee.fullName }}</h6>
-        <p class="text-muted mb-0" *ngIf="_conversation.lastMessage">
 
-          <ng-container *ngIf="!!user">
+        <p class="text-muted mb-0" >
 
-            <span class="d-inline-block">
+          <ng-container *ngIf="_conversation.lastMessage; else deletedMessage">
+            <ng-container *ngIf="!!user">
 
-              <app-user-avatar *ngIf="_conversation.lastMessage.message.author.id !== user.id"
-                [size]="'extraSmall'"
-                [user]="_conversation.lastMessage.message.author"
-              ></app-user-avatar>
+              <span class="d-inline-block">
 
+                <app-user-avatar *ngIf="_conversation.lastMessage.message.author.id !== user.id"
+                                 [size]="'extraSmall'"
+                                 [user]="_conversation.lastMessage.message.author"
+                ></app-user-avatar>
+
+              </span>
+
+              </ng-container>
+              <span>
+              {{ _conversation.lastMessage.message.text | textTrim:50}}
             </span>
 
           </ng-container>
-          <span>
-            {{ _conversation.lastMessage.message.text | textTrim:50}}
-          </span>
+          <ng-template #deletedMessage>
+            <span class="small">(message deleted)</span>
+          </ng-template>
         </p>
+
       </div>
     </div>
   </td>

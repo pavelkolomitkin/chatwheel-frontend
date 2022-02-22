@@ -3,6 +3,7 @@ import {User} from "../../../../../../security/data/models/user.model";
 import {select, Store} from "@ngrx/store";
 import {State} from "../../../../../../app.state";
 import {first} from "rxjs/operators";
+import {UserReportAbuseInit} from "../../../../../data/actions";
 
 @Component({
   selector: 'app-action-menu',
@@ -26,5 +27,10 @@ export class ActionMenuComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+  }
+
+  onReportAbuseClickHandler(event)
+  {
+    this.store.dispatch(new UserReportAbuseInit(this.user));
   }
 }

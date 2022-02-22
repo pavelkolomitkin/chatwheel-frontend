@@ -12,14 +12,16 @@ import {UserLogout} from "../../../security/data/actions";
 })
 export class PageHeaderComponent implements OnInit {
 
-  user: Observable<User>
+  user: Observable<User>;
+  newMessageNumber: Observable<Number>;
 
   constructor(
     private store: Store<State>
   ) { }
 
   ngOnInit(): void {
-    this.user = this.store.pipe(select(state => state.security.user))
+    this.user = this.store.pipe(select(state => state.security.user));
+    this.newMessageNumber = this.store.pipe(select(state => state.client.newMessageNumber));
   }
 
   onLogoutClickHandler(event)

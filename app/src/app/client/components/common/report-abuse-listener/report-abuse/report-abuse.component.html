@@ -1,0 +1,53 @@
+<app-alert-window [title]="'Report Abuse'"
+                  [(isShown)]="isWindowShown"
+                  (onClose)="onWindowCloseHandler($event)"
+>
+
+  <div content>
+    <ng-container *ngIf="_recipient !== null">
+      <div class="d-inline-block">
+        <app-user-avatar
+          [size]="'small'"
+          [user]="_recipient"
+        ></app-user-avatar>
+      </div>
+      <div class="d-inline-block ml-2">
+        <h5>{{ _recipient.fullName }}</h5>
+      </div>
+      <hr/>
+    </ng-container>
+
+    <form #form="ngForm">
+      <div class="form-group">
+        <div
+          *ngFor="let type of types"
+          class="radio radio-matrial radio-primary">
+          <label>
+            <input
+              type="radio"
+              name="radio"
+              [value]="type"
+              [(ngModel)]="abuseType">
+            {{ type.title }}
+          </label>
+        </div>
+      </div>
+      <div class="form-group">
+        <textarea
+          class="form-control"
+          [(ngModel)]="abuseComment"
+          name="comment"
+          placeholder="You comment(optional)"
+        ></textarea>
+      </div>
+    </form>
+  </div>
+  <div footer>
+    <button
+      type="button"
+      class="btn btn-outline-danger"
+      (click)="onReportClickHandler($event)"
+      [disabled]="!abuseType"
+    >Report</button>
+  </div>
+</app-alert-window>

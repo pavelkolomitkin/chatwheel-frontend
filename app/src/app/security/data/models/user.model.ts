@@ -42,7 +42,9 @@ export class User
 
   interests?: UserInterest[];
 
-  hasBannedUser?: boolean;
+  amIBanned?: boolean;
+
+  isBanned?: boolean
 
   static createFromRawData(data: any)
   {

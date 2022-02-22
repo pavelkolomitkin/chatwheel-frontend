@@ -46,6 +46,11 @@ import {
 } from "./components/pages/my-profile/messages/conversation-list-page/conversation-list-item/conversation-list-item.component";
 import {ConversationMessageService} from "./services/conversation-message.service";
 import { PageNotFoundComponent } from './components/pages/page-not-found/page-not-found.component';
+import { ReportAbuseComponent } from './components/common/report-abuse-listener/report-abuse/report-abuse.component';
+import { ReportAbuseListenerComponent } from './components/common/report-abuse-listener/report-abuse-listener.component';
+import {AbuseReportTypeService} from "../core/services/abuse-report-type.service";
+import {ReportAbuseEffects} from "./data/effects/report-abuse.effects";
+import {AbuseReportService} from "./services/abuse-report.service";
 
 @NgModule({
   declarations: [
@@ -81,6 +86,8 @@ import { PageNotFoundComponent } from './components/pages/page-not-found/page-no
     ActionMenuComponent,
     ConversationListItemComponent,
     PageNotFoundComponent,
+    ReportAbuseComponent,
+    ReportAbuseListenerComponent,
 
 
   ],
@@ -88,7 +95,9 @@ import { PageNotFoundComponent } from './components/pages/page-not-found/page-no
     ProfileService,
     UserProfileService,
     UserConversationService,
-    ConversationMessageService
+    ConversationMessageService,
+    AbuseReportTypeService,
+    AbuseReportService
   ],
   imports: [
     CommonModule,
@@ -97,7 +106,8 @@ import { PageNotFoundComponent } from './components/pages/page-not-found/page-no
     StoreModule.forFeature('client', reducer),
     EffectsModule.forFeature([
       GeolocationEffects,
-      ProfileEffects
+      ProfileEffects,
+      ReportAbuseEffects
     ]),
     NgbModalModule,
   ],

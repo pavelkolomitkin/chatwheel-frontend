@@ -12,6 +12,7 @@ import {User} from "../../../../security/data/models/user.model";
 export class MyProfileComponent implements OnInit {
 
   user:Observable<User>
+  newMessageNumber: Observable<Number>;
 
   constructor(
     private store: Store<State>
@@ -19,6 +20,8 @@ export class MyProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.store.pipe(select(state => state.security.user));
+    this.newMessageNumber = this.store.pipe(select(state => state.client.newMessageNumber));
+
   }
 
 }
