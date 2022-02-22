@@ -20,6 +20,10 @@ export const USER_REPORT_ABUSE_START = 'USER_REPORT_ABUSE_START';
 export const USER_REPORT_ABUSE_SUCCESS = 'USER_REPORT_ABUSE_SUCCESS';
 export const USER_REPORT_ABUSE_ERROR = 'USER_REPORT_ABUSE_ERROR';
 
+export const USER_BLOCK_TOGGLE_START = 'USER_BLOCK_TOGGLE_START';
+export const USER_BLOCK_TOGGLE_SUCCESS = 'USER_BLOCK_TOGGLE_SUCCESS';
+export const USER_BLOCK_TOGGLE_ERROR = 'USER_BLOCK_TOGGLE_ERROR';
+
 
 export class UserRequestUpdateGeoLocation implements Action
 {
@@ -104,6 +108,27 @@ export class UserReportAbuseError implements Action
   constructor(public errors: any) { }
 }
 
+export class UserBlockToggleStart implements Action
+{
+  readonly type = USER_BLOCK_TOGGLE_START;
+
+  constructor(public user: User, public block: boolean) {}
+}
+
+export class UserBlockToggleSuccess implements Action
+{
+  readonly type = USER_BLOCK_TOGGLE_SUCCESS;
+
+  constructor(public user: User) { }
+}
+
+export class UserBlockToggleError implements Action
+{
+  readonly type = USER_BLOCK_TOGGLE_ERROR;
+
+  constructor(public errors: any) { }
+}
+
 export type ClientUserActions =
   UserRequestUpdateGeoLocation
   | UserGeolocationPermissionChange
@@ -121,5 +146,9 @@ export type ClientUserActions =
   | UserReportAbuseStart
   | UserReportAbuseSuccess
   | UserReportAbuseError
+
+  | UserBlockToggleStart
+  | UserBlockToggleSuccess
+  | UserBlockToggleError
 
   ;

@@ -4,11 +4,11 @@ import {State} from "../../../../app.state";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {User} from "../../../../security/data/models/user.model";
-import {first} from "rxjs/operators";
+import {filter, first} from "rxjs/operators";
 import {UserProfileService} from "../../../services/user-profile.service";
 import {GlobalProgressHide, GlobalProgressShow} from "../../../../core/data/actions";
 import {PAGE_NOT_FOUND_ROUTE} from "../../../client-routing.module";
-import {UserReportAbuseInit} from "../../../data/actions";
+import {UserBlockToggleStart, UserReportAbuseInit} from "../../../data/actions";
 
 @Component({
   selector: 'app-profile',
@@ -21,6 +21,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   authorizedUser: User = null;
 
   routeParamsSubscription: Subscription = null;
+  banChangedUserSubscription: Subscription = null;
 
   constructor(
     private store: Store<State>,
@@ -59,6 +60,16 @@ export class ProfileComponent implements OnInit, OnDestroy {
       }
 
     });
+
+    this.banChangedUserSubscription = this.store.pipe(
+      select(state => state.client.lastBanStatusChangedUser),
+      filter(user => !!user)
+    ).subscribe((user) => {
+      if (this.user.id === user.id)
+      {
+        this.user = user;
+      }
+    });
   }
 
   ngOnDestroy(): void {
@@ -67,6 +78,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
     {
       this.routeParamsSubscription.unsubscribe();
       this.routeParamsSubscription = null
+    }
+
+    if (!!this.banChangedUserSubscription)
+    {
+      this.banChangedUserSubscription.unsubscribe();
+      this.banChangedUserSubscription = null;
     }
   }
 

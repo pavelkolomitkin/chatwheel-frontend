@@ -26,4 +26,33 @@ export class UserProfileService
       )
       ;
   }
+
+
+  banUser(user: User)
+  {
+    return this.http.put<{ user: User, isBanned: boolean, amIBanned: boolean }>('/client/user-profile/ban-user/' + user.id, {}).pipe(
+      map((data) => {
+
+        const user: User = User.createFromRawData(data.user);
+        user.isBanned = data.isBanned;
+        user.amIBanned = data.amIBanned
+
+        return user;
+      })
+    );
+  }
+
+  unbanUser(user: User)
+  {
+    return this.http.put<{ user: User, isBanned: boolean, amIBanned: boolean }>('/client/user-profile/unban-user/' + user.id, {}).pipe(
+      map((data) => {
+
+        const user: User = User.createFromRawData(data.user);
+        user.isBanned = data.isBanned;
+        user.amIBanned = data.amIBanned
+
+        return user;
+      })
+    );
+  }
 }

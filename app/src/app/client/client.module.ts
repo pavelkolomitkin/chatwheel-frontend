@@ -51,6 +51,7 @@ import { ReportAbuseListenerComponent } from './components/common/report-abuse-l
 import {AbuseReportTypeService} from "../core/services/abuse-report-type.service";
 import {ReportAbuseEffects} from "./data/effects/report-abuse.effects";
 import {AbuseReportService} from "./services/abuse-report.service";
+import {UserProfileEffects} from "./data/effects/user-profile.effects";
 
 @NgModule({
   declarations: [
@@ -107,7 +108,8 @@ import {AbuseReportService} from "./services/abuse-report.service";
     EffectsModule.forFeature([
       GeolocationEffects,
       ProfileEffects,
-      ReportAbuseEffects
+      ReportAbuseEffects,
+      UserProfileEffects
     ]),
     NgbModalModule,
   ],

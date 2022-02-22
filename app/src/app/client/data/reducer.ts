@@ -12,6 +12,9 @@ export interface State
   reportAbuseErrors: any;
 
   lastReportedUser: User;
+
+  lastBanStatusChangedUser: User;
+
 }
 
 export const initialState: State = {
@@ -24,6 +27,8 @@ export const initialState: State = {
   reportAbuseErrors: {},
 
   lastReportedUser: null,
+
+  lastBanStatusChangedUser: null,
 }
 
 export function reducer(state: State = initialState, action: actions.ClientUserActions): State
@@ -78,7 +83,8 @@ export function reducer(state: State = initialState, action: actions.ClientUserA
       return {
         ...state,
         abuseReportRecipient: null,
-        lastReportedUser: action.recipient
+        lastReportedUser: action.recipient,
+        lastBanStatusChangedUser: action.recipient
       };
 
     case actions.USER_REPORT_ABUSE_ERROR:
@@ -87,6 +93,20 @@ export function reducer(state: State = initialState, action: actions.ClientUserA
         ...state,
         abuseReportRecipient: null,
         reportAbuseErrors: action.errors
+      };
+
+    case actions.USER_BLOCK_TOGGLE_SUCCESS:
+
+      return {
+        ...state,
+        lastBanStatusChangedUser: action.user
+      };
+
+    case actions.USER_BLOCK_TOGGLE_ERROR:
+
+      return {
+        ...state,
+        lastBanStatusChangedUser: null
       };
 
     default:
