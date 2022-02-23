@@ -1,6 +1,7 @@
 export const environment = {
   production: true,
   baseApiUrl: '/api',
+  baseSocketUrl: '',
   lang: 'en',
   maxUploadFileSize: 7340032,
   maxUploadFileSizeLabel: '7M',

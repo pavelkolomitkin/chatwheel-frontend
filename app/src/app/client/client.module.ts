@@ -53,6 +53,10 @@ import {ReportAbuseEffects} from "./data/effects/report-abuse.effects";
 import {AbuseReportService} from "./services/abuse-report.service";
 import {UserProfileEffects} from "./data/effects/user-profile.effects";
 import { ReportAbuseButtonsComponent } from './components/pages/my-profile/messages/conversation/components/report-abuse-buttons/report-abuse-buttons.component';
+import {MessageSocketService} from "./services/sockets/message-socket.service";
+import {UserActivitySocketService} from "./services/sockets/user-activity-socket.service";
+import { MessageObserverComponent } from './components/common/message-observer/message-observer.component';
+import { UserTypingComponent } from './components/pages/my-profile/messages/conversation/components/user-typing/user-typing.component';
 
 @NgModule({
   declarations: [
@@ -91,8 +95,8 @@ import { ReportAbuseButtonsComponent } from './components/pages/my-profile/messa
     ReportAbuseComponent,
     ReportAbuseListenerComponent,
     ReportAbuseButtonsComponent,
-
-
+    MessageObserverComponent,
+    UserTypingComponent,
   ],
   providers: [
     ProfileService,
@@ -100,7 +104,10 @@ import { ReportAbuseButtonsComponent } from './components/pages/my-profile/messa
     UserConversationService,
     ConversationMessageService,
     AbuseReportTypeService,
-    AbuseReportService
+    AbuseReportService,
+
+    MessageSocketService,
+    UserActivitySocketService
   ],
   imports: [
     CommonModule,

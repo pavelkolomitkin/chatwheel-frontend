@@ -65,11 +65,15 @@
 
       </ng-container>
 
+      <app-user-typing
+        [typing]="userTyping"
+      ></app-user-typing>
     </div>
 
     <app-conversation-user-input
       (onSubmit)="onMessageSubmitHandler($event)"
       [isEnabled]="isInitialized"
+      [messageList]="messageList"
     ></app-conversation-user-input>
 
   </div>

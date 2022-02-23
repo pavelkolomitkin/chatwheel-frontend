@@ -14,6 +14,11 @@ import {GlobalNotification} from "../../../../../../core/data/actions";
 import {Notification, NotificationType} from "../../../../../../core/data/models/notification.model";
 import {PAGE_NOT_FOUND_ROUTE} from "../../../../../client-routing.module";
 import {UserReportAbuseInit} from "../../../../../data/actions";
+import {ReceivedMessage} from "../../../../../data/model/messages/received-message.model";
+import {RemovedMessage} from "../../../../../data/model/messages/removed-message.model";
+import {EditedMessage} from "../../../../../data/model/messages/edited-message.model";
+import {UserActivitySocketService} from "../../../../../services/sockets/user-activity-socket.service";
+import {UserTyping} from "../../../../../data/model/user-activity/user-typing.model";
 
 @Component({
   selector: 'app-conversation',
@@ -26,6 +31,10 @@ export class ConversationComponent implements OnInit, OnDestroy {
 
   paramSubscription: Subscription = null;
   bannedUserSubscription: Subscription = null;
+  receivedMessageSubscription: Subscription = null;
+  removedMessageSubscription: Subscription = null;
+  editedMessageSubscription: Subscription = null;
+  userActivitySubscription: Subscription = null;
 
   user: User = null;
   addressee: User = null;
@@ -40,13 +49,16 @@ export class ConversationComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
   infinityScrollDisabled: boolean = true;
 
+  userTyping: UserTyping = null;
+
   constructor(
     private store: Store<State>,
     private router: Router,
     private route: ActivatedRoute,
     private userProfileService: UserProfileService,
     private conversationService: UserConversationService,
-    private messageService: ConversationMessageService
+    private messageService: ConversationMessageService,
+    private userActivitySocket: UserActivitySocketService
   ) { }
 
   async ngOnInit() {
@@ -56,6 +68,10 @@ export class ConversationComponent implements OnInit, OnDestroy {
     this.paramSubscription = this.route.params.subscribe( async (params) => {
 
       this.disposeBanUserSubscription();
+      this.disposeReceivedMessageHandler();
+      this.disposeRemovedMessageHandler();
+      this.disposeEditedMessageHandler();
+      this.disposeTypingHandler();
 
       this.isInitialized = false;
 
@@ -98,10 +114,142 @@ export class ConversationComponent implements OnInit, OnDestroy {
       await this.readLastMessages();
 
       this.initBanUserSubscription();
+      this.initReceivedMessageHandler();
+      this.initRemovedMessageHandler();
+      this.initEditedMessageHandler();
+      this.initTypingHandler();
 
       this.isInitialized = true;
     });
 
+  }
+
+  initTypingHandler()
+  {
+    this.userActivitySubscription = this.userActivitySocket.getUserTyping().subscribe(
+      (data: UserTyping) => {
+
+        if (!this.messageList)
+        {
+          return;
+        }
+
+        if (this.messageList.id === data.messageList)
+        {
+          this.userTyping = data;
+        }
+      }
+    );
+  }
+
+  disposeTypingHandler()
+  {
+    if (!!this.userActivitySubscription)
+    {
+      this.userActivitySubscription.unsubscribe();
+      this.userActivitySubscription = null;
+    }
+  }
+
+  initReceivedMessageHandler()
+  {
+    this.receivedMessageSubscription = this.store.pipe(
+      select(state => state.client.lastReceivedMessage),
+      filter(message => !!message)
+    ).subscribe((message: ReceivedMessage) => {
+
+      if (!this.messageList)
+      {
+        return;
+      }
+
+      if (this.messageList.id === message.messageList.id)
+      {
+        if (this.user.id !== message.message.message.author.id)
+        {
+          this.messages.unshift(message.message);
+        }
+      }
+    });
+  }
+
+  disposeReceivedMessageHandler()
+  {
+    if (!!this.receivedMessageSubscription)
+    {
+      this.receivedMessageSubscription.unsubscribe();
+      this.receivedMessageSubscription = null;
+    }
+  }
+
+  initRemovedMessageHandler()
+  {
+    this.removedMessageSubscription = this.store.pipe(
+      select(state => state.client.lastRemovedMessage),
+      filter(message => !!message)
+    )
+      .subscribe((message: RemovedMessage) => {
+
+        if (!this.messageList)
+        {
+          return;
+        }
+
+        if (this.messageList.id === message.messageList.id)
+        {
+          const index = this.messages.findIndex(item => item.message.id === message.message);
+          if (index !== -1)
+          {
+            this.messages.splice(index, 1);
+          }
+        }
+
+      });
+  }
+
+  disposeRemovedMessageHandler()
+  {
+    if (!!this.removedMessageSubscription)
+    {
+      this.removedMessageSubscription.unsubscribe();
+      this.removedMessageSubscription = null;
+    }
+  }
+
+  initEditedMessageHandler()
+  {
+    this.editedMessageSubscription = this.store.pipe(
+      select(state => state.client.lastEditedMessage),
+      filter(message => !!message)
+    ).subscribe((message: EditedMessage) => {
+
+      if (!this.messageList)
+      {
+        return;
+      }
+
+      if (this.messageList.id === message.messageList)
+      {
+        const index = this.messages.findIndex(item => item.id === message.id);
+        if (index !== -1)
+        {
+          const editedMessage: ConversationMessage = this.messages[index];
+
+          message.editMessage(editedMessage);
+
+          this.messages[index] = editedMessage;
+        }
+      }
+    });
+  }
+
+  disposeEditedMessageHandler()
+  {
+    if (!!this.editedMessageSubscription)
+    {
+      this.editedMessageSubscription.unsubscribe();
+      this.editedMessageSubscription = null;
+    }
   }
 
   initBanUserSubscription()

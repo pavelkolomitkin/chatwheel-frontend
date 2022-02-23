@@ -1,5 +1,9 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {NgForm} from "@angular/forms";
+import {UserActivitySocketService} from "../../../../../../../services/sockets/user-activity-socket.service";
+import {
+  ConversationMessageList
+} from "../../../../../../../../core/data/models/messages/conversation-message-list.model";
 
 @Component({
   selector: 'app-conversation-user-input',
@@ -12,9 +16,13 @@ export class ConversationUserInputComponent implements OnInit {
 
   @Input() isEnabled: boolean;
 
+  @Input() messageList: ConversationMessageList;
+
   @Output('onSubmit') submitEmitter: EventEmitter<string> = new EventEmitter<string>();
 
-  constructor() { }
+  constructor(
+    private userActivitySocket: UserActivitySocketService
+  ) { }
 
   ngOnInit(): void {
   }
@@ -31,4 +39,11 @@ export class ConversationUserInputComponent implements OnInit {
     }
   }
 
+  onTextChangeHandler(event)
+  {
+    if (!!this.messageList)
+    {
+      this.userActivitySocket.sendTyping(this.messageList);
+    }
+  }
 }
