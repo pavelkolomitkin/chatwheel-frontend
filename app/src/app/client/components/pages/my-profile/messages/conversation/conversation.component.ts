@@ -4,7 +4,7 @@ import {State} from "../../../../../../app.state";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {User} from "../../../../../../security/data/models/user.model";
-import {first} from "rxjs/operators";
+import {filter, first} from "rxjs/operators";
 import {UserProfileService} from "../../../../../services/user-profile.service";
 import {UserConversationService} from "../../../../../services/user-conversation.service";
 import {ConversationMessageList} from "../../../../../../core/data/models/messages/conversation-message-list.model";
@@ -12,7 +12,6 @@ import {ConversationMessageService} from "../../../../../services/conversation-m
 import {ConversationMessage} from "../../../../../../core/data/models/messages/conversation-message.model";
 import {GlobalNotification} from "../../../../../../core/data/actions";
 import {Notification, NotificationType} from "../../../../../../core/data/models/notification.model";
-import {Message} from "../../../../../../core/data/models/messages/message.model";
 import {PAGE_NOT_FOUND_ROUTE} from "../../../../../client-routing.module";
 import {UserReportAbuseInit} from "../../../../../data/actions";
 
@@ -26,6 +25,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
   @ViewChild('messageListContainer') messageListContainer: ElementRef;
 
   paramSubscription: Subscription = null;
+  bannedUserSubscription: Subscription = null;
 
   user: User = null;
   addressee: User = null;
@@ -54,6 +54,8 @@ export class ConversationComponent implements OnInit, OnDestroy {
     this.user = await this.store.pipe(select(state => state.security.user), first()).toPromise();
 
     this.paramSubscription = this.route.params.subscribe( async (params) => {
+
+      this.disposeBanUserSubscription();
 
       this.isInitialized = false;
 
@@ -95,9 +97,35 @@ export class ConversationComponent implements OnInit, OnDestroy {
       await this.loadMessages();
       await this.readLastMessages();
 
+      this.initBanUserSubscription();
+
       this.isInitialized = true;
     });
 
+  }
+
+  initBanUserSubscription()
+  {
+    this.bannedUserSubscription = this.store.pipe(
+      select(state => state.client.lastBanStatusChangedUser),
+      filter(user => !!user)
+    ).subscribe(
+      (user: User) => {
+        if (user.id === this.addressee.id)
+        {
+          this.addressee = user;
+        }
+      }
+    );
+  }
+
+  disposeBanUserSubscription()
+  {
+    if (!!this.bannedUserSubscription)
+    {
+      this.bannedUserSubscription.unsubscribe();
+      this.bannedUserSubscription = null;
+    }
   }
 
   async loadMessages()
@@ -167,6 +195,8 @@ export class ConversationComponent implements OnInit, OnDestroy {
       this.paramSubscription.unsubscribe();
       this.paramSubscription = null;
     }
+
+    this.disposeBanUserSubscription();
   }
 
   async onMessageSubmitHandler(text: string)
@@ -217,13 +247,6 @@ export class ConversationComponent implements OnInit, OnDestroy {
 
   async onScroll()
   {
-    //debugger
-    console.log('SCROLL...');
-
-    const { nativeElement } = this.messageListContainer;
-    console.log('nativeElement.scrollTop: ' + nativeElement.scrollTop.toString());
-    console.log('nativeElement.scrollHeight: ' + nativeElement.scrollHeight.toString());
-
     await this.loadMessages();
   }
 

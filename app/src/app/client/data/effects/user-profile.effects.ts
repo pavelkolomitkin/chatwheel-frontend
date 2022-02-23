@@ -28,8 +28,6 @@ export class UserProfileEffects
 
         const { block, user } = action;
 
-        debugger
-
         let result = null;
         if (block)
         {

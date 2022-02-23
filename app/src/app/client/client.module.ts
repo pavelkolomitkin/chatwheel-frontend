@@ -52,6 +52,7 @@ import {AbuseReportTypeService} from "../core/services/abuse-report-type.service
 import {ReportAbuseEffects} from "./data/effects/report-abuse.effects";
 import {AbuseReportService} from "./services/abuse-report.service";
 import {UserProfileEffects} from "./data/effects/user-profile.effects";
+import { ReportAbuseButtonsComponent } from './components/pages/my-profile/messages/conversation/components/report-abuse-buttons/report-abuse-buttons.component';
 
 @NgModule({
   declarations: [
@@ -89,6 +90,7 @@ import {UserProfileEffects} from "./data/effects/user-profile.effects";
     PageNotFoundComponent,
     ReportAbuseComponent,
     ReportAbuseListenerComponent,
+    ReportAbuseButtonsComponent,
 
 
   ],

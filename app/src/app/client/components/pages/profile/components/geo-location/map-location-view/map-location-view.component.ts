@@ -71,14 +71,12 @@ export class MapLocationViewComponent implements OnInit, AfterViewInit
 
   onLocationSelectedHandler(event)
   {
-    console.log('Map clicked...');
-    console.log(event);
+
   }
 
   onMapMoveHandler(event)
   {
-    console.log('Map moved...');
-    console.log(event);
+
   }
 
 }

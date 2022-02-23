@@ -36,6 +36,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
     this.routeParamsSubscription = this.route.params.subscribe( async (params) => {
 
+      this.disposeBanUserSubscription();
+
       this.user = null;
 
       const userId: string = params['id'];
@@ -59,8 +61,14 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this.store.dispatch(new GlobalProgressHide());
       }
 
+      this.initBanUserSubscription();
     });
 
+
+  }
+
+  initBanUserSubscription()
+  {
     this.banChangedUserSubscription = this.store.pipe(
       select(state => state.client.lastBanStatusChangedUser),
       filter(user => !!user)
@@ -72,6 +80,16 @@ export class ProfileComponent implements OnInit, OnDestroy {
     });
   }
 
+  disposeBanUserSubscription()
+  {
+    if (!!this.banChangedUserSubscription)
+    {
+      this.banChangedUserSubscription.unsubscribe();
+      this.banChangedUserSubscription = null;
+    }
+  }
+
+
   ngOnDestroy(): void {
 
     if (!!this.routeParamsSubscription)
@@ -80,11 +98,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.routeParamsSubscription = null
     }
 
-    if (!!this.banChangedUserSubscription)
-    {
-      this.banChangedUserSubscription.unsubscribe();
-      this.banChangedUserSubscription = null;
-    }
+    this.disposeBanUserSubscription();
   }
 
 }

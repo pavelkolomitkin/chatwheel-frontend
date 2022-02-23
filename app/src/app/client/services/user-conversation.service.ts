@@ -46,10 +46,11 @@ export class UserConversationService extends BaseService
 
   get(id: string)
   {
-    return this.http.get<{ messageList: ConversationMessageList, members: any }>('/client/conversation/' + id).pipe(
+    return this.http.get<{ messageList: ConversationMessageList, members: any, banStatuses: [{ applicant, banned }] }>('/client/conversation/' + id).pipe(
       map(data => {
 
-        return ConversationMessageList.createFromRawData(data);
+        const result: ConversationMessageList = ConversationMessageList.createFromRawData(data);
+        return result;
       })
     );
   }

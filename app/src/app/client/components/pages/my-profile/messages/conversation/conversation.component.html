@@ -26,11 +26,11 @@
 
     </div>
 
-    <div class="card-header-right controls">
+    <div class="card-header-right controls text-right" *ngIf="!!addressee">
 
-        <span class="btn btn-danger" (click)="onReportAbuseClickHandler($event)">
-          <i class="ik ik-alert-circle"></i>Report Abuse
-        </span>
+      <app-report-abuse-buttons
+        [user]="addressee"
+      ></app-report-abuse-buttons>
 
     </div>
 

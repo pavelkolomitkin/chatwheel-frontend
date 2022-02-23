@@ -34,6 +34,21 @@ export class ConversationMessageList
       });
     }
 
+    if (!!data.banStatuses)
+    {
+      result.members.forEach(item => {
+
+        const { member } = item;
+
+        if (typeof data.banStatuses[member.id] !== 'undefined')
+        {
+          const { amIBanned, isBanned } = data.banStatuses[member.id];
+
+          member.amIBanned = amIBanned;
+          member.isBanned = isBanned;
+        }
+      });
+    }
 
     return result;
   }
