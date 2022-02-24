@@ -41,22 +41,18 @@ export class UserActivityObserverComponent implements OnInit, OnDestroy {
   }
 
   userBannedMeHandler = (user: User) => {
-    debugger
     this.store.dispatch(new UserBannedMe(user));
   }
 
   userUnbannedMeHandler = (user: User) => {
-    debugger
     this.store.dispatch(new UserUnbannedMe(user));
   }
 
   iBannedUserHandler = (user: User) => {
-    debugger
     this.store.dispatch(new IBannedUser(user));
   }
 
   iUnbannedUserHandler = (user: User) => {
-    debugger
     this.store.dispatch(new IUnbannedUser(user));
   }
 }

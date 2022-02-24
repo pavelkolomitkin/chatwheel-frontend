@@ -285,7 +285,6 @@ export class ConversationComponent implements OnInit, OnDestroy {
 
   banUserHandler = (user: User) =>
   {
-    debugger
     if (this.addressee.id === user.id)
     {
       this.addressee = user;
@@ -387,6 +386,11 @@ export class ConversationComponent implements OnInit, OnDestroy {
       this.paramSubscription = null;
     }
 
+    this.disposeBanUserSubscription();
+    this.disposeReceivedMessageHandler();
+    this.disposeRemovedMessageHandler();
+    this.disposeEditedMessageHandler();
+    this.disposeTypingHandler();
     this.disposeBanUserSubscription();
   }
 

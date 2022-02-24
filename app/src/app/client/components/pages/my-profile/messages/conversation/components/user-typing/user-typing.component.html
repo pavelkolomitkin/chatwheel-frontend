@@ -1,5 +1,8 @@
 <ng-container *ngIf="!!_typing">
   <div class="typing">
-    <span class="text-muted" *ngIf="isVisible">{{ _typing.user.fullName }} is typing...</span>
+    <span
+      class="text-muted badge badge-pill badge-light"
+      *ngIf="isVisible">
+      <i class="ik ik-edit-2"></i> {{ _typing.user.fullName }}</span>
   </div>
 </ng-container>
