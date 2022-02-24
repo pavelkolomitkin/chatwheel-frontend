@@ -38,22 +38,23 @@ export class MessageObserverComponent implements OnInit, OnDestroy {
     this.messageRemovedSubscription.unsubscribe();
   }
 
-  newMessageChangedHandler(messageNumber: number)
+  newMessageChangedHandler = (messageNumber: number) =>
   {
     this.store.dispatch(new UserUpdateNewMessageNumberSuccess(messageNumber));
   }
 
-  messageAddedHandler(message)
+  messageAddedHandler = (message) =>
   {
+    //debugger
     this.store.dispatch(new MessageReceived(message));
   }
 
-  messageEditedHandler(data)
+  messageEditedHandler = (data) =>
   {
     this.store.dispatch(new MessageEdited(data));
   }
 
-  messageRemovedHandler(data)
+  messageRemovedHandler = (data) =>
   {
     this.store.dispatch(new MessageRemoved(data))
   }

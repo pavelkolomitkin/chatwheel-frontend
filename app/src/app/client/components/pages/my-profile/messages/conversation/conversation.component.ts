@@ -156,7 +156,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
     this.receivedMessageSubscription = this.store.pipe(
       select(state => state.client.lastReceivedMessage),
       filter(message => !!message)
-    ).subscribe((message: ReceivedMessage) => {
+    ).subscribe(async (message: ReceivedMessage) => {
 
       if (!this.messageList)
       {
@@ -165,11 +165,14 @@ export class ConversationComponent implements OnInit, OnDestroy {
 
       if (this.messageList.id === message.messageList.id)
       {
-        if (this.user.id !== message.message.message.author.id)
-        {
-          this.messages.unshift(message.message);
-        }
+        this.messages.unshift(message.message);
       }
+
+      const wasScrollDisabled: boolean = this.infinityScrollDisabled;
+
+      this.infinityScrollDisabled = true;
+      await this.scrollDownList();
+      this.infinityScrollDisabled = wasScrollDisabled;
     });
   }
 
@@ -349,34 +352,31 @@ export class ConversationComponent implements OnInit, OnDestroy {
 
   async onMessageSubmitHandler(text: string)
   {
-    //debugger
-    if (this.messageList === null)
-    {
-      // send directly to the addressee
-      const data = await this.messageService.sendToUser(this.addressee, text).toPromise();
 
-      this.messages.push(data.message);
-      this.messageList = data.conversation;
-    }
-    else
-    {
-      // send to the conversation
-      try {
-        const message = await this.messageService.sendToConversation(this.messageList, text).toPromise();
-        //debugger;
-        this.messages.unshift(message);
-      }
-      catch (error)
+    try {
+      //debugger
+      if (this.messageList === null)
       {
-        this.store.dispatch(new GlobalNotification(new Notification(NotificationType.ERROR, 'Cannot send message. Try it later...', 'Error')));
+        await this.messageService.sendToUser(this.addressee, text).toPromise();
       }
+      else
+      {
+        // send to the conversation
+        await this.messageService.sendToConversation(this.messageList, text).toPromise();
+      }
+
+    }
+    catch (error)
+    {
+      this.store.dispatch(new GlobalNotification(new Notification(NotificationType.ERROR, 'Cannot send message. Try it later...', 'Error')));
     }
 
-    const wasScrollDisabled: boolean = this.infinityScrollDisabled;
 
-    this.infinityScrollDisabled = true;
-    await this.scrollDownList();
-    this.infinityScrollDisabled = wasScrollDisabled;
+    // const wasScrollDisabled: boolean = this.infinityScrollDisabled;
+    //
+    // this.infinityScrollDisabled = true;
+    // await this.scrollDownList();
+    // this.infinityScrollDisabled = wasScrollDisabled;
   }
 
   scrollDownList()
