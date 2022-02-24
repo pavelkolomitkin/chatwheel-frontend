@@ -57,6 +57,7 @@ import {MessageSocketService} from "./services/sockets/message-socket.service";
 import {UserActivitySocketService} from "./services/sockets/user-activity-socket.service";
 import { MessageObserverComponent } from './components/common/message-observer/message-observer.component';
 import { UserTypingComponent } from './components/pages/my-profile/messages/conversation/components/user-typing/user-typing.component';
+import { UserActivityObserverComponent } from './components/common/user-activity-observer/user-activity-observer.component';
 
 @NgModule({
   declarations: [
@@ -97,6 +98,7 @@ import { UserTypingComponent } from './components/pages/my-profile/messages/conv
     ReportAbuseButtonsComponent,
     MessageObserverComponent,
     UserTypingComponent,
+    UserActivityObserverComponent,
   ],
   providers: [
     ProfileService,

@@ -25,6 +25,12 @@ export interface State
   lastEditedMessage: EditedMessage;
   lastRemovedMessage: RemovedMessage;
 
+  lastUserBannedMe: User;
+  lastUserUnbannedMe: User;
+
+  lastUserIBanned: User;
+  lastUserIUnBanned: User;
+
 }
 
 export const initialState: State = {
@@ -43,7 +49,13 @@ export const initialState: State = {
   lastReceivedMessage: null,
 
   lastEditedMessage: null,
-  lastRemovedMessage: null
+  lastRemovedMessage: null,
+
+  lastUserBannedMe: null,
+  lastUserUnbannedMe: null,
+
+  lastUserIBanned: null,
+  lastUserIUnBanned: null,
 }
 
 export function reducer(state: State = initialState, action: actions.ClientUserActions): State
@@ -144,6 +156,34 @@ export function reducer(state: State = initialState, action: actions.ClientUserA
       return {
         ...state,
         lastRemovedMessage: action.message
+      };
+
+    case actions.USER_BANNED_ME:
+
+      return {
+        ...state,
+        lastUserBannedMe: action.user
+      };
+
+    case actions.USER_UNBANNED_ME:
+
+      return {
+        ...state,
+        lastUserUnbannedMe: action.user
+      };
+
+    case actions.I_BANNED_USER:
+
+      return {
+        ...state,
+        lastUserIBanned: action.user
+      };
+
+    case actions.I_UNBANNED_USER:
+
+      return {
+        ...state,
+        lastUserIUnBanned: action.user
       };
 
     default:

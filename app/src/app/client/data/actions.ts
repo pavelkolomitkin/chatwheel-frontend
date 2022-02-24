@@ -31,6 +31,11 @@ export const MESSAGE_RECEIVED = 'MESSAGE_RECEIVED';
 export const MESSAGE_EDITED = 'MESSAGE_EDITED';
 export const MESSAGE_REMOVED = 'MESSAGE_REMOVED';
 
+export const USER_BANNED_ME = 'USER_BANNED_ME';
+export const USER_UNBANNED_ME = 'USER_UNBANNED_ME';
+export const I_BANNED_USER = 'I_BANNED_USER';
+export const I_UNBANNED_USER = 'I_UNBANNED_USER';
+
 
 export class UserRequestUpdateGeoLocation implements Action
 {
@@ -157,6 +162,34 @@ export class MessageRemoved implements Action
   constructor(public message: RemovedMessage) {}
 }
 
+export class UserBannedMe implements Action
+{
+  readonly type = USER_BANNED_ME;
+
+  constructor(public user: User) { }
+}
+
+export class UserUnbannedMe implements Action
+{
+  readonly type = USER_UNBANNED_ME;
+
+  constructor(public user: User) { }
+}
+
+export class IBannedUser implements Action
+{
+  readonly type = I_BANNED_USER;
+
+  constructor(public user: User) { }
+}
+
+export class IUnbannedUser implements Action
+{
+  readonly type = I_UNBANNED_USER;
+
+  constructor(public user: User) { }
+}
+
 export type ClientUserActions =
   UserRequestUpdateGeoLocation
   | UserGeolocationPermissionChange
@@ -182,6 +215,11 @@ export type ClientUserActions =
   | MessageReceived
   | MessageEdited
   | MessageRemoved
+
+  | UserBannedMe
+  | UserUnbannedMe
+  | IBannedUser
+  | IUnbannedUser
 
 
   ;

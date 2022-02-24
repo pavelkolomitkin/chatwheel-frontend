@@ -1,10 +1,10 @@
 import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {select, Store} from "@ngrx/store";
+import {createSelector, select, Store} from "@ngrx/store";
 import {State} from "../../../../../../app.state";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {User} from "../../../../../../security/data/models/user.model";
-import {filter, first} from "rxjs/operators";
+import {combineLatest, filter, first, withLatestFrom} from "rxjs/operators";
 import {UserProfileService} from "../../../../../services/user-profile.service";
 import {UserConversationService} from "../../../../../services/user-conversation.service";
 import {ConversationMessageList} from "../../../../../../core/data/models/messages/conversation-message-list.model";
@@ -30,11 +30,15 @@ export class ConversationComponent implements OnInit, OnDestroy {
   @ViewChild('messageListContainer') messageListContainer: ElementRef;
 
   paramSubscription: Subscription = null;
-  bannedUserSubscription: Subscription = null;
   receivedMessageSubscription: Subscription = null;
   removedMessageSubscription: Subscription = null;
   editedMessageSubscription: Subscription = null;
   userActivitySubscription: Subscription = null;
+
+  userBannedMeSubscription: Subscription = null;
+  userUnbannedMeSubscription: Subscription = null;
+  iBannedUserSubscription: Subscription = null;
+  iUnbannedUserSubscription: Subscription = null;
 
   user: User = null;
   addressee: User = null;
@@ -72,6 +76,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
       this.disposeRemovedMessageHandler();
       this.disposeEditedMessageHandler();
       this.disposeTypingHandler();
+      this.disposeBanUserSubscription();
 
       this.isInitialized = false;
 
@@ -118,6 +123,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
       this.initRemovedMessageHandler();
       this.initEditedMessageHandler();
       this.initTypingHandler();
+      this.initBanUserSubscription();
 
       this.isInitialized = true;
     });
@@ -238,9 +244,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
         {
           const editedMessage: ConversationMessage = this.messages[index];
 
-          message.editMessage(editedMessage);
-
-          this.messages[index] = editedMessage;
+          this.messages[index] = message.editMessage(editedMessage);
         }
       }
     });
@@ -257,25 +261,61 @@ export class ConversationComponent implements OnInit, OnDestroy {
 
   initBanUserSubscription()
   {
-    this.bannedUserSubscription = this.store.pipe(
-      select(state => state.client.lastBanStatusChangedUser),
-      filter(user => !!user)
-    ).subscribe(
-      (user: User) => {
-        if (user.id === this.addressee.id)
-        {
-          this.addressee = user;
-        }
-      }
-    );
+    this.userBannedMeSubscription = this.store.pipe(
+      select(state => state.client.lastUserBannedMe),
+      filter(user => !!user),
+    ).subscribe(this.banUserHandler);
+
+    this.userUnbannedMeSubscription = this.store.pipe(
+      select(state => state.client.lastUserUnbannedMe),
+      filter(user => !!user),
+    ).subscribe(this.banUserHandler);
+
+    this.iBannedUserSubscription = this.store.pipe(
+      select(state => state.client.lastUserIBanned),
+      filter(user => !!user),
+    ).subscribe(this.banUserHandler);
+
+    this.iUnbannedUserSubscription = this.store.pipe(
+      select(state => state.client.lastUserIUnBanned),
+      filter(user => !!user),
+    ).subscribe(this.banUserHandler);
+
+  }
+
+  banUserHandler = (user: User) =>
+  {
+    debugger
+    if (this.addressee.id === user.id)
+    {
+      this.addressee = user;
+    }
   }
 
   disposeBanUserSubscription()
   {
-    if (!!this.bannedUserSubscription)
+    if (!!this.userBannedMeSubscription)
     {
-      this.bannedUserSubscription.unsubscribe();
-      this.bannedUserSubscription = null;
+      this.userBannedMeSubscription.unsubscribe();
+      this.userBannedMeSubscription = null;
+    }
+
+    if (!!this.userUnbannedMeSubscription)
+    {
+      this.userUnbannedMeSubscription.unsubscribe();
+      this.userUnbannedMeSubscription = null;
+    }
+
+    if (!!this.iBannedUserSubscription)
+    {
+      this.iBannedUserSubscription.unsubscribe();
+      this.iBannedUserSubscription = null;
+    }
+
+    if (!!this.iUnbannedUserSubscription)
+    {
+      this.iUnbannedUserSubscription.unsubscribe();
+      this.iUnbannedUserSubscription = null;
     }
   }
 
@@ -370,13 +410,6 @@ export class ConversationComponent implements OnInit, OnDestroy {
     {
       this.store.dispatch(new GlobalNotification(new Notification(NotificationType.ERROR, 'Cannot send message. Try it later...', 'Error')));
     }
-
-
-    // const wasScrollDisabled: boolean = this.infinityScrollDisabled;
-    //
-    // this.infinityScrollDisabled = true;
-    // await this.scrollDownList();
-    // this.infinityScrollDisabled = wasScrollDisabled;
   }
 
   scrollDownList()

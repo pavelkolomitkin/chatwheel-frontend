@@ -70,11 +70,25 @@
       ></app-user-typing>
     </div>
 
-    <app-conversation-user-input
-      (onSubmit)="onMessageSubmitHandler($event)"
-      [isEnabled]="isInitialized"
-      [messageList]="messageList"
-    ></app-conversation-user-input>
+    <ng-container *ngIf="!!addressee">
+      <ng-container *ngIf="!addressee.isBanned && !addressee.amIBanned">
+        <app-conversation-user-input
+          (onSubmit)="onMessageSubmitHandler($event)"
+          [isEnabled]="isInitialized"
+          [messageList]="messageList"
+        ></app-conversation-user-input>
+
+      </ng-container>
+
+      <ng-container *ngIf="addressee.isBanned">
+        <p class="alert alert-danger">You've blocked the user!</p>
+      </ng-container>
+
+      <ng-container *ngIf="addressee.amIBanned && !addressee.isBanned">
+        <p class="alert alert-danger">You've been blocked by the user!</p>
+      </ng-container>
+
+    </ng-container>
 
   </div>
 </div>

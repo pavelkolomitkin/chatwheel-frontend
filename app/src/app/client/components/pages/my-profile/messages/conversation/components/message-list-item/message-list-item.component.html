@@ -19,7 +19,10 @@
           </div>
           <p class="text-muted mb-0"><i class="fa fa-clock-o mr-10"></i>
             <span app-date-time [value]="message.message.createdAt"></span>
-            <span class="text-muted small" *ngIf="message.message.createdAt !== message.message.updatedAt">(edited)</span>
+            <span
+              class="text-muted small" *ngIf="message.message.createdAt !== message.message.updatedAt"
+              [title]="message.message.updatedAt | amLocal"
+            >(edited)</span>
           </p>
         </div>
         <div class="col-auto pl-0">
@@ -98,12 +101,21 @@
         ></app-user-avatar>
       </div>
       <div class="col">
-        <div class="msg">
+        <div class="msg text-container">
           <p class="mb-0" [innerHTML]="message.message.text | multiLine"></p>
+          <div class="controls">
+              <span class="control mr-2 p-1 bg-white rounded" (click)="onRemoveOtherMessageClickHandler($event)">
+                <i class="ik ik-trash"></i>
+              </span>
+          </div>
         </div>
         <p class="text-muted mb-0"><i class="fa fa-clock-o mr-10"></i>
           <span app-date-time [value]="message.message.createdAt"></span>
-          <span class="text-muted small" *ngIf="message.message.createdAt !== message.message.updatedAt">(edited)</span>
+          <span
+            class="text-muted small"
+            *ngIf="message.message.createdAt !== message.message.updatedAt"
+            [title]="message.message.updatedAt | amLocal"
+          >(edited)</span>
         </p>
       </div>
     </div>

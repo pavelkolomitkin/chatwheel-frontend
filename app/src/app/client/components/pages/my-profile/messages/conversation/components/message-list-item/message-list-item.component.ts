@@ -89,14 +89,20 @@ export class MessageListItemComponent implements OnInit, OnDestroy {
 
   }
 
+  async onRemoveOtherMessageClickHandler(event)
+  {
+    await this.messageService.remove(this.message, false).toPromise();
+    this.removedEmitter.emit(this.message);
+  }
+
   async onDeleteConfirmClickHandler(event)
   {
-    //debugger
-//    const { removeFromOthers } = form.value;
-
     try {
       await this.messageService.remove(this.message, this.removeFromOthers).toPromise();
-      this.removedEmitter.emit(this.message);
+      if (!this.removeFromOthers)
+      {
+        this.removedEmitter.emit(this.message);
+      }
     }
     catch (error)
     {

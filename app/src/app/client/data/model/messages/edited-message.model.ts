@@ -15,8 +15,16 @@ export class EditedMessage
   {
     const { text, updatedAt } = this.message;
 
-    message.isRead = this.isRead;
-    message.message.text = text;
-    message.message.updatedAt = updatedAt;
+    const result: ConversationMessage = Object.assign(new ConversationMessage(), {
+      ...message,
+      isRead: this.isRead,
+      message: {
+        ...message.message,
+        text: text,
+        updatedAt: updatedAt
+      }
+    });
+
+    return result;
   }
 }

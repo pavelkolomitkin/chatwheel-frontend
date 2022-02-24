@@ -1,26 +1,24 @@
-.my-message-container {
-
-}
-
-.my-message-container .text-container
+.text-container
 {
   position: relative;
 }
 
-.my-message-container .text-container .controls {
+.text-container .controls
+{
   position: absolute;
   top: 5px;
   left: 5px;
   display: none;
 }
 
-.my-message-container .text-container .controls {
-  cursor: pointer;
-}
-
-.my-message-container .text-container:hover .controls
+.text-container:hover .controls
 {
   display: block;
+}
+
+.text-container .controls .control
+{
+  cursor: pointer;
 }
 
 form {
