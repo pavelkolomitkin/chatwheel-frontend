@@ -7,9 +7,13 @@ import {Observable, of} from "rxjs";
 import {
   USER_DELETE_ACCOUNT_START,
   USER_DELETE_ACCOUNT_SUCCESS,
+  USER_UPDATE_NEW_MESSAGE_NUMBER_START,
   UserDeleteAccountError,
   UserDeleteAccountStart,
-  UserDeleteAccountSuccess
+  UserDeleteAccountSuccess,
+  UserUpdateNewMessageNumberError,
+  UserUpdateNewMessageNumberStart,
+  UserUpdateNewMessageNumberSuccess
 } from "../actions";
 import {catchError, map, mergeMap, tap} from "rxjs/operators";
 import {GlobalNotification, GlobalProgressHide, GlobalProgressShow} from "../../../core/data/actions";
@@ -52,6 +56,22 @@ export class ProfileEffects
       })
     )
   }, { dispatch: false })
+
+  updateNewMessagesStart: Observable<Action> = createEffect(() => {
+    return this.actions.pipe(
+      ofType(USER_UPDATE_NEW_MESSAGE_NUMBER_START),
+      mergeMap((action: UserUpdateNewMessageNumberStart) => {
+        return this.profileService.getNewMessagesNumber().pipe(
+          map((newMessageNumber: number) => {
+            return new UserUpdateNewMessageNumberSuccess(newMessageNumber);
+          }),
+          catchError((errors) => {
+            return of(new UserUpdateNewMessageNumberError(errors));
+          })
+        )
+      })
+    );
+  });
 
   constructor(
     private store: Store<State>,

@@ -1,0 +1,27 @@
+<ng-container *ngIf="!user.amIBanned && !user.isBanned">
+
+  <span class="btn btn-danger" (click)="onReportAbuseClickHandler($event)">
+    <i class="ik ik-alert-circle"></i>Report Abuse
+  </span>
+
+</ng-container>
+
+<ng-container *ngIf="user.isBanned">
+  <div>
+    <span class="text-muted">You've blocked the user!</span>
+  </div>
+  <div>
+    <span class="btn btn-secondary" (click)="onUnblockClickHandler($event)">
+      <i class="ik ik-unlock"></i> Unblock
+    </span>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="user.amIBanned && !user.isBanned">
+  <div>
+    <span class="text-muted">You've been blocked by this user!</span>
+  </div>
+  <span class="btn btn-danger" (click)="onReportAbuseClickHandler($event)">
+    <i class="ik ik-alert-circle"></i>Report Abuse
+  </span>
+</ng-container>

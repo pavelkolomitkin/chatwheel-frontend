@@ -14,6 +14,12 @@ import { UserMapMarkComponent } from './components/geo/user-map-mark/user-map-ma
 import { MapComponentBaseComponent } from './components/geo/map-component-base/map-component-base.component';
 import {RouterModule} from "@angular/router";
 import { UserActivityStatusDirective } from './directives/user-activity-status.directive';
+import {InfiniteScrollModule} from "ngx-infinite-scroll";
+import {MultiLinePipe} from "./pipes/multi-line.pipe";
+import {TextTrimPipe} from "./pipes/text-trim.pipe";
+import {MomentModule} from "ngx-moment";
+import {DateTimeViewComponent} from "./components/date-time-view/date-time-view.component";
+import { AlertWindowComponent } from './components/alert-window/alert-window.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +30,11 @@ import { UserActivityStatusDirective } from './directives/user-activity-status.d
     MapComponent,
     UserMapMarkComponent,
     MapComponentBaseComponent,
+    DateTimeViewComponent,
     UserActivityStatusDirective,
+    MultiLinePipe,
+    TextTrimPipe,
+    AlertWindowComponent
   ],
   imports: [
     CommonModule,
@@ -37,21 +47,29 @@ import { UserActivityStatusDirective } from './directives/user-activity-status.d
       useDefaultLang: true
     }),
     LightboxModule,
-    RouterModule
+    RouterModule,
+    InfiniteScrollModule,
+    MomentModule
   ],
   exports: [
     TranslateModule,
     FormsModule,
     LightboxModule,
+    InfiniteScrollModule,
 
     FooterComponent,
     UserAvatarComponent,
     EditableUserAvatarComponent,
     FormFieldErrorListComponent,
     MapComponent,
+    DateTimeViewComponent,
+    AlertWindowComponent,
 
-    UserActivityStatusDirective
-  ]
+    UserActivityStatusDirective,
+    MultiLinePipe,
+    TextTrimPipe,
+    MomentModule
+  ],
 })
 export class SharedModule {
   constructor(private translate: TranslateService)

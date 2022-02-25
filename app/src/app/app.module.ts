@@ -6,6 +6,7 @@ import {CoreModule} from "./core/core.module";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {StoreDevtoolsModule} from "@ngrx/store-devtools";
 import {environment} from "../environments/environment";
+import {SharedModule} from "./shared/shared.module";
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import {environment} from "../environments/environment";
   ],
   imports: [
     CoreModule,
+    SharedModule,
     BrowserModule,
     AppRoutingModule,
     NgbModule,

@@ -1,7 +1,7 @@
-.avatar-wrapper
-{
-  width: 150px;
-  height: 150px;
-  margin: auto;
-  text-align: center;
+.menu-badge{
+  margin: 0;
+  border-radius: 20px;
+  padding-left: 9px;
+  padding-right: 9px;
+  font-size: 11px;
 }

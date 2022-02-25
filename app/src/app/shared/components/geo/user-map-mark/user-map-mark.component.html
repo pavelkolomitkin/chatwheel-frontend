@@ -1,12 +1,12 @@
 <div class="pin" appUserActivityStatus [user]="user">
-  <a [routerLink]="'client/profile/' + user.id">
+  <a [routerLink]="'/client/profile/' + user.id">
     <app-user-avatar
-      [size]="'extraSmall'"
+      [size]="'small'"
       [user]="user"
-
       [additionalStyles]="{
         transform: 'rotate(45deg)',
-        cursor: 'pointer'
+        cursor: 'pointer',
+        width: '100%'
       }"
 
     ></app-user-avatar>

@@ -1,0 +1,15 @@
+<ng-container *ngIf="!user.geoLocation">
+  <div class="empty-geo-location-container">
+    <div class="content">
+      <div>
+        <p class="text-body">Let other users know where you are!</p>
+      </div>
+      <div>
+        <span class="btn btn-primary" (click)="onUpdateClickHandler($event)"><i class="ik ik-map-pin"></i> Update</span>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="!!user.geoLocation">
+  <app-map-location-view [user]="user"></app-map-location-view>
+</ng-container>

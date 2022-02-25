@@ -1,7 +1,11 @@
 import {Component, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {Store} from "@ngrx/store";
 import {State} from "../../../app.state";
-import {UserRequestUpdateGeoLocation} from "../../data/actions";
+import {
+  MessageActionStateReset,
+  UserRequestUpdateGeoLocation,
+  UserUpdateNewMessageNumberStart
+} from "../../data/actions";
 
 @Component({
   selector: 'app-layout',
@@ -16,6 +20,8 @@ export class LayoutComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.store.dispatch(new UserRequestUpdateGeoLocation());
+    this.store.dispatch(new UserUpdateNewMessageNumberStart());
+    this.store.dispatch(new MessageActionStateReset());
   }
 
   ngOnDestroy(): void {

@@ -78,4 +78,11 @@ export class ProfileService
         map(data => User.createFromRawData(data.user))
       );
   }
+
+  getNewMessagesNumber()
+  {
+    return this.http.get<{newMessagesNumber: number}>('/client/profile/new-message-number').pipe(
+      map(data => data.newMessagesNumber)
+    );
+  }
 }

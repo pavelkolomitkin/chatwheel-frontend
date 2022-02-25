@@ -1,0 +1,25 @@
+.right-column
+{
+  position: relative;
+}
+
+.left-block {
+  position: relative !important;
+  padding-left: 50px;
+}
+.left-block .avatar-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.left-block .last-message-block {
+  position: relative;
+}
+
+.message-time
+{
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}

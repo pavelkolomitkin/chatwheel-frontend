@@ -1,0 +1,40 @@
+.addressee-block {
+
+
+}
+
+.addressee-block .picture-container {
+
+}
+
+.addressee-block .name-block {
+
+}
+
+.card-header .controls
+{
+  top: 20px !important;
+  right: 20px !important;
+}
+
+.list-container
+{
+  min-height: 400px;
+  max-height: 400px;
+  flex-direction: column-reverse;
+  display: flex;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  padding-left: 15px;
+  padding-right: 15px;
+
+  position: relative;
+}
+
+.list-container .loading-container
+{
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+

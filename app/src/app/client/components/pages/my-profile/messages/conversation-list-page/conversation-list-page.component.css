@@ -1,0 +1,31 @@
+.conversation-item {
+  cursor: pointer;
+  position: relative;
+}
+.conversation-item .controls{
+  display: none;
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.conversation-item:hover .controls{
+  display: block;
+}
+
+.conversation-item .message-number {
+  display: block;
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.conversation-item:hover .message-number {
+  display: none;
+}
+
+.conversation-item.has-new-messages {
+  background-color: #e9e9e9;
+}

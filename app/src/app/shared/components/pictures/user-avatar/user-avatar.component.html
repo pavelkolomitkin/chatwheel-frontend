@@ -1,7 +1,9 @@
-<img
-  class="user-avatar rounded-circle"
-  [src]="_avatarUrl"
-  [ngStyle]="getStyles()"
-  title="{{ _user.fullName }}"
-  (click)="onImageClickHandler($event)"
->
+<figure class="image-container" [ngClass]="isActivityVisible ? getActivityClass() : ''">
+  <img
+    class="user-avatar rounded-circle align-top"
+    [src]="_avatarUrl"
+    [ngStyle]="getStyles()"
+    title="{{ _user.fullName }}"
+    (click)="onImageClickHandler($event)"
+  >
+</figure>

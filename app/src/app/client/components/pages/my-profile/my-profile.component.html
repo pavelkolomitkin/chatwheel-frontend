@@ -1,5 +1,5 @@
 <ng-container *ngIf="!!(user | async)">
-  <div class="row">
+  <div class="row profile-page left-column">
     <div class="col-lg-4 col-md-5">
       <div class="card" *ngIf="(user | async)">
         <div class="card-body">
@@ -16,7 +16,7 @@
         <div class="card-body">
           <small class="text-muted d-block">Email address </small>
           <h6>{{ ( user | async ).email ? (user | async).email : '-' }}</h6>
-          <app-map-location-view [user]="(user | async)"></app-map-location-view>
+          <app-edit-map-location [user]="(user | async)"></app-edit-map-location>
         </div>
       </div>
     </div>
@@ -30,7 +30,9 @@
             <a routerLink="./" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active" class="nav-link show" data-toggle="pill" role="tab">Profile</a>
           </li>
           <li class="nav-item">
-            <a routerLink="messages" routerLinkActive="active" class="nav-link show" data-toggle="pill" role="tab">Messages</a>
+            <a routerLink="messages" routerLinkActive="active" class="nav-link show" data-toggle="pill" role="tab">Messages
+              <span class="badge badge-pill badge-danger mb-1 menu-badge" *ngIf="newMessageNumber > 0">{{ newMessageNumber }}</span>
+            </a>
           </li>
           <li class="nav-item">
             <a routerLink="calls" routerLinkActive="active" class="nav-link show" data-toggle="pill" role="tab">Calls</a>
@@ -45,7 +47,7 @@
         <div class="tab-content" id="pills-tabContent">
 
           <div class="tab-pane fade active show" id="current-month" role="tabpanel" aria-labelledby="pills-timeline-tab">
-            <div class="card-body">
+            <div class="card-body p0">
               <router-outlet></router-outlet>
             </div>
           </div>

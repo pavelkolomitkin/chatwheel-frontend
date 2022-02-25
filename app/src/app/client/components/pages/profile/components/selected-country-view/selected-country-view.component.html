@@ -1,0 +1,7 @@
+<span>{{ label }}: </span>
+<span *ngIf="!!country;else noCountry">&nbsp;<b>{{ country.name }}</b>
+      <span class="text-muted">{{ country.region ? '(' + country.region.name + ')' : '' }}</span>
+    </span>
+<ng-template #noCountry>
+  <span class="text-muted">{{ noSelectedMessage }}</span>
+</ng-template>

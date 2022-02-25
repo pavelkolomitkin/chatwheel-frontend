@@ -16,8 +16,6 @@ export class UserAvatarComponent implements OnInit {
   _user: User;
 
   _styles: Object = {
-    width: '100%',
-
   }
 
   getStyles()
@@ -39,6 +37,8 @@ export class UserAvatarComponent implements OnInit {
   @Input() isLightBox: boolean = false;
 
   @Input() size: string;
+
+  @Input() isActivityVisible: boolean = false;
 
   @Input()
   set user(user: User)
@@ -80,5 +80,28 @@ export class UserAvatarComponent implements OnInit {
       caption: '',
       thumb: environment.baseApiUrl + this._user.avatarThumbs['small']
     }]);
+  }
+
+  getActivityClass()
+  {
+    let result: string = '';
+
+    const status: string = this._user.getActivityStatus();
+    switch (status)
+    {
+      case User.ACTIVITY_ONLINE:
+        result = 'user--online';
+        break;
+
+      case User.ACTIVITY_WAS_RECENTLY:
+        result = 'user--busy';
+        break;
+
+      default:
+        result = 'user--offline';
+        break
+    }
+
+    return result;
   }
 }

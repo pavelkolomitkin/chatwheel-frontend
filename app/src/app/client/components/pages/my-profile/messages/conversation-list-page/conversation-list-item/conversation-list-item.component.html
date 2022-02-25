@@ -1,0 +1,72 @@
+<ng-container *ngIf="_conversation">
+  <td class="right-column">
+    <div class="d-inline-block align-middle left-block">
+      <div class="avatar-container">
+        <app-user-avatar *ngIf="!!addressee"
+                         [size]="'small'"
+                         [user]="addressee"
+                         [isActivityVisible]="true"
+        ></app-user-avatar>
+      </div>
+      <div class="d-inline-block last-message-block">
+        <h6 class="mb-0" *ngIf="!!addressee">{{ addressee.fullName }}</h6>
+
+        <p class="text-muted mb-0 message-container" >
+
+          <ng-container *ngIf="_conversation.lastMessage; else deletedMessage">
+            <ng-container>
+
+              <span class="d-inline-block">
+
+                <app-user-avatar *ngIf="_conversation.lastMessage.message.author.id !== user.id"
+                                 [size]="'extraSmall'"
+                                 [user]="_conversation.lastMessage.message.author"
+                ></app-user-avatar>
+
+              </span>
+
+            </ng-container>
+            <span>
+              {{ _conversation.lastMessage.message.text | textTrim:50}}
+              <span class="text-muted small" app-date-time [value]="_conversation.lastMessage.message.updatedAt"></span>
+            </span>
+
+          </ng-container>
+          <ng-template #deletedMessage>
+            <span class="small">(message deleted)</span>
+          </ng-template>
+        </p>
+
+      </div>
+    </div>
+
+<!--    <ng-container *ngIf="_conversation.lastMessage">-->
+<!--      <span class="text-muted small message-time" app-date-time [value]="_conversation.lastMessage.message.updatedAt"></span>-->
+<!--    </ng-container>-->
+  </td>
+  <td class="text-right">
+    <div class="controls">
+      <span class="btn" (click)="onDeleteClickHandler($event)">
+        <i class="ik ik-trash"></i>
+      </span>
+    </div>
+    <div class="message-number" *ngIf="_conversation.newMessageNumber > 0">
+      <span class="badge badge-pill badge-primary">{{ _conversation.newMessageNumber }}</span>
+    </div>
+<!--    <h6 class="fw-700">$78.001<i class="fas fa-level-down-alt text-red ml-10"></i></h6>-->
+  </td>
+  <app-alert-window [title]="'Delete Conversation?'" [(isShown)]="isAlertShown">
+    <div content>
+      Are you sure you wanna delete the conversation?
+    </div>
+    <div footer>
+      <button type="button" class="btn btn-outline-danger" (click)="onConversationDeleteHandler($event)">Delete</button>
+    </div>
+  </app-alert-window>
+</ng-container>
+
+<app-user-typing
+  [typing]="typing"
+  (onVisible)="onTypingVisibilityChangeHandler($event)"
+></app-user-typing>
+

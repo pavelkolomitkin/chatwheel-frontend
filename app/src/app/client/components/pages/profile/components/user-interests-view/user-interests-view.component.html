@@ -1,0 +1,16 @@
+<ng-container *ngIf="!!user">
+  <div>
+    <span>Interests: </span>
+  </div>
+  <div>
+    <ng-container *ngIf="user.interests.length > 0; else noInterest">
+        <span
+          *ngFor="let interest of user.interests"
+          class="badge badge-pill badge-secondary mb-1 mr-1"
+        >{{ interest.name }}</span>
+    </ng-container>
+    <ng-template #noInterest>
+      <span class="text-muted">{{ noInterestsMessage }}</span>
+    </ng-template>
+  </div>
+</ng-container>

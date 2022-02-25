@@ -31,7 +31,9 @@ import {UserPictureService} from "./services/user-picture.service";
 import {GeoLocationDeviceService} from "./services/geo-location-device.service";
 import {UserMediaService} from "./services/user-media.service";
 import {UploadDataService} from "./services/upload/upload-data.service";
-
+import {AbuseReportTypeService} from "./services/abuse-report-type.service";
+import {ToastrModule} from "ngx-toastr";
+import {metaReducers} from "./data/meta-reducer";
 
 const httpInterceptorProviders = [
   { provide: HTTP_INTERCEPTORS, useClass: BaseApiUrlInterceptor, multi: true },
@@ -54,14 +56,23 @@ const httpInterceptorProviders = [
     StoreModule.forRoot({
       core: coreReducer,
       security: securityReducer
-    }),
+    },
+      {
+        metaReducers
+      }
+    ),
     EffectsModule.forRoot([
       AuthEffects,
       RegisterEffects,
       AppInitEffect,
       UploadUserPictureEffects
     ]),
-    RouterModule
+    RouterModule,
+    ToastrModule.forRoot({
+      autoDismiss: true,
+      maxOpened: 5,
+      newestOnTop: false
+    })
   ],
   providers: [
     httpInterceptorProviders,
@@ -76,6 +87,7 @@ const httpInterceptorProviders = [
     GeoLocationDeviceService,
     UserMediaService,
     UploadDataService,
+    AbuseReportTypeService,
     ApplicationInitializerService,
     {
       provide: APP_INITIALIZER,
@@ -88,11 +100,11 @@ const httpInterceptorProviders = [
     NgxPermissionsModule,
     StoreModule,
     EffectsModule,
-
     GlobalProgressComponent,
     LayoutComponent,
     NotFoundPageComponent,
     MessageNotifierComponent,
-  ]
+    ToastrModule
+  ],
 })
 export class CoreModule {}

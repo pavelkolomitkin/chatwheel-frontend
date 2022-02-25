@@ -1,0 +1,41 @@
+<ng-container *ngIf="list !== null">
+  <div
+    infiniteScroll
+    [infiniteScrollDistance]="2"
+    [infiniteScrollThrottle]="50"
+    [infiniteScrollDisabled]="infiniteScrollDisabled"
+    (scrolled)="onScroll()"
+  >
+
+    <div class="table-responsive">
+
+      <ng-container *ngIf="list.length !== 0; else noConversations">
+
+        <table class="table table-hover mb-0 without-header">
+
+          <tbody>
+
+          <tr
+            class="conversation-item"
+            [ngClass]="conversation.newMessageNumber > 0 ? 'has-new-messages' : ''"
+            app-conversation-list-item
+            *ngFor="let conversation of list"
+            [conversation]="conversation"
+            [user]="authorizedUser"
+            (click)="onConversationClickHandler(conversation)"
+            (onRemoved)="onRemoveConversationHandler(conversation)"
+          ></tr>
+
+          </tbody>
+        </table>
+
+      </ng-container>
+      <ng-template #noConversations>
+        <p class="alert alert-info ml-20 mr-20 mt-20 mb-20">You have no conversations yet...</p>
+      </ng-template>
+
+    </div>
+
+  </div>
+
+</ng-container>

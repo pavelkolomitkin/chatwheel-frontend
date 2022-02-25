@@ -1,0 +1,33 @@
+.text-container
+{
+  position: relative;
+}
+
+.text-container .controls
+{
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  display: none;
+}
+
+.text-container:hover .controls
+{
+  display: block;
+}
+
+.text-container .controls .control
+{
+  cursor: pointer;
+}
+
+form {
+  position: relative;
+}
+
+form .loader
+{
+  position: absolute;
+  top: 0;
+  left: 0;
+}

@@ -1,0 +1,26 @@
+.message-container {
+  cursor: pointer !important;
+  background: white;
+  min-width: 250px;
+  position: relative;
+  pointer-events: all;
+  max-width: 250px;
+}
+.message-container .avatar-container {
+  position: absolute;
+  top: 25px;
+  left: 20px;
+}
+.message-container .message {
+  padding-left: 50px;
+}
+.message-container .message .body-container {}
+
+.message-container .controls {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+.message-container .controls .control {
+  cursor: pointer;
+}

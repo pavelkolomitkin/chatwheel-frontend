@@ -53,3 +53,11 @@ body
   background-color: #e2e3e5 !important;
   border-color: #e2e3e5 !important;
 }
+
+.profile-page.left-column .avatar-wrapper
+{
+  width: 150px;
+  height: 150px;
+  margin: auto;
+  text-align: center;
+}

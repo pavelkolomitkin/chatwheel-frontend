@@ -1,0 +1,25 @@
+
+<div class="message-container card" (click)="onClickHandler($event)" *ngIf="!!message">
+
+  <div class="controls">
+    <span class="control" (click)="onDismissClickHandler($event)">
+      <i class="ik ik-x"></i>
+    </span>
+  </div>
+
+  <div class="card-block">
+    <div class="avatar-container">
+      <app-user-avatar
+        [size]="'small'"
+        [user]="message.message.message.author"
+        [additionalStyles]="{ cursor: 'pointer' }"
+      ></app-user-avatar>
+    </div>
+    <div class="message">
+      <p class="body-container">
+        <span>{{ message.message.message.text | textTrim }}</span>
+      </p>
+      <span class="text-muted small" app-date-time [value]="message.message.message.createdAt"></span>
+    </div>
+  </div>
+</div>
