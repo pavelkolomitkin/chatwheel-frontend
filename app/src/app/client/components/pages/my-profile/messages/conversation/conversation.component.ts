@@ -13,7 +13,12 @@ import {ConversationMessage} from "../../../../../../core/data/models/messages/c
 import {GlobalNotification} from "../../../../../../core/data/actions";
 import {Notification, NotificationType} from "../../../../../../core/data/models/notification.model";
 import {PAGE_NOT_FOUND_ROUTE} from "../../../../../client-routing.module";
-import {MessageActionStateReset, UserReportAbuseInit} from "../../../../../data/actions";
+import {
+  ConversationClose,
+  ConversationOpen,
+  MessageActionStateReset,
+  UserReportAbuseInit
+} from "../../../../../data/actions";
 import {ReceivedMessage} from "../../../../../data/model/messages/received-message.model";
 import {RemovedMessage} from "../../../../../data/model/messages/removed-message.model";
 import {EditedMessage} from "../../../../../data/model/messages/edited-message.model";
@@ -68,13 +73,15 @@ export class ConversationComponent implements OnInit, OnDestroy {
 
     this.paramSubscription = this.route.params.subscribe( async (params) => {
 
+      this.resetLocalState();
+      this.store.dispatch(new ConversationClose());
+
       this.resetLastMessageActions();
       this.disposeBanUserSubscription();
       this.disposeReceivedMessageHandler();
       this.disposeRemovedMessageHandler();
       this.disposeEditedMessageHandler();
       this.disposeTypingHandler();
-      this.disposeBanUserSubscription();
 
       this.isInitialized = false;
 
@@ -113,6 +120,11 @@ export class ConversationComponent implements OnInit, OnDestroy {
         }
       }
 
+      if (!!this.messageList)
+      {
+        this.store.dispatch(new ConversationOpen(this.messageList));
+      }
+
       await this.scrollDownList();
       await this.loadMessages();
       await this.readLastMessages();
@@ -122,11 +134,22 @@ export class ConversationComponent implements OnInit, OnDestroy {
       this.initRemovedMessageHandler();
       this.initEditedMessageHandler();
       this.initTypingHandler();
-      this.initBanUserSubscription();
 
       this.isInitialized = true;
     });
 
+  }
+
+  resetLocalState()
+  {
+    this.messages = [];
+    this.messageList = null;
+    this.latestDate = null
+    this.latestLoaded = null
+    this.isInitialized = false
+    this.isLoading = false
+    this.infinityScrollDisabled = true
+    this.userTyping = null;
   }
 
   resetLastMessageActions()
@@ -353,6 +376,8 @@ export class ConversationComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
 
+    this.store.dispatch(new ConversationClose());
+
     if (this.paramSubscription !== null)
     {
       this.paramSubscription.unsubscribe();
@@ -364,7 +389,6 @@ export class ConversationComponent implements OnInit, OnDestroy {
     this.disposeRemovedMessageHandler();
     this.disposeEditedMessageHandler();
     this.disposeTypingHandler();
-    this.disposeBanUserSubscription();
   }
 
   async onMessageSubmitHandler(text: string)

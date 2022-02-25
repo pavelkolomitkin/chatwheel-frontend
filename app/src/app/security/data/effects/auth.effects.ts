@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {Observable, of} from "rxjs";
-import {Action, Store} from "@ngrx/store";
+import {Action, INIT, Store} from "@ngrx/store";
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {SecurityService} from "../../services/security.service";
 import {State} from "../reducer";
@@ -31,6 +31,7 @@ import {catchError, map, mergeMap, tap} from "rxjs/operators";
 import {ProfileService} from "../../services/profile.service";
 import {User} from "../models/user.model";
 import {GlobalProgressHide, GlobalProgressShow} from "../../../core/data/actions";
+import {GlobalResetState} from "../../../core/data/meta-actions";
 
 @Injectable()
 export class AuthEffects
@@ -123,6 +124,8 @@ export class AuthEffects
 
         this.localStorage.remove(LocalStorageService.TOKEN_KEY);
         this.permissionService.loadPermissions([]);
+
+        this.store.dispatch(new GlobalResetState());
 
         this.router.navigate(['/security', 'login'])
       })

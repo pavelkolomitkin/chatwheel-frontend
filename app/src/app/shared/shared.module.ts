@@ -69,7 +69,7 @@ import { AlertWindowComponent } from './components/alert-window/alert-window.com
     MultiLinePipe,
     TextTrimPipe,
     MomentModule
-  ]
+  ],
 })
 export class SharedModule {
   constructor(private translate: TranslateService)

@@ -4,6 +4,7 @@ import {AbuseReportType} from "../../core/data/models/abuse-report-type.model";
 import {EditedMessage} from "./model/messages/edited-message.model";
 import {RemovedMessage} from "./model/messages/removed-message.model";
 import {ReceivedMessage} from "./model/messages/received-message.model";
+import {ConversationMessageList} from "../../core/data/models/messages/conversation-message-list.model";
 
 export const USER_REQUEST_UPDATE_GEOLOCATION = 'USER_REQUEST_UPDATE_GEOLOCATION';
 export const USER_GEOLOCATION_PERMISSION_CHANGE = 'USER_GEOLOCATION_PERMISSION_CHANGE';
@@ -40,6 +41,9 @@ export const USER_BANNED_ME = 'USER_BANNED_ME';
 export const USER_UNBANNED_ME = 'USER_UNBANNED_ME';
 export const I_BANNED_USER = 'I_BANNED_USER';
 export const I_UNBANNED_USER = 'I_UNBANNED_USER';
+
+export const CONVERSATION_OPEN = 'CONVERSATION_OPEN';
+export const CONVERSATION_CLOSE = 'CONVERSATION_CLOSE';
 
 
 export class UserRequestUpdateGeoLocation implements Action
@@ -215,6 +219,18 @@ export class IUnbannedUser implements Action
   constructor(public user: User) { }
 }
 
+export class ConversationOpen implements Action
+{
+  readonly type = CONVERSATION_OPEN;
+
+  constructor(public conversation: ConversationMessageList) { }
+}
+
+export class ConversationClose implements Action
+{
+  readonly type = CONVERSATION_CLOSE;
+}
+
 export type ClientUserActions =
   UserRequestUpdateGeoLocation
   | UserGeolocationPermissionChange
@@ -249,6 +265,9 @@ export type ClientUserActions =
   | UserUnbannedMe
   | IBannedUser
   | IUnbannedUser
+
+  | ConversationOpen
+  | ConversationClose
 
 
   ;

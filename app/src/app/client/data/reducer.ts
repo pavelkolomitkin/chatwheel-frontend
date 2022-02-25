@@ -1,10 +1,9 @@
 import * as actions from './actions';
 import {User} from "../../security/data/models/user.model";
-import {ConversationMessage} from "../../core/data/models/messages/conversation-message.model";
-import {ConversationMessageList} from "../../core/data/models/messages/conversation-message-list.model";
 import {EditedMessage} from "./model/messages/edited-message.model";
 import {RemovedMessage} from "./model/messages/removed-message.model";
 import {ReceivedMessage} from "./model/messages/received-message.model";
+import {ConversationMessageList} from "../../core/data/models/messages/conversation-message-list.model";
 
 export interface State
 {
@@ -31,6 +30,7 @@ export interface State
   lastUserIBanned: User;
   lastUserIUnBanned: User;
 
+  openedConversation: ConversationMessageList;
 }
 
 export const initialState: State = {
@@ -56,6 +56,8 @@ export const initialState: State = {
 
   lastUserIBanned: null,
   lastUserIUnBanned: null,
+
+  openedConversation: null,
 }
 
 export function reducer(state: State = initialState, action: actions.ClientUserActions): State
@@ -217,6 +219,21 @@ export function reducer(state: State = initialState, action: actions.ClientUserA
         ...state,
         lastUserIUnBanned: action.user,
         lastBanStatusChangedUser: action.user,
+      };
+
+
+    case actions.CONVERSATION_OPEN:
+
+      return {
+        ...state,
+        openedConversation: action.conversation
+      };
+
+    case actions.CONVERSATION_CLOSE:
+
+      return {
+        ...state,
+        openedConversation: null
       };
 
     default:

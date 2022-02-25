@@ -58,6 +58,7 @@ import {UserActivitySocketService} from "./services/sockets/user-activity-socket
 import { MessageObserverComponent } from './components/common/message-observer/message-observer.component';
 import { UserTypingComponent } from './components/pages/my-profile/messages/conversation/components/user-typing/user-typing.component';
 import { UserActivityObserverComponent } from './components/common/user-activity-observer/user-activity-observer.component';
+import {IncomingMessageComponent} from "./components/common/toast/incoming-message/incoming-message.component";
 
 @NgModule({
   declarations: [
@@ -99,6 +100,7 @@ import { UserActivityObserverComponent } from './components/common/user-activity
     MessageObserverComponent,
     UserTypingComponent,
     UserActivityObserverComponent,
+    IncomingMessageComponent,
   ],
   providers: [
     ProfileService,
@@ -126,7 +128,11 @@ import { UserActivityObserverComponent } from './components/common/user-activity
   ],
 
   exports: [
-    EffectsModule
+    EffectsModule,
+  ],
+
+  entryComponents: [
+    IncomingMessageComponent
   ]
 })
 export class ClientModule {}
