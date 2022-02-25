@@ -1,5 +1,5 @@
 <ng-container *ngIf="_conversation">
-  <td>
+  <td class="right-column">
     <div class="d-inline-block align-middle left-block">
       <div class="avatar-container">
         <app-user-avatar *ngIf="!!addressee"
@@ -11,10 +11,10 @@
       <div class="d-inline-block last-message-block">
         <h6 class="mb-0" *ngIf="!!addressee">{{ addressee.fullName }}</h6>
 
-        <p class="text-muted mb-0" >
+        <p class="text-muted mb-0 message-container" >
 
           <ng-container *ngIf="_conversation.lastMessage; else deletedMessage">
-            <ng-container *ngIf="!!user">
+            <ng-container>
 
               <span class="d-inline-block">
 
@@ -25,9 +25,10 @@
 
               </span>
 
-              </ng-container>
-              <span>
+            </ng-container>
+            <span>
               {{ _conversation.lastMessage.message.text | textTrim:50}}
+              <span class="text-muted small" app-date-time [value]="_conversation.lastMessage.message.updatedAt"></span>
             </span>
 
           </ng-container>
@@ -38,6 +39,10 @@
 
       </div>
     </div>
+
+<!--    <ng-container *ngIf="_conversation.lastMessage">-->
+<!--      <span class="text-muted small message-time" app-date-time [value]="_conversation.lastMessage.message.updatedAt"></span>-->
+<!--    </ng-container>-->
   </td>
   <td class="text-right">
     <div class="controls">
@@ -59,4 +64,9 @@
     </div>
   </app-alert-window>
 </ng-container>
+
+<app-user-typing
+  [typing]="typing"
+  (onVisible)="onTypingVisibilityChangeHandler($event)"
+></app-user-typing>
 

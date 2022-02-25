@@ -21,6 +21,7 @@
             app-conversation-list-item
             *ngFor="let conversation of list"
             [conversation]="conversation"
+            [user]="authorizedUser"
             (click)="onConversationClickHandler(conversation)"
             (onRemoved)="onRemoveConversationHandler(conversation)"
           ></tr>
@@ -35,10 +36,6 @@
 
     </div>
 
-  </div>
-
-  <div *ngIf="isLoading">
-    <img src="../../../../../../../assets/ajax-loader.gif">
   </div>
 
 </ng-container>

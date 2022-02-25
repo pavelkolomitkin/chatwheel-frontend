@@ -31,7 +31,7 @@
           </li>
           <li class="nav-item">
             <a routerLink="messages" routerLinkActive="active" class="nav-link show" data-toggle="pill" role="tab">Messages
-              <span class="badge badge-pill badge-danger mb-1 menu-badge" *ngIf="(newMessageNumber | async) > 0">{{ newMessageNumber | async }}</span>
+              <span class="badge badge-pill badge-danger mb-1 menu-badge" *ngIf="newMessageNumber > 0">{{ newMessageNumber }}</span>
             </a>
           </li>
           <li class="nav-item">

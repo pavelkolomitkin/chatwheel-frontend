@@ -1,8 +1,13 @@
 .conversation-item {
   cursor: pointer;
+  position: relative;
 }
 .conversation-item .controls{
   display: none;
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .conversation-item:hover .controls{
@@ -11,6 +16,10 @@
 
 .conversation-item .message-number {
   display: block;
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .conversation-item:hover .message-number {

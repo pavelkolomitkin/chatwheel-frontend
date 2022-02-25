@@ -40,6 +40,7 @@ export class MessageObserverComponent implements OnInit, OnDestroy {
 
   newMessageChangedHandler = (messageNumber: number) =>
   {
+    //debugger
     this.store.dispatch(new UserUpdateNewMessageNumberSuccess(messageNumber));
   }
 

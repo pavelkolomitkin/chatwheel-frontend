@@ -143,12 +143,25 @@ export function reducer(state: State = initialState, action: actions.ClientUserA
         lastReceivedMessage: action.message,
       };
 
+    case actions.MESSAGE_RECEIVED_RESET:
+
+      return {
+        ...state,
+        lastReceivedMessage: null
+      };
 
     case actions.MESSAGE_EDITED:
 
       return {
         ...state,
         lastEditedMessage: action.message
+      };
+
+    case actions.MESSAGE_EDITED_RESET:
+
+      return {
+        ...state,
+        lastEditedMessage: null,
       };
 
     case actions.MESSAGE_REMOVED:
@@ -158,32 +171,52 @@ export function reducer(state: State = initialState, action: actions.ClientUserA
         lastRemovedMessage: action.message
       };
 
+    case actions.MESSAGE_REMOVED_RESET:
+
+      return {
+        ...state,
+        lastRemovedMessage: null
+      };
+
+    case actions.MESSAGE_ACTION_STATE_RESET:
+
+      return {
+        ...state,
+        lastReceivedMessage: null,
+        lastEditedMessage: null,
+        lastRemovedMessage: null
+      };
+
     case actions.USER_BANNED_ME:
 
       return {
         ...state,
-        lastUserBannedMe: action.user
+        lastUserBannedMe: action.user,
+        lastBanStatusChangedUser: action.user,
       };
 
     case actions.USER_UNBANNED_ME:
 
       return {
         ...state,
-        lastUserUnbannedMe: action.user
+        lastUserUnbannedMe: action.user,
+        lastBanStatusChangedUser: action.user,
       };
 
     case actions.I_BANNED_USER:
 
       return {
         ...state,
-        lastUserIBanned: action.user
+        lastUserIBanned: action.user,
+        lastBanStatusChangedUser: action.user,
       };
 
     case actions.I_UNBANNED_USER:
 
       return {
         ...state,
-        lastUserIUnBanned: action.user
+        lastUserIUnBanned: action.user,
+        lastBanStatusChangedUser: action.user,
       };
 
     default:

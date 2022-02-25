@@ -28,8 +28,13 @@ export const USER_BLOCK_TOGGLE_SUCCESS = 'USER_BLOCK_TOGGLE_SUCCESS';
 export const USER_BLOCK_TOGGLE_ERROR = 'USER_BLOCK_TOGGLE_ERROR';
 
 export const MESSAGE_RECEIVED = 'MESSAGE_RECEIVED';
+export const MESSAGE_RECEIVED_RESET = 'MESSAGE_RECEIVED_RESET';
 export const MESSAGE_EDITED = 'MESSAGE_EDITED';
+export const MESSAGE_EDITED_RESET = 'MESSAGE_EDITED_RESET';
 export const MESSAGE_REMOVED = 'MESSAGE_REMOVED';
+export const MESSAGE_REMOVED_RESET = 'MESSAGE_REMOVED_RESET';
+
+export const MESSAGE_ACTION_STATE_RESET = 'MESSAGE_ACTION_STATE_RESET';
 
 export const USER_BANNED_ME = 'USER_BANNED_ME';
 export const USER_UNBANNED_ME = 'USER_UNBANNED_ME';
@@ -148,6 +153,11 @@ export class MessageReceived implements Action
   constructor(public message: ReceivedMessage) {}
 }
 
+export class MessageReceivedReset implements Action
+{
+  readonly type = MESSAGE_RECEIVED_RESET;
+}
+
 export class MessageEdited implements Action
 {
   readonly type = MESSAGE_EDITED;
@@ -155,11 +165,26 @@ export class MessageEdited implements Action
   constructor(public message: EditedMessage) {}
 }
 
+export class MessageEditedReset implements Action
+{
+  readonly type = MESSAGE_EDITED_RESET;
+}
+
 export class MessageRemoved implements Action
 {
   readonly type = MESSAGE_REMOVED;
 
   constructor(public message: RemovedMessage) {}
+}
+
+export class MessageRemovedReset implements Action
+{
+  readonly type = MESSAGE_REMOVED_RESET;
+}
+
+export class MessageActionStateReset implements Action
+{
+  readonly type = MESSAGE_ACTION_STATE_RESET;
 }
 
 export class UserBannedMe implements Action
@@ -213,8 +238,12 @@ export type ClientUserActions =
   | UserBlockToggleError
 
   | MessageReceived
+  | MessageReceivedReset
   | MessageEdited
+  | MessageEditedReset
   | MessageRemoved
+  | MessageRemovedReset
+  | MessageActionStateReset
 
   | UserBannedMe
   | UserUnbannedMe

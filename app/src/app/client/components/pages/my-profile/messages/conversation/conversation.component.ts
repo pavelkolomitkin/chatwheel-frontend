@@ -1,10 +1,10 @@
-import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {createSelector, select, Store} from "@ngrx/store";
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {select, Store} from "@ngrx/store";
 import {State} from "../../../../../../app.state";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {User} from "../../../../../../security/data/models/user.model";
-import {combineLatest, filter, first, withLatestFrom} from "rxjs/operators";
+import {filter, first} from "rxjs/operators";
 import {UserProfileService} from "../../../../../services/user-profile.service";
 import {UserConversationService} from "../../../../../services/user-conversation.service";
 import {ConversationMessageList} from "../../../../../../core/data/models/messages/conversation-message-list.model";
@@ -13,7 +13,7 @@ import {ConversationMessage} from "../../../../../../core/data/models/messages/c
 import {GlobalNotification} from "../../../../../../core/data/actions";
 import {Notification, NotificationType} from "../../../../../../core/data/models/notification.model";
 import {PAGE_NOT_FOUND_ROUTE} from "../../../../../client-routing.module";
-import {UserReportAbuseInit} from "../../../../../data/actions";
+import {MessageActionStateReset, UserReportAbuseInit} from "../../../../../data/actions";
 import {ReceivedMessage} from "../../../../../data/model/messages/received-message.model";
 import {RemovedMessage} from "../../../../../data/model/messages/removed-message.model";
 import {EditedMessage} from "../../../../../data/model/messages/edited-message.model";
@@ -35,10 +35,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
   editedMessageSubscription: Subscription = null;
   userActivitySubscription: Subscription = null;
 
-  userBannedMeSubscription: Subscription = null;
-  userUnbannedMeSubscription: Subscription = null;
-  iBannedUserSubscription: Subscription = null;
-  iUnbannedUserSubscription: Subscription = null;
+  banAddresseeStatusSubscription: Subscription = null;
 
   user: User = null;
   addressee: User = null;
@@ -71,6 +68,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
 
     this.paramSubscription = this.route.params.subscribe( async (params) => {
 
+      this.resetLastMessageActions();
       this.disposeBanUserSubscription();
       this.disposeReceivedMessageHandler();
       this.disposeRemovedMessageHandler();
@@ -95,6 +93,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
 
         try {
           this.messageList = await this.conversationService.getIndividual(this.addressee).toPromise();
+          // debugger
         }
         catch (error) { }
 
@@ -128,6 +127,11 @@ export class ConversationComponent implements OnInit, OnDestroy {
       this.isInitialized = true;
     });
 
+  }
+
+  resetLastMessageActions()
+  {
+    this.store.dispatch(new MessageActionStateReset());
   }
 
   initTypingHandler()
@@ -179,6 +183,8 @@ export class ConversationComponent implements OnInit, OnDestroy {
       this.infinityScrollDisabled = true;
       await this.scrollDownList();
       this.infinityScrollDisabled = wasScrollDisabled;
+
+      await this.readLastMessages();
     });
   }
 
@@ -261,23 +267,8 @@ export class ConversationComponent implements OnInit, OnDestroy {
 
   initBanUserSubscription()
   {
-    this.userBannedMeSubscription = this.store.pipe(
-      select(state => state.client.lastUserBannedMe),
-      filter(user => !!user),
-    ).subscribe(this.banUserHandler);
-
-    this.userUnbannedMeSubscription = this.store.pipe(
-      select(state => state.client.lastUserUnbannedMe),
-      filter(user => !!user),
-    ).subscribe(this.banUserHandler);
-
-    this.iBannedUserSubscription = this.store.pipe(
-      select(state => state.client.lastUserIBanned),
-      filter(user => !!user),
-    ).subscribe(this.banUserHandler);
-
-    this.iUnbannedUserSubscription = this.store.pipe(
-      select(state => state.client.lastUserIUnBanned),
+    this.banAddresseeStatusSubscription = this.store.pipe(
+      select(state => state.client.lastBanStatusChangedUser),
       filter(user => !!user),
     ).subscribe(this.banUserHandler);
 
@@ -293,28 +284,10 @@ export class ConversationComponent implements OnInit, OnDestroy {
 
   disposeBanUserSubscription()
   {
-    if (!!this.userBannedMeSubscription)
+    if (!!this.banAddresseeStatusSubscription)
     {
-      this.userBannedMeSubscription.unsubscribe();
-      this.userBannedMeSubscription = null;
-    }
-
-    if (!!this.userUnbannedMeSubscription)
-    {
-      this.userUnbannedMeSubscription.unsubscribe();
-      this.userUnbannedMeSubscription = null;
-    }
-
-    if (!!this.iBannedUserSubscription)
-    {
-      this.iBannedUserSubscription.unsubscribe();
-      this.iBannedUserSubscription = null;
-    }
-
-    if (!!this.iUnbannedUserSubscription)
-    {
-      this.iUnbannedUserSubscription.unsubscribe();
-      this.iUnbannedUserSubscription = null;
+      this.banAddresseeStatusSubscription.unsubscribe();
+      this.banAddresseeStatusSubscription = null;
     }
   }
 
@@ -401,7 +374,10 @@ export class ConversationComponent implements OnInit, OnDestroy {
       //debugger
       if (this.messageList === null)
       {
-        await this.messageService.sendToUser(this.addressee, text).toPromise();
+        //debugger;
+        const result = await this.messageService.sendToUser(this.addressee, text).toPromise();
+        //debugger;
+        this.messageList = result.conversation;
       }
       else
       {

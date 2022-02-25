@@ -1,11 +1,10 @@
-import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
 import {UserTyping} from "../../../../../../../data/model/user-activity/user-typing.model";
 
 @Component({
   selector: 'app-user-typing',
   templateUrl: './user-typing.component.html',
-  styleUrls: ['./user-typing.component.css'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./user-typing.component.css']
 })
 export class UserTypingComponent implements OnInit {
 
@@ -15,6 +14,8 @@ export class UserTypingComponent implements OnInit {
 
   isVisible: boolean = false;
   visibleInterval = null;
+
+  @Output('onVisible') changeEventEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @Input() set typing(value: UserTyping)
   {
@@ -31,6 +32,7 @@ export class UserTypingComponent implements OnInit {
   showTyping()
   {
     this.isVisible = true;
+    this.changeEventEmitter.emit(true);
 
     this.clearVisibleInterval();
     this.visibleInterval = setTimeout(() => {
@@ -53,6 +55,7 @@ export class UserTypingComponent implements OnInit {
   {
     this.isVisible = false;
     this.clearVisibleInterval();
+    this.changeEventEmitter.emit(false);
   }
 
 }

@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {select, Store} from "@ngrx/store";
 import {State} from "../../../../app.state";
-import {Observable} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 import {User} from "../../../../security/data/models/user.model";
 
 @Component({
@@ -9,18 +9,55 @@ import {User} from "../../../../security/data/models/user.model";
   templateUrl: './my-profile.component.html',
   styleUrls: ['./my-profile.component.css']
 })
-export class MyProfileComponent implements OnInit {
+export class MyProfileComponent implements OnInit, OnDestroy {
+
 
   user:Observable<User>
-  newMessageNumber: Observable<Number>;
+  newMessageNumber: Number;
+
+  newMessageNumberSubscription: Subscription = null;
+  newMessageNumberTimeout: any = null;
 
   constructor(
-    private store: Store<State>
+    private store: Store<State>,
   ) { }
 
   ngOnInit(): void {
     this.user = this.store.pipe(select(state => state.security.user));
-    this.newMessageNumber = this.store.pipe(select(state => state.client.newMessageNumber));
+
+    this.newMessageNumberSubscription = this.store.pipe(select(state => state.client.newMessageNumber))
+      .subscribe((newMessageNumber) => {
+
+        this.updateMessageNumber(newMessageNumber);
+      });
+  }
+
+  ngOnDestroy(): void {
+    if (!!this.newMessageNumberSubscription)
+    {
+      this.newMessageNumberSubscription.unsubscribe();
+      this.newMessageNumberSubscription = null;
+    }
+
+    if (!!this.newMessageNumberTimeout)
+    {
+      clearTimeout(this.newMessageNumberTimeout);
+      this.newMessageNumberTimeout = null;
+    }
+
+  }
+
+  updateMessageNumber(value: number)
+  {
+    if (!!this.newMessageNumberTimeout)
+    {
+      clearTimeout(this.newMessageNumberTimeout);
+      this.newMessageNumberTimeout = null;
+    }
+
+    this.newMessageNumberTimeout = setTimeout(() => {
+      this.newMessageNumber = value;
+    }, 500);
 
   }
 

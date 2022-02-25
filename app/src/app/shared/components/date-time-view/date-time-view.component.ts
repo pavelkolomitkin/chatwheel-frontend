@@ -19,7 +19,7 @@ export class DateTimeViewComponent implements OnInit {
   @Input()
   set value(value: any)
   {
-    if (isNumber(value))
+    if (typeof value === 'number')
     {
       this._value = moment.unix(value);
     }
