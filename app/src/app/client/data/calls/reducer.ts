@@ -7,7 +7,7 @@ export interface State
 {
   callWindowId: string;
 
-  lastInitiatedCallAddressee: User;
+  lastInitiatedDirectCallAddressee: User;
 
   lastMemberConnectingLink: CallMemberLink;
   lastMemberConnectedLink: CallMemberLink;
@@ -19,7 +19,7 @@ export const initialState: State = {
 
   callWindowId: null,
 
-  lastInitiatedCallAddressee: null,
+  lastInitiatedDirectCallAddressee: null,
 
   lastMemberConnectingLink: null,
   lastMemberConnectedLink: null,
@@ -43,7 +43,7 @@ export function reducer(state: State = initialState, action: actions.ClientCallA
 
       return {
         ...state,
-        lastInitiatedCallAddressee: action.addressee
+        lastInitiatedDirectCallAddressee: action.addressee
       };
 
 

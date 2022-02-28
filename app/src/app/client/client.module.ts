@@ -64,6 +64,8 @@ import {CallSocketService} from "./services/sockets/call-socket.service";
 import { CallsObserverComponent } from './components/common/calls-observer/calls-observer.component';
 import { DirectCallWindowComponent } from './components/common/calls/direct-call-window/direct-call-window.component';
 import { IncomingDirectCallToastComponent } from './components/common/calls/incoming-direct-call-toast/incoming-direct-call-toast.component';
+import {CallConnectorService} from "./services/calls/call-connector.service";
+import {CallService} from "./services/call.service";
 
 @NgModule({
   declarations: [
@@ -117,10 +119,12 @@ import { IncomingDirectCallToastComponent } from './components/common/calls/inco
     ConversationMessageService,
     AbuseReportTypeService,
     AbuseReportService,
+    CallConnectorService,
 
     MessageSocketService,
     UserActivitySocketService,
-    CallSocketService
+    CallSocketService,
+    CallService,
   ],
   imports: [
     CommonModule,

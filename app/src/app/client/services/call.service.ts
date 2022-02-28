@@ -11,11 +11,13 @@ export class CallService extends BaseService
 {
   initiate(addressee: User, isDirect: boolean, windowId: string)
   {
-    return this.http.post<{ call: Call, members: CallMember[] }>('/client/calls/initiate', {
-      addresseeId: addressee.id,
-      isDirect: isDirect,
-      socketId: windowId
-    }).pipe(
+    return this
+      .http
+      .post<{ call: Call, members: CallMember[] }>('/client/calls/initiate', {
+        addresseeId: addressee.id,
+        isDirect: isDirect,
+        socketId: windowId
+      }).pipe(
       map((data) => {
         return Call.createFromRawData(data);
       })

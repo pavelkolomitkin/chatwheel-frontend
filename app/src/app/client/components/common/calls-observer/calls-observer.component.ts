@@ -41,7 +41,7 @@ export class CallsObserverComponent implements OnInit, OnDestroy {
 
     this.initiatedCallSubscription = this
       .store
-      .pipe(select(state => state.client.lastInitiatedCallAddressee))
+      .pipe(select(state => state.calls.lastInitiatedDirectCallAddressee))
       .subscribe(this.lastInitiatedCallHandler);
 
 
@@ -78,6 +78,7 @@ export class CallsObserverComponent implements OnInit, OnDestroy {
   }
 
   incomingCallHandler = (call: Call) => {
+
     this.store.dispatch(new IncomingCallReceived(call));
   }
 

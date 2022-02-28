@@ -1,0 +1,96 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.31);
+  z-index: 9998;
+  display: none;
+}
+
+.call-window
+{
+  position: fixed;
+  z-index: 9999;
+  top: 10%;
+  width: 100%;
+  margin: 0 auto;
+  padding-left: 10%;
+  padding-right: 10%;
+  min-width: 100%;
+  display: none;
+}
+
+.call-window.size-minimized
+{
+  bottom: 5px;
+  left: 5px;
+  width: 20%;
+}
+
+.call-window .window-container {
+  position: relative;
+  min-height: 600px;
+}
+
+.call-window .window-container .remote-video-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+
+  background: black;
+}
+
+.call-window .window-container .remote-video-container {
+  position: absolute;
+  margin: auto;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.call-window .window-container .remote-video-container video {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.call-window .window-container .local-video-container {
+  background: #cccccc;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 250px;
+  height: 150px;
+
+  z-index: 2;
+}
+
+.call-window .window-container .local-video-container video {
+  width: 100%;
+  height: 100%;
+}
+
+.call-window .window-container .window-controls {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+.call-window .window-container .window-controls .control {
+
+}
+
+.call-window .window-container .call-controls {
+  position: absolute;
+  bottom: 5px;
+  margin: auto;
+}
+.call-window .window-container .call-controls .control {}
+
+.call-window .window-container .message-controls {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+}
+.call-window .window-container .message-controls .control {}
