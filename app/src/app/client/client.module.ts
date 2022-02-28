@@ -25,6 +25,7 @@ import { TextLocationViewComponent } from './components/pages/profile/components
 import { TextLocationViewComponent as TextMyLocationViewComponent } from './components/pages/my-profile/components/geo-location/text-location-view/text-location-view.component';
 import {StoreModule} from "@ngrx/store";
 import { reducer } from './data/reducer';
+import { reducer as callsReducer } from './data/calls/reducer';
 import { MapLocationViewComponent } from './components/pages/profile/components/geo-location/map-location-view/map-location-view.component';
 import { CameraProfilePictureGrabberWindowComponent } from './components/common/camera-profile-picture-grabber-window/camera-profile-picture-grabber-window.component'
 import {NgbModalModule} from "@ng-bootstrap/ng-bootstrap";
@@ -59,6 +60,10 @@ import { MessageObserverComponent } from './components/common/message-observer/m
 import { UserTypingComponent } from './components/pages/my-profile/messages/conversation/components/user-typing/user-typing.component';
 import { UserActivityObserverComponent } from './components/common/user-activity-observer/user-activity-observer.component';
 import {IncomingMessageComponent} from "./components/common/toast/incoming-message/incoming-message.component";
+import {CallSocketService} from "./services/sockets/call-socket.service";
+import { CallsObserverComponent } from './components/common/calls-observer/calls-observer.component';
+import { DirectCallWindowComponent } from './components/common/calls/direct-call-window/direct-call-window.component';
+import { IncomingDirectCallToastComponent } from './components/common/calls/incoming-direct-call-toast/incoming-direct-call-toast.component';
 
 @NgModule({
   declarations: [
@@ -101,6 +106,9 @@ import {IncomingMessageComponent} from "./components/common/toast/incoming-messa
     UserTypingComponent,
     UserActivityObserverComponent,
     IncomingMessageComponent,
+    CallsObserverComponent,
+    DirectCallWindowComponent,
+    IncomingDirectCallToastComponent,
   ],
   providers: [
     ProfileService,
@@ -111,13 +119,15 @@ import {IncomingMessageComponent} from "./components/common/toast/incoming-messa
     AbuseReportService,
 
     MessageSocketService,
-    UserActivitySocketService
+    UserActivitySocketService,
+    CallSocketService
   ],
   imports: [
     CommonModule,
     SharedModule,
     ClientRoutingModule,
     StoreModule.forFeature('client', reducer),
+    StoreModule.forFeature('calls', callsReducer),
     EffectsModule.forFeature([
       GeolocationEffects,
       ProfileEffects,

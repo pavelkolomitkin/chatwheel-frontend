@@ -10,7 +10,7 @@ export const environment = {
   maxUploadFileSize: 7340032,
   maxUploadFileSizeLabel: '7M',
 
-  geoLocationUpdateInterval: 10000,
+  geoLocationUpdateInterval: 60000,
 
   geoLocationInfoUri: 'https://nominatim.openstreetmap.org/reverse?format=json&namedetails=1',
 

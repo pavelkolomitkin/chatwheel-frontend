@@ -18,6 +18,12 @@ export class BaseSocketService
         this.tokenSubscription = this.store.pipe(select(state => state.security.token)).subscribe(
             (token: string) => {
 
+              if (token === null)
+              {
+                this.release();
+                return;
+              }
+
                 this.socket = new SocketService(this.getNamespace(), token, this.getConnectionOptions());
                 this.flushUnprocessedEmits();
             });
@@ -49,7 +55,7 @@ export class BaseSocketService
             this.socket.release();
             this.socket = null;
         }
-        this.tokenSubscription.unsubscribe();
+        //this.tokenSubscription.unsubscribe();
     }
 
 

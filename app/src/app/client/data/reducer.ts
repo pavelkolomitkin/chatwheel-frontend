@@ -31,6 +31,8 @@ export interface State
   lastUserIUnBanned: User;
 
   openedConversation: ConversationMessageList;
+
+  lastInitiatedCallAddressee: User;
 }
 
 export const initialState: State = {
@@ -58,6 +60,8 @@ export const initialState: State = {
   lastUserIUnBanned: null,
 
   openedConversation: null,
+
+  lastInitiatedCallAddressee: null,
 }
 
 export function reducer(state: State = initialState, action: actions.ClientUserActions): State

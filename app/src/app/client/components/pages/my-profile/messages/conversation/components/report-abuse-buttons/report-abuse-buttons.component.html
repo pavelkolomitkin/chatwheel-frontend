@@ -1,5 +1,9 @@
 <ng-container *ngIf="!user.amIBanned && !user.isBanned">
 
+  <span class="btn btn-success mr-1">
+    <i class="ik ik-video"></i>Call
+  </span>
+
   <span class="btn btn-danger" (click)="onReportAbuseClickHandler($event)">
     <i class="ik ik-alert-circle"></i>Report Abuse
   </span>
