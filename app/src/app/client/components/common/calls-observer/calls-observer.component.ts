@@ -9,9 +9,14 @@ import {
   SetCallWindowId
 } from '../../../data/calls/actions';
 import {Subscription} from 'rxjs';
-import {User} from '../../../../security/data/models/user.model';
 import {Call} from '../../../data/model/calls/call.model';
 import {CallMemberLink} from '../../../data/model/calls/call-member-link.model';
+import {ToastrService} from "ngx-toastr";
+import {
+  IncomingDirectCallToastComponent
+} from "../toast/incoming-direct-call-toast/incoming-direct-call-toast.component";
+import {CallService} from "../../../services/call.service";
+import {filter} from "rxjs/operators";
 
 @Component({
   selector: 'app-calls-observer',
@@ -21,28 +26,35 @@ import {CallMemberLink} from '../../../data/model/calls/call-member-link.model';
 export class CallsObserverComponent implements OnInit, OnDestroy {
 
   callWindowIdSubscription: Subscription;
-  initiatedCallSubscription: Subscription;
   incomingCallSubscription: Subscription;
   connectingMemberSubscription: Subscription;
   connectedMemberSubscription: Subscription;
   rejectedMemberSubscription: Subscription;
   hungUpMemberSubscription: Subscription;
 
-  lastInitiatedCallAddressee: User = null;
+  lastIncomingCallSubscription: Subscription;
+
+
+  lastReceivedIncomingCall: Call = null;
 
   constructor(
     private store: Store<State>,
-    private callSocketService: CallSocketService
+    private service: CallService,
+    private callSocketService: CallSocketService,
+    private toastService: ToastrService
   ) { }
 
   ngOnInit(): void {
 
     this.callWindowIdSubscription = this.callSocketService.getCallConnectionId().subscribe(this.callWindowIdReceivedHandler);
 
-    this.initiatedCallSubscription = this
+    this.lastIncomingCallSubscription = this
       .store
-      .pipe(select(state => state.calls.lastInitiatedDirectCallAddressee))
-      .subscribe(this.lastInitiatedCallHandler);
+      .pipe(
+        select(state => state.calls.lastDirectedIncomingCall),
+        filter(call => !!call)
+        )
+      .subscribe(this.lastIncomingCallHandler);
 
 
     this.incomingCallSubscription = this.callSocketService.getIncomingCall().subscribe(this.incomingCallHandler);
@@ -56,12 +68,12 @@ export class CallsObserverComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
 
     this.callWindowIdSubscription.unsubscribe();
-    this.initiatedCallSubscription.unsubscribe();
     this.incomingCallSubscription.unsubscribe();
     this.connectingMemberSubscription.unsubscribe();
     this.connectedMemberSubscription.unsubscribe();
     this.rejectedMemberSubscription.unsubscribe();
     this.hungUpMemberSubscription.unsubscribe();
+    this.lastIncomingCallSubscription.unsubscribe();
 
     this.store.dispatch(new SetCallWindowId(null));
   }
@@ -72,13 +84,45 @@ export class CallsObserverComponent implements OnInit, OnDestroy {
 
   }
 
-  lastInitiatedCallHandler = (addressee: User) => {
+  lastIncomingCallHandler = (call: Call) => {
 
-    this.lastInitiatedCallAddressee = addressee;
+    const toast = this.toastService.show('', '', {
+      toastComponent: IncomingDirectCallToastComponent,
+      positionClass: 'toast-bottom-left',
+      disableTimeOut: true
+    });
+
+    toast.toastRef.componentInstance.call = call;
+    toast
+      .toastRef
+      .componentInstance
+      .acceptEmitter
+      .subscribe((call: Call) => {
+
+        this.lastReceivedIncomingCall = call;
+        this.toastService.remove(toast.toastId);
+
+      });
+
+    toast
+      .toastRef
+      .componentInstance
+      .rejectEmitter
+      .subscribe(async (call: Call) => {
+
+        this.toastService.remove(toast.toastId);
+
+        try {
+          await this.service.reject(call).toPromise();
+        }
+        catch (error)
+        {
+          console.log(error);
+        }
+      });
   }
 
   incomingCallHandler = (call: Call) => {
-
     this.store.dispatch(new IncomingCallReceived(call));
   }
 

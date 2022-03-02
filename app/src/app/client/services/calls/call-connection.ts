@@ -1,14 +1,13 @@
-import {CallService} from "../call.service";
-import {CallSocketService} from "../sockets/call-socket.service";
-import {UserMediaService} from "../../../core/services/user-media.service";
+import {CallService} from '../call.service';
+import {CallSocketService} from '../sockets/call-socket.service';
+import {UserMediaService} from '../../../core/services/user-media.service';
 import * as Peer from 'simple-peer';
-import {environment} from "../../../../environments/environment";
-import {Subject} from "rxjs";
-import {Call} from "../../data/model/calls/call.model";
-import {User} from "../../../security/data/models/user.model";
-import {CallError} from "./errors/call.error";
-import {MediaError} from "./errors/media.error";
-import {CallConnectionInitiator} from "./call-connection.initiator";
+import {environment} from '../../../../environments/environment';
+import {Subject} from 'rxjs';
+import {Call} from '../../data/model/calls/call.model';
+import {CallError} from './errors/call.error';
+import {MediaError} from './errors/media.error';
+import {CallConnectionInitiator} from './call-connection.initiator';
 
 
 export class CallConnection
@@ -51,6 +50,13 @@ export class CallConnection
 
   }
 
+  async hangUp()
+  {
+    const call: Call = this.getCall();
+
+    await this.callService.hangUp(call).toPromise();
+  }
+
   async release()
   {
     this.localMediaSubject.unsubscribe();
@@ -77,6 +83,10 @@ export class CallConnection
     }
   }
 
+  getCall()
+  {
+    return this.call;
+  }
 
   setSocketId(id: string)
   {
@@ -139,6 +149,7 @@ export class CallConnection
   initPeerStreamHandler()
   {
     this.peer.on('stream', (stream: MediaStream) => {
+      //debugger
       this.remoteMediaStream = stream;
       this.remoteMediaSubject.next(this.remoteMediaStream);
     });
@@ -147,13 +158,13 @@ export class CallConnection
   initPeerErrorHandler()
   {
     this.peer.on('error', (error) => {
+      //debugger
       this.errorSubject.next(new CallError(CallConnectionInitiator.CONNECTION_ESTABLISHING_ERROR_MESSAGE));
     });
   }
 
   getPeerOptions(stream: MediaStream, params: Object)
   {
-    // TODO add stun and turn servers to the configuration
     const result = {
       ...params,
       stream: stream,

@@ -1,0 +1,187 @@
+<div class="call-window">
+  <div class="window-container">
+
+    <div class="addressee-block" *ngIf="!!_addressee">
+      <div class="addressee">
+        <div class="avatar-container">
+          <app-user-avatar
+            [size]="'extraSmall'"
+            [user]="_addressee"
+          ></app-user-avatar>
+        </div>
+        <div class="user-name">
+          <div class="h4">{{ _addressee.fullName }}</div>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="window-controls">
+
+      <span class="control btn">
+        <i class="ik ik-minus"></i>
+      </span>
+
+        <span class="control btn mr-1">
+        <i class="ik ik-square"></i>
+      </span>
+
+        <span class="control btn mr-1">
+        <i class="ik ik-minimize-2"></i>
+      </span>
+
+        <span class="control btn mr-1">
+        <i class="ik ik-x"></i>
+      </span>
+
+    </div>
+
+
+    <div class="remote-video-container">
+
+      <ng-container
+        *ngIf="uiState === 'call_rejected'"
+      >
+
+        <div class="loader-container text-white" *ngIf="!!_rejectedMember">
+          <div class="loader">
+            <div class="h2">
+              <i class="ik ik-phone-off"></i>
+            </div>
+            <div class="h6">
+              <span class="text-muted">{{ _rejectedMember.addressee.fullName }} doesn't pick up</span>
+            </div>
+          </div>
+        </div>
+
+      </ng-container>
+
+      <ng-container
+        *ngIf="uiState === 'addressee_hung_up'"
+      >
+
+        <div class="loader-container text-white" *ngIf="!!_hungUpMember">
+          <div class="loader">
+            <div class="h2">
+              <i class="ik ik-phone-off"></i>
+            </div>
+            <div class="h6">
+              <span class="text-muted">{{ _addressee.fullName }} hung up</span>
+            </div>
+          </div>
+        </div>
+
+      </ng-container>
+
+
+
+      <ng-container
+        *ngIf="uiState === 'calling_addressee'"
+      >
+        <div class="loader-container">
+          <div class="loader">
+            <div class="blob blue">
+            </div>
+            <span class="icon-container text-white">
+              <i class="ik ik-phone"></i>
+            </span>
+          </div>
+        </div>
+
+      </ng-container>
+
+
+      <div *ngIf="uiState === 'receiving_call'">
+        <div class="loader-container">
+
+          <div
+            class="spinner-border text-primary"
+            role="status"
+          >
+            <span class="sr-only">Loading...</span>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <video
+        #remoteVideo
+        [autoplay]="true"
+      ></video>
+
+    </div>
+
+    <div class="local-video-container">
+      <video
+        #localVideo
+        [autoplay]="true"
+        [muted]="'muted'"
+      ></video>
+    </div>
+
+    <div class="call-controls">
+
+      <ng-container *ngIf="
+      (uiState === 'call_rejected')
+      || (uiState === 'call_error')
+      || (uiState === 'addressee_hung_up')">
+        <div
+          class="control btn btn-outline-success mr-2"
+          title="Call Again"
+          (click)="onCallAgainClickHandler($event)"
+        >
+          <i class="ik ik-phone ml-2 mr-2"></i>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="
+        (uiState === 'calling_addressee')
+        || (uiState === 'call_in_progress')
+        || (uiState === 'receiving_call')"
+      >
+        <div
+          class="control btn btn-outline-danger mr-2"
+          title="Hang Up"
+          (click)="onHangUpClickHandler($event)"
+        >
+          <i class="ik ik-phone-off ml-2 mr-2"></i>
+        </div>
+      </ng-container>
+
+      <div
+        class="control btn btn-outline-danger"
+        title="Report Abuse"
+        (click)="onReportAbuseClickHandler($event)"
+      >
+        <i class="ik ik-alert-circle ml-2 mr-2"></i>
+      </div>
+    </div>
+
+
+    <div class="message-controls">
+      <div class="control btn btn-outline-primary">
+        <i class="ik ik-message-square ml-2 mr-2"></i>
+      </div>
+    </div>
+
+    <div *ngIf="uiState === 'call_error'" class="error-container">
+
+      <div class="h2">
+        <i class="ik ik-alert-triangle"></i>
+      </div>
+      <div class="h6">
+        <span class="text-muted">{{ error.message }}</span>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+
+
+
+

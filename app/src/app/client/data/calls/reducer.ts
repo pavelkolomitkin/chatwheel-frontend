@@ -2,12 +2,15 @@
 import * as actions from './actions';
 import {User} from "../../../security/data/models/user.model";
 import {CallMemberLink} from "../model/calls/call-member-link.model";
+import {Call} from "../model/calls/call.model";
+import {CALL_INCOMING_CALL_RECEIVED} from "./actions";
 
 export interface State
 {
   callWindowId: string;
 
   lastInitiatedDirectCallAddressee: User;
+  lastDirectedIncomingCall: Call,
 
   lastMemberConnectingLink: CallMemberLink;
   lastMemberConnectedLink: CallMemberLink;
@@ -20,6 +23,7 @@ export const initialState: State = {
   callWindowId: null,
 
   lastInitiatedDirectCallAddressee: null,
+  lastDirectedIncomingCall: null,
 
   lastMemberConnectingLink: null,
   lastMemberConnectedLink: null,
@@ -76,6 +80,13 @@ export function reducer(state: State = initialState, action: actions.ClientCallA
         lastMemberHungUpLink: action.link
       };
 
+
+    case actions.CALL_INCOMING_CALL_RECEIVED:
+
+      return {
+        ...state,
+        lastDirectedIncomingCall: action.call
+      };
 
     default:
       return state;

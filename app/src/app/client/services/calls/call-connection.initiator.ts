@@ -59,10 +59,12 @@ export class CallConnectionInitiator extends CallConnection
 
       try {
         // connect to the connecting member
-        await this.callService.connect(link);
+        //debugger
+        await this.callService.connect(link).toPromise();
       }
       catch (error)
       {
+        //debugger
         this.errorSubject.next(new CallError(CallConnectionInitiator.CONNECTION_ESTABLISHING_ERROR_MESSAGE));
       }
     });

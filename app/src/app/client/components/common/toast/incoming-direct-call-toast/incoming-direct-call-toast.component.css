@@ -1,0 +1,20 @@
+.incoming-call-container {
+  position: relative;
+  pointer-events: all;
+  padding: 15px;
+  min-width: 250px;
+  max-width: 250px;
+}
+
+.incoming-call-container .avatar-container {
+
+}
+
+.incoming-call-container .controls {
+
+}
+
+.incoming-call-container .controls .control {
+  color: #cccccc !important;
+  font-size: 28px !important;
+}

@@ -84,9 +84,9 @@ export class MessageObserverComponent implements OnInit, OnDestroy {
       toast.toastRef.componentInstance.message = message;
       toast.toastRef.componentInstance.toastId = toast.toastId;
 
-      setTimeout(() => {
-        this.toastService.remove(toast.toastId);
-      }, 5000);
+      // setTimeout(() => {
+      //   this.toastService.remove(toast.toastId);
+      // }, 5000);
     }
   }
 

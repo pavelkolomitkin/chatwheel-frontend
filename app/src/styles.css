@@ -61,3 +61,12 @@ body
   margin: auto;
   text-align: center;
 }
+
+.modal-content {
+  border-radius: unset !important;
+}
+
+
+.modal-xl {
+  min-width: 1140px !important;
+}

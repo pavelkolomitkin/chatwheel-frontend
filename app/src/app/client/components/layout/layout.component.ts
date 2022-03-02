@@ -25,7 +25,6 @@ export class LayoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    debugger
   }
 
 }

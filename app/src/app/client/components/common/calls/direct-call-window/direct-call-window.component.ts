@@ -1,12 +1,15 @@
-import {Component, ElementRef, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
-import {User} from "../../../../../security/data/models/user.model";
+import {Component, Input, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {User} from '../../../../../security/data/models/user.model';
+import {Call} from '../../../../data/model/calls/call.model';
 import {select, Store} from "@ngrx/store";
 import {State} from "../../../../../app.state";
-import {CallConnectorService} from "../../../../services/calls/call-connector.service";
-import {first} from "rxjs/operators";
-import {CallConnection} from "../../../../services/calls/call-connection";
 import {Subscription} from "rxjs";
-import {Call} from "../../../../data/model/calls/call.model";
+import {filter, first} from "rxjs/operators";
+import {CallMemberLink} from "../../../../data/model/calls/call-member-link.model";
+import {CallMemberHungUp, IncomingCallReceived, UserInitiateDirectCall} from "../../../../data/calls/actions";
+import {GlobalNotification} from "../../../../../core/data/actions";
+import {Notification, NotificationType} from "../../../../../core/data/models/notification.model";
 
 @Component({
   selector: 'app-direct-call-window',
@@ -15,180 +18,184 @@ import {Call} from "../../../../data/model/calls/call.model";
 })
 export class DirectCallWindowComponent implements OnInit, OnDestroy {
 
-  static WINDOW_SIZE_FULLSCREEN = 'window_size_fullscreen';
-  static WINDOW_SIZE_NORMAL = 'window_size_normal';
-  static WINDOW_SIZE_MINIMIZED = 'window_size_minimized';
+  initiatedCallSubscription: Subscription;
+  lastRejectedCallSubscription: Subscription;
+  lastReportedUserSubscription: Subscription;
+  lastMemberHangUpSubscription: Subscription;
 
-  static UI_STATE_CALLING_ADDRESSEE = 'calling_addressee';
-  static UI_STATE_RECEIVING_CALL = 'receiving_call';
-  static UI_STATE_CALL_IN_PROGRESS = 'call_in_progress';
-  static UI_STATE_ERROR = 'call_error';
+  @ViewChild('modalWindow') templateWindow: TemplateRef<any>;
+  window: NgbModalRef = null;
 
-  @ViewChild('remoteVideo') remoteVideoElement: ElementRef;
-  @ViewChild('localVideo') localVideoElement: ElementRef;
+  _initiatedCallAddressee: User = null;
+  _incomingCall: Call = null;
+  _lastMemberRejected: CallMemberLink = null;
+  _lastMemberHungUp: CallMemberLink = null;
 
-  windowSize: string = DirectCallWindowComponent.WINDOW_SIZE_NORMAL;
-  windowShown: boolean = false;
+  authorizedUser: User = null;
 
-  uiState: string;
-
-  _initiatedToAddressee: User = null;
-  _receivingCall: Call = null;
-
-  authorizedUser: User;
-
-  callConnection: CallConnection = null;
-
-  localStream: MediaStream = null;
-  remoteStream: MediaStream = null;
-  error: Error = null;
-
-  localStreamSubscription: Subscription = null;
-  remoteStreamSubscription: Subscription = null;
-  errorSubscription: Subscription = null;
-
-  @Input() set initiateToAddressee (value: User)
+  @Input() set incomingCall(value: Call)
   {
-    //debugger
-    this.windowShown = false;
+    this.closeWindow();
 
-    this._initiatedToAddressee = value;
-    this.windowShown = !!this._initiatedToAddressee;
-
-    (async () => {
-      await this.callAddressee();
-    })();
-  }
-
-  @Input() set receivingCall(value: Call)
-  {
-    this.windowShown = false;
-
-    this._receivingCall = value;
-    this.windowShown = !!this._receivingCall;
-
-    (async () => {
-      await this.receiveCall();
-    })();
+    this._incomingCall = value;
+    if (this._incomingCall)
+    {
+      this.openWindow();
+    }
   }
 
   constructor(
     private store: Store<State>,
-    private callConnector: CallConnectorService
+    private modal: NgbModal
   ) { }
 
+  openWindow()
+  {
+    this.window = this.modal.open(this.templateWindow, { centered: true, size: 'xl' });
+    this.window.result
+      .then(() => {
+
+        this.closeWindow();
+      })
+      .catch(() => {
+        this.closeWindow();
+      })
+  }
+
+  closeWindow()
+  {
+    if (this.window)
+    {
+      this.window.close();
+      this.window = null;
+
+      this.store.dispatch(new UserInitiateDirectCall(null));
+      this.store.dispatch(new IncomingCallReceived(null));
+      this.store.dispatch(new CallMemberHungUp(null));
+      this.cleanLocalState();
+    }
+  }
+
   async ngOnInit() {
-    this.authorizedUser = await this.store.pipe(select(state => state.security.user), first()).toPromise();
+
+    this.authorizedUser = await this.store.pipe(
+      select(state => state.security.user),
+      first())
+      .toPromise();
+
+    this.initiatedCallSubscription = this
+      .store
+      .pipe(select(state => state.calls.lastInitiatedDirectCallAddressee))
+      .subscribe(this.lastInitiatedCallHandler);
+
+
+    this.lastRejectedCallSubscription = this
+      .store
+      .pipe(
+        select(state => state.calls.lastMemberRejectedLink),
+      )
+      .subscribe(this.lastRejectedMemberLinkHandler);
+
+
+    this.lastReportedUserSubscription = this.store.pipe(
+      select(state => state.client.lastBanStatusChangedUser),
+      filter(user => !!user)
+    ).subscribe(this.lastBanStatusChangeHandler);
+
+    this.lastMemberHangUpSubscription = this.store.pipe(
+      select(state => state.calls.lastMemberHungUpLink),
+      filter(link => !!link)
+    ).subscribe(this.lastMemberHangUpHandler);
+
   }
 
-  async ngOnDestroy() {
+  ngOnDestroy(): void {
 
-    await this.releaseCallConnection();
+    this.closeWindow();
+    this.lastRejectedCallSubscription.unsubscribe();
+    this.initiatedCallSubscription.unsubscribe();
+    this.lastReportedUserSubscription.unsubscribe();
+    this.lastMemberHangUpSubscription.unsubscribe();
 
-    this.releaseCallSubscriptions();
   }
 
-  async callAddressee()
+  cleanLocalState()
   {
-    if (this._initiatedToAddressee !== null)
+    this._initiatedCallAddressee = null;
+    this._lastMemberRejected = null;
+    this._lastMemberHungUp = null;
+    this._incomingCall = null;
+  }
+
+  lastMemberHangUpHandler = (link: CallMemberLink) => {
+    this._lastMemberHungUp = link;
+  }
+
+  lastBanStatusChangeHandler = (user: User) => {
+
+    const addressee: User = this.getAddressee();
+
+    if (!addressee)
     {
-      this.uiState = DirectCallWindowComponent.UI_STATE_CALLING_ADDRESSEE;
+      return;
+    }
 
-      await this.releaseCallConnection();
-      this.releaseCallSubscriptions();
+    if (addressee.id === user.id)
+    {
 
-      //debugger
-      const socketWindowId: string = await this.store.pipe(select(state => state.calls.callWindowId), first()).toPromise();
-      this.callConnection = this.callConnector.call(this._initiatedToAddressee, socketWindowId, true);
+      if (user.amIBanned || user.isBanned)
+      {
+        this.closeWindow();
 
-      await this.initiateCallConnection();
+        if (user.amIBanned)
+        {
+          this.store.dispatch(
+            new GlobalNotification(
+              new Notification(NotificationType.WARNING, user.fullName + ' has banned you!')
+            )
+          );
+        }
+      }
+
     }
   }
 
-  async receiveCall()
+  lastInitiatedCallHandler = (addressee: User) => {
+
+    this._initiatedCallAddressee = addressee;
+
+    this.closeWindow();
+    if (!!this._initiatedCallAddressee)
+    {
+      this.openWindow();
+    }
+  }
+
+  lastRejectedMemberLinkHandler = (link: CallMemberLink) => {
+    this._lastMemberRejected = link;
+  }
+
+  onHangUpHandler(call: Call)
   {
-    if (this._receivingCall !== null)
-    {
-      this.uiState = DirectCallWindowComponent.UI_STATE_RECEIVING_CALL;
-
-      await this.releaseCallConnection();
-      this.releaseCallSubscriptions();
-
-      const socketWindowId: string = await this.store.pipe(select(state => state.calls.callWindowId), first()).toPromise();
-
-      this.callConnection = this.callConnector.receive(this._receivingCall, socketWindowId);
-
-      await this.initiateCallConnection();
-    }
+    this.closeWindow();
   }
 
-  localStreamsReadyHandler = (stream: MediaStream) => {
-    this.localStream = stream;
-    // turn off local audio
-
-    this.localVideoElement.nativeElement.srcObject = stream;
-  }
-
-  remoteStreamReadyHandler = (stream: MediaStream) => {
-    this.remoteStream = stream;
-
-    this.remoteVideoElement.nativeElement.srcObject = stream;
-
-    this.uiState = DirectCallWindowComponent.UI_STATE_CALL_IN_PROGRESS;
-  }
-
-  connectionErrorHandler = (error) => {
-    this.error = error;
-
-    this.uiState = DirectCallWindowComponent.UI_STATE_ERROR;
-  }
-
-  async initiateCallConnection()
+  getAddressee()
   {
-    this.localStreamSubscription = this.callConnection.getLocalMediaStream().subscribe(this.localStreamsReadyHandler);
-    this.remoteStreamSubscription = this.callConnection.getRemoteMediaStream().subscribe(this.remoteStreamReadyHandler);
-    this.errorSubscription = this.callConnection.getErrors().subscribe(this.connectionErrorHandler);
-
-    try {
-      await this.callConnection.initiate();
-    }
-    catch (error)
+    if (!!this._initiatedCallAddressee)
     {
-      // set the interface to the error state
-      this.error = error;
-      // display the error message at the center of canvas to make it conspicuous
-      this.uiState = DirectCallWindowComponent.UI_STATE_ERROR;
-    }
-  }
-
-  async releaseCallConnection()
-  {
-    if (this.callConnection !== null)
-    {
-      await this.callConnection.release();
-      this.callConnection = null;
-    }
-  }
-
-  releaseCallSubscriptions()
-  {
-    if (this.localStreamSubscription !== null)
-    {
-      this.localStreamSubscription.unsubscribe();
-      this.localStreamSubscription = null;
+      return this._initiatedCallAddressee;
     }
 
-    if (this.remoteStreamSubscription !== null)
+    if (!!this._incomingCall)
     {
-      this.remoteStreamSubscription.unsubscribe();
-      this.remoteStreamSubscription = null;
+      return this
+        ._incomingCall
+        .members
+        .find(member => member.user.id !== this.authorizedUser.id).user;
     }
 
-    if (this.errorSubscription !== null)
-    {
-      this.errorSubscription.unsubscribe();
-      this.errorSubscription = null;
-    }
+    return null;
   }
 
 }

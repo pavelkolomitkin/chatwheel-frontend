@@ -62,10 +62,11 @@ import { UserActivityObserverComponent } from './components/common/user-activity
 import {IncomingMessageComponent} from "./components/common/toast/incoming-message/incoming-message.component";
 import {CallSocketService} from "./services/sockets/call-socket.service";
 import { CallsObserverComponent } from './components/common/calls-observer/calls-observer.component';
-import { DirectCallWindowComponent } from './components/common/calls/direct-call-window/direct-call-window.component';
-import { IncomingDirectCallToastComponent } from './components/common/calls/incoming-direct-call-toast/incoming-direct-call-toast.component';
+import { DirectCallComponent } from './components/common/calls/direct-call/direct-call.component';
+import { IncomingDirectCallToastComponent } from './components/common/toast/incoming-direct-call-toast/incoming-direct-call-toast.component';
 import {CallConnectorService} from "./services/calls/call-connector.service";
 import {CallService} from "./services/call.service";
+import { DirectCallWindowComponent } from './components/common/calls/direct-call-window/direct-call-window.component';
 
 @NgModule({
   declarations: [
@@ -109,8 +110,9 @@ import {CallService} from "./services/call.service";
     UserActivityObserverComponent,
     IncomingMessageComponent,
     CallsObserverComponent,
-    DirectCallWindowComponent,
+    DirectCallComponent,
     IncomingDirectCallToastComponent,
+    DirectCallWindowComponent,
   ],
   providers: [
     ProfileService,
@@ -146,7 +148,8 @@ import {CallService} from "./services/call.service";
   ],
 
   entryComponents: [
-    IncomingMessageComponent
+    IncomingMessageComponent,
+    IncomingDirectCallToastComponent
   ]
 })
 export class ClientModule {}
