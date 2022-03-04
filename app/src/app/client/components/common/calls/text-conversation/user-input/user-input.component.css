@@ -1,0 +1,8 @@
+input
+{
+  border: none;
+  border-bottom: 1px solid #ccc;
+  background: transparent !important;
+  color: #ccc !important;
+  border-radius: 0;
+}

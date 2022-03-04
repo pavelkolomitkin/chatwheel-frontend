@@ -10,7 +10,6 @@ import {Call} from '../../../../data/model/calls/call.model';
 import {CallMemberLink} from "../../../../data/model/calls/call-member-link.model";
 import {UserReportAbuseInit} from "../../../../data/actions";
 import {CallMemberRejected} from "../../../../data/calls/actions";
-import * as screenfull from 'screenfull';
 
 @Component({
   selector: 'app-direct-call',
@@ -20,6 +19,8 @@ import * as screenfull from 'screenfull';
 export class DirectCallComponent implements OnInit, OnDestroy {
 
   @Output('onHangUp') hangUpEmitter: EventEmitter<Call> = new EventEmitter<Call>();
+  @Output('onDoubleClickRemote') doubleClickRemoteVideoEmitter: EventEmitter<void> = new EventEmitter<void>();
+  @Output('onReportAbuse') reportAbuseEmitter: EventEmitter<User> = new EventEmitter<User>();
 
   static UI_STATE_CALLING_ADDRESSEE = 'calling_addressee';
   static UI_STATE_RECEIVING_CALL = 'receiving_call';
@@ -47,6 +48,8 @@ export class DirectCallComponent implements OnInit, OnDestroy {
   localStream: MediaStream = null;
   remoteStream: MediaStream = null;
   error: Error = null;
+
+  isTextChatVisible: boolean = false;
 
   localStreamSubscription: Subscription = null;
   remoteStreamSubscription: Subscription = null;
@@ -255,7 +258,7 @@ export class DirectCallComponent implements OnInit, OnDestroy {
   onReportAbuseClickHandler = async (event) => {
 
     const addressee: User = this.getAddressee();
-    this.store.dispatch(new UserReportAbuseInit(addressee));
+    this.reportAbuseEmitter.emit(addressee)
   }
 
   getAddressee()
@@ -324,5 +327,25 @@ export class DirectCallComponent implements OnInit, OnDestroy {
       this.errorSubscription.unsubscribe();
       this.errorSubscription = null;
     }
+  }
+
+  onDoubleClickRemoteVideoHandler(event)
+  {
+    this.doubleClickRemoteVideoEmitter.emit();
+  }
+
+  onTextChatButtonClickHandler(event)
+  {
+    this.isTextChatVisible = true
+  }
+
+  onTextChatCloseHandler(event)
+  {
+    this.isTextChatVisible = false;
+  }
+
+  onRemoteVideoClickHandler(event)
+  {
+    this.isTextChatVisible = false;
   }
 }

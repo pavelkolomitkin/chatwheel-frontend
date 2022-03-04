@@ -70,6 +70,9 @@ import { DirectCallWindowComponent } from './components/common/calls/direct-call
 import {
     ConversationLastMessageComponent
 } from "./components/pages/my-profile/messages/conversation-list-page/conversation-last-message/conversation-last-message.component";
+import { TextConversationComponent } from './components/common/calls/text-conversation/text-conversation.component';
+import { UserInputComponent } from './components/common/calls/text-conversation/user-input/user-input.component';
+import { MessageListItemComponent as CallWindowMessageListItemComponent } from './components/common/calls/text-conversation/message-list-item/message-list-item.component';
 
 @NgModule({
     declarations: [
@@ -117,6 +120,9 @@ import {
         IncomingDirectCallToastComponent,
         DirectCallWindowComponent,
         ConversationLastMessageComponent,
+        TextConversationComponent,
+        UserInputComponent,
+        CallWindowMessageListItemComponent
     ],
   providers: [
     ProfileService,

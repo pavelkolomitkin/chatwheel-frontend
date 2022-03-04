@@ -68,5 +68,10 @@ body
 
 
 .modal-xl {
-  min-width: 1140px !important;
+  max-width: 1024px !important;
+}
+
+.modal
+{
+  pointer-events: none !important;
 }

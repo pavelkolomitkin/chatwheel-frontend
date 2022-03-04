@@ -1,0 +1,32 @@
+.message-container {
+  position: relative;
+  padding: 10px;
+  background: rgba(204, 204, 204, 0.34);
+  color: #cccccc;
+  border-radius: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.message-container .body-message {
+  color: white;
+  padding-right: 50px;
+  overflow: hidden;
+}
+.message-container .avatar-container {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.message-container.received {}
+
+.message-container.received .body-message {
+  padding-right: 0 !important;
+  padding-left: 50px;
+}
+.message-container.received .avatar-container {
+  right: unset !important;
+  left: 10px;
+}
+

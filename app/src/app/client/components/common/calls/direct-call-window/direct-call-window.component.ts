@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, TemplateRef, ViewChild, ViewEncapsulation} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {User} from '../../../../../security/data/models/user.model';
 import {Call} from '../../../../data/model/calls/call.model';
@@ -11,12 +11,13 @@ import {CallMemberHungUp, IncomingCallReceived, UserInitiateDirectCall} from "..
 import {GlobalNotification} from "../../../../../core/data/actions";
 import {Notification, NotificationType} from "../../../../../core/data/models/notification.model";
 import screenfull from "screenfull";
+import {UserReportAbuseInit} from "../../../../data/actions";
 
 @Component({
   selector: 'app-direct-call-window',
   templateUrl: './direct-call-window.component.html',
   styleUrls: ['./direct-call-window.component.css'],
-
+  encapsulation: ViewEncapsulation.None
 })
 export class DirectCallWindowComponent implements OnInit, OnDestroy {
 
@@ -260,22 +261,42 @@ export class DirectCallWindowComponent implements OnInit, OnDestroy {
     }
   }
 
-  onFullScreenClickHandler(event)
+  isWindowInFullscreenMode()
+  {
+    return this.windowSize === DirectCallWindowComponent.WINDOW_SIZE_FULLSCREEN;
+  }
+
+  fullScreenToggle()
   {
     if (!this.fullScreenEnabled)
     {
       return;
     }
 
-    this.windowSize = DirectCallWindowComponent.WINDOW_SIZE_FULLSCREEN;
+    if (!this.isWindowInFullscreenMode())
+    {
+      this.windowSize = DirectCallWindowComponent.WINDOW_SIZE_FULLSCREEN;
 
-    debugger
+      // @ts-ignore
+      const element = this.window._contentRef.viewRef.rootNodes[0];
+      // @ts-ignore
+      screenfull.request(element);
+    }
+    else
+    {
+      // @ts-ignore
+      screenfull.exit();
+    }
+  }
 
-    // @ts-ignore
-    const element = this.window._contentRef.viewRef.rootNodes[0];
-    // @ts-ignore
-    screenfull.request(element);
+  onToggleFullScreenHandler(event)
+  {
+    this.fullScreenToggle();
+  }
 
+  onFullScreenClickHandler(event)
+  {
+    this.fullScreenToggle();
   }
 
   onNormalSizeClickHandler(event)
@@ -285,7 +306,7 @@ export class DirectCallWindowComponent implements OnInit, OnDestroy {
     if (screenfull.isFullscreen)
     {
       // @ts-ignore
-      screenfull.exit()
+      screenfull.exit();
     }
   }
 
@@ -294,4 +315,14 @@ export class DirectCallWindowComponent implements OnInit, OnDestroy {
     this.closeWindow();
   }
 
+  onReportAbuseHandler(user: User)
+  {
+    if (this.isWindowInFullscreenMode())
+    {
+      // @ts-ignore
+      screenfull.exit();
+    }
+
+    this.store.dispatch(new UserReportAbuseInit(user));
+  }
 }
