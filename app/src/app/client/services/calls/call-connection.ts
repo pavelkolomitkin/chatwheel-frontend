@@ -30,6 +30,9 @@ export class CallConnection
 
   protected socketId: string;
 
+  private _isInitialized: Boolean = false;
+  private wasReleased: boolean = false;
+
 
   constructor(
     protected callService: CallService,
@@ -37,6 +40,19 @@ export class CallConnection
     protected userMediaService: UserMediaService
   ) {
 
+  }
+
+  /**
+   * This function should overwritten in a subclass
+   */
+  async initialize()
+  {
+
+  }
+
+  isInitialized()
+  {
+    return this._isInitialized;
   }
 
   async initiate()
@@ -48,17 +64,33 @@ export class CallConnection
     // fire the event 'user_stream_ready' with the stream
     await this.initializeMedia();
 
+    await this.initialize();
+
+    this._isInitialized = true;
   }
 
   async hangUp()
   {
     const call: Call = this.getCall();
 
-    await this.callService.hangUp(call).toPromise();
+    if (call)
+    {
+      await this.callService.hangUp(call).toPromise();
+    }
+  }
+
+  async reject()
+  {
+    const call: Call = this.getCall();
+    if (call)
+    {
+      await this.callService.reject(call).toPromise();
+    }
   }
 
   async release()
   {
+    this.wasReleased = true;
     this.localMediaSubject.unsubscribe();
     this.remoteMediaSubject.unsubscribe();
     this.errorSubject.unsubscribe();
@@ -68,14 +100,14 @@ export class CallConnection
       this.peer.destroy();
     }
 
-    this.releaseMediaStream(this.userMediaStream);
+    await this.releaseMediaStream(this.userMediaStream);
     this.userMediaStream = null;
 
-    this.releaseMediaStream(this.remoteMediaStream);
+    await this.releaseMediaStream(this.remoteMediaStream);
     this.remoteMediaStream = null;
   }
 
-  releaseMediaStream(stream: MediaStream)
+  async releaseMediaStream(stream: MediaStream)
   {
     if (stream)
     {
@@ -122,6 +154,15 @@ export class CallConnection
     try {
       // @ts-ignore
       this.userMediaStream = await this.userMediaService.getUserMedia(true, true);
+
+      if (this.wasReleased)
+      {
+        this.releaseMediaStream(this.userMediaStream);
+        this.userMediaStream = null;
+
+        return;
+      }
+
       this.localMediaSubject.next(this.userMediaStream);
     }
     catch (error)
@@ -149,7 +190,13 @@ export class CallConnection
   initPeerStreamHandler()
   {
     this.peer.on('stream', (stream: MediaStream) => {
-      //debugger
+      if (this.wasReleased)
+      {
+        this.releaseMediaStream(stream);
+        return;
+      }
+
+
       this.remoteMediaStream = stream;
       this.remoteMediaSubject.next(this.remoteMediaStream);
     });
@@ -158,7 +205,7 @@ export class CallConnection
   initPeerErrorHandler()
   {
     this.peer.on('error', (error) => {
-      //debugger
+
       this.errorSubject.next(new CallError(CallConnectionInitiator.CONNECTION_ESTABLISHING_ERROR_MESSAGE));
     });
   }

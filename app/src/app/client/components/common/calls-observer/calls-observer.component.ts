@@ -31,11 +31,15 @@ export class CallsObserverComponent implements OnInit, OnDestroy {
   connectedMemberSubscription: Subscription;
   rejectedMemberSubscription: Subscription;
   hungUpMemberSubscription: Subscription;
+  lastAddresseeHungUpSubscription: Subscription;
 
   lastIncomingCallSubscription: Subscription;
 
-
   lastReceivedIncomingCall: Call = null;
+  lastAddresseeHungUp: CallMemberLink;
+
+
+  toasts: any = {};
 
   constructor(
     private store: Store<State>,
@@ -56,6 +60,12 @@ export class CallsObserverComponent implements OnInit, OnDestroy {
         )
       .subscribe(this.lastIncomingCallHandler);
 
+    this.lastAddresseeHungUpSubscription = this.store.pipe(
+      select(state => state.calls.lastMemberHungUpLink),
+      filter(link => !!link)
+    )
+      .subscribe(this.lastAddresseeHungUpHandler);
+
 
     this.incomingCallSubscription = this.callSocketService.getIncomingCall().subscribe(this.incomingCallHandler);
     this.connectingMemberSubscription = this.callSocketService.getConnectingMember().subscribe(this.connectingMemberHandler);
@@ -74,8 +84,20 @@ export class CallsObserverComponent implements OnInit, OnDestroy {
     this.rejectedMemberSubscription.unsubscribe();
     this.hungUpMemberSubscription.unsubscribe();
     this.lastIncomingCallSubscription.unsubscribe();
+    this.lastAddresseeHungUpSubscription.unsubscribe();
 
     this.store.dispatch(new SetCallWindowId(null));
+  }
+
+  lastAddresseeHungUpHandler = (link: CallMemberLink) => {
+
+    if (!!this.toasts[link.call])
+    {
+      const toast = this.toasts[link.call]
+      this.toastService.remove(toast.toastId);
+      delete this.toasts[link.call];
+    }
+
   }
 
   callWindowIdReceivedHandler = (id: string) => {
@@ -120,6 +142,8 @@ export class CallsObserverComponent implements OnInit, OnDestroy {
           console.log(error);
         }
       });
+
+    this.toasts[call.id] = toast;
   }
 
   incomingCallHandler = (call: Call) => {

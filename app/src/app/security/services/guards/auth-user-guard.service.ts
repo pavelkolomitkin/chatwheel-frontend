@@ -31,7 +31,6 @@ export class AuthUserGuardService implements CanActivate {
   {
       return new Promise<boolean>((resolve, reject) => {
 
-        //debugger
           let result: boolean = false;
 
           if (route.url.length > 0) {

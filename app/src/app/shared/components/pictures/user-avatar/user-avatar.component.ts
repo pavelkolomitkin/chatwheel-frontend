@@ -20,7 +20,6 @@ export class UserAvatarComponent implements OnInit {
 
   getStyles()
   {
-    //debugger
     const result = {
       ...this._styles,
       cursor: (this.isLightBox && !!this._user.avatar) ? 'pointer': 'default',

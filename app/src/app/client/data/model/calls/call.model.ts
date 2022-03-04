@@ -28,11 +28,14 @@ export class Call
     const result: Call = Object.assign(new Call(), data);
     result.members = [];
 
-    for (let member of data.members)
+    if (!!data.members)
     {
-      result.members.push(
-        CallMember.createFromRawData(member)
-      );
+      for (let member of data.members)
+      {
+        result.members.push(
+          CallMember.createFromRawData(member)
+        );
+      }
     }
 
     return result;

@@ -18,7 +18,6 @@ export class DefaultRedirectGuard implements CanActivate
     {
         return new Promise((resolve, reject) => {
 
-          //debugger
             const permissions = this.permissionService.getPermissions();
 
             let isRedirected = false;

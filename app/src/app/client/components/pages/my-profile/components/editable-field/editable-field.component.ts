@@ -59,8 +59,6 @@ export class EditableFieldComponent implements OnInit {
       return;
     }
 
-
-    //debugger
     //console.log('CLICK ON THE DOCUMENT!');
     if (this.isEditing)
     {

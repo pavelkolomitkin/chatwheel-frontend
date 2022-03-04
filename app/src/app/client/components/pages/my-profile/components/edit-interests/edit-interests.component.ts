@@ -75,7 +75,6 @@ export class EditInterestsComponent implements OnInit {
 
     tagsInput.on('itemRemoved', async (event) => {
 
-      //debugger
       this.customEditing = true;
       //const interestId = this.interestHash[event.item];
       // call the server for removing the tag from user's interests

@@ -1,4 +1,6 @@
 <div class="call-window">
+
+
   <div class="window-container">
 
     <div class="addressee-block" *ngIf="!!_addressee">
@@ -13,27 +15,6 @@
           <div class="h4">{{ _addressee.fullName }}</div>
         </div>
       </div>
-
-    </div>
-
-
-    <div class="window-controls">
-
-      <span class="control btn">
-        <i class="ik ik-minus"></i>
-      </span>
-
-        <span class="control btn mr-1">
-        <i class="ik ik-square"></i>
-      </span>
-
-        <span class="control btn mr-1">
-        <i class="ik ik-minimize-2"></i>
-      </span>
-
-        <span class="control btn mr-1">
-        <i class="ik ik-x"></i>
-      </span>
 
     </div>
 
@@ -126,7 +107,6 @@
 
       <ng-container *ngIf="
       (uiState === 'call_rejected')
-      || (uiState === 'call_error')
       || (uiState === 'addressee_hung_up')">
         <div
           class="control btn btn-outline-success mr-2"

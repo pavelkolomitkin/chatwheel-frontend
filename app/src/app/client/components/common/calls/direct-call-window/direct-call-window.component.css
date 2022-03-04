@@ -1,0 +1,27 @@
+.modal-window-container {
+  position: relative;
+}
+
+.modal-window-container .window-controls {
+
+  position: absolute;
+  top: 5px;
+  right: -10px;
+  z-index: 100;
+
+
+  display: none;
+}
+
+.modal-window-container:hover .window-controls
+{
+  display: block;
+}
+
+.modal-window-container .window-controls .control {
+  color: #cccccc;
+}
+
+.modal-window-container .window-controls .control:hover {
+  color: white;
+}

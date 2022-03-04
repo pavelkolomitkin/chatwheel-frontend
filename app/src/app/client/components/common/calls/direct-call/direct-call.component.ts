@@ -10,6 +10,7 @@ import {Call} from '../../../../data/model/calls/call.model';
 import {CallMemberLink} from "../../../../data/model/calls/call-member-link.model";
 import {UserReportAbuseInit} from "../../../../data/actions";
 import {CallMemberRejected} from "../../../../data/calls/actions";
+import * as screenfull from 'screenfull';
 
 @Component({
   selector: 'app-direct-call',
@@ -17,11 +18,6 @@ import {CallMemberRejected} from "../../../../data/calls/actions";
   styleUrls: ['./direct-call.component.css']
 })
 export class DirectCallComponent implements OnInit, OnDestroy {
-
-  // static WINDOW_SIZE_FULLSCREEN = 'window_size_fullscreen';
-  // static WINDOW_SIZE_NORMAL = 'window_size_normal';
-  // static WINDOW_SIZE_MINIMIZED = 'window_size_minimized';
-  // windowSize: string = DirectCallComponent.WINDOW_SIZE_NORMAL;
 
   @Output('onHangUp') hangUpEmitter: EventEmitter<Call> = new EventEmitter<Call>();
 
@@ -31,7 +27,6 @@ export class DirectCallComponent implements OnInit, OnDestroy {
   static UI_STATE_CALL_ADDRESSEE_HUNG_UP = 'addressee_hung_up';
   static UI_STATE_CALL_IN_PROGRESS = 'call_in_progress';
   static UI_STATE_ERROR = 'call_error';
-  static UI_STATE_BANNED_BY_ADDRESSEE = 'banned_by_addressee';
 
   @ViewChild('remoteVideo') remoteVideoElement: ElementRef;
   @ViewChild('localVideo') localVideoElement: ElementRef;
@@ -111,8 +106,24 @@ export class DirectCallComponent implements OnInit, OnDestroy {
 
   async ngOnDestroy() {
 
-    await this.releaseCallConnection();
+    try {
+      if (this.callConnection && this.callConnection.isInitialized())
+      {
+        await this.callConnection.hangUp();
+      }
+      else if (!!this._initiatedToAddressee)
+      {
+        await this.callConnection.hangUp();
+      }
+      else if (!!this._receivingCall)
+      {
+        await this.callConnection.reject();
+      }
+    }
+    catch (error)
+    {}
 
+    await this.releaseCallConnection();
     this.releaseCallSubscriptions();
   }
 
@@ -125,7 +136,6 @@ export class DirectCallComponent implements OnInit, OnDestroy {
       await this.releaseCallConnection();
       this.releaseCallSubscriptions();
 
-      //debugger
       const socketWindowId: string = await this.store.pipe(select(state => state.calls.callWindowId), first()).toPromise();
       this.callConnection = this.callConnector.call(this._initiatedToAddressee, socketWindowId, true);
 
@@ -152,12 +162,17 @@ export class DirectCallComponent implements OnInit, OnDestroy {
 
   rejectCall()
   {
-    if (!this._rejectedMember)
+    if (!this._rejectedMember || !this.callConnection)
     {
       return;
     }
 
     const currentCall: Call = this.callConnection.getCall();
+    if (!currentCall)
+    {
+      return;
+    }
+
     const callId: string = this._rejectedMember.call;
 
     if (callId === currentCall.id)
@@ -216,7 +231,17 @@ export class DirectCallComponent implements OnInit, OnDestroy {
   onHangUpClickHandler = async (event) => {
     try {
 
-      await this.callConnection.hangUp();
+      if (this.callConnection.isInitialized())
+      {
+        await this.callConnection.hangUp();
+      }
+      else
+      {
+        await this.callConnection.reject();
+      }
+
+      this._initiatedToAddressee = null;
+      this._receivingCall = null;
 
       const call: Call = this.callConnection.getCall();
       this.hangUpEmitter.emit(call);
@@ -300,5 +325,4 @@ export class DirectCallComponent implements OnInit, OnDestroy {
       this.errorSubscription = null;
     }
   }
-
 }

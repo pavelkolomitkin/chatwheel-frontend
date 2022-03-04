@@ -1,23 +1,81 @@
 <ng-template #modalWindow let-modal>
 
-  <ng-container *ngIf="_initiatedCallAddressee !== null">
-    <app-direct-call
-      [authorizedUser]="authorizedUser"
-      [initiateToAddressee]="_initiatedCallAddressee"
-      [rejectedMember]="_lastMemberRejected"
-      [hungUpMember]="_lastMemberHungUp"
-      (onHangUp)="onHangUpHandler($event)"
-    ></app-direct-call>
-  </ng-container>
+  <div class="modal-window-container">
 
-  <ng-container *ngIf="_incomingCall !== null">
-    <app-direct-call
-      [authorizedUser]="authorizedUser"
-      [receivingCall]="_incomingCall"
-      [hungUpMember]="_lastMemberHungUp"
-      [rejectedMember]="_lastMemberRejected"
-      (onHangUp)="onHangUpHandler($event)"
-    ></app-direct-call>
-  </ng-container>
+    <div class="window-controls">
+
+      <ng-container *ngIf="windowSize === 'window_size_normal'">
+
+        <span class="control btn" (click)="onMinimizeClickHandler($event)">
+          <i class="ik ik-minus"></i>
+        </span>
+
+        <ng-container>
+          <span class="control btn mr-1" (click)="onFullScreenClickHandler($event)">
+            <i class="ik ik-maximize-2"></i>
+          </span>
+        </ng-container>
+
+      </ng-container>
+
+      <ng-container *ngIf="windowSize === 'window_size_fullscreen'">
+
+        <span class="control btn" (click)="onMinimizeClickHandler($event)">
+          <i class="ik ik-minus"></i>
+        </span>
+
+        <span class="control btn mr-1" (click)="onNormalSizeClickHandler($event)">
+          <i class="ik ik-minimize-2"></i>
+        </span>
+
+      </ng-container>
+
+      <ng-container *ngIf="windowSize === 'window_size_minimized'">
+        <span class="control btn mr-1" (click)="onNormalSizeClickHandler($event)">
+          <i class="ik ik-square"></i>
+        </span>
+
+        <ng-container>
+          <span class="control btn mr-1" (click)="onFullScreenClickHandler($event)">
+            <i class="ik ik-maximize-2"></i>
+          </span>
+        </ng-container>
+
+      </ng-container>
+
+      <span class="control btn mr-1" (click)="onCloseClickHandler($event)">
+        <i class="ik ik-x"></i>
+      </span>
+
+    </div>
+
+
+    <ng-container *ngIf="_initiatedCallAddressee !== null">
+      <app-direct-call
+        [authorizedUser]="authorizedUser"
+        [initiateToAddressee]="_initiatedCallAddressee"
+        [rejectedMember]="_lastMemberRejected"
+        [hungUpMember]="_lastMemberHungUp"
+        (onHangUp)="onHangUpHandler($event)"
+      ></app-direct-call>
+    </ng-container>
+
+    <ng-container *ngIf="_incomingCall !== null">
+      <app-direct-call
+        [authorizedUser]="authorizedUser"
+        [receivingCall]="_incomingCall"
+        [hungUpMember]="_lastMemberHungUp"
+        [rejectedMember]="_lastMemberRejected"
+        (onHangUp)="onHangUpHandler($event)"
+      ></app-direct-call>
+    </ng-container>
+
+
+  </div>
+
+
+
+
+
 
 </ng-template>

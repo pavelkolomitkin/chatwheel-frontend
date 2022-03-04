@@ -36,7 +36,7 @@ export class RegisterEffects
             return new UserRegisterSuccess();
           }),
           catchError((errors) => {
-            //debugger
+
             return of(new UserRegisterError(errors.error.errors));
           })
         )
@@ -64,14 +64,14 @@ export class RegisterEffects
         this.store.dispatch(new GlobalProgressShow());
       }),
       mergeMap(({ key }: UserRegisterConfirmStart) => {
-        //debugger
+
         return this.service.registerConfirm(key).pipe(
           map((token: string) => {
-            //debugger
+
             return new UserRegisterConfirmSuccess(token);
           }),
           catchError(() => {
-            //debugger
+
             return of(new UserRegisterConfirmError());
           })
         );
@@ -86,7 +86,7 @@ export class RegisterEffects
     return this.actions.pipe(
       ofType(USER_REGISTER_CONFIRM_SUCCESS),
       tap((action: UserRegisterConfirmSuccess) => {
-        //debugger
+
 
         const { token } = action;
 

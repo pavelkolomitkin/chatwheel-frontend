@@ -10,13 +10,20 @@ import {CallMemberLink} from "../../../../data/model/calls/call-member-link.mode
 import {CallMemberHungUp, IncomingCallReceived, UserInitiateDirectCall} from "../../../../data/calls/actions";
 import {GlobalNotification} from "../../../../../core/data/actions";
 import {Notification, NotificationType} from "../../../../../core/data/models/notification.model";
+import screenfull from "screenfull";
 
 @Component({
   selector: 'app-direct-call-window',
   templateUrl: './direct-call-window.component.html',
-  styleUrls: ['./direct-call-window.component.css']
+  styleUrls: ['./direct-call-window.component.css'],
+
 })
 export class DirectCallWindowComponent implements OnInit, OnDestroy {
+
+  static WINDOW_SIZE_FULLSCREEN = 'window_size_fullscreen';
+  static WINDOW_SIZE_NORMAL = 'window_size_normal';
+  static WINDOW_SIZE_MINIMIZED = 'window_size_minimized';
+  windowSize: string = DirectCallWindowComponent.WINDOW_SIZE_NORMAL;
 
   initiatedCallSubscription: Subscription;
   lastRejectedCallSubscription: Subscription;
@@ -30,6 +37,9 @@ export class DirectCallWindowComponent implements OnInit, OnDestroy {
   _incomingCall: Call = null;
   _lastMemberRejected: CallMemberLink = null;
   _lastMemberHungUp: CallMemberLink = null;
+
+  //@ts-ignore
+  fullScreenEnabled: boolean = screenfull.enabled;
 
   authorizedUser: User = null;
 
@@ -47,19 +57,49 @@ export class DirectCallWindowComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<State>,
     private modal: NgbModal
-  ) { }
+  ) {
+  }
+
+  initializeFullScreen()
+  {
+    if (this.fullScreenEnabled)
+    {
+      // @ts-ignore
+      screenfull.on('change', () => {
+        // @ts-ignore
+        if (!screenfull.isFullscreen && (this.windowSize === DirectCallWindowComponent.WINDOW_SIZE_FULLSCREEN))
+        {
+          this.windowSize = DirectCallWindowComponent.WINDOW_SIZE_NORMAL;
+        }
+
+      });
+    }
+  }
+
+  disposeFullScreen()
+  {
+    if (this.fullScreenEnabled)
+    {
+      // @ts-ignore
+      screenfull.off('change');
+    }
+  }
 
   openWindow()
   {
-    this.window = this.modal.open(this.templateWindow, { centered: true, size: 'xl' });
+    this.window = this.modal.open(this.templateWindow, {
+      centered: true,
+      size: 'xl',
+      backdrop: false,
+    });
     this.window.result
       .then(() => {
 
-        this.closeWindow();
+        this.cleanUpState();
       })
       .catch(() => {
-        this.closeWindow();
-      })
+        this.cleanUpState();
+      });
   }
 
   closeWindow()
@@ -69,14 +109,13 @@ export class DirectCallWindowComponent implements OnInit, OnDestroy {
       this.window.close();
       this.window = null;
 
-      this.store.dispatch(new UserInitiateDirectCall(null));
-      this.store.dispatch(new IncomingCallReceived(null));
-      this.store.dispatch(new CallMemberHungUp(null));
-      this.cleanLocalState();
+      this.cleanUpState();
     }
   }
 
   async ngOnInit() {
+
+    this.initializeFullScreen();
 
     this.authorizedUser = await this.store.pipe(
       select(state => state.security.user),
@@ -111,12 +150,15 @@ export class DirectCallWindowComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
 
-    this.closeWindow();
     this.lastRejectedCallSubscription.unsubscribe();
     this.initiatedCallSubscription.unsubscribe();
     this.lastReportedUserSubscription.unsubscribe();
     this.lastMemberHangUpSubscription.unsubscribe();
 
+    this.closeWindow();
+    this.cleanUpState();
+
+    this.disposeFullScreen();
   }
 
   cleanLocalState()
@@ -125,6 +167,14 @@ export class DirectCallWindowComponent implements OnInit, OnDestroy {
     this._lastMemberRejected = null;
     this._lastMemberHungUp = null;
     this._incomingCall = null;
+  }
+
+  cleanUpState()
+  {
+    this.store.dispatch(new UserInitiateDirectCall(null));
+    this.store.dispatch(new IncomingCallReceived(null));
+    this.store.dispatch(new CallMemberHungUp(null));
+    this.cleanLocalState();
   }
 
   lastMemberHangUpHandler = (link: CallMemberLink) => {
@@ -196,6 +246,52 @@ export class DirectCallWindowComponent implements OnInit, OnDestroy {
     }
 
     return null;
+  }
+
+
+  onMinimizeClickHandler(event)
+  {
+    this.windowSize = DirectCallWindowComponent.WINDOW_SIZE_MINIMIZED;
+    // @ts-ignore
+    if (screenfull.isFullscreen)
+    {
+      // @ts-ignore
+      screenfull.exit()
+    }
+  }
+
+  onFullScreenClickHandler(event)
+  {
+    if (!this.fullScreenEnabled)
+    {
+      return;
+    }
+
+    this.windowSize = DirectCallWindowComponent.WINDOW_SIZE_FULLSCREEN;
+
+    debugger
+
+    // @ts-ignore
+    const element = this.window._contentRef.viewRef.rootNodes[0];
+    // @ts-ignore
+    screenfull.request(element);
+
+  }
+
+  onNormalSizeClickHandler(event)
+  {
+    this.windowSize = DirectCallWindowComponent.WINDOW_SIZE_NORMAL;
+    // @ts-ignore
+    if (screenfull.isFullscreen)
+    {
+      // @ts-ignore
+      screenfull.exit()
+    }
+  }
+
+  onCloseClickHandler(event)
+  {
+    this.closeWindow();
   }
 
 }

@@ -15,10 +15,7 @@ export class CallConnectionReceiver extends CallConnection
   }
 
 
-  async initiate(): Promise<void> {
-    await super.initiate();
-
-    //debugger
+  async initialize(): Promise<void> {
 
     try {
       this.peer = this.createInitiatorPeer(this.userMediaStream);
@@ -30,10 +27,8 @@ export class CallConnectionReceiver extends CallConnection
 
     this.connectedMemberSubscription = this.callSockets.getConnectedMember().subscribe(this.connectedMemberHandler);
 
-    //debugger
     this.peer.on('signal', async (data) => {
 
-      //debugger
       const peerId: string = JSON.stringify(data);
 
       try {

@@ -32,7 +32,7 @@ export class RegisterConfirmComponent implements OnInit, OnDestroy {
       map(params => params.key),
       filter(key => !!key)
     ).subscribe((key:string) => {
-      //debugger
+
       this.store.dispatch(new UserRegisterConfirmStart(key));
     });
 
@@ -40,7 +40,7 @@ export class RegisterConfirmComponent implements OnInit, OnDestroy {
       select(state => state.security.accountActivationAction),
       filter(action => action !== AccountConfirmationActions.NONE)
     ).subscribe((action) => {
-      // debugger
+
       if (action === AccountConfirmationActions.SUCCESS)
       {
         this.action = 'SUCCESS';

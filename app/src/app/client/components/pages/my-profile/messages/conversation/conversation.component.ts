@@ -28,7 +28,8 @@ import {UserTyping} from "../../../../../data/model/user-activity/user-typing.mo
 @Component({
   selector: 'app-conversation',
   templateUrl: './conversation.component.html',
-  styleUrls: ['./conversation.component.css']
+  styleUrls: ['./conversation.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ConversationComponent implements OnInit, OnDestroy {
 
@@ -100,7 +101,6 @@ export class ConversationComponent implements OnInit, OnDestroy {
 
         try {
           this.messageList = await this.conversationService.getIndividual(this.addressee).toPromise();
-          // debugger
         }
         catch (error) { }
 
@@ -395,12 +395,12 @@ export class ConversationComponent implements OnInit, OnDestroy {
   {
 
     try {
-      //debugger
+
       if (this.messageList === null)
       {
-        //debugger;
+
         const result = await this.messageService.sendToUser(this.addressee, text).toPromise();
-        //debugger;
+
         this.messageList = result.conversation;
       }
       else

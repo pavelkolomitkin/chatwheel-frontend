@@ -44,7 +44,7 @@ export class MapLocationViewComponent implements OnInit, AfterViewInit
 
 
   ngOnInit(): void {
-    //debugger
+
 
   }
 
@@ -63,7 +63,7 @@ export class MapLocationViewComponent implements OnInit, AfterViewInit
 
   onMapReadyHandler(event)
   {
-//debugger
+
 
   }
 

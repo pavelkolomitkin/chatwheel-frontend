@@ -30,7 +30,7 @@ export class ConversationMessageService extends BaseService
     const params: HttpParams = this.getHttpParamsFromObject(data);
     return this.http.get<{ list: ConversationMessage[] }>('/client/message/list/' + messageList.id, { params }).pipe(
       map(({ list }) => {
-        //debugger;
+
         return list.map(item => ConversationMessage.createFromRawData(item))
       })
     );
@@ -58,7 +58,7 @@ export class ConversationMessageService extends BaseService
       text: text
     }).pipe(
       map(({ message }) => {
-        //debugger;
+
         return ConversationMessage.createFromRawData(message);
       })
     );

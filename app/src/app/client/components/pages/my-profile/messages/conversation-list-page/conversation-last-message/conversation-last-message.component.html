@@ -1,0 +1,38 @@
+<ng-container *ngIf="conversation.lastMessage; else deletedMessage">
+
+  <ng-container *ngIf="conversation.lastMessage.message.type === 0">
+    <span class="d-inline-block">
+
+    <app-user-avatar *ngIf="conversation.lastMessage.message.author.id !== user.id"
+                     [size]="'extraSmall'"
+                     [user]="conversation.lastMessage.message.author"
+    ></app-user-avatar>
+
+    </span>
+      <span>
+      {{ conversation.lastMessage.message.text | textTrim:50}}
+        <span class="text-muted small" app-date-time [value]="conversation.lastMessage.message.updatedAt"></span>
+    </span>
+  </ng-container>
+
+  <ng-container *ngIf="conversation.lastMessage.message.type === 1">
+      <span class="badge badge-pill badge-success mb-1" title="Call Started">
+        <i class="ik ik-phone-call"></i><span app-date-time [value]="conversation.lastMessage.message.call.createdAt"></span>
+      </span>
+  </ng-container>
+
+  <ng-container *ngIf="conversation.lastMessage.message.type === 2">
+      <span class="badge badge-pill badge-secondary mb-1" title="Call Ended">
+        <i class="ik ik-phone-off"></i><span app-date-time [value]="conversation.lastMessage.message.call.endTime"></span>
+      </span>
+  </ng-container>
+  <ng-container *ngIf="conversation.lastMessage.message.type === 3">
+      <span class="badge badge-pill badge-danger mb-1" title="Call Rejected">
+        <i class="ik ik-phone-off"></i><span app-date-time [value]="conversation.lastMessage.message.call.endTime"></span>
+      </span>
+  </ng-container>
+
+</ng-container>
+<ng-template #deletedMessage>
+  <span class="small">(message deleted)</span>
+</ng-template>

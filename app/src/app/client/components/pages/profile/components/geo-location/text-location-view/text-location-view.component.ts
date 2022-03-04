@@ -88,13 +88,13 @@ export class TextLocationViewComponent implements OnInit {
 
         this.isError = false;
         this.isLoadingInfo = false;
-        //debugger
+
       })
       .catch((error) => {
         this.locationInfo = null;
         this.isError = true;
         this.isLoadingInfo = false;
-        //debugger
+
       });
   }
 

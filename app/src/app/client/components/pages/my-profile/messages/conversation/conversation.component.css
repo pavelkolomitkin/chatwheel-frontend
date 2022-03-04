@@ -17,6 +17,16 @@
   right: 20px !important;
 }
 
+.message-list {
+  position: relative;
+}
+
+.message-list .typing
+{
+  right: 20px !important;
+  bottom: 10px !important;
+}
+
 .list-container
 {
   min-height: 400px;

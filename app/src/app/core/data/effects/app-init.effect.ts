@@ -9,10 +9,7 @@ import {State} from "../../../app.state";
 @Injectable()
 export class AppInitEffect
 {
-  // ngrxOnInitEffects(): Action {
-  //   debugger
-  //   return new GlobalStoreEffectInit();
-  // }
+
   rootEffectsInit: Observable<Action> = createEffect(() => {
     return this.actions.pipe(
       ofType(ROOT_EFFECTS_INIT),

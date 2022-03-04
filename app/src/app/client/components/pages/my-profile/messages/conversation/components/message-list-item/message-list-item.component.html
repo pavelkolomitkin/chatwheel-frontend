@@ -1,46 +1,48 @@
 <ng-container *ngIf="!!user">
-  <ng-container *ngIf="message.message.author.id === user.id; else receivedMessage">
 
-    <ng-container *ngIf="!isEditing">
-      <div class="row mb-20 send-chat my-message-container">
-        <div class="col">
-          <div class="msg text-container">
-            <p class="mb-0" [innerHTML]="message.message.text | multiLine"></p>
+  <ng-container *ngIf="message.message.type === 0">
+    <ng-container *ngIf="message.message.author.id === user.id; else receivedMessage">
 
-            <div class="controls">
+      <ng-container *ngIf="!isEditing">
+        <div class="row mb-20 send-chat my-message-container">
+          <div class="col">
+            <div class="msg text-container">
+              <p class="mb-0" [innerHTML]="message.message.text | multiLine"></p>
+
+              <div class="controls">
               <span class="control mr-2 p-1 bg-white rounded" (click)="onEditClickHandler($event)">
                 <i class="ik ik-edit"></i>
               </span>
                 <span class="control mr-2 p-1 bg-white rounded" (click)="onRemoveClickHandler($event)">
                 <i class="ik ik-trash"></i>
               </span>
+              </div>
+
             </div>
-
+            <p class="text-muted mb-0"><i class="fa fa-clock-o mr-10"></i>
+              <span app-date-time [value]="message.message.createdAt"></span>
+              <span
+                class="text-muted small" *ngIf="message.message.createdAt !== message.message.updatedAt"
+                [title]="message.message.updatedAt | amLocal"
+              >(edited)</span>
+            </p>
           </div>
-          <p class="text-muted mb-0"><i class="fa fa-clock-o mr-10"></i>
-            <span app-date-time [value]="message.message.createdAt"></span>
-            <span
-              class="text-muted small" *ngIf="message.message.createdAt !== message.message.updatedAt"
-              [title]="message.message.updatedAt | amLocal"
-            >(edited)</span>
-          </p>
+          <div class="col-auto pl-0">
+            <app-user-avatar
+              [size]="'small'"
+              [user]="message.message.author"
+            ></app-user-avatar>
+          </div>
         </div>
-        <div class="col-auto pl-0">
-          <app-user-avatar
-            [size]="'small'"
-            [user]="message.message.author"
-          ></app-user-avatar>
-        </div>
-      </div>
-    </ng-container>
+      </ng-container>
 
-    <ng-container *ngIf="isEditing">
+      <ng-container *ngIf="isEditing">
 
-      <form (ngSubmit)="onEditSubmitHandler(form)" #form="ngForm">
-        <div class="loader" *ngIf="isSaving">
-          <img src="../../../../../../../../../assets/ajax-loader.gif">
-        </div>
-        <div class="form-group">
+        <form (ngSubmit)="onEditSubmitHandler(form)" #form="ngForm">
+          <div class="loader" *ngIf="isSaving">
+            <img src="../../../../../../../../../assets/ajax-loader.gif">
+          </div>
+          <div class="form-group">
           <textarea
             class="form-control"
             id="exampleTextarea1"
@@ -50,74 +52,97 @@
             name="editingText"
             placeholder="Your message..."
           ></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary mr-2" [disabled]="!form.valid || isSaving">Save</button>
+          <button class="btn btn-light" (click)="onEditCancelHandler($event)">Cancel</button>
+        </form>
+
+      </ng-container>
+      <ng-template #confirmationWindow let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Delete Message?</h4>
+          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-        <button type="submit" class="btn btn-primary mr-2" [disabled]="!form.valid || isSaving">Save</button>
-        <button class="btn btn-light" (click)="onEditCancelHandler($event)">Cancel</button>
-      </form>
+        <div class="modal-body">
+          <form #confirmationForm="ngForm">
+            <div class="form-group">
+              <div class="checkbox-color checkbox-primary">
+
+                <input id="removeFromOthers"
+                       type="checkbox"
+                       checked=""
+                       [(ngModel)]="removeFromOthers"
+                       name="removeFromOthers"
+                >
+                <label for="removeFromOthers">
+                  Also delete from others
+                </label>
+              </div>
+
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark" (click)="modal.close()">Cancel</button>
+          <button type="button" class="btn btn-outline-danger" (click)="onDeleteConfirmClickHandler($event)">Delete</button>
+        </div>
+      </ng-template>
+
 
     </ng-container>
-
-
-    <ng-template #confirmationWindow let-modal>
-      <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Delete Message?</h4>
-        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form #confirmationForm="ngForm">
-          <div class="form-group">
-            <div class="checkbox-color checkbox-primary">
-
-              <input id="removeFromOthers"
-                     type="checkbox"
-                     checked=""
-                     [(ngModel)]="removeFromOthers"
-                     name="removeFromOthers"
-              >
-              <label for="removeFromOthers">
-                Also delete from others
-              </label>
-            </div>
-
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="modal.close()">Cancel</button>
-        <button type="button" class="btn btn-outline-danger" (click)="onDeleteConfirmClickHandler($event)">Delete</button>
-      </div>
-    </ng-template>
-
-
-  </ng-container>
-  <ng-template #receivedMessage>
-    <div class="row mb-20 received-chat">
-      <div class="col-auto pr-0">
-        <app-user-avatar
-          [size]="'small'"
-          [user]="message.message.author"
-        ></app-user-avatar>
-      </div>
-      <div class="col">
-        <div class="msg text-container">
-          <p class="mb-0" [innerHTML]="message.message.text | multiLine"></p>
-          <div class="controls">
+    <ng-template #receivedMessage>
+      <div class="row mb-20 received-chat">
+        <div class="col-auto pr-0">
+          <app-user-avatar
+            [size]="'small'"
+            [user]="message.message.author"
+          ></app-user-avatar>
+        </div>
+        <div class="col">
+          <div class="msg text-container">
+            <p class="mb-0" [innerHTML]="message.message.text | multiLine"></p>
+            <div class="controls">
               <span class="control mr-2 p-1 bg-white rounded" (click)="onRemoveOtherMessageClickHandler($event)">
                 <i class="ik ik-trash"></i>
               </span>
+            </div>
           </div>
+          <p class="text-muted mb-0"><i class="fa fa-clock-o mr-10"></i>
+            <span app-date-time [value]="message.message.createdAt"></span>
+            <span
+              class="text-muted small"
+              *ngIf="message.message.createdAt !== message.message.updatedAt"
+              [title]="message.message.updatedAt | amLocal"
+            >(edited)</span>
+          </p>
         </div>
-        <p class="text-muted mb-0"><i class="fa fa-clock-o mr-10"></i>
-          <span app-date-time [value]="message.message.createdAt"></span>
-          <span
-            class="text-muted small"
-            *ngIf="message.message.createdAt !== message.message.updatedAt"
-            [title]="message.message.updatedAt | amLocal"
-          >(edited)</span>
-        </p>
       </div>
+    </ng-template>
+
+  </ng-container>
+
+  <ng-container *ngIf="message.message.type === 1">
+    <div class="text-center mb-2">
+      <span class="badge badge-pill badge-success mb-1" title="Call Started">
+        <i class="ik ik-phone-call"></i><span app-date-time [value]="message.message.call.createdAt"></span>
+      </span>
     </div>
-  </ng-template>
+  </ng-container>
+
+  <ng-container *ngIf="message.message.type === 2">
+    <div class="text-center mb-2">
+      <span class="badge badge-pill badge-secondary mb-1" title="Call Ended">
+        <i class="ik ik-phone-off"></i><span app-date-time [value]="message.message.call.endTime"></span>
+      </span>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="message.message.type === 3">
+    <div class="text-center mb-2">
+      <span class="badge badge-pill badge-danger mb-1" title="Call Rejected">
+        <i class="ik ik-phone-off"></i><span app-date-time [value]="message.message.call.endTime"></span>
+      </span>
+    </div>
+  </ng-container>
 </ng-container>

@@ -56,13 +56,13 @@ export class CameraProfilePictureGrabberComponent implements OnInit, OnDestroy {
       // @ts-ignore
       this.userMediaStream = await this.mediaService.getUserMedia(false, true);
       this.mediaInitState = CameraProfilePictureGrabberComponent.MEDIA_INIT_SUCCESS;
-      //debugger
+
       this.videoElement.nativeElement.srcObject = this.userMediaStream;
       this.videoElement.nativeElement.play();
     }
     catch (error)
     {
-      //debugger
+
       this.mediaInitState = CameraProfilePictureGrabberComponent.MEDIA_INIT_ERROR;
 
       this.store.dispatch(
