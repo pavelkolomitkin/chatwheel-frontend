@@ -54,7 +54,7 @@ export function reducer(state = initialState, action: actions.SecurityActions): 
 
     case actions.USER_LOGIN_SUCCESS:
 
-      //debugger
+
       return {
         ...state,
         token: action.token,
@@ -63,7 +63,7 @@ export function reducer(state = initialState, action: actions.SecurityActions): 
       }
 
     case actions.USER_LOGIN_ERROR:
-      //debugger
+
       return {
         ...state,
         token: null,

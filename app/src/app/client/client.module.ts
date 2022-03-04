@@ -8,7 +8,6 @@ import { ChatwheelComponent } from './components/pages/search/chatwheel/chatwhee
 import { NearbyComponent } from './components/pages/search/nearby/nearby.component';
 import { MyProfileComponent } from './components/pages/my-profile/my-profile.component';
 import { MessagesComponent } from './components/pages/my-profile/messages/messages.component';
-import { CallsComponent } from './components/pages/my-profile/calls/calls.component';
 import {ProfileComponent as MyProfilePageComponent} from "./components/pages/my-profile/profile/profile.component";
 import { ProfileComponent as UserProfileComponent } from './components/pages/profile/profile.component';
 import { EditableFieldComponent } from './components/pages/my-profile/components/editable-field/editable-field.component';
@@ -25,6 +24,7 @@ import { TextLocationViewComponent } from './components/pages/profile/components
 import { TextLocationViewComponent as TextMyLocationViewComponent } from './components/pages/my-profile/components/geo-location/text-location-view/text-location-view.component';
 import {StoreModule} from "@ngrx/store";
 import { reducer } from './data/reducer';
+import { reducer as callsReducer } from './data/calls/reducer';
 import { MapLocationViewComponent } from './components/pages/profile/components/geo-location/map-location-view/map-location-view.component';
 import { CameraProfilePictureGrabberWindowComponent } from './components/common/camera-profile-picture-grabber-window/camera-profile-picture-grabber-window.component'
 import {NgbModalModule} from "@ng-bootstrap/ng-bootstrap";
@@ -59,49 +59,69 @@ import { MessageObserverComponent } from './components/common/message-observer/m
 import { UserTypingComponent } from './components/pages/my-profile/messages/conversation/components/user-typing/user-typing.component';
 import { UserActivityObserverComponent } from './components/common/user-activity-observer/user-activity-observer.component';
 import {IncomingMessageComponent} from "./components/common/toast/incoming-message/incoming-message.component";
+import {CallSocketService} from "./services/sockets/call-socket.service";
+import { CallsObserverComponent } from './components/common/calls-observer/calls-observer.component';
+import { DirectCallComponent } from './components/common/calls/direct-call/direct-call.component';
+import { IncomingDirectCallToastComponent } from './components/common/toast/incoming-direct-call-toast/incoming-direct-call-toast.component';
+import {CallConnectorService} from "./services/calls/call-connector.service";
+import {CallService} from "./services/call.service";
+import { DirectCallWindowComponent } from './components/common/calls/direct-call-window/direct-call-window.component';
+import {
+    ConversationLastMessageComponent
+} from "./components/pages/my-profile/messages/conversation-list-page/conversation-last-message/conversation-last-message.component";
+import { TextConversationComponent } from './components/common/calls/text-conversation/text-conversation.component';
+import { UserInputComponent } from './components/common/calls/text-conversation/user-input/user-input.component';
+import { MessageListItemComponent as CallWindowMessageListItemComponent } from './components/common/calls/text-conversation/message-list-item/message-list-item.component';
 
 @NgModule({
-  declarations: [
-    LayoutComponent,
-    MyProfilePageComponent,
-    PageHeaderComponent,
-    ChatwheelComponent,
-    NearbyComponent,
-    MyProfileComponent,
-    UserProfileComponent,
-    MessagesComponent,
-    CallsComponent,
-    EditableFieldComponent,
-    EditFullNameComponent,
-    EditAboutComponent,
-    EditResidenceCountryComponent,
-    EditSearchCountryComponent,
-    EditUserPickComponent,
-    EditInterestsComponent,
-    TextLocationViewComponent,
-    TextMyLocationViewComponent,
-    MapLocationViewComponent,
-    CameraProfilePictureGrabberWindowComponent,
-    CameraProfilePictureGrabberComponent,
-    SettingsComponent,
-    UserInterestsViewComponent,
-    SelectedCountryViewComponent,
-    EditMapLocationComponent,
-    ConversationComponent,
-    MessageListItemComponent,
-    ConversationUserInputComponent,
-    ConversationListPageComponent,
-    ActionMenuComponent,
-    ConversationListItemComponent,
-    PageNotFoundComponent,
-    ReportAbuseComponent,
-    ReportAbuseListenerComponent,
-    ReportAbuseButtonsComponent,
-    MessageObserverComponent,
-    UserTypingComponent,
-    UserActivityObserverComponent,
-    IncomingMessageComponent,
-  ],
+    declarations: [
+        LayoutComponent,
+        MyProfilePageComponent,
+        PageHeaderComponent,
+        ChatwheelComponent,
+        NearbyComponent,
+        MyProfileComponent,
+        UserProfileComponent,
+        MessagesComponent,
+        EditableFieldComponent,
+        EditFullNameComponent,
+        EditAboutComponent,
+        EditResidenceCountryComponent,
+        EditSearchCountryComponent,
+        EditUserPickComponent,
+        EditInterestsComponent,
+        TextLocationViewComponent,
+        TextMyLocationViewComponent,
+        MapLocationViewComponent,
+        CameraProfilePictureGrabberWindowComponent,
+        CameraProfilePictureGrabberComponent,
+        SettingsComponent,
+        UserInterestsViewComponent,
+        SelectedCountryViewComponent,
+        EditMapLocationComponent,
+        ConversationComponent,
+        MessageListItemComponent,
+        ConversationUserInputComponent,
+        ConversationListPageComponent,
+        ActionMenuComponent,
+        ConversationListItemComponent,
+        PageNotFoundComponent,
+        ReportAbuseComponent,
+        ReportAbuseListenerComponent,
+        ReportAbuseButtonsComponent,
+        MessageObserverComponent,
+        UserTypingComponent,
+        UserActivityObserverComponent,
+        IncomingMessageComponent,
+        CallsObserverComponent,
+        DirectCallComponent,
+        IncomingDirectCallToastComponent,
+        DirectCallWindowComponent,
+        ConversationLastMessageComponent,
+        TextConversationComponent,
+        UserInputComponent,
+        CallWindowMessageListItemComponent
+    ],
   providers: [
     ProfileService,
     UserProfileService,
@@ -109,15 +129,19 @@ import {IncomingMessageComponent} from "./components/common/toast/incoming-messa
     ConversationMessageService,
     AbuseReportTypeService,
     AbuseReportService,
+    CallConnectorService,
 
     MessageSocketService,
-    UserActivitySocketService
+    UserActivitySocketService,
+    CallSocketService,
+    CallService,
   ],
   imports: [
     CommonModule,
     SharedModule,
     ClientRoutingModule,
     StoreModule.forFeature('client', reducer),
+    StoreModule.forFeature('calls', callsReducer),
     EffectsModule.forFeature([
       GeolocationEffects,
       ProfileEffects,
@@ -132,7 +156,8 @@ import {IncomingMessageComponent} from "./components/common/toast/incoming-messa
   ],
 
   entryComponents: [
-    IncomingMessageComponent
+    IncomingMessageComponent,
+    IncomingDirectCallToastComponent
   ]
 })
 export class ClientModule {}

@@ -4,6 +4,7 @@ import {select, Store} from "@ngrx/store";
 import {State} from "../../../../../../app.state";
 import {first} from "rxjs/operators";
 import {UserBlockToggleStart, UserReportAbuseInit} from "../../../../../data/actions";
+import {UserInitiateDirectCall} from "../../../../../data/calls/actions";
 
 @Component({
   selector: 'app-action-menu',
@@ -37,5 +38,10 @@ export class ActionMenuComponent implements OnInit, OnDestroy {
   onUnblockUserClickHandler(event)
   {
     this.store.dispatch(new UserBlockToggleStart(this.user, false));
+  }
+
+  onCallButtonClickHandler(event)
+  {
+    this.store.dispatch(new UserInitiateDirectCall(this.user));
   }
 }

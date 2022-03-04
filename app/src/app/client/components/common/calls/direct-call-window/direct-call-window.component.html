@@ -1,0 +1,70 @@
+<ng-template #modalWindow let-modal>
+
+  <div class="modal-window-container">
+
+    <div class="window-controls">
+
+      <ng-container *ngIf="windowSize === 'window_size_normal'">
+
+        <ng-container>
+          <span class="control btn mr-1" (click)="onFullScreenClickHandler($event)">
+            <i class="ik ik-maximize-2"></i>
+          </span>
+        </ng-container>
+
+      </ng-container>
+
+      <ng-container *ngIf="windowSize === 'window_size_fullscreen'">
+
+        <span class="control btn mr-1" (click)="onNormalSizeClickHandler($event)">
+          <i class="ik ik-minimize-2"></i>
+        </span>
+
+      </ng-container>
+
+      <ng-container *ngIf="windowSize === 'window_size_minimized'">
+
+        <ng-container>
+          <span class="control btn mr-1" (click)="onFullScreenClickHandler($event)">
+            <i class="ik ik-maximize-2"></i>
+          </span>
+        </ng-container>
+
+      </ng-container>
+
+      <span class="control btn mr-1" (click)="onCloseClickHandler($event)">
+        <i class="ik ik-x"></i>
+      </span>
+
+    </div>
+
+
+    <ng-container *ngIf="_initiatedCallAddressee !== null">
+      <app-direct-call
+        [authorizedUser]="authorizedUser"
+        [initiateToAddressee]="_initiatedCallAddressee"
+        [rejectedMember]="_lastMemberRejected"
+        [hungUpMember]="_lastMemberHungUp"
+        (onHangUp)="onHangUpHandler($event)"
+        (onDoubleClickRemote)="onToggleFullScreenHandler($event)"
+        (onReportAbuse)="onReportAbuseHandler($event)"
+      ></app-direct-call>
+    </ng-container>
+
+    <ng-container *ngIf="_incomingCall !== null">
+      <app-direct-call
+        [authorizedUser]="authorizedUser"
+        [receivingCall]="_incomingCall"
+        [hungUpMember]="_lastMemberHungUp"
+        [rejectedMember]="_lastMemberRejected"
+        (onHangUp)="onHangUpHandler($event)"
+        (onDoubleClickRemote)="onToggleFullScreenHandler($event)"
+        (onReportAbuse)="onReportAbuseHandler($event)"
+      ></app-direct-call>
+    </ng-container>
+
+
+  </div>
+
+
+</ng-template>

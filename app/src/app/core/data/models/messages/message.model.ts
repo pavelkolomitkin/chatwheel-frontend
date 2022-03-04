@@ -1,4 +1,5 @@
-import {User} from "../../../../security/data/models/user.model";
+import {User} from '../../../../security/data/models/user.model';
+import {Call} from '../../../../client/data/model/calls/call.model';
 
 export enum MessageType
 {
@@ -14,19 +15,27 @@ export class Message
 
   text: string;
 
-  author: User;
+  author?: User;
 
-  type: string;
+  type: number;
 
   createdAt: string;
 
   updatedAt: string;
 
+  call?: Call;
+
   static createFromRawData(data: any): Message
   {
     const result: Message = Object.assign(new Message(), data);
-
-    result.author = User.createFromRawData(data.author);
+    if (!!data.author)
+    {
+      result.author = User.createFromRawData(data.author);
+    }
+    if (!!data.call)
+    {
+      result.call = Call.createFromRawData(data.call);
+    }
 
     return result;
   }

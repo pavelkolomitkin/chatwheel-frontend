@@ -61,3 +61,17 @@ body
   margin: auto;
   text-align: center;
 }
+
+.modal-content {
+  border-radius: unset !important;
+}
+
+
+.modal-xl {
+  max-width: 1024px !important;
+}
+
+.modal
+{
+  pointer-events: none !important;
+}

@@ -9,6 +9,7 @@ import {IncomingMessageComponent} from "../toast/incoming-message/incoming-messa
 import {User} from "../../../../security/data/models/user.model";
 import {first} from "rxjs/operators";
 import {ConversationMessageList} from "../../../../core/data/models/messages/conversation-message-list.model";
+import {MessageType} from "../../../../core/data/models/messages/message.model";
 
 @Component({
   selector: 'app-message-observer',
@@ -67,6 +68,11 @@ export class MessageObserverComponent implements OnInit, OnDestroy {
   {
     this.store.dispatch(new MessageReceived(message));
 
+    if (message.message.message.type !== MessageType.TEXT)
+    {
+      return;
+    }
+
     const isUserAuthor: boolean = this.user.id === message.message.message.author.id;
     const isConversationWindowOpened: boolean = !!this.openedConversation && (
       message.messageList.id === this.openedConversation.id
@@ -83,6 +89,10 @@ export class MessageObserverComponent implements OnInit, OnDestroy {
       // @ts-ignore
       toast.toastRef.componentInstance.message = message;
       toast.toastRef.componentInstance.toastId = toast.toastId;
+
+      toast.toastRef.componentInstance.tapEmitter.subscribe((id: number) => {
+        this.toastService.remove(id);
+      });
 
       setTimeout(() => {
         this.toastService.remove(toast.toastId);

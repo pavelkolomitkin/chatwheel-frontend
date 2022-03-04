@@ -33,7 +33,7 @@ export class EditFullNameComponent implements OnInit {
 
   async onEditCommitHandler(event)
   {
-    //debugger;
+
     const editedName = this.name.trim();
     if (editedName === this.user.fullName)
     {
@@ -62,13 +62,13 @@ export class EditFullNameComponent implements OnInit {
 
   onEditInitHandler(event)
   {
-    //debugger;
+
     this.name = this.user.fullName;
   }
 
   onCancelEditHandler(event)
   {
-    //debugger;
+
     this.name = this.user.fullName;
   }
 

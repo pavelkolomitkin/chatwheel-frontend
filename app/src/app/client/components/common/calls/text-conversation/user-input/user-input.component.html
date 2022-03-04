@@ -1,0 +1,13 @@
+<form (ngSubmit)="onSubmit(form)" #form="ngForm">
+  <div class="input-group input-group-button">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Your message..."
+      name="text"
+      [(ngModel)]="text"
+      required
+      autocomplete="off"
+    >
+  </div>
+</form>

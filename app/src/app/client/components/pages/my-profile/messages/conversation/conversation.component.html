@@ -38,37 +38,44 @@
   </div>
   <div class="card-block">
 
-    <div class="list-container" #messageListContainer
+    <div class="message-list">
+      <div class="list-container" #messageListContainer
 
-         infiniteScroll
-         [scrollWindow]="false"
-         [infiniteScrollThrottle]="50"
-         [infiniteScrollUpDistance]="-8"
-         [infiniteScrollDisabled]="infinityScrollDisabled"
-         (scrolledUp)="onScroll()"
-    >
+           infiniteScroll
+           [scrollWindow]="false"
+           [infiniteScrollThrottle]="50"
+           [infiniteScrollUpDistance]="-8"
+           [infiniteScrollDisabled]="infinityScrollDisabled"
+           (scrolledUp)="onScroll()"
+      >
 
-      <ng-container *ngIf="isLoading">
-        <div class="loading-container">
-          <div>
-            <img src="../../../../../../../assets/ajax-loader.gif" />
+        <ng-container *ngIf="isLoading">
+          <div class="loading-container">
+            <div>
+              <img src="../../../../../../../assets/ajax-loader.gif" />
+            </div>
           </div>
-        </div>
-      </ng-container>
+        </ng-container>
 
-      <ng-container *ngIf="messages !== null">
-        <app-message-list-item
-          *ngFor="let message of messages;"
-          [message]="message"
-          (onRemoved)="onMessageRemovedHandler($event)"
-        ></app-message-list-item>
+        <ng-container *ngIf="messages !== null">
+          <app-message-list-item
+            *ngFor="let message of messages;"
+            [message]="message"
+            (onRemoved)="onMessageRemovedHandler($event)"
+          ></app-message-list-item>
 
-      </ng-container>
+        </ng-container>
 
+
+      </div>
       <app-user-typing
         [typing]="userTyping"
       ></app-user-typing>
     </div>
+
+
+
+
 
     <ng-container *ngIf="!!addressee">
       <ng-container *ngIf="!addressee.isBanned && !addressee.amIBanned">

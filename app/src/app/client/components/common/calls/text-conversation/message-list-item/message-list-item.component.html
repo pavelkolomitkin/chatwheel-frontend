@@ -1,0 +1,76 @@
+<ng-container *ngIf="!!user">
+
+  <ng-container *ngIf="message.message.type === 0">
+
+
+    <ng-container *ngIf="message.message.author.id === user.id; else receivedMessage">
+
+      <div class="message-container">
+        <div class="body-message">
+          <p class="mb-0 overflow-hidden" [innerHTML]="message.message.text | multiLine"></p>
+          <span app-date-time [value]="message.message.createdAt"></span>
+          <span
+            class="text-muted small" *ngIf="message.message.createdAt !== message.message.updatedAt"
+            [title]="message.message.updatedAt | amLocal"
+          >(edited)</span>
+        </div>
+        <div class="avatar-container">
+          <app-user-avatar
+            [size]="'small'"
+            [user]="message.message.author"
+          ></app-user-avatar>
+        </div>
+      </div>
+
+
+    </ng-container>
+
+    <ng-template #receivedMessage>
+
+      <div class="message-container received">
+        <div class="body-message">
+          <p class="mb-0 overflow-hidden" [innerHTML]="message.message.text | multiLine"></p>
+          <span app-date-time [value]="message.message.createdAt"></span>
+          <span
+            class="text-muted small" *ngIf="message.message.createdAt !== message.message.updatedAt"
+            [title]="message.message.updatedAt | amLocal"
+          >(edited)</span>
+        </div>
+        <div class="avatar-container">
+          <app-user-avatar
+            [size]="'small'"
+            [user]="message.message.author"
+          ></app-user-avatar>
+        </div>
+      </div>
+
+
+
+    </ng-template>
+
+  </ng-container>
+
+  <ng-container *ngIf="message.message.type === 1">
+    <div class="text-center mb-2">
+      <span class="badge badge-pill badge-success mb-1" title="Call Started">
+        <i class="ik ik-phone-call"></i><span app-date-time [value]="message.message.call.createdAt"></span>
+      </span>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="message.message.type === 2">
+    <div class="text-center mb-2">
+      <span class="badge badge-pill badge-secondary mb-1" title="Call Ended">
+        <i class="ik ik-phone-off"></i><span app-date-time [value]="message.message.call.endTime"></span>
+      </span>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="message.message.type === 3">
+    <div class="text-center mb-2">
+      <span class="badge badge-pill badge-danger mb-1" title="Call Rejected">
+        <i class="ik ik-phone-off"></i><span app-date-time [value]="message.message.call.endTime"></span>
+      </span>
+    </div>
+  </ng-container>
+</ng-container>
+

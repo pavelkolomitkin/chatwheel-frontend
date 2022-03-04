@@ -47,14 +47,13 @@ export class AuthEffects
       mergeMap((action: UserLoginStart) => {
         const { credentials } = action;
 
-        //debugger
         return this.service.login(credentials).pipe(
           map((token: string) => {
-            //debugger
+
             return new UserLoginSuccess(token, action.rememberUser);
           }),
           catchError((errors) => {
-            //debugger
+
             return of(new UserLoginError(errors.error.errors));
           })
         )
@@ -70,7 +69,7 @@ export class AuthEffects
       ofType(USER_LOGIN_SUCCESS),
       tap((action: UserLoginSuccess) => {
 
-        //debugger
+
         this.localStorage.set(LocalStorageService.TOKEN_KEY, action.token, action.rememberUser);
 
         this.store.dispatch(new UserInitializationStart());
@@ -87,11 +86,11 @@ export class AuthEffects
       mergeMap((action: UserInitializationStart) => {
         return this.profileService.getProfile().pipe(
           map((user: User) => {
-            //debugger
+
             return new UserInitializationSuccess(user);
           }),
           catchError((error) => {
-            //debugger
+
             return of(new UserInitializationError());
           })
         )
@@ -106,7 +105,7 @@ export class AuthEffects
     return this.actions.pipe(
       ofType(USER_INITIALIZATION_SUCCESS),
       tap((action: UserInitializationSuccess) => {
-        //debugger
+
         const { user: { roles } } = action;
 
         this.permissionService.loadPermissions(roles);
@@ -120,7 +119,6 @@ export class AuthEffects
     return this.actions.pipe(
       ofType(USER_INITIALIZATION_ERROR, USER_LOGOUT),
       tap((action) => {
-        //debugger
 
         this.localStorage.remove(LocalStorageService.TOKEN_KEY);
         this.permissionService.loadPermissions([]);

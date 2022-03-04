@@ -29,7 +29,6 @@ export class UserConversationService extends BaseService
     return this.http.get<{list: ConversationMessageList[]}>('/client/conversation/list', { params }).pipe(
       map(data => {
 
-        //debugger;
         return data.list.map(item => ConversationMessageList.createFromRawData(item));
       })
     );

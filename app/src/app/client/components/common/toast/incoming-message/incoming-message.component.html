@@ -16,6 +16,9 @@
       ></app-user-avatar>
     </div>
     <div class="message">
+      <div class="body-header">
+        {{ message.message.message.author.fullName }}
+      </div>
       <p class="body-container">
         <span>{{ message.message.message.text | textTrim }}</span>
       </p>

@@ -100,7 +100,7 @@ export class GeolocationEffects
   async updateUserLocation({ latitude, longitude }: Geolocation)
   {
     const user: User = await this.profileService.updateGeoLocation({ latitude, longitude }).toPromise();
-    ////debugger
+
     this.store.dispatch(new UserUpdated(user));
   }
 

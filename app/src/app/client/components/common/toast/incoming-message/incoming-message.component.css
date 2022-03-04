@@ -14,7 +14,11 @@
 .message-container .message {
   padding-left: 50px;
 }
+.message-container .message .body-header {
+
+}
 .message-container .message .body-container {}
+
 
 .message-container .controls {
   position: absolute;

@@ -4,6 +4,7 @@ import {select, Store} from "@ngrx/store";
 import {State} from "../../../../../../../../app.state";
 import {first} from "rxjs/operators";
 import {UserBlockToggleStart, UserReportAbuseInit} from "../../../../../../../data/actions";
+import {UserInitiateDirectCall} from "../../../../../../../data/calls/actions";
 
 @Component({
   selector: 'app-report-abuse-buttons',
@@ -32,5 +33,10 @@ export class ReportAbuseButtonsComponent implements OnInit {
   onUnblockClickHandler(event)
   {
     this.store.dispatch(new UserBlockToggleStart(this.user, false));
+  }
+
+  onCallClickHandler(event)
+  {
+    this.store.dispatch(new UserInitiateDirectCall(this.user));
   }
 }

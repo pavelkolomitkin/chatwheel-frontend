@@ -1,0 +1,38 @@
+<div class="conversation">
+
+  <div class="controls">
+    <div class="control">
+      <span class="btn" (click)="onCloseClickHandler($event)">
+        <i class="ik ik-x"></i>
+      </span>
+    </div>
+  </div>
+
+
+  <div class="message-list-container">
+    <div class="message-list scroll-hidden"
+         #messageListContainer
+         infiniteScroll
+         [scrollWindow]="false"
+         [infiniteScrollThrottle]="50"
+         [infiniteScrollUpDistance]="-8"
+         [infiniteScrollDisabled]="infinityScrollDisabled"
+         (scrolledUp)="onScroll()"
+    >
+
+      <app-call-window-message-list-item
+        *ngFor="let message of messages"
+        [user]="authorizedUser"
+        [message]="message"
+      ></app-call-window-message-list-item>
+
+    </div>
+  </div>
+
+  <div class="user-input-container">
+    <app-user-input
+      (onSend)="onSendHandler($event)"
+    ></app-user-input>
+  </div>
+
+</div>

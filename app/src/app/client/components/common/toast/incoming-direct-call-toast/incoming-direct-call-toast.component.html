@@ -1,0 +1,42 @@
+
+<div class="card sale-card incoming-call-container">
+
+  <div class="card-block text-center">
+
+    <div>
+      <div class="avatar-container">
+        <app-user-avatar
+          [size]="'mediumMedium'"
+          [user]="addressee"
+        ></app-user-avatar>
+      </div>
+
+      <p class="user-name">{{ addressee.fullName }}</p>
+
+    </div>
+
+    <div class="row controls">
+
+      <div class="col-6 control">
+        <div class="s-cont d-inline-block">
+          <span class="btn btn-icon btn-success" (click)="onAcceptClickHandler($event)">
+            <i class="ik ik-phone"></i>
+          </span>
+        </div>
+      </div>
+
+      <div class="col-6 border-left control">
+
+        <div class="s-cont d-inline-block">
+          <span class="btn btn-icon btn-danger" (click)="onRejectClickHandler($event)">
+            <i class="ik ik-x"></i>
+          </span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

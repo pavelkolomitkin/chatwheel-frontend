@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CallsComponent } from './calls.component';
+import { DirectCallWindowComponent } from './direct-call-window.component';
 
-describe('CallsComponent', () => {
-  let component: CallsComponent;
-  let fixture: ComponentFixture<CallsComponent>;
+describe('DirectCallWindowComponent', () => {
+  let component: DirectCallWindowComponent;
+  let fixture: ComponentFixture<DirectCallWindowComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CallsComponent ]
+      declarations: [ DirectCallWindowComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CallsComponent);
+    fixture = TestBed.createComponent(DirectCallWindowComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

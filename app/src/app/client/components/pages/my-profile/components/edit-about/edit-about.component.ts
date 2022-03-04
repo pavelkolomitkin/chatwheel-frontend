@@ -76,13 +76,11 @@ export class EditAboutComponent implements OnInit {
 
   onEditInitHandler(event)
   {
-    //debugger;
     this.initField();
   }
 
   onCancelEditHandler(event)
   {
-    //debugger;
     this.initField();
   }
 
