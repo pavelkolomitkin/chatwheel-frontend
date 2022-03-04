@@ -8,7 +8,6 @@ import {CallConnection} from '../../../../services/calls/call-connection';
 import {Subscription} from 'rxjs';
 import {Call} from '../../../../data/model/calls/call.model';
 import {CallMemberLink} from "../../../../data/model/calls/call-member-link.model";
-import {UserReportAbuseInit} from "../../../../data/actions";
 import {CallMemberRejected} from "../../../../data/calls/actions";
 
 @Component({
@@ -136,11 +135,15 @@ export class DirectCallComponent implements OnInit, OnDestroy {
     {
       this.uiState = DirectCallComponent.UI_STATE_CALLING_ADDRESSEE;
 
-      await this.releaseCallConnection();
+      const preserveLocalStream: boolean = !!this.localStream;
+
+      await this.releaseCallConnection(preserveLocalStream);
       this.releaseCallSubscriptions();
 
       const socketWindowId: string = await this.store.pipe(select(state => state.calls.callWindowId), first()).toPromise();
+
       this.callConnection = this.callConnector.call(this._initiatedToAddressee, socketWindowId, true);
+      this.callConnection.setUserMedia(this.localStream);
 
       await this.initiateCallConnection();
     }
@@ -202,10 +205,11 @@ export class DirectCallComponent implements OnInit, OnDestroy {
   }
 
   localStreamsReadyHandler = (stream: MediaStream) => {
-    this.localStream = stream;
-    // turn off local audio
-
-    this.localVideoElement.nativeElement.srcObject = stream;
+    if (!this.localStream)
+    {
+      this.localStream = stream;
+      this.localVideoElement.nativeElement.srcObject = stream;
+    }
   }
 
   remoteStreamReadyHandler = (stream: MediaStream) => {
@@ -299,11 +303,11 @@ export class DirectCallComponent implements OnInit, OnDestroy {
     }
   }
 
-  async releaseCallConnection()
+  async releaseCallConnection(preserveLocalMedia: boolean = false)
   {
     if (this.callConnection !== null)
     {
-      await this.callConnection.release();
+      await this.callConnection.release(preserveLocalMedia);
       this.callConnection = null;
     }
   }

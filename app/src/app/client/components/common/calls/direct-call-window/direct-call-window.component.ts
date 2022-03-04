@@ -1,4 +1,12 @@
-import {Component, Input, OnDestroy, OnInit, TemplateRef, ViewChild, ViewEncapsulation} from '@angular/core';
+import {
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+  ViewEncapsulation
+} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {User} from '../../../../../security/data/models/user.model';
 import {Call} from '../../../../data/model/calls/call.model';
@@ -48,16 +56,18 @@ export class DirectCallWindowComponent implements OnInit, OnDestroy {
   {
     this.closeWindow();
 
-    this._incomingCall = value;
-    if (this._incomingCall)
-    {
-      this.openWindow();
-    }
+    setTimeout(() => {
+      this._incomingCall = value;
+      if (this._incomingCall)
+      {
+        this.openWindow();
+      }
+    }, 1);
   }
 
   constructor(
     private store: Store<State>,
-    private modal: NgbModal
+    private modal: NgbModal,
   ) {
   }
 

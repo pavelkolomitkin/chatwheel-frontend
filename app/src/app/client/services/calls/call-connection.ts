@@ -88,7 +88,7 @@ export class CallConnection
     }
   }
 
-  async release()
+  async release(preserveLocalMedia: boolean = false)
   {
     this.wasReleased = true;
     this.localMediaSubject.unsubscribe();
@@ -100,7 +100,11 @@ export class CallConnection
       this.peer.destroy();
     }
 
-    await this.releaseMediaStream(this.userMediaStream);
+    if (!preserveLocalMedia)
+    {
+      await this.releaseMediaStream(this.userMediaStream);
+    }
+
     this.userMediaStream = null;
 
     await this.releaseMediaStream(this.remoteMediaStream);
@@ -123,6 +127,12 @@ export class CallConnection
   setSocketId(id: string)
   {
     this.socketId = id;
+    return this;
+  }
+
+  setUserMedia(media: MediaStream)
+  {
+    this.userMediaStream = media;
     return this;
   }
 
@@ -151,6 +161,12 @@ export class CallConnection
 
   async initializeMedia()
   {
+    if (!!this.userMediaStream)
+    {
+      this.localMediaSubject.next(this.userMediaStream);
+      return;
+    }
+
     try {
       // @ts-ignore
       this.userMediaStream = await this.userMediaService.getUserMedia(true, true);

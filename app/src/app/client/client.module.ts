@@ -8,7 +8,6 @@ import { ChatwheelComponent } from './components/pages/search/chatwheel/chatwhee
 import { NearbyComponent } from './components/pages/search/nearby/nearby.component';
 import { MyProfileComponent } from './components/pages/my-profile/my-profile.component';
 import { MessagesComponent } from './components/pages/my-profile/messages/messages.component';
-import { CallsComponent } from './components/pages/my-profile/calls/calls.component';
 import {ProfileComponent as MyProfilePageComponent} from "./components/pages/my-profile/profile/profile.component";
 import { ProfileComponent as UserProfileComponent } from './components/pages/profile/profile.component';
 import { EditableFieldComponent } from './components/pages/my-profile/components/editable-field/editable-field.component';
@@ -84,7 +83,6 @@ import { MessageListItemComponent as CallWindowMessageListItemComponent } from '
         MyProfileComponent,
         UserProfileComponent,
         MessagesComponent,
-        CallsComponent,
         EditableFieldComponent,
         EditFullNameComponent,
         EditAboutComponent,

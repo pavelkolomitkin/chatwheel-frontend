@@ -55,8 +55,8 @@ export class CallConnectionReceiver extends CallConnection
     this.peer.signal(peerId);
   }
 
-  async release(): Promise<void> {
-    await super.release();
+  async release(preserveLocalMedia: boolean = false): Promise<void> {
+    await super.release(preserveLocalMedia);
 
     if (this.connectedMemberSubscription !== null)
     {

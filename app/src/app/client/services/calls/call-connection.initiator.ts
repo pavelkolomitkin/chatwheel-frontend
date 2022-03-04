@@ -70,9 +70,9 @@ export class CallConnectionInitiator extends CallConnection
     this.peer.signal(initiatorPeer);
   }
 
-  async release()
+  async release(preserveLocalMedia: boolean = false)
   {
-    await super.release();
+    await super.release(preserveLocalMedia);
 
     if (this.memberConnectingSubscription !== null)
     {

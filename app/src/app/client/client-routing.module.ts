@@ -6,7 +6,6 @@ import {NearbyComponent} from "./components/pages/search/nearby/nearby.component
 import {MyProfileComponent} from "./components/pages/my-profile/my-profile.component";
 import {ProfileComponent as MyProfilePageComponent} from "./components/pages/my-profile/profile/profile.component";
 import {MessagesComponent} from "./components/pages/my-profile/messages/messages.component";
-import {CallsComponent} from "./components/pages/my-profile/calls/calls.component";
 import {SettingsComponent} from "./components/pages/my-profile/settings/settings.component";
 import { ProfileComponent as UserProfileComponent } from './components/pages/profile/profile.component';
 import {ConversationComponent} from "./components/pages/my-profile/messages/conversation/conversation.component";
@@ -27,7 +26,6 @@ const routes: Routes = [
               { path: 'conversation/user/:addresseeId', component: ConversationComponent },
               { path: '', redirectTo: 'conversations', pathMatch: 'full' }
             ] },
-          { path: 'calls', component: CallsComponent },
           { path: 'settings', component: SettingsComponent }
         ]
       },
