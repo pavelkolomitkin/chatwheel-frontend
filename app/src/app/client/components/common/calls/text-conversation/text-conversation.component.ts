@@ -23,6 +23,7 @@ import {Notification, NotificationType} from "../../../../../core/data/models/no
 export class TextConversationComponent implements OnInit, OnDestroy {
 
   @Output('onClose') closeEmitter: EventEmitter<void> = new EventEmitter<void>();
+  @Output('onMessageReceived') messageReceivedEmitter: EventEmitter<ConversationMessage> = new EventEmitter<ConversationMessage>();
 
   @Input() addressee: User;
 
@@ -108,6 +109,8 @@ export class TextConversationComponent implements OnInit, OnDestroy {
       this.infinityScrollDisabled = wasScrollDisabled;
 
       await this.readLastMessages();
+
+      this.messageReceivedEmitter.emit(message.message);
     });
   }
 

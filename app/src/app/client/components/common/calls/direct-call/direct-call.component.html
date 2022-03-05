@@ -157,6 +157,7 @@
           [authorizedUser]="authorizedUser"
           [addressee]="_addressee"
           (onClose)="onTextChatCloseHandler($event)"
+          (onMessageReceived)="onMessageReceivedHandler($event)"
         ></app-text-conversation>
       </div>
     </ng-container>

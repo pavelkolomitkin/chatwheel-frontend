@@ -9,6 +9,8 @@ import {Subscription} from 'rxjs';
 import {Call} from '../../../../data/model/calls/call.model';
 import {CallMemberLink} from "../../../../data/model/calls/call-member-link.model";
 import {CallMemberRejected} from "../../../../data/calls/actions";
+import {ConversationMessage} from "../../../../../core/data/models/messages/conversation-message.model";
+import {MessageType} from "../../../../../core/data/models/messages/message.model";
 
 @Component({
   selector: 'app-direct-call',
@@ -351,5 +353,13 @@ export class DirectCallComponent implements OnInit, OnDestroy {
   onRemoteVideoClickHandler(event)
   {
     this.isTextChatVisible = false;
+  }
+
+  onMessageReceivedHandler(message: ConversationMessage)
+  {
+    if (message.message.type === MessageType.TEXT)
+    {
+      this.isTextChatVisible = true;
+    }
   }
 }
