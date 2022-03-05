@@ -1,0 +1,14 @@
+<div #layout class="group-layout">
+  <div
+    id="container"
+    class="group-container"
+    #container
+    [ngClass]="pinsVisible ? 'd-flex' : 'd-none'"
+  >
+  </div>
+  <span
+        class="badge badge-pill badge-primary badge-number"
+        [ngClass]="!pinsVisible ? 'd-block': 'd-none'"
+        (click)="onNumberClickHandler($event)"
+  >{{ childNumber }}</span>
+</div>

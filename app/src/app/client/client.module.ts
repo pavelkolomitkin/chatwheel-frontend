@@ -72,6 +72,9 @@ import {
 import { TextConversationComponent } from './components/common/calls/text-conversation/text-conversation.component';
 import { UserInputComponent } from './components/common/calls/text-conversation/user-input/user-input.component';
 import { MessageListItemComponent as CallWindowMessageListItemComponent } from './components/common/calls/text-conversation/message-list-item/message-list-item.component';
+import { SearchListPageComponent } from './components/pages/search/nearby/search-list-page/search-list-page.component';
+import { SearchMapPageComponent } from './components/pages/search/nearby/search-map-page/search-map-page.component';
+import {GeoSearchService} from "./services/search/geo-search.service";
 
 @NgModule({
     declarations: [
@@ -120,7 +123,9 @@ import { MessageListItemComponent as CallWindowMessageListItemComponent } from '
         ConversationLastMessageComponent,
         TextConversationComponent,
         UserInputComponent,
-        CallWindowMessageListItemComponent
+        CallWindowMessageListItemComponent,
+        SearchListPageComponent,
+        SearchMapPageComponent
     ],
   providers: [
     ProfileService,
@@ -135,6 +140,7 @@ import { MessageListItemComponent as CallWindowMessageListItemComponent } from '
     UserActivitySocketService,
     CallSocketService,
     CallService,
+    GeoSearchService
   ],
   imports: [
     CommonModule,

@@ -20,8 +20,6 @@ import {UserMapMarkComponent} from "../../../../../../../shared/components/geo/u
 })
 export class MapLocationViewComponent implements OnInit, AfterViewInit
 {
-
-
   @ViewChild(MapComponent) map: MapComponent;
 
   _user: User;
@@ -49,6 +47,13 @@ export class MapLocationViewComponent implements OnInit, AfterViewInit
   }
 
   ngAfterViewInit(): void {
+
+    this.setUserPin();
+
+  }
+
+  setUserPin()
+  {
     const { geoLocation } = this._user;
 
     this.markComponent = this.map.addMark(UserMapMarkComponent, geoLocation);
@@ -58,7 +63,6 @@ export class MapLocationViewComponent implements OnInit, AfterViewInit
     this.map.setCenter(geoLocation);
 
     this.changeDetector.detectChanges();
-
   }
 
   onMapReadyHandler(event)
