@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   Component,
   ComponentFactoryResolver,
   ComponentRef,
@@ -17,6 +18,7 @@ import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
 import {Geolocation} from "../../../../core/data/models/geolocation.model";
 import {MapViewBox} from "../../../data/model/map-view-box.model";
+import {MapEntityLayout} from "../map-entity-layout";
 
 @Component({
   selector: 'app-map',
@@ -36,6 +38,8 @@ export class MapComponent implements OnInit, OnDestroy {
   @Input() defaultZoom: number;
 
   map: Map;
+
+  layout: MapEntityLayout;
 
   constructor(private componentResolver: ComponentFactoryResolver) { }
 
@@ -68,6 +72,8 @@ export class MapComponent implements OnInit, OnDestroy {
 
     this.map.on('singleclick', this.onMapClickHandler);
     this.map.on('moveend', this.onMoveEndHandler);
+
+    this.layout = new MapEntityLayout(this, this.componentResolver);
 
     this.readyEmitter.emit();
   }
@@ -139,39 +145,16 @@ export class MapComponent implements OnInit, OnDestroy {
 
   addMark<C>(component: Type<C>, location: Geolocation): ComponentRef<C>
   {
-    const factory = this.componentResolver.resolveComponentFactory(component);
-    const result = this.mapContainer.createComponent(factory);
-
-    const overlayPosition = fromLonLat([ location.longitude, location.latitude ]);
-
-    const overlay: Overlay =  new Overlay({
-      element: result.location.nativeElement,
-      autoPan: true,
-      autoPanAnimation: {
-        duration: 250
-      }
-    });
-
-    overlay.setPosition(overlayPosition);
-
-    this.map.addOverlay(overlay);
-    //@ts-ignore
-    result.instance.setOverlay(overlay);
-
-    return result;
+    return this.layout.addEntity(component, location);
   }
 
   removeMark<C>(component: ComponentRef<C>)
   {
-    const componentIndex: number = this.mapContainer.indexOf(component.hostView);
-    if (componentIndex !== -1)
-    {
-      this.mapContainer.remove(componentIndex);
-    }
+    this.layout.removeEntity(component);
   }
 
   removeAllMarks()
   {
-    this.mapContainer.clear();
+    this.layout.removeAllEntities();
   }
 }

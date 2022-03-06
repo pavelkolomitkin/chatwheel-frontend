@@ -1,0 +1,9 @@
+.update-geolocation-container
+{
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 200;
+  padding: 15px;
+  background: rgb(255 255 255 / 58%);
+}

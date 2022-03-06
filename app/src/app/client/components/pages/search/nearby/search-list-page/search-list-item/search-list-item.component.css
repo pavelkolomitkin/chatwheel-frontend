@@ -1,0 +1,21 @@
+.item-container {
+  padding: 15px;
+  cursor: pointer;
+  position: relative;
+}
+
+.item-container:hover
+{
+  background: rgba(0,0,0,.075);
+}
+
+.item-container .avatar-container {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+}
+.item-container .right-block {
+  margin-left: 65px;
+}
+
+.item-container .right-block .controls {}

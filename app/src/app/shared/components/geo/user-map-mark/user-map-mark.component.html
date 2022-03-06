@@ -1,14 +1,16 @@
-<div class="pin" appUserActivityStatus [user]="user">
-  <a [routerLink]="'/client/profile/' + user.id">
-    <app-user-avatar
-      [size]="'small'"
-      [user]="user"
-      [additionalStyles]="{
+<ng-container *ngIf="!!user">
+  <div class="pin" appUserActivityStatus [user]="user">
+    <a [routerLink]="'/client/profile/' + user.id">
+      <app-user-avatar
+        [size]="'small'"
+        [user]="user"
+        [additionalStyles]="{
         transform: 'rotate(45deg)',
         cursor: 'pointer',
         width: '100%'
       }"
 
-    ></app-user-avatar>
-  </a>
-</div>
+      ></app-user-avatar>
+    </a>
+  </div>
+</ng-container>

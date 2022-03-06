@@ -1,5 +1,5 @@
 .pin {
-  position: absolute;
+  position: relative;
   border-radius: 50% 50% 50% 0;
   border: 4px solid yellow;
   width: 50px;

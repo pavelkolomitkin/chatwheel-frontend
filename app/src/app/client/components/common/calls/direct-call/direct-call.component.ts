@@ -9,6 +9,8 @@ import {Subscription} from 'rxjs';
 import {Call} from '../../../../data/model/calls/call.model';
 import {CallMemberLink} from "../../../../data/model/calls/call-member-link.model";
 import {CallMemberRejected} from "../../../../data/calls/actions";
+import {ConversationMessage} from "../../../../../core/data/models/messages/conversation-message.model";
+import {MessageType} from "../../../../../core/data/models/messages/message.model";
 
 @Component({
   selector: 'app-direct-call',
@@ -46,7 +48,7 @@ export class DirectCallComponent implements OnInit, OnDestroy {
 
   localStream: MediaStream = null;
   remoteStream: MediaStream = null;
-  error: Error = null;
+  error: string = null;
 
   isTextChatVisible: boolean = false;
 
@@ -297,7 +299,7 @@ export class DirectCallComponent implements OnInit, OnDestroy {
     catch (error)
     {
       // set the interface to the error state
-      this.error = error;
+      this.error = error.error.errors.message;
       // display the error message at the center of canvas to make it conspicuous
       this.uiState = DirectCallComponent.UI_STATE_ERROR;
     }
@@ -351,5 +353,13 @@ export class DirectCallComponent implements OnInit, OnDestroy {
   onRemoteVideoClickHandler(event)
   {
     this.isTextChatVisible = false;
+  }
+
+  onMessageReceivedHandler(message: ConversationMessage)
+  {
+    if (message.message.type === MessageType.TEXT)
+    {
+      this.isTextChatVisible = true;
+    }
   }
 }

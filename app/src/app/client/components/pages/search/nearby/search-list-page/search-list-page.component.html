@@ -1,0 +1,14 @@
+<div>
+  <div class="user-list"
+       infiniteScroll
+       [infiniteScrollDistance]="2"
+       [infiniteScrollThrottle]="50"
+       [infiniteScrollDisabled]="infiniteScrollDisabled"
+       (scrolled)="onScroll()">
+
+    <app-search-list-item
+      *ngFor="let user of list"
+      [user]="user"
+    ></app-search-list-item>
+  </div>
+</div>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {MapComponentInterface} from "../MapComponentInterface";
+import {MapComponentInterface} from "../map-component.interface";
 import Overlay from 'ol/Overlay';
 import { fromLonLat } from 'ol/proj.js';
 import {Geolocation} from "../../../../core/data/models/geolocation.model";

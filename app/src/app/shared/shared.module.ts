@@ -20,6 +20,7 @@ import {TextTrimPipe} from "./pipes/text-trim.pipe";
 import {MomentModule} from "ngx-moment";
 import {DateTimeViewComponent} from "./components/date-time-view/date-time-view.component";
 import { AlertWindowComponent } from './components/alert-window/alert-window.component';
+import { MapPinGroupComponent } from './components/geo/map-pin-group/map-pin-group.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { AlertWindowComponent } from './components/alert-window/alert-window.com
     UserActivityStatusDirective,
     MultiLinePipe,
     TextTrimPipe,
-    AlertWindowComponent
+    AlertWindowComponent,
+    MapPinGroupComponent
   ],
   imports: [
     CommonModule,
@@ -70,6 +72,10 @@ import { AlertWindowComponent } from './components/alert-window/alert-window.com
     TextTrimPipe,
     MomentModule
   ],
+
+  entryComponents: [
+    MapPinGroupComponent
+  ]
 })
 export class SharedModule {
   constructor(private translate: TranslateService)
