@@ -32,16 +32,20 @@ export class GeoSearchService extends BaseService
   {
     const params = this.getHttpParamsFromObject({ page })
 
-    return this.http.get<{ users: User[] }>('client/search/geo', { params })
+    return this.http.get<{ users: User[], banStatuses: [{ amIBanned, isBanned }] }>('/client/search/geo/near-by', { params })
       .pipe(
-        map(({ users }) => {
+        map(({ users, banStatuses }) => {
           const result = [];
 
           for (let userData of users)
           {
-            result.push(
-              User.createFromRawData(userData)
-            );
+            const user: User = User.createFromRawData(userData);
+            const { amIBanned, isBanned } = banStatuses[user.id];
+
+            user.isBanned = isBanned;
+            user.amIBanned = amIBanned;
+
+            result.push(user);
           }
 
           return result;

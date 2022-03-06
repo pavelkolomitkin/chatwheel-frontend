@@ -1,11 +1,9 @@
 <div class="map-container">
-  <ng-container *ngIf="!!(user | async)">
+  <ng-container *ngIf="!!authorizedUser">
     <app-map
       #mapComponent
-      (onSelectLocation)="onLocationSelectedHandler($event)"
       (onMove)="onMapMoveHandler($event)"
-      (onReady)="onMapReadyHandler($event)"
-      [defaultCenter]="(user | async).geoLocation"
+      [defaultCenter]="authorizedUser.geoLocation"
       [defaultZoom]="14"
     ></app-map>
   </ng-container>

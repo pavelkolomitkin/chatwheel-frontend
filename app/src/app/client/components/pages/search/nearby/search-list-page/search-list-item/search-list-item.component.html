@@ -1,0 +1,48 @@
+<div
+  class="item-container"
+  (click)="onClickHandler($event)"
+
+>
+  <div class="avatar-container">
+    <app-user-avatar
+      [size]="'mediumSmall'"
+      [user]="user"
+      [isActivityVisible]="true"
+    ></app-user-avatar>
+  </div>
+  <div class="right-block">
+    <h6>{{ user.fullName }}</h6>
+    <div *ngIf="user.interests.length > 0" class="mb-3">
+      <span
+        class="badge badge-primary badge-pill mr-1"
+        *ngFor="let interest of user.interests.slice(0, 10)"
+      >{{ interest.name }}</span>
+      <span class="text-muted" *ngIf="user.interests.length > 10">...</span>
+    </div>
+    <div class="controls">
+      <ng-container *ngIf="!(user.isBanned || user.amIBanned)">
+        <span
+          class="btn btn-success mr-2"
+          (click)="onCallClickHandler($event)"
+        >
+          <i class="ik ik-phone-call"></i>Call
+        </span>
+        <span class="btn btn-light mr-2" (click)="onMessageClickHandler($event)">
+          <i class="ik ik-message-square"></i>Send Message
+        </span>
+        <span class="btn btn-danger mr-2" (click)="onReportAbuseClickHandler($event)">
+          <i class="ik ik-alert-circle"></i>Report Abuse
+        </span>
+      </ng-container>
+
+      <ng-container *ngIf="user.isBanned">
+        <span class="text-muted">You've banned this user</span>
+      </ng-container>
+
+      <ng-container *ngIf="user.amIBanned">
+        <span class="text-muted">You've been banned by this user</span>
+      </ng-container>
+
+    </div>
+  </div>
+</div>

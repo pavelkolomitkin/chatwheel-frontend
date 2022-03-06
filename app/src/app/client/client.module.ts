@@ -75,6 +75,7 @@ import { MessageListItemComponent as CallWindowMessageListItemComponent } from '
 import { SearchListPageComponent } from './components/pages/search/nearby/search-list-page/search-list-page.component';
 import { SearchMapPageComponent } from './components/pages/search/nearby/search-map-page/search-map-page.component';
 import {GeoSearchService} from "./services/search/geo-search.service";
+import { SearchListItemComponent } from './components/pages/search/nearby/search-list-page/search-list-item/search-list-item.component';
 
 @NgModule({
     declarations: [
@@ -125,7 +126,8 @@ import {GeoSearchService} from "./services/search/geo-search.service";
         UserInputComponent,
         CallWindowMessageListItemComponent,
         SearchListPageComponent,
-        SearchMapPageComponent
+        SearchMapPageComponent,
+        SearchListItemComponent
     ],
   providers: [
     ProfileService,

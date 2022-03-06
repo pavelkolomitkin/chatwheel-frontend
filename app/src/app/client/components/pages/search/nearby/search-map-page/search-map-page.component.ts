@@ -10,14 +10,15 @@ import {
 import {select, Store} from "@ngrx/store";
 import {State} from "../../../../../../app.state";
 import {User} from "../../../../../../security/data/models/user.model";
-import {Observable} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 import {MapViewBox} from "../../../../../../shared/data/model/map-view-box.model";
-import {Geolocation} from "../../../../../../core/data/models/geolocation.model";
+import {Geolocation, isEqual} from "../../../../../../core/data/models/geolocation.model";
 import {MapComponent} from "../../../../../../shared/components/geo/map/map.component";
 import {GeoSearchService} from "../../../../../services/search/geo-search.service";
 import {GlobalNotification} from "../../../../../../core/data/actions";
 import {Notification, NotificationType} from "../../../../../../core/data/models/notification.model";
 import {UserMapMarkComponent} from "../../../../../../shared/components/geo/user-map-mark/user-map-mark.component";
+import {filter, first} from "rxjs/operators";
 
 @Component({
   selector: 'app-search-map-page',
@@ -26,9 +27,12 @@ import {UserMapMarkComponent} from "../../../../../../shared/components/geo/user
 })
 export class SearchMapPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  static REQUEST_USERS_DELAY = 500;
+  static REQUEST_USERS_DELAY = 1000;
 
   @ViewChild(MapComponent) map: MapComponent;
+
+  authorizedUser: User;
+  userUpdateSubscription: Subscription;
 
   user: Observable<User>;
 
@@ -46,16 +50,29 @@ export class SearchMapPageComponent implements OnInit, OnDestroy, AfterViewInit 
 
   async ngOnInit() {
 
-    this.user = this.store.pipe(select(state => state.security.user));
+    this.authorizedUser = await this.store.pipe(select(state => state.security.user), first()).toPromise();
+
+    this.userUpdateSubscription = this.store.pipe(
+      select(state => state.security.user),
+      filter(user => !!user)
+    ).subscribe(async (user) => {
+
+      const oldLocation: Geolocation = this.authorizedUser.geoLocation;
+      const newLocation: Geolocation = user.geoLocation;
+
+      this.authorizedUser = user;
+      if (!isEqual(oldLocation, newLocation))
+      {
+        this.users = {};
+        await this.loadUsers();
+      }
+
+    });
   }
 
   ngOnDestroy(): void {
 
-
-  }
-
-  async onMapReadyHandler(event)
-  {
+    this.userUpdateSubscription.unsubscribe();
 
   }
 
@@ -64,10 +81,6 @@ export class SearchMapPageComponent implements OnInit, OnDestroy, AfterViewInit 
     this.loadUsersWithDelay();
   }
 
-  onLocationSelectedHandler(location: Geolocation)
-  {
-
-  }
 
   async ngAfterViewInit() {
     await this.loadUsers();
@@ -75,6 +88,11 @@ export class SearchMapPageComponent implements OnInit, OnDestroy, AfterViewInit 
 
   async loadUsers()
   {
+    if (!this.map)
+    {
+      return;
+    }
+
     const box: MapViewBox = this.map.getViewBox();
 
     try {
