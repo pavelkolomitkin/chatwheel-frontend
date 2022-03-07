@@ -14,6 +14,8 @@ export const environment = {
   onlineActivitySeconds: 60,
   recentOnlineActivitySeconds: 300,
 
+  chatRouletteAwaitAcceptedCallTimeout: 10000,
+
   iceServers: [
     {url:'stun:stun01.sipphone.com'},
     {url:'stun:stun.ekiga.net'},

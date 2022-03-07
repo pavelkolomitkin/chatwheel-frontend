@@ -1,0 +1,128 @@
+.page-container {
+  position: relative;
+}
+
+.page-container .video-area {
+  background: black;
+  position: relative;
+  margin-bottom: 15px;
+  height: 100%;
+  min-height: 700px;
+}
+.page-container .video-area .addressee-header {
+  position: relative;
+  top: 0;
+  left: 0;
+  padding: 15px;
+}
+
+.page-container .video-area .media-error-controls
+{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+}
+
+.page-container .video-area .addressee-header .avatar-container {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+}
+
+.page-container .video-area .addressee-header .header {
+  position: relative;
+  margin-left: 50px;
+}
+
+
+.page-container .video-area .window-size-controls {
+  position: absolute;
+  top: 15px;
+  right: 0;
+  z-index: 10;
+  color: white;
+}
+
+.page-container .video-area .window-size-controls .control {
+  color: #ccc;
+}
+
+.page-container .video-area .loader-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  z-index: 11;
+}
+
+.page-container .video-area .offer-preview {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+}
+
+
+.page-container .video-area .remote-video-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+.page-container .video-area .remote-video-container video {
+  width: 100%;
+  height: 100%;
+  background: black;
+}
+
+.page-container .video-area .local-video-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 200px;
+  max-width: 200px;
+  z-index: 2;
+}
+.page-container .video-area .local-video-container video {
+  width: 100%;
+  background: #cccccc;
+}
+
+.page-container .video-area .search-controls {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  z-index: 3;
+}
+
+
+.page-container .video-area .search-controls .control {
+  font-size: 28px !important;
+  height: unset;
+  color: white;
+  padding: 5px;
+  border-radius: 50%;
+  border: 0;
+}
+
+
+.page-container .video-area .message-controls {
+  z-index: 7;
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+}
+
+.page-container .video-area .message-controls .control {}
+
+.page-container .bottom-area {
+  padding: 15px;
+}
