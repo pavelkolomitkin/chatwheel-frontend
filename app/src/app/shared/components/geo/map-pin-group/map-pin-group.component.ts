@@ -80,6 +80,11 @@ export class MapPinGroupComponent implements OnInit {
   @HostListener('document:click', ['$event'])
   onDocumentClickHandler(event)
   {
+    if (!this.layout)
+    {
+      return;
+    }
+
     if (
       (this.layout.nativeElement.contains(event.target))
       || (this.layout.nativeElement === event.target)

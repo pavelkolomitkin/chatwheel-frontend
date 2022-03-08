@@ -68,6 +68,8 @@ export class ChatwheelComponent implements OnInit, OnDestroy {
   incomingCallSubscription: Subscription;
   lastMemberHangUpSubscription: Subscription;
   lastRejectedCallSubscription: Subscription;
+  lastUserIBannedSubscription: Subscription;
+  lastUserBannedMeSubscription: Subscription;
 
   //=========== CALL SUBSCRIPTIONS ==============
 
@@ -97,7 +99,68 @@ export class ChatwheelComponent implements OnInit, OnDestroy {
 
     this.acceptOfferSubscription = this.socketService.getAcceptedOffer().subscribe(this.onAcceptOfferHandler);
     this.incomingCallSubscription = this.callSocketService.getIncomingCall().subscribe(this.getIncomingCallHandler);
+
+    this.initBanUserSubscription();
   }
+
+  initBanUserSubscription()
+  {
+    this.lastUserIBannedSubscription = this.store.pipe(
+      select(state => state.client.lastUserIBanned),
+      filter(user => !!user)
+    ).subscribe(async (user: User) => {
+      await this.lastUserBanHandler(user, 'You have banned ' + user.fullName + '!');
+    });
+
+    this.lastUserBannedMeSubscription = this.store.pipe(
+      select(state => state.client.lastUserBannedMe),
+      filter(user => !!user)
+    ).subscribe(async (user: User) => {
+      await this.lastUserBanHandler(user, user.fullName + ' has banned you!');
+    });
+  }
+
+  releaseBanUserSubscription()
+  {
+    if (!!this.lastUserIBannedSubscription)
+    {
+      this.lastUserIBannedSubscription.unsubscribe()
+      this.lastUserIBannedSubscription = null;
+    }
+
+    if (!!this.lastUserBannedMeSubscription)
+    {
+      this.lastUserBannedMeSubscription.unsubscribe();
+      this.lastUserBannedMeSubscription = null;
+    }
+  }
+
+  isUserRelatedToOffer(user: User)
+  {
+    if (!this.currentOffer)
+    {
+      return false;
+    }
+
+    return this.currentOffer.addressee.id === user.id;
+  }
+
+  lastUserBanHandler = async (user: User, notificationMessage: string) => {
+
+    if (!this.isUserRelatedToOffer(user))
+    {
+      return;
+    }
+
+    this.store.dispatch(
+      new GlobalNotification(
+        new Notification(NotificationType.INFO, notificationMessage)
+      )
+    );
+
+    await this.searchPartner();
+  }
+
 
   initiateCallDenyingSubscriptions()
   {
@@ -132,6 +195,8 @@ export class ChatwheelComponent implements OnInit, OnDestroy {
 
   async ngOnDestroy() {
 
+    this.releaseBanUserSubscription();
+
     this.releaseCallDenyingSubscriptions();
 
     if (!!this.acceptOfferSubscription)
@@ -145,9 +210,6 @@ export class ChatwheelComponent implements OnInit, OnDestroy {
       this.incomingCallSubscription.unsubscribe();
     }
 
-    this.disposeFullScreen();
-    await this.disposeLocalMedia();
-
     try {
       await this.searchService.turnOff().toPromise();
     }
@@ -155,10 +217,10 @@ export class ChatwheelComponent implements OnInit, OnDestroy {
     {
 
     }
+    this.disposeFullScreen();
 
-    await this.releaseConnectionResources();
-
-
+    await this.releaseConnectionResources(false);
+    this.mediaService.disposeMedia(this.localMediaStream);
   }
 
 
@@ -177,14 +239,14 @@ export class ChatwheelComponent implements OnInit, OnDestroy {
     }
   }
 
-  async releaseConnectionResources()
+  async releaseConnectionResources(preserveLocalMedia: boolean = true)
   {
     this.releaseAwaitingAcceptingCallTimeout();
     this.releaseAwaitingAcceptedCallTimeout();
 
     await this.denyExistingCall();
 
-    await this.releaseCallConnection();
+    await this.releaseCallConnection(preserveLocalMedia);
     await this.releaseCallSubscriptions();
   }
 
@@ -326,7 +388,8 @@ export class ChatwheelComponent implements OnInit, OnDestroy {
   }
 
   lastRejectedMemberLinkHandler = async (link: CallMemberLink) => {
-
+    //debugger
+    console.log('CALLING... lastRejectedMemberLinkHandler');
     if (this.isCurrentCallDenied(link))
     {
       await this.searchPartner();
@@ -336,6 +399,8 @@ export class ChatwheelComponent implements OnInit, OnDestroy {
 
   lastMemberHangUpHandler = async (link: CallMemberLink) => {
 
+    //debugger
+    console.log('CALLING... lastMemberHangUpHandler');
     if (this.isCurrentCallDenied(link))
     {
       await this.searchPartner();
@@ -405,14 +470,6 @@ export class ChatwheelComponent implements OnInit, OnDestroy {
     }
   }
 
-  async disposeLocalMedia()
-  {
-    if (!!this.localMediaStream)
-    {
-      this.localMediaStream.getTracks().forEach(track => track.stop());
-    }
-  }
-
   initializeFullScreen()
   {
     if (this.fullScreenEnabled)
@@ -445,11 +502,11 @@ export class ChatwheelComponent implements OnInit, OnDestroy {
 
   //==================================== MAKING AND RECEIVING CALLS ==============================
 
-  async releaseCallConnection()
+  async releaseCallConnection(preserveLocalMedia: boolean = true)
   {
     if (this.callConnection)
     {
-      await this.callConnection.release(true);
+      await this.callConnection.release(preserveLocalMedia);
     }
   }
 
@@ -478,7 +535,6 @@ export class ChatwheelComponent implements OnInit, OnDestroy {
       first()
     ).toPromise();
 
-    this.initiateCallDenyingSubscriptions();
 
     // create a call connection that will receive the call
     this.callConnection = this.callConnector.receive(call, socketWindowId);
@@ -496,8 +552,6 @@ export class ChatwheelComponent implements OnInit, OnDestroy {
       select(state => state.calls.callWindowId),
       first()
     ).toPromise();
-
-    this.initiateCallDenyingSubscriptions();
 
     this.callConnection = this.callConnector.call(this.currentOffer.addressee, socketWindowId, false);
     this.callConnection.setUserMedia(this.localMediaStream);

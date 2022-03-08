@@ -95,11 +95,6 @@ export class CallConnection
     this.remoteMediaSubject.unsubscribe();
     this.errorSubject.unsubscribe();
 
-    if (this.peer)
-    {
-      this.peer.destroy();
-    }
-
     if (!preserveLocalMedia)
     {
       await this.releaseMediaStream(this.userMediaStream);
@@ -109,6 +104,11 @@ export class CallConnection
 
     await this.releaseMediaStream(this.remoteMediaStream);
     this.remoteMediaStream = null;
+
+    if (this.peer)
+    {
+      this.peer.destroy();
+    }
   }
 
   async releaseMediaStream(stream: MediaStream)
