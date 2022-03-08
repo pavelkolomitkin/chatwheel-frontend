@@ -56,7 +56,8 @@ export class CallsObserverComponent implements OnInit, OnDestroy {
       .store
       .pipe(
         select(state => state.calls.lastDirectedIncomingCall),
-        filter(call => !!call)
+        filter(call => !!call),
+        filter(call => call.isDirect === true)
         )
       .subscribe(this.lastIncomingCallHandler);
 
@@ -108,6 +109,7 @@ export class CallsObserverComponent implements OnInit, OnDestroy {
 
   lastIncomingCallHandler = (call: Call) => {
 
+    debugger
     const toast = this.toastService.show('', '', {
       toastComponent: IncomingDirectCallToastComponent,
       positionClass: 'toast-bottom-left',

@@ -21,12 +21,7 @@ export class ChatRouletteService
     capturedPicture: File
   )
   {
-    return this.uploadService.upload(capturedPicture, '/client/chat-roulette/turn-on', 'image')
-      .pipe(
-        // @ts-ignore
-        filter(data => data.type === UploadFileService.UPLOAD_EVENT_TYPE_COMPLETE),
-        map(data => null)
-      );
+    return this.uploadService.upload(capturedPicture, '/client/chat-roulette/turn-on', 'image');
   }
 
   turnOff()

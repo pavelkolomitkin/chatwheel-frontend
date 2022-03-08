@@ -6,7 +6,7 @@ import {ChatRouletteSocketService} from "../../../../services/sockets/chat-roule
 import {ChatRouletteOffer, ChatRouletteOfferType} from "../../../../data/model/search/chat-roulette-offer.model";
 import {Observable, Subscription} from "rxjs";
 import {User} from "../../../../../security/data/models/user.model";
-import {first} from "rxjs/operators";
+import {filter, first} from "rxjs/operators";
 import screenfull from "screenfull";
 import {UserMediaService} from "../../../../../core/services/user-media.service";
 import {UploadDataService} from "../../../../../core/services/upload/upload-data.service";
@@ -18,6 +18,9 @@ import {CallConnection} from "../../../../services/calls/call-connection";
 import {CallConnectorService} from "../../../../services/calls/call-connector.service";
 import {environment} from "../../../../../../environments/environment";
 import {UserReportAbuseInit} from "../../../../data/actions";
+import {CallMemberLink} from "../../../../data/model/calls/call-member-link.model";
+import {MessageType} from "../../../../../core/data/models/messages/message.model";
+import {ConversationMessage} from "../../../../../core/data/models/messages/conversation-message.model";
 
 @Component({
   selector: 'app-chatwheel',
@@ -56,11 +59,15 @@ export class ChatwheelComponent implements OnInit, OnDestroy {
   currentOffer: ChatRouletteOffer = null;
   awaitingAcceptedCallTimeout: any = null;
   awaitingAcceptingCallTimeout: any = null;
+  isTextChatVisible: boolean = false;
 
   callConnection: CallConnection = null;
+  previousDenyingLink: CallMemberLink = null;
 
   acceptOfferSubscription: Subscription;
   incomingCallSubscription: Subscription;
+  lastMemberHangUpSubscription: Subscription;
+  lastRejectedCallSubscription: Subscription;
 
   //=========== CALL SUBSCRIPTIONS ==============
 
@@ -86,31 +93,103 @@ export class ChatwheelComponent implements OnInit, OnDestroy {
 
     this.authorizedUser = this.store.pipe(select(state => state.security.user));
 
+    this.initiateCallDenyingSubscriptions();
+
     this.acceptOfferSubscription = this.socketService.getAcceptedOffer().subscribe(this.onAcceptOfferHandler);
     this.incomingCallSubscription = this.callSocketService.getIncomingCall().subscribe(this.getIncomingCallHandler);
+  }
 
+  initiateCallDenyingSubscriptions()
+  {
+    this.lastMemberHangUpSubscription = this.store.pipe(
+      select(state => state.calls.lastMemberHungUpLink),
+      filter(link => !!link)
+    ).subscribe(this.lastMemberHangUpHandler);
 
+    this.lastRejectedCallSubscription = this
+      .store
+      .pipe(
+        select(state => state.calls.lastMemberRejectedLink),
+        filter(link => !!link)
+      )
+      .subscribe(this.lastRejectedMemberLinkHandler);
+  }
 
+  releaseCallDenyingSubscriptions()
+  {
+    if (!!this.lastMemberHangUpSubscription)
+    {
+      this.lastMemberHangUpSubscription.unsubscribe();
+      this.lastMemberHangUpSubscription = null;
+    }
+
+    if (!!this.lastRejectedCallSubscription)
+    {
+      this.lastRejectedCallSubscription.unsubscribe();
+      this.lastRejectedCallSubscription = null;
+    }
   }
 
   async ngOnDestroy() {
 
-    this.acceptOfferSubscription.unsubscribe();
-    this.incomingCallSubscription.unsubscribe();
+    this.releaseCallDenyingSubscriptions();
+
+    if (!!this.acceptOfferSubscription)
+    {
+      this.acceptOfferSubscription.unsubscribe();
+      this.acceptOfferSubscription = null;
+    }
+
+    if (!!this.incomingCallSubscription)
+    {
+      this.incomingCallSubscription.unsubscribe();
+    }
 
     this.disposeFullScreen();
     await this.disposeLocalMedia();
 
-    await this.releaseCallConnection();
-    await this.releaseCallSubscriptions();
+    try {
+      await this.searchService.turnOff().toPromise();
+    }
+    catch (error)
+    {
 
+    }
+
+    await this.releaseConnectionResources();
+
+
+  }
+
+
+  async denyExistingCall()
+  {
+    if (!!this.callConnection)
+    {
+      if (this.callConnection.isInitialized())
+      {
+        await this.callConnection.hangUp()
+      }
+      else
+      {
+        await this.callConnection.reject();
+      }
+    }
+  }
+
+  async releaseConnectionResources()
+  {
     this.releaseAwaitingAcceptingCallTimeout();
     this.releaseAwaitingAcceptedCallTimeout();
+
+    await this.denyExistingCall();
+
+    await this.releaseCallConnection();
+    await this.releaseCallSubscriptions();
   }
 
   async searchPartner()
   {
-    debugger
     if (this.uiState === ChatwheelComponent.UI_STATE_CHAT_STOPPED)
     {
       return;
@@ -118,17 +197,22 @@ export class ChatwheelComponent implements OnInit, OnDestroy {
 
     this.uiState = ChatwheelComponent.UI_STATE_CHAT_SEARCHING;
     this.currentOffer = null;
+    console.log('SET NULL CURRENT OFFER ', this.currentOffer);
+
+    await this.releaseConnectionResources();
 
     // try to find or create a new offer
     try {
       this.currentOffer = await this.searchService.search().toPromise();
+      console.log('CURRENT OFFER SEARCH PARTNER 1', this.currentOffer);
     }
     catch (error)
     {
-      this.store.dispatch(new GlobalNotification(
-        new Notification(NotificationType.ERROR, 'Cannot start the wheel! Try it later!', 'Error')
-      ));
+      this.uiState = ChatwheelComponent.UI_STATE_CHAT_STOPPED;
+    }
 
+    if (!this.currentOffer)
+    {
       return;
     }
 
@@ -139,6 +223,8 @@ export class ChatwheelComponent implements OnInit, OnDestroy {
       // accept the found offer
       try {
         this.currentOffer = await this.searchService.acceptOffer(this.currentOffer).toPromise();
+        console.log('CURRENT OFFER ACCEPT OFFER 2', this.currentOffer);
+
         this.uiState = ChatwheelComponent.UI_STATE_CHAT_OFFER_ACCEPTED;
 
         this.awaitAcceptedCall();
@@ -163,12 +249,12 @@ export class ChatwheelComponent implements OnInit, OnDestroy {
   {
     this.awaitingAcceptedCallTimeout = setTimeout( async () => {
       await this.searchPartner();
-    }, environment.chatRouletteAwaitAcceptedCallTimeout);
+    }, environment.awaitingConnectionTimeout);
   }
 
   releaseAwaitingAcceptedCallTimeout()
   {
-    if (!!this.awaitingAcceptedCallTimeout)
+    if (this.awaitingAcceptedCallTimeout !== null)
     {
       clearTimeout(this.awaitingAcceptedCallTimeout);
       this.awaitingAcceptedCallTimeout = null;
@@ -179,12 +265,12 @@ export class ChatwheelComponent implements OnInit, OnDestroy {
   {
     this.awaitingAcceptingCallTimeout = setTimeout(async () => {
       await this.searchPartner();
-    }, environment.chatRouletteAwaitAcceptedCallTimeout);
+    }, environment.awaitingAcceptingOfferTimeout);
   }
 
   releaseAwaitingAcceptingCallTimeout()
   {
-    if (!!this.awaitingAcceptingCallTimeout)
+    if (this.awaitingAcceptingCallTimeout !== null)
     {
       clearTimeout(this.awaitingAcceptingCallTimeout);
       this.awaitingAcceptingCallTimeout = null;
@@ -193,7 +279,11 @@ export class ChatwheelComponent implements OnInit, OnDestroy {
 
   getIncomingCallHandler = async (call: Call) => {
 
-    debugger
+    if (this.isChatStopped())
+    {
+      return;
+    }
+
     if (!this.isOfferCall(call))
     {
       return;
@@ -205,10 +295,65 @@ export class ChatwheelComponent implements OnInit, OnDestroy {
     await this.receiveCall(call);
   }
 
+  isCurrentCallDenied(denyingLink: CallMemberLink)
+  {
+    if (!this.previousDenyingLink || (this.previousDenyingLink.call !== denyingLink.call))
+    {
+      this.previousDenyingLink = denyingLink;
+    }
+    else if (this.previousDenyingLink.call === denyingLink.call)
+    {
+      return false;
+    }
+
+    if (!this.currentOffer)
+    {
+      return false;
+    }
+
+    if (!this.callConnection)
+    {
+      return false;
+    }
+
+    const currentCall: Call = this.callConnection.getCall();
+    if (!currentCall)
+    {
+      return false;
+    }
+
+    return (currentCall.id === denyingLink.call);
+  }
+
+  lastRejectedMemberLinkHandler = async (link: CallMemberLink) => {
+
+    if (this.isCurrentCallDenied(link))
+    {
+      await this.searchPartner();
+    }
+
+  }
+
+  lastMemberHangUpHandler = async (link: CallMemberLink) => {
+
+    if (this.isCurrentCallDenied(link))
+    {
+      await this.searchPartner();
+    }
+  }
+
+  isChatStopped()
+  {
+    return (this.uiState === ChatwheelComponent.UI_STATE_CHAT_STOPPED);
+  }
+
   onAcceptOfferHandler = async (offer: ChatRouletteOffer) => {
 
-    debugger
-    //offer.type
+    if (this.isChatStopped())
+    {
+      return;
+    }
+
     if (!this.currentOffer)
     {
       return;
@@ -220,11 +365,12 @@ export class ChatwheelComponent implements OnInit, OnDestroy {
     }
 
     this.releaseAwaitingAcceptingCallTimeout();
+
+
     this.currentOffer = offer;
-
-    this.uiState = ChatwheelComponent.UI_STATE_CHAT_OFFER_ACCEPTED;
-
+    console.log('CURRENT OFFER OFFER ACCEPTED 3 ' + this.currentOffer);
     await this.makeCall();
+    this.uiState = ChatwheelComponent.UI_STATE_CHAT_OFFER_ACCEPTED;
   }
 
   isOfferCall(call: Call): boolean
@@ -324,17 +470,15 @@ export class ChatwheelComponent implements OnInit, OnDestroy {
 
   async receiveCall(call: Call)
   {
-    // release all the resources concerning the callConnection preserving localMedia
-    await this.releaseCallConnection();
-
-    // release all the call connection subscriptions
-    this.releaseCallSubscriptions();
+    await this.releaseConnectionResources();
 
     // take the current socketId related to the window
     const socketWindowId: string = await this.store.pipe(
       select(state => state.calls.callWindowId),
       first()
     ).toPromise();
+
+    this.initiateCallDenyingSubscriptions();
 
     // create a call connection that will receive the call
     this.callConnection = this.callConnector.receive(call, socketWindowId);
@@ -345,17 +489,15 @@ export class ChatwheelComponent implements OnInit, OnDestroy {
 
   async makeCall()
   {
-    // release all the resources concerning the callConnection preserving localMedia
-    await this.releaseCallConnection();
-
-    // release all the call connection subscriptions
-    this.releaseCallSubscriptions();
+    await this.releaseConnectionResources();
 
     // take the current socketId related to the window
     const socketWindowId: string = await this.store.pipe(
       select(state => state.calls.callWindowId),
       first()
     ).toPromise();
+
+    this.initiateCallDenyingSubscriptions();
 
     this.callConnection = this.callConnector.call(this.currentOffer.addressee, socketWindowId, false);
     this.callConnection.setUserMedia(this.localMediaStream);
@@ -413,9 +555,14 @@ export class ChatwheelComponent implements OnInit, OnDestroy {
     }
   }
 
-  onRemoteVideoDoubleClickHandler(event)
+  onVideoAreaDoubleClickHandler(event)
   {
     this.fullScreenToggle();
+  }
+
+  onVideoAreaClickHandler(event)
+  {
+    this.isTextChatVisible = false;
   }
 
   onFullscreenClickHandler(event)
@@ -454,11 +601,9 @@ export class ChatwheelComponent implements OnInit, OnDestroy {
       const imageFile: File = this.takePictureFromCamera();
       // turn on the play mode
       await this.searchService.turnOn(imageFile).toPromise();
-      debugger
     }
     catch (error)
     {
-      debugger
       this.store.dispatch(new GlobalNotification(
         new Notification(NotificationType.ERROR, 'Cannot start the wheel! Try it later!', 'Error')
       ));
@@ -471,9 +616,10 @@ export class ChatwheelComponent implements OnInit, OnDestroy {
 
   async onStartChatClickHandler(event)
   {
+    this.uiState = ChatwheelComponent.UI_STATE_CHAT_SEARCHING;
+
     await this.turnOnChat();
 
-    debugger
     await this.searchPartner();
   }
 
@@ -486,11 +632,9 @@ export class ChatwheelComponent implements OnInit, OnDestroy {
   {
     this.uiState = ChatwheelComponent.UI_STATE_CHAT_STOPPED;
 
-    await this.releaseCallConnection();
-    this.releaseCallSubscriptions();
+    await this.releaseConnectionResources();
 
-    this.releaseAwaitingAcceptedCallTimeout();
-    this.releaseAwaitingAcceptedCallTimeout();
+    await this.searchService.turnOff().toPromise();
   }
 
   onReportAbuseClickHandler(event)
@@ -508,7 +652,26 @@ export class ChatwheelComponent implements OnInit, OnDestroy {
 
   onMessageButtonClickHandler(event)
   {
+    event.stopPropagation();
+    this.isTextChatVisible = true;
+  }
 
+  onChatClickHandler(event)
+  {
+    event.stopPropagation();
+  }
+
+  onMessageReceivedHandler(message: ConversationMessage)
+  {
+    if (message.message.type === MessageType.TEXT)
+    {
+      this.isTextChatVisible = true;
+    }
+  }
+
+  onTextChatCloseHandler(event)
+  {
+    this.isTextChatVisible = false;
   }
 
 }

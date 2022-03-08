@@ -29,10 +29,9 @@ export class UploadFileService extends UploadService
 
       this.http.request(request).subscribe(
         (event) => {
-          debugger
+
           if (event.type === HttpEventType.UploadProgress)
           {
-            debugger
             const { loaded, total } = event;
 
             observer.next({
@@ -43,7 +42,6 @@ export class UploadFileService extends UploadService
           }
           else if (event instanceof HttpResponse)
           {
-            debugger
             observer.next({
               body: event.body,
               type: UploadFileService.UPLOAD_EVENT_TYPE_COMPLETE
@@ -51,14 +49,13 @@ export class UploadFileService extends UploadService
           }
         },
         (errors) => {
-          debugger
           observer.error({
             errors: errors.error.errors,
             type: UploadFileService.UPLOAD_EVENT_TYPE_ERROR
           });
         },
         () => {
-          debugger
+          observer.complete();
         })
     });
   }

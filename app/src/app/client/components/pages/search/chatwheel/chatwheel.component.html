@@ -1,17 +1,24 @@
 <div class="card">
   <div class="page-container">
 
-    <div #videoArea class="video-area">
+    <div #videoArea class="video-area"
+         (dblclick)="onVideoAreaDoubleClickHandler($event)"
+        (click)="onVideoAreaClickHandler($event)"
+    >
 
-      <div class="addressee-header" *ngIf="!!addressee">
+      <div class="addressee-header" *ngIf="!!currentOffer">
         <div class="avatar-container">
-          <app-user-avatar
-            [size]="'small'"
-            [user]="addressee"
-          ></app-user-avatar>
+          <a [routerLink]="'/client/profile/' + currentOffer.addressee.id">
+            <app-user-avatar
+              [size]="'small'"
+              [user]="currentOffer.addressee"
+            ></app-user-avatar>
+          </a>
         </div>
         <div class="header">
-          <h2>{{ addressee.fullName}}</h2>
+          <div class="h4">
+            <a [routerLink]="'/client/profile/' + currentOffer.addressee.id">{{ currentOffer.addressee.fullName}}</a>
+          </div>
         </div>
       </div>
 
@@ -32,19 +39,6 @@
         </span>
       </div>
 
-      <ng-container *ngIf="uiState === 'chat_addressee_connecting'">
-        <div class="loader-container">
-
-          <div
-            class="spinner-border text-primary"
-            role="status"
-          >
-            <span class="sr-only">Loading...</span>
-          </div>
-
-        </div>
-      </ng-container>
-
       <ng-container *ngIf="uiState === 'chat_searching'">
         <div class="loader-container">
 
@@ -59,14 +53,37 @@
       </ng-container>
 
 
-      <ng-container *ngIf="(uiState === 'chat_offer_made') || (uiState === 'chat_offer_accepted')">
-        <div class="offer-preview">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Shaqi_jrvej.jpg/1200px-Shaqi_jrvej.jpg" />
-          <!--        <img [src]="'/api/client/search/chat-roulette-picture/' + addressee.id" />-->
+      <ng-container *ngIf="
+      (uiState === 'chat_offer_made')
+      || (uiState === 'chat_offer_accepted')
+      || (uiState === 'chat_addressee_connecting')
+">
+        <div class="offer-preview" *ngIf="currentOffer !== null">
+          <img [src]="'/client/search/chat-roulette-picture/' + currentOffer.addressee.id | imageUrl" />
         </div>
+
+
+        <div class="loader-container">
+
+          <ng-container *ngIf="(uiState === 'chat_offer_made')">
+            <div class="spinner-border text-primary" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="(uiState === 'chat_offer_accepted') || (uiState === 'chat_addressee_connecting')">
+            <div class="spinner-border text-success" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </ng-container>
+          <div>
+            <span class="text-muted">Connecting...</span>
+          </div>
+        </div>
+
       </ng-container>
 
-      <div class="remote-video-container" (dblclick)="onRemoteVideoDoubleClickHandler($event)">
+      <div class="remote-video-container">
         <video
           #remoteVideo
           [autoplay]="true"
@@ -111,7 +128,7 @@
           (click)="onNextChatClickHandler($event)"
           [disabled]="(uiState === 'chat_searching')"
         >
-          <i class="ik ik-arrow-right"></i>
+          <i class="ik ik-arrow-right ml-2 mr-0 pr-1"></i>
         </button>
 
         <button
@@ -119,7 +136,7 @@
           title="Stop"
           class="control btn btn-secondary mr-2" (click)="onStopChatClickHandler($event)"
         >
-          <i class="ik ik-square"></i>
+          <i class="ik ik-square ml-2 mr-1 pr-1"></i>
         </button>
 
         <button
@@ -128,17 +145,35 @@
           class="control btn btn-danger mr-2" (click)="onReportAbuseClickHandler($event)"
           [disabled]="(uiState !== 'chat_addressee_calling')"
         >
-          <i class="ik ik-alert-circle"></i>
+          <i class="ik ik-alert-circle ml-2 mr-0 pr-1"></i>
         </button>
 
       </div>
 
 
-      <div class="message-controls" *ngIf="(uiState === 'chat_addressee_calling')">
-        <span class="control btn btn-outline-primary" (click)="onMessageButtonClickHandler($event)">
-          <i class="ik ik-message-square ml-2 mr-2"></i>
-        </span>
-      </div>
+      <ng-container *ngIf="(uiState === 'chat_addressee_calling')">
+        <div class="message-controls" [ngClass]="isTextChatVisible ? 'd-none' : 'd-block'">
+          <span
+            class="control btn btn-outline-primary"
+            (click)="onMessageButtonClickHandler($event)"
+          >
+            <i class="ik ik-message-square ml-2 mr-2"></i>
+          </span>
+        </div>
+
+        <div class="text-chat-container"
+             (click)="onChatClickHandler($event)"
+             [ngClass]="isTextChatVisible ? 'd-block' : 'd-none'">
+          <app-text-conversation
+            [authorizedUser]="authorizedUser | async"
+            [addressee]="this.currentOffer.addressee"
+            (onClose)="onTextChatCloseHandler($event)"
+            (onMessageReceived)="onMessageReceivedHandler($event)"
+          ></app-text-conversation>
+        </div>
+      </ng-container>
+
+
     </div>
 
 

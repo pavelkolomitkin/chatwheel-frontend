@@ -21,6 +21,7 @@ import {MomentModule} from "ngx-moment";
 import {DateTimeViewComponent} from "./components/date-time-view/date-time-view.component";
 import { AlertWindowComponent } from './components/alert-window/alert-window.component';
 import { MapPinGroupComponent } from './components/geo/map-pin-group/map-pin-group.component';
+import {ImageUrlPipe} from "./pipes/image-url.pipe";
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { MapPinGroupComponent } from './components/geo/map-pin-group/map-pin-gro
     UserActivityStatusDirective,
     MultiLinePipe,
     TextTrimPipe,
+    ImageUrlPipe,
     AlertWindowComponent,
     MapPinGroupComponent
   ],
@@ -70,6 +72,7 @@ import { MapPinGroupComponent } from './components/geo/map-pin-group/map-pin-gro
     UserActivityStatusDirective,
     MultiLinePipe,
     TextTrimPipe,
+    ImageUrlPipe,
     MomentModule
   ],
 

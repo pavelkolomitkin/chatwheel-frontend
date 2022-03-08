@@ -18,7 +18,8 @@ export const environment = {
   onlineActivitySeconds: 60,
   recentOnlineActivitySeconds: 300,
 
-  chatRouletteAwaitAcceptedCallTimeout: 10000,
+  awaitingAcceptingOfferTimeout: 27000,
+  awaitingConnectionTimeout: 10000,
 
   iceServers: [
     {url:'stun:stun01.sipphone.com'},
