@@ -259,14 +259,12 @@ export class ChatwheelComponent implements OnInit, OnDestroy {
 
     this.uiState = ChatwheelComponent.UI_STATE_CHAT_SEARCHING;
     this.currentOffer = null;
-    console.log('SET NULL CURRENT OFFER ', this.currentOffer);
 
     await this.releaseConnectionResources();
 
     // try to find or create a new offer
     try {
       this.currentOffer = await this.searchService.search().toPromise();
-      console.log('CURRENT OFFER SEARCH PARTNER 1', this.currentOffer);
     }
     catch (error)
     {
@@ -285,7 +283,6 @@ export class ChatwheelComponent implements OnInit, OnDestroy {
       // accept the found offer
       try {
         this.currentOffer = await this.searchService.acceptOffer(this.currentOffer).toPromise();
-        console.log('CURRENT OFFER ACCEPT OFFER 2', this.currentOffer);
 
         this.uiState = ChatwheelComponent.UI_STATE_CHAT_OFFER_ACCEPTED;
 
@@ -389,7 +386,6 @@ export class ChatwheelComponent implements OnInit, OnDestroy {
 
   lastRejectedMemberLinkHandler = async (link: CallMemberLink) => {
     //debugger
-    console.log('CALLING... lastRejectedMemberLinkHandler');
     if (this.isCurrentCallDenied(link))
     {
       await this.searchPartner();
@@ -400,7 +396,6 @@ export class ChatwheelComponent implements OnInit, OnDestroy {
   lastMemberHangUpHandler = async (link: CallMemberLink) => {
 
     //debugger
-    console.log('CALLING... lastMemberHangUpHandler');
     if (this.isCurrentCallDenied(link))
     {
       await this.searchPartner();
@@ -433,7 +428,7 @@ export class ChatwheelComponent implements OnInit, OnDestroy {
 
 
     this.currentOffer = offer;
-    console.log('CURRENT OFFER OFFER ACCEPTED 3 ' + this.currentOffer);
+
     await this.makeCall();
     this.uiState = ChatwheelComponent.UI_STATE_CHAT_OFFER_ACCEPTED;
   }
@@ -538,6 +533,9 @@ export class ChatwheelComponent implements OnInit, OnDestroy {
 
     // create a call connection that will receive the call
     this.callConnection = this.callConnector.receive(call, socketWindowId);
+    this
+      .callConnection
+      .setEstablishingConnectionTimeout(environment.awaitingCallConnectionTimeout);
 
     // initiate the call connection
     await this.initiateCallConnection();
@@ -554,7 +552,11 @@ export class ChatwheelComponent implements OnInit, OnDestroy {
     ).toPromise();
 
     this.callConnection = this.callConnector.call(this.currentOffer.addressee, socketWindowId, false);
-    this.callConnection.setUserMedia(this.localMediaStream);
+    this
+      .callConnection
+      .setUserMedia(this.localMediaStream)
+      .setEstablishingConnectionTimeout(environment.awaitingCallConnectionTimeout)
+    ;
 
     // initiate the call connection
     await this.initiateCallConnection();
@@ -570,8 +572,6 @@ export class ChatwheelComponent implements OnInit, OnDestroy {
     }
     catch (error)
     {
-      console.error(error);
-
       await this.searchPartner();
     }
   }

@@ -17,6 +17,8 @@ export const environment = {
   awaitingAcceptingOfferTimeout: 27000,
   awaitingConnectionTimeout: 10000,
 
+  awaitingCallConnectionTimeout: 15000,
+
   iceServers: [
     {url:'stun:stun01.sipphone.com'},
     {url:'stun:stun.ekiga.net'},
