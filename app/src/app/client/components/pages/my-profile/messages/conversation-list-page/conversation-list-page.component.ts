@@ -85,7 +85,7 @@ export class ConversationListPageComponent implements OnInit, OnDestroy {
     const index = this.list.findIndex(item => item.id === message.messageList);
     if (index !== -1)
     {
-      const conversation: ConversationMessageList = {...this.list[index]};
+      const conversation: ConversationMessageList = this.list[index];
       if (!!conversation.lastMessage && (conversation.lastMessage.id === message.id))
       {
         conversation.lastMessage = message.editMessage(conversation.lastMessage);
@@ -99,7 +99,7 @@ export class ConversationListPageComponent implements OnInit, OnDestroy {
     const index = this.list.findIndex(item => item.id === message.messageList.id);
     if (index !== -1)
     {
-      const conversation: ConversationMessageList = {...this.list[index]};
+      const conversation: ConversationMessageList = this.list[index];
       conversation.newMessageNumber = message.messageList.newMessageNumber;
 
       if (!!conversation.lastMessage && (conversation.lastMessage.message.id === message.message))

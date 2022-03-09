@@ -52,4 +52,9 @@ export class ConversationMessageList
 
     return result;
   }
+
+  isMember(user: User)
+  {
+    return (this.members.findIndex(member => member.member.id === user.id) !== -1);
+  }
 }

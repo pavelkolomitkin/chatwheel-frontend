@@ -92,9 +92,16 @@ export class TextConversationComponent implements OnInit, OnDestroy {
       filter(message => !!message)
     ).subscribe(async (message: ReceivedMessage) => {
 
-      if (!this.messageList)
+      const { messageList } = message;
+      if (
+        // @ts-ignore
+        messageList.isMember(this.addressee)
+        // @ts-ignore
+        && messageList.isMember(this.authorizedUser)
+        && !this.messageList
+      )
       {
-        return;
+        this.messageList = messageList;
       }
 
       if (this.messageList.id === message.messageList.id)
