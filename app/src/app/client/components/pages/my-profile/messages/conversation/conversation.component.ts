@@ -48,6 +48,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
 
   messageList: ConversationMessageList = null;
   messages: ConversationMessage[] = [];
+  myAddedMessages: {[key: string]: ConversationMessage} = {};
 
   latestDate: string = null;
   latestLoaded: ConversationMessage = null;
@@ -143,6 +144,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
   resetLocalState()
   {
     this.messages = [];
+    this.myAddedMessages = {};
     this.messageList = null;
     this.latestDate = null
     this.latestLoaded = null
@@ -198,7 +200,14 @@ export class ConversationComponent implements OnInit, OnDestroy {
 
       if (this.messageList.id === message.messageList.id)
       {
-        this.messages.unshift(message.message);
+        if (!!this.myAddedMessages[message.message.id])
+        {
+          delete this.myAddedMessages[message.message.id];
+        }
+        else
+        {
+          this.messages.unshift(message.message);
+        }
       }
 
       const wasScrollDisabled: boolean = this.infinityScrollDisabled;
@@ -239,6 +248,11 @@ export class ConversationComponent implements OnInit, OnDestroy {
           if (index !== -1)
           {
             this.messages.splice(index, 1);
+          }
+
+          if (!!this.myAddedMessages[message.message])
+          {
+            delete this.myAddedMessages[message.message];
           }
         }
 
@@ -396,19 +410,24 @@ export class ConversationComponent implements OnInit, OnDestroy {
 
     try {
 
+      let message: ConversationMessage = null;
+
       if (this.messageList === null)
       {
 
         const result = await this.messageService.sendToUser(this.addressee, text).toPromise();
 
         this.messageList = result.conversation;
+        message = result.message;
       }
       else
       {
         // send to the conversation
-        await this.messageService.sendToConversation(this.messageList, text).toPromise();
+        message = await this.messageService.sendToConversation(this.messageList, text).toPromise();
       }
 
+      this.myAddedMessages[message.id] = message;
+      this.messages.unshift(message);
     }
     catch (error)
     {
