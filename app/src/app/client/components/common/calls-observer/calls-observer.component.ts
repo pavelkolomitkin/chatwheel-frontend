@@ -109,7 +109,6 @@ export class CallsObserverComponent implements OnInit, OnDestroy {
 
   lastIncomingCallHandler = (call: Call) => {
 
-    debugger
     const toast = this.toastService.show('', '', {
       toastComponent: IncomingDirectCallToastComponent,
       positionClass: 'toast-bottom-left',

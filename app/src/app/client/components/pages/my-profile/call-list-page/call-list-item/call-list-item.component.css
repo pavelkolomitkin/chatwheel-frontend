@@ -1,0 +1,16 @@
+.right-column.direct {
+  position: relative;
+  width: 50% !important;
+}
+
+.right-column.direct .avatar-container {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+}
+
+.right-column.direct .info-block {
+  top: -15px;
+  margin-left: 60px;
+  position: relative;
+}

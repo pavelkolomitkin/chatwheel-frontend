@@ -1,0 +1,44 @@
+<div>
+
+  <ng-container *ngIf="list !== null">
+
+    <div
+      infiniteScroll
+      [infiniteScrollDistance]="2"
+      [infiniteScrollThrottle]="50"
+      [infiniteScrollDisabled]="infiniteScrollDisabled"
+      (scrolled)="onScroll()"
+
+    >
+
+      <ng-container *ngIf="list.length > 0">
+        <div class="table-responsive">
+          <table class="table table-hover mb-0 without-header">
+            <tbody>
+
+
+            <tr
+              app-call-list-item
+              [user]="authorizedUser"
+              *ngFor="let call of list"
+              [call]="call"
+            ></tr>
+            </tbody>
+          </table>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="list.length === 0">
+        <p class="alert alert-info">
+          You have no conversations yet! Meet people on <a routerLink="/" class="btn btn-primary">ChatWheel</a> or
+          <a routerLink="/client/nearby" class="btn btn-success">near by</a> :-)
+        </p>
+      </ng-container>
+
+    </div>
+
+  </ng-container>
+
+
+
+</div>

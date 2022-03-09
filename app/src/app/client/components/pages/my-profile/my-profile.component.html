@@ -27,15 +27,28 @@
 
         <ul class="nav nav-pills custom-pills" id="pills-tab" role="tablist">
           <li class="nav-item">
-            <a routerLink="./" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active" class="nav-link show" data-toggle="pill" role="tab">Profile</a>
+            <a routerLink="./" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active" class="nav-link show" data-toggle="pill" role="tab">
+              <i class="ik ik-user"></i> Profile</a>
           </li>
           <li class="nav-item">
-            <a routerLink="messages" routerLinkActive="active" class="nav-link show" data-toggle="pill" role="tab">Messages
+            <a routerLink="messages" routerLinkActive="active" class="nav-link show" data-toggle="pill" role="tab">
+              <i class="ik ik-message-square"></i> Messages
               <span class="badge badge-pill badge-danger mb-1 menu-badge" *ngIf="newMessageNumber > 0">{{ newMessageNumber }}</span>
             </a>
           </li>
           <li class="nav-item">
-            <a routerLink="settings" routerLinkActive="active" class="nav-link show" data-toggle="pill" role="tab">Settings</a>
+            <a routerLink="wheel-calls" routerLinkActive="active" class="nav-link show" data-toggle="pill" role="tab">
+              <i class="ik ik-video"></i> Wheel History
+            </a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="direct-calls" routerLinkActive="active" class="nav-link show" data-toggle="pill" role="tab">
+              <i class="ik ik-phone"></i> Calls
+            </a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="settings" routerLinkActive="active" class="nav-link show" data-toggle="pill" role="tab">
+              <i class="ik ik-settings"></i> Settings</a>
           </li>
         </ul>
 

@@ -78,6 +78,8 @@ import {GeoSearchService} from "./services/search/geo-search.service";
 import { SearchListItemComponent } from './components/pages/search/nearby/search-list-page/search-list-item/search-list-item.component';
 import {ChatRouletteService} from "./services/search/chat-roulette.service";
 import {ChatRouletteSocketService} from "./services/sockets/chat-roulette-socket.service";
+import { CallListPageComponent } from './components/pages/my-profile/call-list-page/call-list-page.component';
+import { CallListItemComponent } from './components/pages/my-profile/call-list-page/call-list-item/call-list-item.component';
 
 @NgModule({
     declarations: [
@@ -129,7 +131,9 @@ import {ChatRouletteSocketService} from "./services/sockets/chat-roulette-socket
         CallWindowMessageListItemComponent,
         SearchListPageComponent,
         SearchMapPageComponent,
-        SearchListItemComponent
+        SearchListItemComponent,
+        CallListPageComponent,
+        CallListItemComponent
     ],
   providers: [
     ProfileService,

@@ -15,6 +15,7 @@ import {
 import {PageNotFoundComponent} from "./components/pages/page-not-found/page-not-found.component";
 import {SearchMapPageComponent} from "./components/pages/search/nearby/search-map-page/search-map-page.component";
 import {SearchListPageComponent} from "./components/pages/search/nearby/search-list-page/search-list-page.component";
+import {CallListPageComponent} from "./components/pages/my-profile/call-list-page/call-list-page.component";
 
 export const PAGE_NOT_FOUND_ROUTE = '/client/404';
 
@@ -27,7 +28,10 @@ const routes: Routes = [
               { path: 'conversation/:conversationId', component: ConversationComponent },
               { path: 'conversation/user/:addresseeId', component: ConversationComponent },
               { path: '', redirectTo: 'conversations', pathMatch: 'full' }
-            ] },
+            ]
+          },
+          { path: 'direct-calls', component: CallListPageComponent, data: { isDirect: true } },
+          { path: 'wheel-calls', component: CallListPageComponent, data: { isDirect: false } },
           { path: 'settings', component: SettingsComponent }
         ]
       },
