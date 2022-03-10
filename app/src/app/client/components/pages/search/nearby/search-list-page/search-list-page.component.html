@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="list !== null">
   <div class="user-list"
        infiniteScroll
        [infiniteScrollDistance]="2"
@@ -10,5 +10,9 @@
       *ngFor="let user of list"
       [user]="user"
     ></app-search-list-item>
+
+    <p class="alert alert-info m-2" *ngIf="list.length === 0">
+      There is no one around your place! Try to find someone one <a [routerLink]="'/'" class="btn btn-primary">ChatWheel!</a>
+    </p>
   </div>
 </div>

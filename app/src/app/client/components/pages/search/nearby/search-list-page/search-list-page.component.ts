@@ -23,7 +23,7 @@ export class SearchListPageComponent implements OnInit, OnDestroy {
 
   infiniteScrollDisabled: boolean = true;
 
-  list: User[] = [];
+  list: User[] = null;
 
   userUpdateSubscription: Subscription;
 
@@ -48,7 +48,7 @@ export class SearchListPageComponent implements OnInit, OnDestroy {
       this.authorizedUser = user;
       if (!isEqual(oldLocation, newLocation))
       {
-        this.list = [];
+        this.list = null;
         await this.loadUsers();
       }
 
@@ -73,6 +73,11 @@ export class SearchListPageComponent implements OnInit, OnDestroy {
 
       if (users.length > 0)
       {
+        if (!this.list)
+        {
+          this.list = [];
+        }
+
         this.list = this.list.concat(users);
         this.infiniteScrollDisabled = false;
       }
