@@ -14,8 +14,14 @@
         </div>
         <hr class="mb-0">
         <div class="card-body">
-          <small class="text-muted d-block">Email address </small>
-          <h6>{{ ( user | async ).email ? (user | async).email : '-' }}</h6>
+          <ng-container *ngIf="!!(user | async).email">
+            <small class="text-muted d-block">Email address </small>
+            <h6>{{ ( user | async ).email ? (user | async).email : '-' }}</h6>
+          </ng-container>
+          <ng-container *ngIf="!!(user | async).isVkUser()">
+            <small class="text-muted d-block">Authorized by</small>
+            <img src="../../../../../assets/picture/vk-icon.png" style="width: 40px;" class="m-2 ml-0" />
+          </ng-container>
           <app-edit-map-location [user]="(user | async)"></app-edit-map-location>
         </div>
       </div>

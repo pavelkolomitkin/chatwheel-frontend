@@ -14,3 +14,24 @@
   top: calc(50% + 15px) !important;
   left: 5px;
 }
+
+.image-container img.extraSmall {
+  width: 30px;
+  height: 30px;
+}
+.image-container img.small {
+  width: 40px;
+  height: 40px;
+}
+.image-container img.mediumSmall {
+  width: 50px;
+  height: 50px;
+}
+.image-container img.mediumMedium {
+  width: 70px;
+  height: 70px;
+}
+.image-container img.medium {
+  width: 150px;
+  height: 150px;
+}

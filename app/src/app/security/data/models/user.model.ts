@@ -3,6 +3,20 @@ import {UserInterest} from "../../../client/data/model/user-interest.model";
 import {Geolocation} from "../../../core/data/models/geolocation.model";
 import {environment} from "../../../../environments/environment";
 
+export enum SocialMediaType {
+  VK = 0,
+  GOOGLE = 1
+}
+
+const VkUserAvatarPictures = {
+  extraSmall: 'photo_50',
+  small: 'photo_50',
+  mediumSmall: 'photo_50',
+  mediumMedium: 'photo_100',
+  medium: 'photo_200',
+  original: 'photo_400_orig'
+};
+
 export class User
 {
   static ACTIVITY_ONLINE = 'online';
@@ -45,6 +59,67 @@ export class User
   amIBanned?: boolean;
 
   isBanned?: boolean
+
+  socialMediaType?: SocialMediaType;
+
+  socialMediaUserId?: string;
+
+  socialMediaPhotos?: {};
+
+  isSocialMediaUser()
+  {
+    return !!this.socialMediaUserId;
+  }
+
+  isVkUser()
+  {
+    return this.socialMediaType === SocialMediaType.VK;
+  }
+
+  getThumbAvatar(size)
+  {
+    if (this.avatarThumbs && (this.avatarThumbs[size]))
+    {
+      return environment.baseApiUrl + this.avatarThumbs[size];
+    }
+    else {
+
+      return null;
+    }
+  }
+
+  getSocialMediaAvatar(size)
+  {
+    if (this.socialMediaType === SocialMediaType.VK)
+    {
+      const pictures = this.socialMediaPhotos;
+      if (!pictures)
+      {
+        return null;
+      }
+
+      const vkSize = VkUserAvatarPictures[size];
+      return pictures[vkSize];
+    }
+
+    return null;
+  }
+
+  getAvatarPicture(size: string)
+  {
+    let result = this.getThumbAvatar(size);
+    if (!result)
+    {
+      result = this.getSocialMediaAvatar(size);
+    }
+
+    if (!result)
+    {
+      result = 'assets/picture/default_avatar.png'
+    }
+
+    return result;
+  }
 
   static createFromRawData(data: any)
   {

@@ -43,18 +43,8 @@ export class UserAvatarComponent implements OnInit {
   set user(user: User)
   {
     this._user = user;
-    let avatar = '';
 
-
-    if (this._user.avatarThumbs && (this._user.avatarThumbs[this.size]))
-    {
-      avatar = environment.baseApiUrl + this._user.avatarThumbs[this.size];
-    }
-    else {
-      avatar = 'assets/picture/default_avatar.png';
-    }
-
-    this._avatarUrl = avatar;
+    this._avatarUrl = this._user.getAvatarPicture(this.size);
 
     this.changeDetector.markForCheck();
   }
@@ -69,15 +59,23 @@ export class UserAvatarComponent implements OnInit {
 
   onImageClickHandler(event)
   {
-    if (!this.isLightBox || !this._user.avatar)
+    if (!this.isLightBox)
+    {
+      return;
+    }
+
+    const originalAvatar = this._user.getAvatarPicture('original');
+    const smallAvatar = this._user.getAvatarPicture('small');
+
+    if (!originalAvatar)
     {
       return;
     }
 
     this.lightBox.open([{
-      src: environment.baseApiUrl + this._user.avatarThumbs['original'],
+      src: originalAvatar,
       caption: '',
-      thumb: environment.baseApiUrl + this._user.avatarThumbs['small']
+      thumb: smallAvatar
     }]);
   }
 

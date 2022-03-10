@@ -1,8 +1,11 @@
 import {Component, ElementRef, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import {Store} from "@ngrx/store";
+import {select, Store} from "@ngrx/store";
 import {State} from "../../../../../app.state";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {UserDeleteAccountStart} from "../../../../data/actions";
+import {Observable} from "rxjs";
+import {User} from "../../../../../security/data/models/user.model";
+import {UserLogout} from "../../../../../security/data/actions";
 
 @Component({
   selector: 'app-settings',
@@ -15,6 +18,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   window: NgbModalRef = null;
 
+  user: Observable<User>;
+
   constructor(
     private store: Store<State>,
     private modal: NgbModal
@@ -24,8 +29,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
         this.closeWindow();
     }
 
-  ngOnInit(): void {
-
+  async ngOnInit() {
+    this.user = this.store.pipe(select(state => state.security.user));
   }
 
   onDeleteConfirmClickHandler(event)
@@ -36,6 +41,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
   onDeleteClickHandler(event)
   {
     this.openWindow();
+  }
+
+  onLogoutClickHandler(event)
+  {
+    this.store.dispatch(new UserLogout());
   }
 
   openWindow()

@@ -1,0 +1,13 @@
+<div>
+  <p class="alert alert-info" *ngIf="errorMessage === null; else errorTemplate;">
+    <img src="../../../../../assets/picture/vk-icon.png" style="width: 50px;" class="mr-2">
+    Authorizing...
+  </p>
+  <ng-template #errorTemplate>
+    <p class="alert alert-danger">{{ errorMessage }}</p>
+    <div class="text-center">
+      <a class="btn btn-primary mr-2">Sign in via email</a>
+      <a class="btn btn-danger">Create Account</a>
+    </div>
+  </ng-template>
+</div>
