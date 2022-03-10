@@ -55,7 +55,7 @@ export class UploadFileService extends UploadService
           });
         },
         () => {
-
+          observer.complete();
         })
     });
   }

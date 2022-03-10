@@ -56,7 +56,8 @@ export class CallsObserverComponent implements OnInit, OnDestroy {
       .store
       .pipe(
         select(state => state.calls.lastDirectedIncomingCall),
-        filter(call => !!call)
+        filter(call => !!call),
+        filter(call => call.isDirect === true)
         )
       .subscribe(this.lastIncomingCallHandler);
 

@@ -76,6 +76,10 @@ import { SearchListPageComponent } from './components/pages/search/nearby/search
 import { SearchMapPageComponent } from './components/pages/search/nearby/search-map-page/search-map-page.component';
 import {GeoSearchService} from "./services/search/geo-search.service";
 import { SearchListItemComponent } from './components/pages/search/nearby/search-list-page/search-list-item/search-list-item.component';
+import {ChatRouletteService} from "./services/search/chat-roulette.service";
+import {ChatRouletteSocketService} from "./services/sockets/chat-roulette-socket.service";
+import { CallListPageComponent } from './components/pages/my-profile/call-list-page/call-list-page.component';
+import { CallListItemComponent } from './components/pages/my-profile/call-list-page/call-list-item/call-list-item.component';
 
 @NgModule({
     declarations: [
@@ -127,7 +131,9 @@ import { SearchListItemComponent } from './components/pages/search/nearby/search
         CallWindowMessageListItemComponent,
         SearchListPageComponent,
         SearchMapPageComponent,
-        SearchListItemComponent
+        SearchListItemComponent,
+        CallListPageComponent,
+        CallListItemComponent
     ],
   providers: [
     ProfileService,
@@ -140,9 +146,11 @@ import { SearchListItemComponent } from './components/pages/search/nearby/search
 
     MessageSocketService,
     UserActivitySocketService,
+    ChatRouletteSocketService,
     CallSocketService,
     CallService,
-    GeoSearchService
+    GeoSearchService,
+    ChatRouletteService
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,127 @@
+<ng-container *ngIf="!!_call">
+
+  <ng-container *ngIf="_call.isDirect">
+
+    <td class="right-column">
+      <div class="d-inline-block align-middle pl-3">
+
+        <div class="row">
+
+          <div class="col-2 p-0">
+            <div>
+              <a [routerLink]="'/client/profile/' + _caller.user.id">
+                <app-user-avatar
+                  [size]="'mediumSmall'"
+                  [user]="_caller.user"
+                  [isActivityVisible]="true"
+                  [additionalStyles]="{ cursor: 'pointer' }"
+                ></app-user-avatar>
+              </a>
+            </div>
+          </div>
+          <div class="col-2">
+            <div class="arrow-container text-muted h4 pt-2 pl-1 mr-3">
+              <i class="ik ik-phone-forwarded"></i>
+            </div>
+          </div>
+          <div class="col-4">
+            <div>
+              <a [routerLink]="'/client/profile/' + _addressee.user.id">
+                <app-user-avatar
+                  [size]="'mediumSmall'"
+                  [user]="_addressee.user"
+                  [isActivityVisible]="true"
+                  [additionalStyles]="{ cursor: 'pointer' }"
+                ></app-user-avatar>
+              </a>
+            </div>
+          </div>
+          <div class="col-1"></div>
+        </div>
+
+      </div>
+    </td>
+
+    <td class="text-right">
+      <div>
+
+          <span
+            *ngIf="(_call.status === 0) || (_call.status === 1)"
+            class="badge badge-pill badge-success mb-1" title="Call Started">
+            <i class="ik ik-phone-call"></i><span app-date-time [value]="_call.createdAt"></span>
+          </span>
+
+        <span
+          *ngIf="(_call.status === 2)"
+          class="badge badge-pill badge-secondary mb-1" title="Call Ended">
+            <i class="ik ik-phone-off"></i><span app-date-time [value]="_call.endTime"></span>
+          </span>
+
+        <span
+          *ngIf="(_call.status === 3)"
+          class="badge badge-pill badge-danger mb-1" title="Call Rejected">
+            <i class="ik ik-phone-off"></i><span app-date-time [value]="_call.endTime"></span>
+          </span>
+
+      </div>
+    </td>
+
+  </ng-container>
+
+  <ng-container *ngIf="!_call.isDirect">
+
+    <td class="right-column direct">
+      <div class="d-inline-block align-middle">
+
+        <div class="avatar-container">
+          <a [routerLink]="'/client/profile/' + _addressee.user.id">
+            <app-user-avatar
+              [size]="'mediumSmall'"
+              [user]="_addressee.user"
+              [isActivityVisible]="true"
+              [additionalStyles]="{ cursor: 'pointer' }"
+            ></app-user-avatar>
+          </a>
+        </div>
+
+      </div>
+
+      <div class="info-block">
+        <h6>{{ _addressee.user.fullName }}</h6>
+        <div class="text-muted" app-date-time [value]="_call.createdAt"></div>
+      </div>
+
+    </td>
+
+    <td class="text-right">
+
+      <ng-container *ngIf="!(_addressee.user.isBanned || _addressee.user.amIBanned)">
+        <span
+          class="btn btn-success mr-2 mb-2"
+          (click)="onCallClickHandler($event)"
+        >
+          <i class="ik ik-phone-call"></i>Call
+        </span>
+          <a
+            [routerLink]="'/client/profile/me/messages/conversation/user/' + _addressee.user.id"
+            class="btn btn-light mr-2 mb-2">
+            <i class="ik ik-message-square"></i>Send Message
+          </a>
+          <span class="btn btn-danger mr-2 mb-2" (click)="onReportAbuseClickHandler($event)">
+            <i class="ik ik-alert-circle"></i>Report Abuse
+        </span>
+      </ng-container>
+
+      <ng-container *ngIf="_addressee.user.isBanned">
+        <span class="text-muted">You've banned this user</span>
+      </ng-container>
+
+      <ng-container *ngIf="_addressee.user.amIBanned">
+        <span class="text-muted">You've been banned by this user</span>
+      </ng-container>
+
+    </td>
+
+  </ng-container>
+
+</ng-container>

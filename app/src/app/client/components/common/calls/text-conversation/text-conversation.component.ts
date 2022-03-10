@@ -38,6 +38,8 @@ export class TextConversationComponent implements OnInit, OnDestroy {
 
   messageList: ConversationMessageList = null;
   messages: ConversationMessage[] = [];
+  myAddedMessages: {[key: string]: ConversationMessage} = {};
+
   messageLoadError: string = null;
 
   latestDate: string = null;
@@ -92,12 +94,23 @@ export class TextConversationComponent implements OnInit, OnDestroy {
       filter(message => !!message)
     ).subscribe(async (message: ReceivedMessage) => {
 
-      if (!this.messageList)
+      const { messageList } = message;
+      if (
+        // @ts-ignore
+        messageList.isMember(this.addressee)
+        // @ts-ignore
+        && messageList.isMember(this.authorizedUser)
+        && !this.messageList
+      )
       {
-        return;
+        this.messageList = messageList;
       }
 
-      if (this.messageList.id === message.messageList.id)
+      if (!!this.myAddedMessages[message.message.id])
+      {
+        delete this.myAddedMessages[message.message.id];
+      }
+      else
       {
         this.messages.unshift(message.message);
       }
@@ -142,6 +155,11 @@ export class TextConversationComponent implements OnInit, OnDestroy {
           if (index !== -1)
           {
             this.messages.splice(index, 1);
+          }
+
+          if (!!this.myAddedMessages[message.message])
+          {
+            delete this.myAddedMessages[message.message];
           }
         }
 
@@ -260,18 +278,25 @@ export class TextConversationComponent implements OnInit, OnDestroy {
   async onSendHandler(text: string)
   {
     try {
+
+      let message: ConversationMessage = null;
+
       if (this.messageList === null)
       {
 
         const result = await this.messageService.sendToUser(this.addressee, text).toPromise();
 
         this.messageList = result.conversation;
+        message = result.message;
       }
       else
       {
         // send to the conversation
-        await this.messageService.sendToConversation(this.messageList, text).toPromise();
+        message = await this.messageService.sendToConversation(this.messageList, text).toPromise();
       }
+
+      this.myAddedMessages[message.id] = message;
+      this.messages.unshift(message);
 
     }
     catch (error)

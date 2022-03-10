@@ -299,7 +299,7 @@ export class DirectCallComponent implements OnInit, OnDestroy {
     catch (error)
     {
       // set the interface to the error state
-      this.error = error.error.errors.message;
+      this.error = error.message || error.error.errors.message;
       // display the error message at the center of canvas to make it conspicuous
       this.uiState = DirectCallComponent.UI_STATE_ERROR;
     }

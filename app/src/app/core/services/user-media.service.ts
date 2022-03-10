@@ -41,4 +41,15 @@ export class UserMediaService
 
     });
   }
+
+  disposeMedia(stream: MediaStream)
+  {
+    if (stream)
+    {
+      setTimeout(() => {
+        stream.getTracks().forEach(track => track.stop());
+        console.log('MEDIA HAS BEEN DISPOSED');
+      }, 1);
+    }
+  }
 }

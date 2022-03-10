@@ -15,6 +15,7 @@ export class CallConnection
   static CONNECTION_ESTABLISHING_ERROR_MESSAGE = 'Cannot establish the connection with addressee!';
   static WEB_RTC_ISNT_SUPPORTED_ERROR_MESSAGE = 'Your browser does not support calls!';
   static MICROPHONE_AND_CAMERA_ISSUE_ERROR_MESSAGE = 'Check you microphone and video camera!';
+  static CONNECTION_ESTABLISHING_TIMEOUT_ERROR = 'Connection timeout error!';
 
   protected localMediaSubject: Subject<MediaStream> = new Subject<MediaStream>();
   protected remoteMediaSubject: Subject<MediaStream> = new Subject<MediaStream>();
@@ -32,6 +33,9 @@ export class CallConnection
 
   private _isInitialized: Boolean = false;
   private wasReleased: boolean = false;
+
+  private establishingConnectionTimeout: number = 0;
+  private establishingConnectionId: any = null;
 
 
   constructor(
@@ -67,6 +71,31 @@ export class CallConnection
     await this.initialize();
 
     this._isInitialized = true;
+
+    this.initEstablishConnectionTimeout();
+  }
+
+  initEstablishConnectionTimeout()
+  {
+    if (this.establishingConnectionTimeout > 0)
+    {
+      this.establishingConnectionId = setTimeout(() => {
+
+        this.errorSubject.next(new Error(CallConnection.CONNECTION_ESTABLISHING_TIMEOUT_ERROR));
+
+        },
+        this.establishingConnectionTimeout
+      );
+    }
+  }
+
+  releaseEstablishConnectionTimeout()
+  {
+    if (!!this.establishingConnectionId)
+    {
+      clearTimeout(this.establishingConnectionId);
+      this.establishingConnectionId = null;
+    }
   }
 
   async hangUp()
@@ -94,11 +123,7 @@ export class CallConnection
     this.localMediaSubject.unsubscribe();
     this.remoteMediaSubject.unsubscribe();
     this.errorSubject.unsubscribe();
-
-    if (this.peer)
-    {
-      this.peer.destroy();
-    }
+    this.releaseEstablishConnectionTimeout();
 
     if (!preserveLocalMedia)
     {
@@ -109,6 +134,11 @@ export class CallConnection
 
     await this.releaseMediaStream(this.remoteMediaStream);
     this.remoteMediaStream = null;
+
+    if (this.peer)
+    {
+      this.peer.destroy();
+    }
   }
 
   async releaseMediaStream(stream: MediaStream)
@@ -122,6 +152,12 @@ export class CallConnection
   getCall()
   {
     return this.call;
+  }
+
+  setEstablishingConnectionTimeout(milliseconds: number = 0)
+  {
+    this.establishingConnectionTimeout = milliseconds;
+    return this;
   }
 
   setSocketId(id: string)
@@ -173,7 +209,7 @@ export class CallConnection
 
       if (this.wasReleased)
       {
-        this.releaseMediaStream(this.userMediaStream);
+        await this.releaseMediaStream(this.userMediaStream);
         this.userMediaStream = null;
 
         return;
@@ -183,6 +219,8 @@ export class CallConnection
     }
     catch (error)
     {
+      this.releaseEstablishConnectionTimeout();
+
       throw new MediaError(CallConnection.MICROPHONE_AND_CAMERA_ISSUE_ERROR_MESSAGE);
     }
 
@@ -205,10 +243,13 @@ export class CallConnection
 
   initPeerStreamHandler()
   {
-    this.peer.on('stream', (stream: MediaStream) => {
+    this.peer.on('stream', async (stream: MediaStream) => {
+
+      this.releaseEstablishConnectionTimeout();
+
       if (this.wasReleased)
       {
-        this.releaseMediaStream(stream);
+        await this.releaseMediaStream(stream);
         return;
       }
 
@@ -221,7 +262,7 @@ export class CallConnection
   initPeerErrorHandler()
   {
     this.peer.on('error', (error) => {
-
+      this.releaseEstablishConnectionTimeout();
       this.errorSubject.next(new CallError(CallConnectionInitiator.CONNECTION_ESTABLISHING_ERROR_MESSAGE));
     });
   }

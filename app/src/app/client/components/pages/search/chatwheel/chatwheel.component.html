@@ -1,1 +1,196 @@
-<p>chatwheel works!</p>
+<div class="card">
+  <div class="page-container">
+
+    <div #videoArea class="video-area"
+         (dblclick)="onVideoAreaDoubleClickHandler($event)"
+        (click)="onVideoAreaClickHandler($event)"
+    >
+
+      <div class="addressee-header" *ngIf="!!currentOffer">
+        <div class="avatar-container">
+          <a [routerLink]="'/client/profile/' + currentOffer.addressee.id">
+            <app-user-avatar
+              [size]="'small'"
+              [user]="currentOffer.addressee"
+            ></app-user-avatar>
+          </a>
+        </div>
+        <div class="header">
+          <div class="h4">
+            <a [routerLink]="'/client/profile/' + currentOffer.addressee.id">{{ currentOffer.addressee.fullName}}</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="window-size-controls">
+        <span
+          *ngIf="isFullScreen"
+          class="control btn mr-1"
+          (click)="onNormalizeSizeClickHandler($event)"
+        >
+          <i class="ik ik-minimize-2"></i>
+        </span>
+        <span
+          *ngIf="!isFullScreen"
+          class="control btn mr-1"
+          (click)="onFullscreenClickHandler($event)"
+        >
+          <i class="ik ik-maximize-2"></i>
+        </span>
+      </div>
+
+      <ng-container *ngIf="uiState === 'chat_searching'">
+        <div class="loader-container">
+
+          <div class="spinner-border text-light" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+          <div>
+            <span class="text-muted">Searing a partner...</span>
+          </div>
+
+        </div>
+      </ng-container>
+
+
+      <ng-container *ngIf="
+      (uiState === 'chat_offer_made')
+      || (uiState === 'chat_offer_accepted')
+      || (uiState === 'chat_addressee_connecting')
+">
+        <div class="offer-preview" *ngIf="currentOffer !== null">
+          <img [src]="'/client/search/chat-roulette-picture/' + currentOffer.addressee.id | imageUrl" />
+        </div>
+
+
+        <div class="loader-container">
+
+          <ng-container *ngIf="(uiState === 'chat_offer_made')">
+            <div class="spinner-border text-primary" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="(uiState === 'chat_offer_accepted') || (uiState === 'chat_addressee_connecting')">
+            <div class="spinner-border text-success" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </ng-container>
+          <div>
+            <span class="text-muted">Connecting...</span>
+          </div>
+        </div>
+
+      </ng-container>
+
+      <div class="remote-video-container">
+        <video
+          #remoteVideo
+          [autoplay]="true"
+        ></video>
+      </div>
+
+      <div class="local-video-container">
+        <video
+          #localVideo
+          [autoplay]="true"
+          [muted]="'muted'"
+        ></video>
+      </div>
+
+      <div class="media-error-controls" *ngIf="uiState === 'media_initialize_error'">
+        <div>
+          <span class="text-muted"><i class="ik ik-alert-triangle"></i>Check your camera and microphone!</span>
+        </div>
+        <span class="btn btn-secondary" (click)="onTryAgainMediaClickHandler($event)">
+          <i class="ik ik-sliders"></i>Try Again
+        </span>
+      </div>
+
+      <div class="search-controls" *ngIf="!!localMediaStream">
+
+        <span
+          *ngIf="uiState === 'chat_stopped'"
+          title="Start Chatting"
+          class="control btn btn-success mr-2"
+          (click)="onStartChatClickHandler($event)">
+          <i class="ik ik-play ml-2 mr-0 pr-1"></i>
+        </span>
+
+        <button
+          *ngIf="
+          (uiState === 'chat_offer_made')
+          || (uiState === 'chat_offer_accepted')
+          || (uiState === 'chat_addressee_connecting')
+          || (uiState === 'chat_addressee_calling')"
+          title="Next"
+          class="control btn btn-success mr-2"
+          (click)="onNextChatClickHandler($event)"
+          [disabled]="(uiState === 'chat_searching')"
+        >
+          <i class="ik ik-arrow-right ml-2 mr-0 pr-1"></i>
+        </button>
+
+        <button
+          *ngIf="(uiState !== 'chat_stopped')"
+          title="Stop"
+          class="control btn btn-secondary mr-2" (click)="onStopChatClickHandler($event)"
+        >
+          <i class="ik ik-square ml-2 mr-1 pr-1"></i>
+        </button>
+
+        <button
+          *ngIf="(uiState === 'chat_addressee_calling')"
+          title="Report Abuse"
+          class="control btn btn-danger mr-2" (click)="onReportAbuseClickHandler($event)"
+          [disabled]="(uiState !== 'chat_addressee_calling')"
+        >
+          <i class="ik ik-alert-circle ml-2 mr-0 pr-1"></i>
+        </button>
+
+      </div>
+
+
+      <ng-container *ngIf="(uiState === 'chat_addressee_calling')">
+        <div class="message-controls" [ngClass]="isTextChatVisible ? 'd-none' : 'd-block'">
+          <span
+            class="control btn btn-outline-primary"
+            (click)="onMessageButtonClickHandler($event)"
+          >
+            <i class="ik ik-message-square ml-2 mr-2"></i>
+          </span>
+        </div>
+
+        <div class="text-chat-container"
+             (click)="onChatClickHandler($event)"
+             [ngClass]="isTextChatVisible ? 'd-block' : 'd-none'">
+          <app-text-conversation
+            [authorizedUser]="authorizedUser | async"
+            [addressee]="this.currentOffer.addressee"
+            (onClose)="onTextChatCloseHandler($event)"
+            (onMessageReceived)="onMessageReceivedHandler($event)"
+          ></app-text-conversation>
+        </div>
+      </ng-container>
+
+
+    </div>
+
+
+    <div class="bottom-area">
+      <ng-container *ngIf="!!authorizedUser">
+        <app-edit-search-country
+          [user]="authorizedUser | async"
+        ></app-edit-search-country>
+      </ng-container>
+    </div>
+
+    <canvas
+      #takePictureArea
+      class="d-none"
+      width="640"
+      height="480"
+    ></canvas>
+
+  </div>
+</div>
