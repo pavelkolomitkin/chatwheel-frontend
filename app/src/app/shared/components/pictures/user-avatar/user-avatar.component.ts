@@ -1,6 +1,5 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {User} from "../../../../security/data/models/user.model";
-import {environment} from "../../../../../environments/environment";
 import {Lightbox} from "ngx-lightbox";
 
 @Component({
@@ -12,6 +11,8 @@ import {Lightbox} from "ngx-lightbox";
 export class UserAvatarComponent implements OnInit {
 
   _avatarUrl: string = null;
+
+  title: string;
 
   _user: User;
 
@@ -45,8 +46,25 @@ export class UserAvatarComponent implements OnInit {
     this._user = user;
 
     this._avatarUrl = this._user.getAvatarPicture(this.size);
+    this.title = this.getPictureTitle();
 
     this.changeDetector.markForCheck();
+  }
+
+  getPictureTitle()
+  {
+    let result: string = this._user.fullName;
+
+    if (this._user.deleted)
+    {
+      result += ' [Deleted]';
+    }
+    else if (this._user.isBlocked)
+    {
+      result += ' [Blocked]';
+    }
+
+    return result;
   }
 
   constructor(

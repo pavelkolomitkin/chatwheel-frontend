@@ -95,7 +95,7 @@
 
     <td class="text-right">
 
-      <ng-container *ngIf="!(_addressee.user.isBanned || _addressee.user.amIBanned)">
+      <ng-container *ngIf="!(_addressee.user.isBanned || _addressee.user.amIBanned || _addressee.user.isBlocked || _addressee.user.deleted)">
         <span
           class="btn btn-success mr-2 mb-2"
           (click)="onCallClickHandler($event)"
@@ -118,6 +118,14 @@
 
       <ng-container *ngIf="_addressee.user.amIBanned">
         <span class="text-muted">You've been banned by this user</span>
+      </ng-container>
+
+      <ng-container *ngIf="_addressee.user.isBlocked">
+        <span class="text-muted">The account has been blocked</span>
+      </ng-container>
+
+      <ng-container *ngIf="_addressee.user.deleted">
+        <span class="text-muted">The account has been deleted</span>
       </ng-container>
 
     </td>

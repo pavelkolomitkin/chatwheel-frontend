@@ -60,6 +60,8 @@ export class User
 
   isBanned?: boolean
 
+  deleted?: boolean;
+
   socialMediaType?: SocialMediaType;
 
   socialMediaUserId?: string;
@@ -107,6 +109,11 @@ export class User
 
   getAvatarPicture(size: string)
   {
+    if (this.deleted)
+    {
+      return environment.defaultAvatar;
+    }
+
     let result = this.getThumbAvatar(size);
     if (!result)
     {
@@ -115,7 +122,7 @@ export class User
 
     if (!result)
     {
-      result = 'assets/picture/default_avatar.png'
+      result = environment.defaultAvatar;
     }
 
     return result;
