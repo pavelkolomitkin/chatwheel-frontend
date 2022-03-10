@@ -11,6 +11,8 @@ import {ProfileService} from './services/profile.service';
 import {SharedModule} from "../shared/shared.module";
 import {LayoutComponent} from "./components/layout/layout.component";
 import { RegisterSuccessComponent } from './components/pages/register-success/register-success.component';
+import { SocialAuthComponent } from './components/pages/social-auth/social-auth.component';
+import {VkAuthService} from "./services/vk-auth.service";
 
 @NgModule({
   declarations: [
@@ -23,9 +25,11 @@ import { RegisterSuccessComponent } from './components/pages/register-success/re
     RegisterComponent,
     RegisterConfirmComponent,
     RegisterSuccessComponent,
+    SocialAuthComponent,
 
   ],
   providers: [
+
   ],
   imports: [
     CommonModule,

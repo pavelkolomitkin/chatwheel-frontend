@@ -7,6 +7,7 @@ import {LoginCredentials} from "../../../data/models/login-credentials.model";
 import {UserLoginStart} from "../../../data/actions";
 import {Observable, Subscription} from "rxjs";
 import {filter} from "rxjs/operators";
+import {environment} from "../../../../../environments/environment";
 
 @Component({
   selector: 'app-login',
@@ -18,6 +19,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   errors: Observable<Object>;
 
   authorizedUserSubscription: Subscription = null;
+
+  vkAuthorizationLink: string = environment.vkAuthorizationLink;
 
   constructor(
     private store: Store<State>, private router: Router

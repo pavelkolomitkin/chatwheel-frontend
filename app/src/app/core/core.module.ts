@@ -34,6 +34,8 @@ import {UploadDataService} from "./services/upload/upload-data.service";
 import {AbuseReportTypeService} from "./services/abuse-report-type.service";
 import {ToastrModule} from "ngx-toastr";
 import {metaReducers} from "./data/meta-reducer";
+import {SocialNetAuthEffects} from "../security/data/effects/social-net-auth.effects";
+import {VkAuthService} from "../security/services/vk-auth.service";
 
 const httpInterceptorProviders = [
   { provide: HTTP_INTERCEPTORS, useClass: BaseApiUrlInterceptor, multi: true },
@@ -63,6 +65,7 @@ const httpInterceptorProviders = [
     ),
     EffectsModule.forRoot([
       AuthEffects,
+      SocialNetAuthEffects,
       RegisterEffects,
       AppInitEffect,
       UploadUserPictureEffects
@@ -79,6 +82,7 @@ const httpInterceptorProviders = [
     UploadFileService,
     LocalStorageService,
     AuthUserGuardService,
+    VkAuthService,
     DefaultRedirectGuard,
     CountryService,
     SecurityService,

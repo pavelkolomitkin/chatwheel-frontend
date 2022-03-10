@@ -19,6 +19,8 @@ export const environment = {
 
   awaitingCallConnectionTimeout: 15000,
 
+  vkAuthorizationLink: 'https://oauth.vk.com/authorize?client_id=8097405&redirect_uri=http://localhost:4200/security/social-auth/vk&scope=offline,photos&display=page&response_type=token',
+
   iceServers: [
     {url:'stun:stun01.sipphone.com'},
     {url:'stun:stun.ekiga.net'},

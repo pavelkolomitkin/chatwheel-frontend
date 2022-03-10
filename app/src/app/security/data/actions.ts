@@ -3,10 +3,13 @@ import {LoginCredentials} from "./models/login-credentials.model";
 import {User} from "./models/user.model";
 import {RegisterData} from "./models/register-data.model";
 import {RestorePasswordData} from "./models/restore-password-data.model";
+import {SocialNetLoginCredentials} from "./models/social-net-login-credentials.model";
 
 export const USER_LOGIN_START = 'USER_LOGIN_START';
 export const USER_LOGIN_SUCCESS = 'USER_LOGIN_SUCCESS';
 export const USER_LOGIN_ERROR = 'USER_LOGIN_ERROR';
+
+export const USER_SOCIAL_NET_LOGIN_START = 'USER_SOCIAL_NET_LOGIN_START';
 
 export const USER_REGISTER_START = 'USER_REGISTER_START';
 export const USER_REGISTER_SUCCESS = 'USER_REGISTER_SUCCESS';
@@ -144,6 +147,13 @@ export class UserUpdated implements Action
   constructor(public user: User) { }
 }
 
+export class UserSocialNetLoginStart implements Action
+{
+  readonly type = USER_SOCIAL_NET_LOGIN_START;
+
+  constructor(public credentials: SocialNetLoginCredentials) {}
+}
+
 export type SecurityActions =
   UserLoginStart
   | UserLoginSuccess
@@ -170,4 +180,6 @@ export type SecurityActions =
   | UserChangePasswordError
 
   | UserUpdated
+
+  | UserSocialNetLoginStart
   ;

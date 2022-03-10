@@ -1,9 +1,19 @@
 <div class="p20">
-  <ng-container>
+
+
+  <ng-container *ngIf="!(user | async).isSocialMediaUser()">
     <h4>Delete Account</h4>
     <hr />
     <div>
       <span class="btn btn-outline-danger" (click)="onDeleteClickHandler($event)">Delete Account</span>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="(user | async).isSocialMediaUser()">
+
+    <h4>Logout</h4>
+    <hr />
+    <div>
+      <span class="btn btn-outline-secondary" (click)="onLogoutClickHandler($event)">Logout</span>
     </div>
   </ng-container>
 

@@ -40,8 +40,6 @@ export class AuthEffects
     return this.actions.pipe(
       ofType(USER_LOGIN_START),
       tap(() => {
-        this.permissionService.loadPermissions([]);
-        this.localStorage.remove(LocalStorageService.TOKEN_KEY);
         this.store.dispatch(new GlobalProgressShow());
       }),
       mergeMap((action: UserLoginStart) => {
@@ -109,8 +107,6 @@ export class AuthEffects
         const { user: { roles } } = action;
 
         this.permissionService.loadPermissions(roles);
-
-        //this.router.navigate(['/'])
       }),
     )
   }, { dispatch: false });

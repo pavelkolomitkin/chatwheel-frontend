@@ -5,10 +5,22 @@
         <br>
         <app-edit-full-name [user]="(user | async)"></app-edit-full-name>
       </div>
-      <div class="col-md-3 col-6"> <strong>Email</strong>
+
+      <div class="col-md-3 col-6" *ngIf="(user | async).isSocialMediaUser()">
+        <strong>Auth</strong>
+        <br>
+        <img *ngIf="(user | async).isVkUser()"
+          src="../../../../../../assets/picture/vk-icon.png"
+          style="width: 30px;"
+        />
+      </div>
+
+      <div class="col-md-3 col-6" *ngIf="!(user | async).isSocialMediaUser()">
+        <strong>Email</strong>
         <br>
         <p class="text-muted">{{ (user | async).email ? (user | async).email : 'none' }}</p>
       </div>
+
       <div class="col-md-3 col-6"> <strong>Location</strong>
         <br>
         <app-my-text-location-view [user]="user | async"></app-my-text-location-view>
