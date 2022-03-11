@@ -30,8 +30,8 @@
 
       <ng-container *ngIf="list.length === 0">
         <p class="alert alert-info">
-          You have no conversations yet! Meet people on <a routerLink="/" class="btn btn-primary">ChatWheel</a> or
-          <a routerLink="/client/nearby" class="btn btn-success">near by</a> :-)
+          {{ 'YOU_HAVE_NO_CONVERSATIONS_YET' | translate }}! {{ 'MEET_PEOPLE_ON' | translate }} <a routerLink="/" class="btn btn-primary">{{ 'CHAT_WHEEL' | translate }}</a> {{ 'OR' | translate }}
+          <a routerLink="/nearby" class="btn btn-success">{{ 'NEAR_BY' | translate }}</a> :-)
         </p>
       </ng-container>
 

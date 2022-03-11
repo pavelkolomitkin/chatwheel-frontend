@@ -4,8 +4,8 @@
 
     <div class="row text-center">
       <div class="col-4 border-right">
-        <a [routerLink]="'/client/profile/me/messages/conversation/user/' + user.id" class="link d-flex align-items-center justify-content-center btn pl-0 pr-0 pt-0 pb-0">
-          <i class="ik ik-message-square f-20 mr-5"></i>Message
+        <a [routerLink]="'/profile/me/messages/conversation/user/' + user.id" class="link d-flex align-items-center justify-content-center btn pl-0 pr-0 pt-0 pb-0">
+          <i class="ik ik-message-square f-20 mr-5"></i>{{ 'MESSAGE' | translate }}
         </a>
       </div>
       <div class="col-4 border-right">
@@ -13,14 +13,14 @@
           (click)="onCallButtonClickHandler($event)"
           class="link d-flex align-items-center justify-content-center btn pl-0 pr-0 pt-0 pb-0"
         >
-          <i class="ik ik-video f-20 mr-5"></i>Call
+          <i class="ik ik-video f-20 mr-5"></i>{{ 'CALL' | translate }}
         </span>
       </div>
       <div class="col-4">
         <span (click)="onReportAbuseClickHandler($event)"
               class="link d-flex align-items-center justify-content-center text-danger btn pl-0 pr-0 pt-0 pb-0"
         ><i class="ik ik-alert-circle f-20 mr-5"></i>
-          Report Abuse
+          {{ 'REPORT_ABUSE' | translate }}
         </span>
       </div>
     </div>
@@ -31,12 +31,12 @@
 
     <div class="text-center">
       <div>
-        <span class="text-muted">You've blocked the user!</span>
+        <span class="text-muted">{{ 'YOU_HAVE_BANNED_THIS_USER' | translate }}!</span>
       </div>
       <div>
           <span (click)="onUnblockUserClickHandler($event)"
             class="link d-flex align-items-center justify-content-center btn pl-0 pr-0 pt-0 pb-0"
-          ><i class="ik ik-unlock f-20 mr-5"></i>Unblock
+          ><i class="ik ik-unlock f-20 mr-5"></i>{{ 'UNBLOCK' | translate }}
           </span>
       </div>
     </div>
@@ -48,13 +48,13 @@
 
     <div class="text-center">
       <div>
-        <span class="text-muted">You've been blocked by this user!</span>
+        <span class="text-muted">{{ 'YOU_HAVE_BEEN_BANNED_BY_THIS_USER' | translate }}!</span>
       </div>
       <div>
           <span (click)="onReportAbuseClickHandler($event)"
                 class="link d-flex align-items-center justify-content-center text-danger btn pl-0 pr-0 pt-0 pb-0"
           ><i class="ik ik-alert-circle f-20 mr-5"></i>
-          Report Abuse
+            {{ 'REPORT_ABUSE' | translate }}
         </span>
       </div>
     </div>

@@ -22,11 +22,11 @@
                  [multiple]="false"
                  name="imageFile"
                  (change)="onFilesSelectHandler($event)">
-          <i class="ik ik-upload"></i> Upload File <span class="text-muted">(up to {{ maxUploadFileSizeLabel }})</span>
+          <i class="ik ik-upload"></i> {{ 'UPLOAD_FILE' | translate }} <span class="text-muted">({{ 'UP_TO' | translate }} {{ maxUploadFileSizeLabel }})</span>
         </span>
-        <span class="dropdown-item" (click)="onFromCameraClickHandler($event)"><i class="ik ik-video"></i> From Camera</span>
+        <span class="dropdown-item" (click)="onFromCameraClickHandler($event)"><i class="ik ik-video"></i> {{ 'FROM_CAMERA' | translate }}</span>
         <div class="dropdown-divider"></div>
-        <span class="dropdown-item" [ngClass]="(user.avatar === null) ? 'disabled' : ''" (click)="onRemoveClickHandler($event)"><i class="ik ik-delete"></i> Remove</span>
+        <span class="dropdown-item" [ngClass]="(user.avatar === null) ? 'disabled' : ''" (click)="onRemoveClickHandler($event)"><i class="ik ik-delete"></i> {{ 'REMOVE' | translate }}</span>
       </div>
     </div>
   </div>

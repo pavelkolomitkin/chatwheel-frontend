@@ -34,7 +34,7 @@ export class IncomingMessageComponent implements OnInit {
 
   async onClickHandler(event)
   {
-    await this.router.navigateByUrl('/client/profile/me/messages/conversation/' + this.message.messageList.id);
+    await this.router.navigateByUrl('/profile/me/messages/conversation/' + this.message.messageList.id);
 
     this.tapEmitter.emit(this.toastId);
 

@@ -358,7 +358,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
         new Notification(NotificationType.ERROR, 'The conversation is not available!', 'Error'))
       );
 
-      await this.router.navigateByUrl('/client/profile/me');
+      await this.router.navigateByUrl('/profile/me');
     }
 
     this.isLoading = false;

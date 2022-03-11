@@ -9,7 +9,7 @@
 
           <div class="col-2 p-0">
             <div>
-              <a [routerLink]="'/client/profile/' + _caller.user.id">
+              <a [routerLink]="'/profile/' + _caller.user.id">
                 <app-user-avatar
                   [size]="'mediumSmall'"
                   [user]="_caller.user"
@@ -26,7 +26,7 @@
           </div>
           <div class="col-4">
             <div>
-              <a [routerLink]="'/client/profile/' + _addressee.user.id">
+              <a [routerLink]="'/profile/' + _addressee.user.id">
                 <app-user-avatar
                   [size]="'mediumSmall'"
                   [user]="_addressee.user"
@@ -47,19 +47,19 @@
 
           <span
             *ngIf="(_call.status === 0) || (_call.status === 1)"
-            class="badge badge-pill badge-success mb-1" title="Call Started">
+            class="badge badge-pill badge-success mb-1" title="{{ 'CALL_STARTED' | translate }}">
             <i class="ik ik-phone-call"></i><span app-date-time [value]="_call.createdAt"></span>
           </span>
 
         <span
           *ngIf="(_call.status === 2)"
-          class="badge badge-pill badge-secondary mb-1" title="Call Ended">
+          class="badge badge-pill badge-secondary mb-1" title="{{ 'CALL_ENDED' | translate }}">
             <i class="ik ik-phone-off"></i><span app-date-time [value]="_call.endTime"></span>
           </span>
 
         <span
           *ngIf="(_call.status === 3)"
-          class="badge badge-pill badge-danger mb-1" title="Call Rejected">
+          class="badge badge-pill badge-danger mb-1" title="{{ 'CALL_REJECTED' | translate }}">
             <i class="ik ik-phone-off"></i><span app-date-time [value]="_call.endTime"></span>
           </span>
 
@@ -74,7 +74,7 @@
       <div class="d-inline-block align-middle">
 
         <div class="avatar-container">
-          <a [routerLink]="'/client/profile/' + _addressee.user.id">
+          <a [routerLink]="'/profile/' + _addressee.user.id">
             <app-user-avatar
               [size]="'mediumSmall'"
               [user]="_addressee.user"
@@ -95,29 +95,37 @@
 
     <td class="text-right">
 
-      <ng-container *ngIf="!(_addressee.user.isBanned || _addressee.user.amIBanned)">
+      <ng-container *ngIf="!(_addressee.user.isBanned || _addressee.user.amIBanned || _addressee.user.isBlocked || _addressee.user.deleted)">
         <span
           class="btn btn-success mr-2 mb-2"
           (click)="onCallClickHandler($event)"
         >
-          <i class="ik ik-phone-call"></i>Call
+          <i class="ik ik-phone-call"></i>{{ 'CALL' | translate }}
         </span>
           <a
-            [routerLink]="'/client/profile/me/messages/conversation/user/' + _addressee.user.id"
+            [routerLink]="'/profile/me/messages/conversation/user/' + _addressee.user.id"
             class="btn btn-light mr-2 mb-2">
-            <i class="ik ik-message-square"></i>Send Message
+            <i class="ik ik-message-square"></i>{{ 'SEND_MESSAGE' | translate }}
           </a>
           <span class="btn btn-danger mr-2 mb-2" (click)="onReportAbuseClickHandler($event)">
-            <i class="ik ik-alert-circle"></i>Report Abuse
+            <i class="ik ik-alert-circle"></i>{{ 'REPORT_ABUSE' | translate}}
         </span>
       </ng-container>
 
       <ng-container *ngIf="_addressee.user.isBanned">
-        <span class="text-muted">You've banned this user</span>
+        <span class="text-muted">{{ 'YOU_HAVE_BANNED_THIS_USER' | translate }}</span>
       </ng-container>
 
       <ng-container *ngIf="_addressee.user.amIBanned">
-        <span class="text-muted">You've been banned by this user</span>
+        <span class="text-muted">{{ 'YOU_HAVE_BEEN_BANNED_BY_THIS_USER' | translate }}</span>
+      </ng-container>
+
+      <ng-container *ngIf="_addressee.user.isBlocked">
+        <span class="text-muted">{{ 'THE_ACCOUNT_HAS_BEEN_BLOCKED' | translate }}</span>
+      </ng-container>
+
+      <ng-container *ngIf="_addressee.user.deleted">
+        <span class="text-muted">{{ 'THE_ACCOUNT_HAS_BEEN_DELETED' | translate }}</span>
       </ng-container>
 
     </td>

@@ -3,7 +3,7 @@
     <div class="addressee-block" *ngIf="!!addressee">
 
       <div class="picture-container d-inline-block">
-        <a [routerLink]="'/client/profile/' + addressee.id">
+        <a [routerLink]="'/profile/' + addressee.id">
           <app-user-avatar
             [size]="'mediumSmall'"
             [user]="addressee"
@@ -14,19 +14,19 @@
       </div>
       <div class="name-block d-inline-block pl-10">
         <h6>
-          <a [routerLink]="'/client/profile/' + addressee.id">{{ addressee.fullName }}</a>
+          <a [routerLink]="'/profile/' + addressee.id">{{ addressee.fullName }}</a>
         </h6>
         <div class="interests" *ngIf="addressee.interests.length > 0">
           <span class="badge badge-pill badge-primary mr-1" *ngFor="let interest of addressee.interests.slice(0, 10)">{{ interest.name }}</span>
           <ng-container *ngIf="addressee.interests.length > 10">
-            <span class="text-muted small">and many more...</span>
+            <span class="text-muted small">{{ 'AND_MANY_MORE' | translate }}...</span>
           </ng-container>
         </div>
       </div>
 
     </div>
 
-    <div class="card-header-right controls text-right" *ngIf="!!addressee">
+    <div class="card-header-right controls text-right" *ngIf="!!addressee && !addressee.isBlocked && !addressee.deleted">
 
       <app-report-abuse-buttons
         [user]="addressee"
@@ -74,11 +74,8 @@
     </div>
 
 
-
-
-
     <ng-container *ngIf="!!addressee">
-      <ng-container *ngIf="!addressee.isBanned && !addressee.amIBanned">
+      <ng-container *ngIf="!addressee.isBanned && !addressee.amIBanned && !addressee.deleted && !addressee.isBlocked">
         <app-conversation-user-input
           (onSubmit)="onMessageSubmitHandler($event)"
           [isEnabled]="isInitialized"
@@ -88,11 +85,19 @@
       </ng-container>
 
       <ng-container *ngIf="addressee.isBanned">
-        <p class="alert alert-danger">You've blocked the user!</p>
+        <p class="alert alert-danger m-2">{{ 'YOU_HAVE_BANNED_THIS_USER' | translate }}</p>
       </ng-container>
 
       <ng-container *ngIf="addressee.amIBanned && !addressee.isBanned">
-        <p class="alert alert-danger">You've been blocked by the user!</p>
+        <p class="alert alert-danger m-2">{{ 'YOU_HAVE_BEEN_BANNED_BY_THIS_USER' | translate }}</p>
+      </ng-container>
+
+      <ng-container *ngIf="addressee.deleted">
+        <p class="alert alert-secondary m-2">{{ 'THE_USER_HAS_DELETED_THEIR_PROFILE' | translate }}</p>
+      </ng-container>
+
+      <ng-container *ngIf="addressee.isBlocked">
+        <p class="alert alert-secondary m-2">{{ 'THE_ACCOUNT_HAS_BEEN_BLOCKED' | translate }}</p>
       </ng-container>
 
     </ng-container>

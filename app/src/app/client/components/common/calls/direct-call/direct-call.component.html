@@ -35,7 +35,7 @@
               <i class="ik ik-phone-off"></i>
             </div>
             <div class="h6">
-              <span class="text-muted">{{ _addressee.fullName }} doesn't pick up</span>
+              <span class="text-muted">{{ _addressee.fullName }} {{ 'DOESNT_PICK_UP' | translate }}</span>
             </div>
           </div>
         </div>
@@ -52,7 +52,7 @@
               <i class="ik ik-phone-off"></i>
             </div>
             <div class="h6">
-              <span class="text-muted">{{ _addressee.fullName }} hung up</span>
+              <span class="text-muted">{{ _addressee.fullName }} {{ 'HUNG_UP' | translate }}</span>
             </div>
           </div>
         </div>
@@ -114,7 +114,7 @@
       || (uiState === 'addressee_hung_up')">
         <div
           class="control btn btn-outline-success mr-2"
-          title="Call Again"
+          title="{{ 'CALL_AGAIN' | translate }}"
           (click)="onCallAgainClickHandler($event)"
         >
           <i class="ik ik-phone ml-2 mr-2"></i>
@@ -128,7 +128,7 @@
       >
         <div
           class="control btn btn-success mr-2"
-          title="Hang Up"
+          title="{{ 'HANG_UP' | translate }}"
           (click)="onHangUpClickHandler($event)"
         >
           <i class="ik ik-phone-off ml-2 mr-2"></i>
@@ -137,7 +137,7 @@
 
       <div
         class="control btn btn-danger"
-        title="Report Abuse"
+        title="{{ 'REPORT_ABUSE' | translate }}"
         (click)="onReportAbuseClickHandler($event)"
       >
         <i class="ik ik-alert-circle ml-2 mr-2"></i>

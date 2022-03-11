@@ -9,7 +9,7 @@ export class DefaultRedirectGuard implements CanActivate
 {
     roleDefaultRouteMap = {
         'ROLE_ADMIN_USER': '/admin',
-        'ROLE_CLIENT_USER': '/client'
+        'ROLE_CLIENT_USER': '/chatwheel'
     };
 
     constructor(private router: Router, private permissionService: NgxPermissionsService) {}
@@ -25,15 +25,16 @@ export class DefaultRedirectGuard implements CanActivate
             {
                 if (!!permissions[role])
                 {
-                    this.router.navigateByUrl(this.roleDefaultRouteMap[role]);
                     isRedirected = true;
+                    const route = this.roleDefaultRouteMap[role];
+                    this.router.navigateByUrl(route);
                     break;
                 }
             }
 
             if (!isRedirected)
             {
-                this.router.navigateByUrl('/security/login');
+              this.router.navigateByUrl('/security/login');
             }
 
             resolve(true);

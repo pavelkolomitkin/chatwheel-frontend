@@ -2,34 +2,34 @@
 
 
   <ng-container *ngIf="!(user | async).isSocialMediaUser()">
-    <h4>Delete Account</h4>
+    <h4>{{ 'DELETE_ACCOUNT' | translate }}</h4>
     <hr />
     <div>
-      <span class="btn btn-outline-danger" (click)="onDeleteClickHandler($event)">Delete Account</span>
+      <span class="btn btn-outline-danger" (click)="onDeleteClickHandler($event)">{{ 'DELETE_ACCOUNT' | translate }}</span>
     </div>
   </ng-container>
   <ng-container *ngIf="(user | async).isSocialMediaUser()">
 
-    <h4>Logout</h4>
+    <h4>{{ 'LOGOUT' | translate }}</h4>
     <hr />
     <div>
-      <span class="btn btn-outline-secondary" (click)="onLogoutClickHandler($event)">Logout</span>
+      <span class="btn btn-outline-secondary" (click)="onLogoutClickHandler($event)">{{ 'LOGOUT' | translate }}</span>
     </div>
   </ng-container>
 
   <ng-template #confirmationWindow let-modal>
     <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Deleting Account</h4>
+      <h4 class="modal-title" id="modal-basic-title">{{ 'DELETE_ACCOUNT' | translate }}</h4>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
-      <p>Are you sure you wanna delete your account?</p>
+      <p>{{ 'ARE_YOU_SURE_YOU_WANNA_DELETE_YOUR_ACCOUNT_QUESTION' | translate }}</p>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark" (click)="modal.close()">Cancel</button>
-      <button type="button" class="btn btn-outline-danger" (click)="onDeleteConfirmClickHandler($event)">Delete</button>
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close()">{{ 'CANCEL' | translate }}</button>
+      <button type="button" class="btn btn-outline-danger" (click)="onDeleteConfirmClickHandler($event)">{{ 'DELETE' | translate }}</button>
     </div>
   </ng-template>
 

@@ -1,9 +1,9 @@
-<figure class="image-container" [ngClass]="isActivityVisible ? getActivityClass() : ''">
+<figure class="image-container" [ngClass]="isActivityVisible && !_user.deleted ? getActivityClass() : ''">
   <img
     class="user-avatar rounded-circle align-top"
     [src]="_avatarUrl"
     [ngStyle]="getStyles()"
-    title="{{ _user.fullName }}"
+    title="{{ title }}"
     (click)="onImageClickHandler($event)"
     [ngClass]="size"
   >

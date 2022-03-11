@@ -16,23 +16,23 @@
   </ng-container>
 
   <ng-container *ngIf="conversation.lastMessage.message.type === 1">
-      <span class="badge badge-pill badge-success mb-1" title="Call Started">
+      <span class="badge badge-pill badge-success mb-1" title="{{ 'CALL_STARTED' | translate }}">
         <i class="ik ik-phone-call"></i><span app-date-time [value]="conversation.lastMessage.message.call.createdAt"></span>
       </span>
   </ng-container>
 
   <ng-container *ngIf="conversation.lastMessage.message.type === 2">
-      <span class="badge badge-pill badge-secondary mb-1" title="Call Ended">
+      <span class="badge badge-pill badge-secondary mb-1" title="{{ 'CALL_ENDED' | translate }}">
         <i class="ik ik-phone-off"></i><span app-date-time [value]="conversation.lastMessage.message.call.endTime"></span>
       </span>
   </ng-container>
   <ng-container *ngIf="conversation.lastMessage.message.type === 3">
-      <span class="badge badge-pill badge-danger mb-1" title="Call Rejected">
+      <span class="badge badge-pill badge-danger mb-1" title="{{ 'CALL_REJECTED' | translate }}">
         <i class="ik ik-phone-off"></i><span app-date-time [value]="conversation.lastMessage.message.call.endTime"></span>
       </span>
   </ng-container>
 
 </ng-container>
 <ng-template #deletedMessage>
-  <span class="small">(message deleted)</span>
+  <span class="small">({{ 'MESSAGE_HAS_BEEN_DELETED' | translate }})</span>
 </ng-template>

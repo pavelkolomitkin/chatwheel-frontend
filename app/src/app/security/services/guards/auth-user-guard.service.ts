@@ -13,10 +13,9 @@ import {NgxPermissionsService} from 'ngx-permissions';
 @Injectable()
 export class AuthUserGuardService implements CanActivate {
 
-  static routePermissionRules: { [s: string]: Array<string> } = {
-      admin: [ 'ROLE_ADMIN_USER' ],
-      client: [ 'ROLE_CLIENT_USER' ]
-  };
+
+  static ADMIN_ROLE = 'ROLE_ADMIN_USER';
+  static CLIENT_ROLE = 'ROLE_CLIENT_USER';
 
   constructor(
       private router: Router,
@@ -24,34 +23,52 @@ export class AuthUserGuardService implements CanActivate {
       ) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.getAuthChecker(route);
+    return this.getAuthChecker(route, state);
   }
 
-  private getAuthChecker(route: ActivatedRouteSnapshot)
+  private getAuthChecker(route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
   {
-      return new Promise<boolean>((resolve, reject) => {
+      return new Promise<boolean>( async (resolve, reject) => {
 
-          let result: boolean = false;
 
-          if (route.url.length > 0) {
-              const urlPrefix = route.url[0].toString();
-              const routeRoles = AuthUserGuardService.routePermissionRules[urlPrefix];
+
+        // @ts-ignore
+          const url = route._routerState.url;
+          const urlPrefix = this.getUrlPrefix(url);
+
+          if (urlPrefix !== '') {
 
               const permissions = this.permissionService.getPermissions();
-              for (let role in permissions) {
-                  result = routeRoles.includes(role);
-                  if (result) {
-                      break;
-                  }
+              const roles = Object.keys(permissions);
+              // @ts-ignore
+              if ((urlPrefix === 'admin') && (!roles.includes(AuthUserGuardService.ADMIN_ROLE)))
+              {
+                await this.router.navigateByUrl('/');
+              }
+              // @ts-ignore
+              else if (!roles.includes(AuthUserGuardService.CLIENT_ROLE)) {
+                await this.router.navigateByUrl('/');
               }
           }
 
-          if (!result)
-          {
-              this.router.navigate(['/']);
-          }
-
-          resolve(result);
+          resolve(true);
       });
+  }
+
+  getUrlPrefix(url: string)
+  {
+    let result = '';
+
+    const urlItems = url.split('/');
+    if (urlItems.length > 1)
+    {
+      result = urlItems[1];
+    }
+    else
+    {
+      result = urlItems[0];
+    }
+
+    return result;
   }
 }

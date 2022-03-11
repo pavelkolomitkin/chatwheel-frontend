@@ -35,12 +35,12 @@
     </div>
   </td>
 
-  <app-alert-window [title]="'Delete Conversation?'" [(isShown)]="isAlertShown">
+  <app-alert-window [title]="'DELETE_CONVERSATION_QUESTION' | translate" [(isShown)]="isAlertShown">
     <div content>
-      Are you sure you wanna delete the conversation?
+      {{ 'ARE_YOU_SURE_YOU_WANNA_DELETE_THE_CONVERSATION' | translate }}
     </div>
     <div footer>
-      <button type="button" class="btn btn-outline-danger" (click)="onConversationDeleteHandler($event)">Delete</button>
+      <button type="button" class="btn btn-outline-danger" (click)="onConversationDeleteHandler($event)">{{ 'DELETE' | translate }}</button>
     </div>
   </app-alert-window>
 

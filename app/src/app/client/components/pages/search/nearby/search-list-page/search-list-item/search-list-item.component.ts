@@ -44,7 +44,7 @@ export class SearchListItemComponent implements OnInit, OnDestroy {
 
   async onClickHandler(event)
   {
-    await this.router.navigateByUrl('/client/profile/' + this.user.id);
+    await this.router.navigateByUrl('/profile/' + this.user.id);
   }
 
   onCallClickHandler(event)
@@ -56,7 +56,7 @@ export class SearchListItemComponent implements OnInit, OnDestroy {
   async onMessageClickHandler(event)
   {
     event.stopPropagation();
-    await this.router.navigateByUrl('/client/profile/me/messages/conversation/user/' + this.user.id);
+    await this.router.navigateByUrl('/profile/me/messages/conversation/user/' + this.user.id);
   }
 
   async onReportAbuseClickHandler(event)

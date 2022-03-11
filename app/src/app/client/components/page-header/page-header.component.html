@@ -7,11 +7,11 @@
 
           <a routerLink="./chatwheel" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }" class="left-menu-item nav-link">
             <i class="ik ik-message-circle"></i>
-            ChatWheel
+            {{ 'CHAT_WHEEL' | translate }}
           </a>
           <a routerLink="nearby" [routerLinkActive]="'active'" class="left-menu-item nav-link">
             <i class="ik ik-map-pin"></i>
-            Near By
+            {{ 'NEAR_BY' | translate }}
           </a>
 
         </div>
@@ -41,9 +41,9 @@
             </a>
 
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-              <a routerLink="./profile/me" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }" class="dropdown-item"><i class="ik ik-user dropdown-icon"></i> Profile</a>
-              <a routerLink="./profile/me/settings" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }" class="dropdown-item"><i class="ik ik-settings dropdown-icon"></i> Settings</a>
-              <a class="dropdown-item" role="button" (click)="onLogoutClickHandler($event)"><i class="ik ik-power dropdown-icon"></i> Logout</a>
+              <a routerLink="./profile/me" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }" class="dropdown-item"><i class="ik ik-user dropdown-icon"></i> {{ 'PROFILE' | translate }}</a>
+              <a routerLink="./profile/me/settings" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }" class="dropdown-item"><i class="ik ik-settings dropdown-icon"></i> {{ 'SETTINGS' | translate }}</a>
+              <a class="dropdown-item" role="button" (click)="onLogoutClickHandler($event)"><i class="ik ik-power dropdown-icon"></i> {{ 'LOGOUT' | translate }}</a>
             </div>
           </div>
 

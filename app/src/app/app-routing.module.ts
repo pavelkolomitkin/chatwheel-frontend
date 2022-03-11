@@ -10,12 +10,9 @@ const routes: Routes = [
     path: '',
     component: LayoutComponent,
     children: [
+
       { path: 'security',
         loadChildren: () => import('./security/security.module').then(m => m.SecurityModule)
-      },
-      { path: 'client',
-        loadChildren: () => import('./client/client.module').then(m => m.ClientModule),
-        canActivate: [AuthUserGuardService]
       },
       { path: 'admin',
         loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
@@ -26,6 +23,11 @@ const routes: Routes = [
         canActivate: [DefaultRedirectGuard],
         pathMatch: 'full',
         children: []
+      },
+      {
+        path: '',
+        loadChildren: () => import('./client/client.module').then(m => m.ClientModule),
+        canActivate: [AuthUserGuardService]
       },
       {
         path: '404',
