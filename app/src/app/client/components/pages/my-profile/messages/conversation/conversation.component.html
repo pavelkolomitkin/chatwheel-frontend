@@ -3,7 +3,7 @@
     <div class="addressee-block" *ngIf="!!addressee">
 
       <div class="picture-container d-inline-block">
-        <a [routerLink]="'/client/profile/' + addressee.id">
+        <a [routerLink]="'/profile/' + addressee.id">
           <app-user-avatar
             [size]="'mediumSmall'"
             [user]="addressee"
@@ -14,7 +14,7 @@
       </div>
       <div class="name-block d-inline-block pl-10">
         <h6>
-          <a [routerLink]="'/client/profile/' + addressee.id">{{ addressee.fullName }}</a>
+          <a [routerLink]="'/profile/' + addressee.id">{{ addressee.fullName }}</a>
         </h6>
         <div class="interests" *ngIf="addressee.interests.length > 0">
           <span class="badge badge-pill badge-primary mr-1" *ngFor="let interest of addressee.interests.slice(0, 10)">{{ interest.name }}</span>

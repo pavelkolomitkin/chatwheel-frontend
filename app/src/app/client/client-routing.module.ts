@@ -17,7 +17,7 @@ import {SearchMapPageComponent} from "./components/pages/search/nearby/search-ma
 import {SearchListPageComponent} from "./components/pages/search/nearby/search-list-page/search-list-page.component";
 import {CallListPageComponent} from "./components/pages/my-profile/call-list-page/call-list-page.component";
 
-export const PAGE_NOT_FOUND_ROUTE = '/client/404';
+export const PAGE_NOT_FOUND_ROUTE = '/404';
 
 const routes: Routes = [
   { path: '', component: LayoutComponent, children: [

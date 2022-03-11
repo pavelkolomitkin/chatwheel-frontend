@@ -1,6 +1,6 @@
 <ng-container *ngIf="!!user">
   <div class="pin" appUserActivityStatus [user]="user">
-    <a [routerLink]="'/client/profile/' + user.id">
+    <a [routerLink]="'/profile/' + user.id">
       <app-user-avatar
         [size]="'small'"
         [user]="user"

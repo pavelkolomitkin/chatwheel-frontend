@@ -8,7 +8,7 @@
 
       <div class="addressee-header" *ngIf="!!currentOffer">
         <div class="avatar-container">
-          <a [routerLink]="'/client/profile/' + currentOffer.addressee.id">
+          <a [routerLink]="'/profile/' + currentOffer.addressee.id">
             <app-user-avatar
               [size]="'small'"
               [user]="currentOffer.addressee"
@@ -17,7 +17,7 @@
         </div>
         <div class="header">
           <div class="h4">
-            <a [routerLink]="'/client/profile/' + currentOffer.addressee.id">{{ currentOffer.addressee.fullName}}</a>
+            <a [routerLink]="'/profile/' + currentOffer.addressee.id">{{ currentOffer.addressee.fullName}}</a>
           </div>
         </div>
       </div>

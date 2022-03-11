@@ -174,7 +174,7 @@ export class ConversationListPageComponent implements OnInit, OnDestroy {
 
   async onConversationClickHandler(conversation: ConversationMessageList)
   {
-    await this.router.navigateByUrl('/client/profile/me/messages/conversation/' + conversation.id);
+    await this.router.navigateByUrl('/profile/me/messages/conversation/' + conversation.id);
   }
 
   onRemoveConversationHandler(conversation: ConversationMessageList)

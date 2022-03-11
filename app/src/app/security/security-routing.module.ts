@@ -23,6 +23,7 @@ const routes: Routes = [
       { path: 'register-confirm/:key', component: RegisterConfirmComponent },
       { path: 'register-success', component: RegisterSuccessComponent },
       { path: 'social-auth/:type', component: SocialAuthComponent },
+      { path: '', redirectTo: 'login', pathMatch: 'full' },
     ]
   }
 ];

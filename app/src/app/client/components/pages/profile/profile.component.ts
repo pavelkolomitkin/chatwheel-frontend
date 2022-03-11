@@ -43,7 +43,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       const userId: string = params['id'];
       if (userId === this.authorizedUser.id)
       {
-        await this.router.navigateByUrl('/client/profile/me');
+        await this.router.navigateByUrl('/profile/me');
         return;
       }
 

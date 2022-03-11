@@ -9,7 +9,7 @@
 
           <div class="col-2 p-0">
             <div>
-              <a [routerLink]="'/client/profile/' + _caller.user.id">
+              <a [routerLink]="'/profile/' + _caller.user.id">
                 <app-user-avatar
                   [size]="'mediumSmall'"
                   [user]="_caller.user"
@@ -26,7 +26,7 @@
           </div>
           <div class="col-4">
             <div>
-              <a [routerLink]="'/client/profile/' + _addressee.user.id">
+              <a [routerLink]="'/profile/' + _addressee.user.id">
                 <app-user-avatar
                   [size]="'mediumSmall'"
                   [user]="_addressee.user"
@@ -74,7 +74,7 @@
       <div class="d-inline-block align-middle">
 
         <div class="avatar-container">
-          <a [routerLink]="'/client/profile/' + _addressee.user.id">
+          <a [routerLink]="'/profile/' + _addressee.user.id">
             <app-user-avatar
               [size]="'mediumSmall'"
               [user]="_addressee.user"
@@ -103,7 +103,7 @@
           <i class="ik ik-phone-call"></i>Call
         </span>
           <a
-            [routerLink]="'/client/profile/me/messages/conversation/user/' + _addressee.user.id"
+            [routerLink]="'/profile/me/messages/conversation/user/' + _addressee.user.id"
             class="btn btn-light mr-2 mb-2">
             <i class="ik ik-message-square"></i>Send Message
           </a>
