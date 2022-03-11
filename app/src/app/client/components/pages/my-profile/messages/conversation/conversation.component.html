@@ -19,7 +19,7 @@
         <div class="interests" *ngIf="addressee.interests.length > 0">
           <span class="badge badge-pill badge-primary mr-1" *ngFor="let interest of addressee.interests.slice(0, 10)">{{ interest.name }}</span>
           <ng-container *ngIf="addressee.interests.length > 10">
-            <span class="text-muted small">and many more...</span>
+            <span class="text-muted small">{{ 'AND_MANY_MORE' | translate }}...</span>
           </ng-container>
         </div>
       </div>
@@ -85,19 +85,19 @@
       </ng-container>
 
       <ng-container *ngIf="addressee.isBanned">
-        <p class="alert alert-danger m-2">You've blocked the user!</p>
+        <p class="alert alert-danger m-2">{{ 'YOU_HAVE_BANNED_THIS_USER' | translate }}</p>
       </ng-container>
 
       <ng-container *ngIf="addressee.amIBanned && !addressee.isBanned">
-        <p class="alert alert-danger m-2">You've been blocked by the user!</p>
+        <p class="alert alert-danger m-2">{{ 'YOU_HAVE_BEEN_BANNED_BY_THIS_USER' | translate }}</p>
       </ng-container>
 
       <ng-container *ngIf="addressee.deleted">
-        <p class="alert alert-secondary m-2">The user has deleted their profile!</p>
+        <p class="alert alert-secondary m-2">{{ 'THE_USER_HAS_DELETED_THEIR_PROFILE' | translate }}</p>
       </ng-container>
 
       <ng-container *ngIf="addressee.isBlocked">
-        <p class="alert alert-secondary m-2">The account has been blocked!</p>
+        <p class="alert alert-secondary m-2">{{ 'THE_ACCOUNT_HAS_BEEN_BLOCKED' | translate }}</p>
       </ng-container>
 
     </ng-container>

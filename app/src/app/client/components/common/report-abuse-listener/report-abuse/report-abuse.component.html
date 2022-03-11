@@ -1,4 +1,4 @@
-<app-alert-window [title]="'Report Abuse'"
+<app-alert-window [title]="'REPORT_ABUSE' | translate"
                   [(isShown)]="isWindowShown"
                   (onClose)="onWindowCloseHandler($event)"
 >
@@ -37,7 +37,7 @@
           class="form-control"
           [(ngModel)]="abuseComment"
           name="comment"
-          placeholder="You comment(optional)"
+          placeholder="{{ 'PLACEHOLDER_YOUR_COMMENT_OPTIONAL' | translate }}"
         ></textarea>
       </div>
     </form>
@@ -48,6 +48,6 @@
       class="btn btn-outline-danger"
       (click)="onReportClickHandler($event)"
       [disabled]="!abuseType"
-    >Report</button>
+    >{{ 'REPORT' | translate }}</button>
   </div>
 </app-alert-window>

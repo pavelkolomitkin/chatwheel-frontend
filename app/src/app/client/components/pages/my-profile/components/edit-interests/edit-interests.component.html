@@ -6,13 +6,13 @@
 >
 
   <div view-area>
-    <app-user-interests-view [user]="user" [noInterestsMessage]="'Describe your interests so that people know you better!'"></app-user-interests-view>
+    <app-user-interests-view [user]="user" [noInterestsMessage]="'NO_INTERESTS_MESSAGE' | translate"></app-user-interests-view>
   </div>
 
   <div edit-area>
     <form>
       <div class="form-group">
-        <label>Interests</label>
+        <label>{{ 'YOUR_INTERESTS' | translate }}</label>
         <input type="text" id="interests" class="form-control" data-role="tagsinput">
       </div>
     </form>

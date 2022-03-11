@@ -46,7 +46,7 @@
             <span class="sr-only">Loading...</span>
           </div>
           <div>
-            <span class="text-muted">Searing a partner...</span>
+            <span class="text-muted">{{ 'SEARCHING_A_PARTNER' | translate }}...</span>
           </div>
 
         </div>
@@ -77,7 +77,7 @@
             </div>
           </ng-container>
           <div>
-            <span class="text-muted">Connecting...</span>
+            <span class="text-muted">{{ 'CONNECTING' | translate }}...</span>
           </div>
         </div>
 
@@ -100,10 +100,10 @@
 
       <div class="media-error-controls" *ngIf="uiState === 'media_initialize_error'">
         <div>
-          <span class="text-muted"><i class="ik ik-alert-triangle"></i>Check your camera and microphone!</span>
+          <span class="text-muted"><i class="ik ik-alert-triangle"></i>{{ 'CHECK_YOUR_CAMERA_AND_MICROPHONE' | translate }}!</span>
         </div>
         <span class="btn btn-secondary" (click)="onTryAgainMediaClickHandler($event)">
-          <i class="ik ik-sliders"></i>Try Again
+          <i class="ik ik-sliders"></i>{{ 'TRY_AGAIN' | translate }}
         </span>
       </div>
 
@@ -111,7 +111,7 @@
 
         <span
           *ngIf="uiState === 'chat_stopped'"
-          title="Start Chatting"
+          title="{{ 'START_CHATTING' | translate }}"
           class="control btn btn-success mr-2"
           (click)="onStartChatClickHandler($event)">
           <i class="ik ik-play ml-2 mr-0 pr-1"></i>
@@ -123,7 +123,7 @@
           || (uiState === 'chat_offer_accepted')
           || (uiState === 'chat_addressee_connecting')
           || (uiState === 'chat_addressee_calling')"
-          title="Next"
+          title="{{ 'NEXT' | translate }}"
           class="control btn btn-success mr-2"
           (click)="onNextChatClickHandler($event)"
           [disabled]="(uiState === 'chat_searching')"
@@ -133,7 +133,7 @@
 
         <button
           *ngIf="(uiState !== 'chat_stopped')"
-          title="Stop"
+          title="{{ 'STOP'| translate }}"
           class="control btn btn-secondary mr-2" (click)="onStopChatClickHandler($event)"
         >
           <i class="ik ik-square ml-2 mr-1 pr-1"></i>
@@ -141,7 +141,7 @@
 
         <button
           *ngIf="(uiState === 'chat_addressee_calling')"
-          title="Report Abuse"
+          title="{{ 'REPORT_ABUSE' | translate }}"
           class="control btn btn-danger mr-2" (click)="onReportAbuseClickHandler($event)"
           [disabled]="(uiState !== 'chat_addressee_calling')"
         >

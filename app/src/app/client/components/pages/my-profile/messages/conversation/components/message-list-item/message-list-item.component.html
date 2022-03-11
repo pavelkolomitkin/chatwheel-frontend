@@ -24,7 +24,7 @@
               <span
                 class="text-muted small" *ngIf="message.message.createdAt !== message.message.updatedAt"
                 [title]="message.message.updatedAt | amLocal"
-              >(edited)</span>
+              >({{ 'EDITED' | translate }})</span>
             </p>
           </div>
           <div class="col-auto pl-0">
@@ -50,17 +50,17 @@
             required
             [(ngModel)]="editingText"
             name="editingText"
-            placeholder="Your message..."
+            placeholder="{{ 'PLACEHOLDER_YOUR_MESSAGE' | translate }}"
           ></textarea>
           </div>
-          <button type="submit" class="btn btn-primary mr-2" [disabled]="!form.valid || isSaving">Save</button>
-          <button class="btn btn-light" (click)="onEditCancelHandler($event)">Cancel</button>
+          <button type="submit" class="btn btn-primary mr-2" [disabled]="!form.valid || isSaving">{{ 'SAVE' | translate }}</button>
+          <button class="btn btn-light" (click)="onEditCancelHandler($event)">{{ 'CANCEL' | translate }}</button>
         </form>
 
       </ng-container>
       <ng-template #confirmationWindow let-modal>
         <div class="modal-header">
-          <h4 class="modal-title" id="modal-basic-title">Delete Message?</h4>
+          <h4 class="modal-title" id="modal-basic-title">{{ 'DELETE_MESSAGE_QUESTION' | translate }}</h4>
           <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -77,7 +77,7 @@
                        name="removeFromOthers"
                 >
                 <label for="removeFromOthers">
-                  Also delete from others
+                  {{ 'ALSO_DELETE_FROM_OTHERS' | translate }}
                 </label>
               </div>
 
@@ -85,8 +85,8 @@
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-outline-dark" (click)="modal.close()">Cancel</button>
-          <button type="button" class="btn btn-outline-danger" (click)="onDeleteConfirmClickHandler($event)">Delete</button>
+          <button type="button" class="btn btn-outline-dark" (click)="modal.close()">{{ 'CANCEL' | translate }}</button>
+          <button type="button" class="btn btn-outline-danger" (click)="onDeleteConfirmClickHandler($event)">{{ 'DELETE' | translate }}</button>
         </div>
       </ng-template>
 
@@ -115,7 +115,7 @@
               class="text-muted small"
               *ngIf="message.message.createdAt !== message.message.updatedAt"
               [title]="message.message.updatedAt | amLocal"
-            >(edited)</span>
+            >({{ 'EDITED' | translate }})</span>
           </p>
         </div>
       </div>
@@ -125,7 +125,7 @@
 
   <ng-container *ngIf="message.message.type === 1">
     <div class="text-center mb-2">
-      <span class="badge badge-pill badge-success mb-1" title="Call Started">
+      <span class="badge badge-pill badge-success mb-1" title="{{ 'CALL_STARTED' | translate }}">
         <i class="ik ik-phone-call"></i><span app-date-time [value]="message.message.call.createdAt"></span>
       </span>
     </div>
@@ -133,14 +133,14 @@
 
   <ng-container *ngIf="message.message.type === 2">
     <div class="text-center mb-2">
-      <span class="badge badge-pill badge-secondary mb-1" title="Call Ended">
+      <span class="badge badge-pill badge-secondary mb-1" title="{{ 'CALL_ENDED' | translate }}">
         <i class="ik ik-phone-off"></i><span app-date-time [value]="message.message.call.endTime"></span>
       </span>
     </div>
   </ng-container>
   <ng-container *ngIf="message.message.type === 3">
     <div class="text-center mb-2">
-      <span class="badge badge-pill badge-danger mb-1" title="Call Rejected">
+      <span class="badge badge-pill badge-danger mb-1" title="{{ 'CALL_REJECTED' | translate }}">
         <i class="ik ik-phone-off"></i><span app-date-time [value]="message.message.call.endTime"></span>
       </span>
     </div>

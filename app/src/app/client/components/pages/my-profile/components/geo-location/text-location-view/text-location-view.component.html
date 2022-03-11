@@ -1,11 +1,10 @@
 <app-text-location-view [user]="user"></app-text-location-view>
 <ng-container *ngIf="!(isGeolocationTurnedOn | async) && !!user.geoLocation">
-  <span class="text-muted small">(latest)</span>
+  <span class="text-muted small">({{ 'LATEST_GEO_LOCATION' | translate }})</span>
 </ng-container>
 <ng-container *ngIf="!(isGeolocationTurnedOn | async)">
   <br/>
   <span class="btn btn-primary mb-1" (click)="onUpdateRequestLocationClickHandler($event)">
-    <i class="ik ik-map-pin"></i> Update
+    <i class="ik ik-map-pin"></i> {{ 'UPDATE' | translate }}
   </span>
-<!--  <span class="badge badge-blue" (click)="onUpdateRequestLocationClickHandler($event)">Update</span>-->
 </ng-container>

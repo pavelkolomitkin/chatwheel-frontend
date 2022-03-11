@@ -6,8 +6,8 @@
 >
 
   <div view-area>
-    <h5>About you</h5>
-    <span class="text-muted" *ngIf="!user.about; else aboutYourself;">Tell people about yourself...</span>
+    <h5>{{ 'ABOUT_YOU' | translate }}</h5>
+    <span class="text-muted" *ngIf="!user.about; else aboutYourself;">{{ 'TELL_PEOPLE_ABOUT_YOURSELF' | translate }}...</span>
     <ng-template #aboutYourself>
       <span [innerHTML]="user.about | multiLine"></span>
     </ng-template>
@@ -18,7 +18,7 @@
       <div class="form-group">
         <textarea
           class="form-control"
-          placeholder="About yourself"
+          placeholder="{{ 'PLACEHOLDER_ABOUT_YOURSELF' | translate }}"
           [(ngModel)]="about"
           name="about"
           required

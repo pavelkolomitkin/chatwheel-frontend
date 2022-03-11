@@ -52,7 +52,7 @@
 
   <ng-container *ngIf="message.message.type === 1">
     <div class="text-center mb-2">
-      <span class="badge badge-pill badge-success mb-1" title="Call Started">
+      <span class="badge badge-pill badge-success mb-1" title="{{ 'CALL_STARTED' | translate }}">
         <i class="ik ik-phone-call"></i><span app-date-time [value]="message.message.call.createdAt"></span>
       </span>
     </div>
@@ -60,14 +60,14 @@
 
   <ng-container *ngIf="message.message.type === 2">
     <div class="text-center mb-2">
-      <span class="badge badge-pill badge-secondary mb-1" title="Call Ended">
+      <span class="badge badge-pill badge-secondary mb-1" title="{{ 'CALL_ENDED' | translate }}">
         <i class="ik ik-phone-off"></i><span app-date-time [value]="message.message.call.endTime"></span>
       </span>
     </div>
   </ng-container>
   <ng-container *ngIf="message.message.type === 3">
     <div class="text-center mb-2">
-      <span class="badge badge-pill badge-danger mb-1" title="Call Rejected">
+      <span class="badge badge-pill badge-danger mb-1" title="{{ 'CALL_REJECTED' | translate }}">
         <i class="ik ik-phone-off"></i><span app-date-time [value]="message.message.call.endTime"></span>
       </span>
     </div>

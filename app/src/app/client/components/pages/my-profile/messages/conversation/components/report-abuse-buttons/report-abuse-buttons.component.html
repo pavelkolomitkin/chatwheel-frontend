@@ -1,31 +1,31 @@
 <ng-container *ngIf="!user.amIBanned && !user.isBanned">
 
   <span class="btn btn-success mr-1" (click)="onCallClickHandler($event)">
-    <i class="ik ik-video"></i>Call
+    <i class="ik ik-video"></i>{{ 'CALL' | translate }}
   </span>
 
   <span class="btn btn-danger" (click)="onReportAbuseClickHandler($event)">
-    <i class="ik ik-alert-circle"></i>Report Abuse
+    <i class="ik ik-alert-circle"></i>{{ 'REPORT_ABUSE' | translate }}
   </span>
 
 </ng-container>
 
 <ng-container *ngIf="user.isBanned">
   <div>
-    <span class="text-muted">You've blocked the user!</span>
+    <span class="text-muted">{{ 'YOU_HAVE_BANNED_THIS_USER' | translate }}</span>
   </div>
   <div>
     <span class="btn btn-secondary" (click)="onUnblockClickHandler($event)">
-      <i class="ik ik-unlock"></i> Unblock
+      <i class="ik ik-unlock"></i> {{ 'UNBLOCK' | translate }}
     </span>
   </div>
 </ng-container>
 
 <ng-container *ngIf="user.amIBanned && !user.isBanned">
   <div>
-    <span class="text-muted">You've been blocked by this user!</span>
+    <span class="text-muted">{{ 'YOU_HAVE_BEEN_BANNED_BY_THIS_USER' | translate }}</span>
   </div>
   <span class="btn btn-danger" (click)="onReportAbuseClickHandler($event)">
-    <i class="ik ik-alert-circle"></i>Report Abuse
+    <i class="ik ik-alert-circle"></i>{{ 'REPORT_ABUSE' | translate }}
   </span>
 </ng-container>

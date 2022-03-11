@@ -1,6 +1,6 @@
 <ng-container *ngIf="!!user">
   <div>
-    <span>Interests: </span>
+    <span>{{ 'YOUR_INTERESTS' | translate }}: </span>
   </div>
   <div>
     <ng-container *ngIf="user.interests.length > 0; else noInterest">

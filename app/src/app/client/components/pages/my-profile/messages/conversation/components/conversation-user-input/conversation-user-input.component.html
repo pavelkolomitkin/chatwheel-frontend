@@ -5,7 +5,7 @@
       <input
         type="text"
         class="form-control"
-        placeholder="Your message..."
+        placeholder="{{ 'PLACEHOLDER_YOUR_MESSAGE' | translate }}"
         [(ngModel)]="inputText"
         name="inputText"
         (keydown.enter)="onSubmit(form)"

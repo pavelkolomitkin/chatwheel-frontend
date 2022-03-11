@@ -1,13 +1,13 @@
 <div class="p20">
   <ng-container *ngIf="(user | async)">
     <div class="row">
-      <div class="col-md-3 col-6"> <strong>Full Name</strong>
+      <div class="col-md-3 col-6"> <strong>{{ 'FULL_NAME' | translate }}</strong>
         <br>
         <app-edit-full-name [user]="(user | async)"></app-edit-full-name>
       </div>
 
       <div class="col-md-3 col-6" *ngIf="(user | async).isSocialMediaUser()">
-        <strong>Auth</strong>
+        <strong>{{ 'AUTH' | translate }}</strong>
         <br>
         <img *ngIf="(user | async).isVkUser()"
           src="../../../../../../assets/picture/vk-icon.png"
@@ -16,12 +16,12 @@
       </div>
 
       <div class="col-md-3 col-6" *ngIf="!(user | async).isSocialMediaUser()">
-        <strong>Email</strong>
+        <strong>{{ 'EMAIL'| translate }}</strong>
         <br>
         <p class="text-muted">{{ (user | async).email ? (user | async).email : 'none' }}</p>
       </div>
 
-      <div class="col-md-3 col-6"> <strong>Location</strong>
+      <div class="col-md-3 col-6"> <strong>{{ 'LOCATION' | translate }}</strong>
         <br>
         <app-my-text-location-view [user]="user | async"></app-my-text-location-view>
 

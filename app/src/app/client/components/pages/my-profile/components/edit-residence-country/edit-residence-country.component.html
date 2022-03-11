@@ -8,15 +8,15 @@
   <div view-area>
     <app-selected-country-view
       [country]="user.residenceCountry"
-      [label]="'Residence Country'"
-      [noSelectedMessage]="'Not Selected'"
+      [label]="'RESIDENCE_COUNTRY' | translate"
+      [noSelectedMessage]="'NOT_SELECTED' | translate"
     ></app-selected-country-view>
   </div>
 
   <div edit-area>
     <form class="form-horizontal">
       <div class="form-group">
-        <label for="residence-country">Residence Country</label>
+        <label for="residence-country">{{ 'RESIDENCE_COUNTRY' | translate }}</label>
         <select
           [(ngModel)]="country"
           [compareWith]="compareEntity"
