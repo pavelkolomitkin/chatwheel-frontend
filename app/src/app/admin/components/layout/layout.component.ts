@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {Store} from "@ngrx/store";
+import {State} from "../../../app.state";
+import {GetNewAbuseReportNumberStart, GetTotalNumberClientUsersStart} from "../../data/actions";
 
 @Component({
   selector: 'app-layout',
@@ -7,9 +10,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LayoutComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private store: Store<State>
+  ) { }
 
   ngOnInit(): void {
+    this.store.dispatch(new GetTotalNumberClientUsersStart());
+    this.store.dispatch(new GetNewAbuseReportNumberStart());
   }
 
 }

@@ -13,7 +13,6 @@ import {NgxPermissionsService} from 'ngx-permissions';
 @Injectable()
 export class AuthUserGuardService implements CanActivate {
 
-
   static ADMIN_ROLE = 'ROLE_ADMIN_USER';
   static CLIENT_ROLE = 'ROLE_CLIENT_USER';
 
@@ -30,8 +29,6 @@ export class AuthUserGuardService implements CanActivate {
   {
       return new Promise<boolean>( async (resolve, reject) => {
 
-
-
         // @ts-ignore
           const url = route._routerState.url;
           const urlPrefix = this.getUrlPrefix(url);
@@ -41,17 +38,21 @@ export class AuthUserGuardService implements CanActivate {
               const permissions = this.permissionService.getPermissions();
               const roles = Object.keys(permissions);
               // @ts-ignore
-              if ((urlPrefix === 'admin') && (!roles.includes(AuthUserGuardService.ADMIN_ROLE)))
+              if ((urlPrefix === 'admin') && (roles.includes(AuthUserGuardService.ADMIN_ROLE)))
               {
-                await this.router.navigateByUrl('/');
+                resolve(true);
+                return;
               }
               // @ts-ignore
-              else if (!roles.includes(AuthUserGuardService.CLIENT_ROLE)) {
-                await this.router.navigateByUrl('/');
+              if (roles.includes(AuthUserGuardService.CLIENT_ROLE)) {
+                resolve(true);
+                return;
               }
+
+              await this.router.navigateByUrl('/');
           }
 
-          resolve(true);
+          resolve(false);
       });
   }
 

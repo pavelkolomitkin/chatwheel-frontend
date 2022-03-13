@@ -118,5 +118,11 @@
   "CREATED_BY": "Created by",
   "UPLOAD_FILE": "Upload File",
   "UP_TO": "up to",
-  "FROM_CAMERA": "From Camera"
+  "FROM_CAMERA": "From Camera",
+
+  "NAVIGATION": "Navigation",
+  "DASHBOARD": "Dashboard",
+  "USERS": "Users",
+  "ABUSE_REPORTS": "Abuse Reports",
+  "ADMINS": "Admins"
 }

@@ -167,9 +167,10 @@ import { CallListItemComponent } from './components/pages/my-profile/call-list-p
     NgbModalModule,
   ],
 
-  exports: [
-    EffectsModule,
-  ],
+    exports: [
+        EffectsModule,
+        PageHeaderComponent,
+    ],
 
   entryComponents: [
     IncomingMessageComponent,

@@ -1,0 +1,48 @@
+<div class="app-sidebar colored">
+
+  <div class="sidebar-header">
+    <a class="header-brand" [routerLink]="'./'">
+      <div class="logo-img mr-1">
+        <img src="../../../../assets/picture/icon_30x30.png" class="header-brand-img">
+      </div>
+      <span class="text">{{ 'CHAT_WHEEL' | translate }}</span>
+    </a>
+
+  </div>
+
+  <div class="sidebar-content ps ps--active-y">
+
+    <div class="nav-container">
+
+      <nav id="main-menu-navigation" class="navigation-main">
+        <div class="nav-lavel">{{ 'NAVIGATION' | translate }}</div>
+
+        <div class="nav-item" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
+          <a [routerLink]="'./dashboard'"><i class="ik ik-bar-chart-2"></i><span>{{ 'DASHBOARD' | translate }}</span></a>
+        </div>
+
+
+        <div class="nav-item" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
+          <a [routerLink]="'./users'"><i class="ik ik-users"></i><span>{{ 'USERS' | translate }}</span> <span class="badge badge-secondary">{{ totalUserNumber | async }}</span></a>
+        </div>
+
+        <div class="nav-item" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
+          <a [routerLink]="'./admins'"><i class="ik ik-user-plus"></i><span>{{ 'ADMINS' | translate }}</span></a>
+        </div>
+
+        <div class="nav-item" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
+          <a [routerLink]="'./abuse-reports'"><i class="ik ik-alert-circle"></i><span>{{ 'ABUSE_REPORTS' | translate }}</span>
+            <span class="badge badge-danger" *ngIf="(newAbuseReportNumber | async) > 0">{{ newAbuseReportNumber | async }}</span>
+          </a>
+        </div>
+
+        <div class="nav-item" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
+          <a [routerLink]="'./calls'"><i class="ik ik-phone"></i><span>{{ 'CALLS' | translate }}</span></a>
+        </div>
+
+      </nav>
+    </div>
+
+  </div>
+
+</div>

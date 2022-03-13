@@ -45,8 +45,11 @@ export class UserAvatarComponent implements OnInit {
   {
     this._user = user;
 
-    this._avatarUrl = this._user.getAvatarPicture(this.size);
-    this.title = this.getPictureTitle();
+    if (this._user)
+    {
+      this._avatarUrl = this._user.getAvatarPicture(this.size);
+      this.title = this.getPictureTitle();
+    }
 
     this.changeDetector.markForCheck();
   }

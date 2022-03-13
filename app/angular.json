@@ -61,7 +61,8 @@
               "lib/BootstrapAdmin-master/plugins/c3/c3.min.js",
               "lib/BootstrapAdmin-master/plugins/jquery-toast-plugin/dist/jquery.toast.min.js",
               "node_modules/typeahead.js/dist/typeahead.bundle.min.js",
-              "lib/BootstrapAdmin-master/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"
+              "lib/BootstrapAdmin-master/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js",
+              "lib/BootstrapAdmin-master/src/js/theme.js"
             ]
           },
           "configurations": {
