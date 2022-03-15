@@ -23,6 +23,7 @@ import {NgbPopoverModule, NgbTooltipModule} from "@ng-bootstrap/ng-bootstrap";
 import { UserGeoLocationViewComponent } from './components/pages/user-list-page/user-geo-location-view/user-geo-location-view.component';
 import { UserManagerComponent } from './components/common/user-manager/user-manager.component';
 import { ClientUserProfilePageComponent } from './components/pages/client-user-profile-page/client-user-profile-page.component';
+import { UserListFilterFormComponent } from './components/pages/user-list-page/user-list-filter-form/user-list-filter-form.component';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import { ClientUserProfilePageComponent } from './components/pages/client-user-p
     UserGeoLocationViewComponent,
     UserManagerComponent,
     ClientUserProfilePageComponent,
+    UserListFilterFormComponent,
   ],
   imports: [
     CommonModule,

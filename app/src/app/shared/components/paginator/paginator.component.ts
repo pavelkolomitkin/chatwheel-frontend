@@ -7,7 +7,7 @@ import {Subscription} from 'rxjs';
   selector: 'app-paginator',
   templateUrl: './paginator.component.html',
   styleUrls: ['./paginator.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PaginatorComponent implements OnInit, OnDestroy {
 
@@ -45,7 +45,6 @@ export class PaginatorComponent implements OnInit, OnDestroy {
 
       this.queryStringParams = params;
 
-      //this.locationPath = this.location.path();
       this.locationPath = window.location.pathname;
 
       this.page = (!!params.page && params.page > 0) ? params.page : 1;

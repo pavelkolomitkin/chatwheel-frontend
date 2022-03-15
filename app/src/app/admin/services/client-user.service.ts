@@ -14,7 +14,9 @@ export class ClientUserService extends BaseService
   {
     const params: HttpParams = this.getHttpParamsFromObject({
       ...filter,
-      page
+      page,
+      residenceCountry: filter.residenceCountry ? filter.residenceCountry.id : null,
+      searchCountry: filter.searchCountry ? filter.searchCountry.id : null,
     });
 
     return this.http.get<{users: User[], totalNumber: number}>('/admin/client-user/list', { params }).pipe(

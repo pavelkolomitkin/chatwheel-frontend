@@ -7,6 +7,7 @@
   "CREATE_AN_ACCOUNT": "Create an account",
   "CREATE_ACCOUNT" :  "Create account",
   "EMAIL": "Email",
+  "VK": "VK",
   "PASSWORD": "Password",
 
   "LOGIN_ERROR": "Bad credentials",
@@ -142,5 +143,8 @@
   "ARE_YOU_SURE_YOU_WANNA_UNBLOCK_THIS_USER_QUESTION": "Are you sure you wanna unblock this user?",
   "DELETE_USER_QUESTION": "Delete User?",
   "ARE_YOU_SURE_YOU_WANNA_DELETE_THIS_USER_QUESTION": "Are you sure you wanna delete this user?",
-  "PREVIOUS": "Previous"
+  "PREVIOUS": "Previous",
+  "IS_ACTIVATED": "Activated",
+  "IS_BLOCKED": "Blocked",
+  "IS_DELETED": "Deleted"
 }

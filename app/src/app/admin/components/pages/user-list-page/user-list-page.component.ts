@@ -2,14 +2,17 @@ import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {select, Store} from "@ngrx/store";
 import {State} from "../../../../app.state";
 import {ClientUserService} from "../../../services/client-user.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {ClientUserListFilter} from "../../../data/model/client-user-list.filter";
 import {User} from "../../../../security/data/models/user.model";
 import {GlobalNotification} from "../../../../core/data/actions";
 import {Notification, NotificationType} from "../../../../core/data/models/notification.model";
 import {BlockUserInit, DeleteUserInit, UnBlockUserInit} from "../../../data/actions";
-import {filter} from "rxjs/operators";
+import {filter, first} from "rxjs/operators";
+import {SortingType} from "../../../../core/data/models/sorting-type.enum";
+import {Country} from "../../../../core/data/models/country.model";
+import {FormFilterData} from "./user-list-filter-form/user-list-filter-form.component";
 
 @Component({
   selector: 'app-user-list-page',
@@ -19,11 +22,34 @@ import {filter} from "rxjs/operators";
 })
 export class UserListPageComponent implements OnInit, OnDestroy {
 
+  static AVAILABLE_SORT_FIELD = {
+    lastActivity: 'lastActivity',
+    fullName: 'fullName',
+    signUp: 'signUp'
+  };
+
   paramSubscription: Subscription = null;
 
   userBlockedSubscription: Subscription = null;
   userUnBlockedSubscription: Subscription = null;
   userDeletedSubscription: Subscription = null;
+
+
+  defaultSortField: string = UserListPageComponent.AVAILABLE_SORT_FIELD.lastActivity;
+  defaultSortType: SortingType = SortingType.DESC;
+
+  currentFilter: ClientUserListFilter = {
+    authType: null,
+    isActivated: null,
+    isBlocked: null,
+    residenceCountry: null,
+    searchCountry: null,
+    sortType: null,
+    sortField: null,
+    isDeleted: null
+  }
+
+  countries: Country[] = null;
 
 
   list: User[] = null;
@@ -32,10 +58,16 @@ export class UserListPageComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<State>,
     private service: ClientUserService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
+
+    this.countries = await this.store.pipe(
+      select(state => state.core.countries),
+      filter(countries => countries.length > 0),
+      first()).toPromise();
 
     this.paramSubscription = this.route.queryParams.subscribe(async (params) => {
 
@@ -43,6 +75,8 @@ export class UserListPageComponent implements OnInit, OnDestroy {
 
 
       this.initUserManagementSubscriptions();
+
+      this.currentFilter = this.getCurrentFilter();
 
       await this.loadUsers();
 
@@ -110,15 +144,35 @@ export class UserListPageComponent implements OnInit, OnDestroy {
 
   getCurrentFilter(): ClientUserListFilter
   {
+    let {
+      authType,
+      isActivated,
+      isBlocked,
+      residenceCountry,
+      searchCountry,
+      sortType,
+      sortField,
+      isDeleted,
+    } = this.route.snapshot.queryParams;
+
+    sortField =
+      UserListPageComponent.AVAILABLE_SORT_FIELD[sortField] ?
+        UserListPageComponent.AVAILABLE_SORT_FIELD[sortField] :
+        this.defaultSortField
+    ;
+
+    sortType = !sortType ? this.defaultSortType : sortType;
+
     return {
-      userType: null,
-      isActivated: null,
-      isBlocked: null,
-      residenceCountry: null,
-      sortType: null,
-      sortField: null,
-      deleted: null
-    }
+      authType: !!authType ? JSON.parse(authType) : null,
+      isActivated: !!isActivated ? JSON.parse(isActivated) : null,
+      isBlocked: !!isBlocked ? JSON.parse(isBlocked) : null,
+      residenceCountry: !!residenceCountry ? this.countries.find(country => country.id === residenceCountry) : null,
+      searchCountry: !!searchCountry ? this.countries.find(country => country.id === searchCountry) : null,
+      sortType: sortType,
+      sortField: sortField,
+      isDeleted: !!isDeleted ? JSON.parse(isDeleted) : null
+    };
   }
 
   getCurrentListPage()
@@ -165,4 +219,51 @@ export class UserListPageComponent implements OnInit, OnDestroy {
   {
     this.store.dispatch(new DeleteUserInit(user));
   }
+
+  async onSortingFieldClickHandler(event, fieldName: string)
+  {
+    if (this.currentFilter.sortField !== fieldName)
+    {
+      this.currentFilter.sortField = fieldName;
+      this.currentFilter.sortType = SortingType.DESC;
+    }
+    else
+    {
+      this.currentFilter.sortType = (this.currentFilter.sortType === SortingType.ASC) ? SortingType.DESC : SortingType.ASC;
+    }
+
+    const { sortField, sortType } = this.currentFilter;
+
+    await this.router.navigate(
+      [],
+      {
+        relativeTo: this.route,
+        queryParams: {
+          sortType: sortType,
+          sortField: sortField
+        },
+        queryParamsHandling: "merge"
+      }
+    )
+  }
+
+  async onFilterFormChangeHandler(data: FormFilterData)
+  {
+    const params: any = {
+      ...data,
+      residenceCountry: data.residenceCountry ? data.residenceCountry.id : '',
+      searchCountry: data.searchCountry ? data.searchCountry.id : '',
+      page: 1
+    };
+
+    await this.router.navigate(
+      [],
+      {
+        relativeTo: this.route,
+        queryParams: params,
+        queryParamsHandling: "merge"
+      }
+    );
+  }
+
 }
