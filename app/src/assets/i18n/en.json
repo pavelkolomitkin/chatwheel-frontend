@@ -147,5 +147,6 @@
   "NOT_ACTIVATED": "Not Activated",
   "IS_BLOCKED": "Blocked",
   "IS_DELETED": "Deleted",
-  "ALL_TYPES": "All"
+  "ALL_TYPES": "All",
+  "NO_USER_FOUND": "No user found"
 }

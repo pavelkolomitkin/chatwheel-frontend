@@ -62,19 +62,23 @@
         </thead>
         <tbody *ngIf="list !== null">
 
-        <tr
-          app-user-list-item
-          *ngFor="let user of list"
-          [user]="user"
-          (blockUserEmitter)="onBlockUserHandler($event)"
-          (unBlockUserEmitter)="onUnBlockUserHandler($event)"
-          (deleteUserEmitter)="onDeleteUserHandler($event)"
-        >
+          <tr
+            app-user-list-item
+            *ngFor="let user of list"
+            [user]="user"
+            (blockUserEmitter)="onBlockUserHandler($event)"
+            (unBlockUserEmitter)="onUnBlockUserHandler($event)"
+            (deleteUserEmitter)="onDeleteUserHandler($event)"
+          >
 
-        </tr>
+          </tr>
 
         </tbody>
       </table>
+    </div>
+
+    <div *ngIf="list !== null">
+      <p class="alert alert-info m-4" *ngIf="list.length === 0">{{ 'NO_USER_FOUND' | translate }}</p>
     </div>
 
     <div class="mr-4">

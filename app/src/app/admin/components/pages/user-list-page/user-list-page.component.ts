@@ -135,26 +135,6 @@ export class UserListPageComponent implements OnInit, OnDestroy {
   userModifiedHandler = async (user: User) => {
 
     await this.loadUsers();
-    /*const index = this.list.findIndex(item => item.id === user.id);
-    if (index !== -1)
-    {
-      this.list[index] = user;
-    }
-
-    const params = {
-      ...this.getCurrentFilter(),
-      page: this.getCurrentListPage()
-    }
-
-    await this.router.navigate(
-      [],
-        {
-          relativeTo: this.route,
-          queryParams: params,
-          queryParamsHandling: "merge",
-        }
-      );
-    */
   }
 
   getCurrentFilter(): ClientUserListFilter
