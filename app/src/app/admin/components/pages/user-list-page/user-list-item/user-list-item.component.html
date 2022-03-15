@@ -22,7 +22,7 @@
 
 <td>
   <ng-container *ngIf="!!user.residenceCountry; else noCountry">
-    <span class="fi fi-{{user.residenceCountry.code.toLocaleLowerCase() }} fis"></span>
+    <span class="fi fi-{{user.residenceCountry.code.toLocaleLowerCase() }} country-flag mb-2"></span>
     <span class="text-muted">{{ user.residenceCountry.name }}</span>
   </ng-container>
   <ng-template #noCountry>
@@ -32,7 +32,7 @@
 
 <td>
   <ng-container *ngIf="!!user.searchCountry; else noCountry">
-    <span class="fi fi-{{user.searchCountry.code.toLocaleLowerCase() }} fis"></span>
+    <span class="fi fi-{{user.searchCountry.code.toLocaleLowerCase() }} country-flag mb-2"></span>
     <span class="text-muted">{{ user.searchCountry.name }}</span>
   </ng-container>
   <ng-template #noCountry>
