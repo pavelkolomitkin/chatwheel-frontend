@@ -14,7 +14,10 @@
         <hr class="mb-0">
         <div class="card-body">
           <ng-container *ngIf="!!user.geoLocation">
-            <app-map-location-view [user]="user"></app-map-location-view>
+            <app-map-location-view
+              [user]="user"
+              [userUrl]="'/profile/' + user.id"
+            ></app-map-location-view>
           </ng-container>
         </div>
 

@@ -8,9 +8,9 @@ import {
   OnInit,
   ViewChild
 } from '@angular/core';
-import {User} from "../../../../../../../security/data/models/user.model";
-import {MapComponent} from "../../../../../../../shared/components/geo/map/map.component";
-import {UserMapMarkComponent} from "../../../../../../../shared/components/geo/user-map-mark/user-map-mark.component";
+import {User} from "../../../../security/data/models/user.model";
+import {MapComponent} from "../map/map.component";
+import {UserMapMarkComponent} from "../user-map-mark/user-map-mark.component";
 
 @Component({
   selector: 'app-map-location-view',
@@ -21,6 +21,8 @@ import {UserMapMarkComponent} from "../../../../../../../shared/components/geo/u
 export class MapLocationViewComponent implements OnInit, AfterViewInit
 {
   @ViewChild(MapComponent) map: MapComponent;
+
+  @Input() userUrl: string;
 
   _user: User;
 
@@ -59,6 +61,7 @@ export class MapLocationViewComponent implements OnInit, AfterViewInit
     this.markComponent = this.map.addMark(UserMapMarkComponent, geoLocation);
 
     this.markComponent.instance.user = this._user;
+    this.markComponent.instance.url = this.userUrl;
 
     this.map.setCenter(geoLocation);
 

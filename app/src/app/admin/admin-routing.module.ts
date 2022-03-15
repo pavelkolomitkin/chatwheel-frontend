@@ -7,11 +7,15 @@ import {AdminListPageComponent} from "./components/pages/admin-list-page/admin-l
 import {CallListPageComponent} from "./components/pages/call-list-page/call-list-page.component";
 import {AbuseReportListPageComponent} from "./components/pages/abuse-report-list-page/abuse-report-list-page.component";
 import {DashboardComponent} from "./components/pages/dashboard/dashboard.component";
+import {
+  ClientUserProfilePageComponent
+} from "./components/pages/client-user-profile-page/client-user-profile-page.component";
 
 const routes: Routes = [
   { path: '', component: LayoutComponent, children: [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'profile', component: ProfileComponent },
+      { path: 'users/:id', component: ClientUserProfilePageComponent },
       { path: 'users', component: UserListPageComponent },
       { path: 'admins', component: AdminListPageComponent },
       { path: 'abuse-reports', component: AbuseReportListPageComponent },

@@ -18,6 +18,11 @@ import {ClientUserEffects} from "./data/effects/client-user.effects";
 import {ClientUserService} from "./services/client-user.service";
 import {AbuseReportService} from "./services/abuse-report.service";
 import {AbuseReportEffects} from "./data/effects/abuse-report.effects";
+import { UserListItemComponent } from './components/pages/user-list-page/user-list-item/user-list-item.component';
+import {NgbPopoverModule, NgbTooltipModule} from "@ng-bootstrap/ng-bootstrap";
+import { UserGeoLocationViewComponent } from './components/pages/user-list-page/user-geo-location-view/user-geo-location-view.component';
+import { UserManagerComponent } from './components/common/user-manager/user-manager.component';
+import { ClientUserProfilePageComponent } from './components/pages/client-user-profile-page/client-user-profile-page.component';
 
 
 @NgModule({
@@ -30,7 +35,11 @@ import {AbuseReportEffects} from "./data/effects/abuse-report.effects";
     AdminListPageComponent,
     AbuseReportListPageComponent,
     CallListPageComponent,
-    DashboardComponent
+    DashboardComponent,
+    UserListItemComponent,
+    UserGeoLocationViewComponent,
+    UserManagerComponent,
+    ClientUserProfilePageComponent,
   ],
   imports: [
     CommonModule,
@@ -40,7 +49,9 @@ import {AbuseReportEffects} from "./data/effects/abuse-report.effects";
     EffectsModule.forFeature([
       ClientUserEffects,
       AbuseReportEffects
-    ])
+    ]),
+    NgbTooltipModule,
+    NgbPopoverModule
   ],
   exports: [
     EffectsModule

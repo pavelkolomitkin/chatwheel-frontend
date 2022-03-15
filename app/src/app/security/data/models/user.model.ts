@@ -42,7 +42,9 @@ export class User
 
   lastActivity: string
 
-  isBlocked: boolean;
+  isBlocked?: boolean;
+
+  blockingReason?: string
 
   geoLocation?: Geolocation;
 
@@ -55,6 +57,8 @@ export class User
   searchCountry?: Country;
 
   interests?: UserInterest[];
+
+  isActivated?: boolean;
 
   amIBanned?: boolean;
 

@@ -3,7 +3,7 @@ import {User} from "../../security/data/models/user.model";
 import {environment} from "../../../environments/environment";
 
 @Directive({
-  selector: '[appUserActivityStatus]'
+  selector: '[app-user-activity-status]'
 })
 export class UserActivityStatusDirective implements OnInit{
 

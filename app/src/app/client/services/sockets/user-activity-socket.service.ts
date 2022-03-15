@@ -12,6 +12,21 @@ export class UserActivitySocketService extends BaseSocketService
     return 'user_activity';
   }
 
+  getIHasBeenDeleted()
+  {
+    return this.fromEvent('i_has_been_deleted');
+  }
+
+  getIHasBeenBlocked()
+  {
+    return this
+      .fromEvent('i_has_been_blocked')
+      .pipe(
+        map(data => data.blockingReason)
+      )
+      ;
+  }
+
   getUserTyping()
   {
     return this.fromEvent('user_is_typing_event')

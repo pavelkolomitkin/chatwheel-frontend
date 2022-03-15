@@ -124,5 +124,23 @@
   "DASHBOARD": "Dashboard",
   "USERS": "Users",
   "ABUSE_REPORTS": "Abuse Reports",
-  "ADMINS": "Admins"
+  "ADMINS": "Admins",
+
+
+  "CANNOT_LOAD_USERS": "Cannot load users!",
+  "ERROR": "Error",
+
+  "BLOCK_USER_QUESTION": "Block User?",
+  "BLOCK": "Block",
+  "ARE_YOU_SURE_YOU_WANNA_BLOCK_THE_USER_QUESTION": "Are you sure you wanna block this user?",
+  "BLOCK_USER": "Block User",
+  "UNBLOCK_USER": "Unblock User",
+  "DELETE_USER": "Delete User",
+  "BLOCKING_REASON": "Blocking Reason",
+  "YOUR_ACCOUNT_HAS_BEEN_BLOCKED": "Your account has been blocked!",
+  "UNBLOCK_USER_QUESTION": "Unblock User?",
+  "ARE_YOU_SURE_YOU_WANNA_UNBLOCK_THIS_USER_QUESTION": "Are you sure you wanna unblock this user?",
+  "DELETE_USER_QUESTION": "Delete User?",
+  "ARE_YOU_SURE_YOU_WANNA_DELETE_THIS_USER_QUESTION": "Are you sure you wanna delete this user?",
+  "PREVIOUS": "Previous"
 }

@@ -15,7 +15,7 @@ import {
   USER_LOGIN_START,
   USER_LOGIN_SUCCESS,
   USER_LOGOUT,
-  USER_TOKEN_INITIALIZE_STORE, UserChangePasswordError,
+  UserChangePasswordError,
   UserChangePasswordStart,
   UserChangePasswordSuccess,
   UserInitializationError,

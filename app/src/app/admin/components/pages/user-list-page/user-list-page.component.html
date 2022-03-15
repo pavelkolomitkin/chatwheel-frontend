@@ -1,1 +1,56 @@
-<p>user-list-page works!</p>
+<div class="card table-card">
+
+  <div class="card-header">
+
+    <h3>Users</h3>
+
+  </div>
+
+  <div class="card-block card-body">
+
+    <div class="table-responsive">
+      <table class="table table-hover mb-0">
+        <thead>
+          <tr>
+            <th>Photo</th>
+            <th>Full Name</th>
+            <th>Residence Country</th>
+            <th>Search Country</th>
+            <th>Geo Location</th>
+            <th>Interests</th>
+            <th>Auth Type</th>
+            <th>Last Activity</th>
+            <th>Activated</th>
+            <th>Blocked</th>
+            <th>Deleted</th>
+            <th>Created</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="list !== null">
+
+        <tr
+          app-user-list-item
+          *ngFor="let user of list"
+          [user]="user"
+          (blockUserEmitter)="onBlockUserHandler($event)"
+          (unBlockUserEmitter)="onUnBlockUserHandler($event)"
+          (deleteUserEmitter)="onDeleteUserHandler($event)"
+        >
+
+        </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mr-4">
+      <app-paginator
+        [itemsOnPage]="10"
+        [totalItems]="totalNumber"
+
+      ></app-paginator>
+    </div>
+  </div>
+
+</div>

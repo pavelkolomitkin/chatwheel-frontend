@@ -1,0 +1,150 @@
+<td>
+  <a [routerLink]="'/admin/users/' + user.id">
+    <app-user-avatar
+      [size]="'small'"
+      [user]="user"
+      [isActivityVisible]="true"
+      [additionalStyles]="{ cursor: 'pointer' }"
+    >
+    </app-user-avatar>
+  </a>
+
+</td>
+
+<td>
+  {{ user.fullName }}
+  <ng-container *ngIf="!!user.about">
+    <span placement="bottom" [ngbTooltip]="user.about">
+      <i class="ik ik-info"></i>
+    </span>
+  </ng-container>
+</td>
+
+<td>
+  <ng-container *ngIf="!!user.residenceCountry; else noCountry">
+    <span class="fi fi-{{user.residenceCountry.code.toLocaleLowerCase() }} fis"></span>
+    <span class="text-muted">{{ user.residenceCountry.name }}</span>
+  </ng-container>
+  <ng-template #noCountry>
+    <span class="text-muted">-</span>
+  </ng-template>
+</td>
+
+<td>
+  <ng-container *ngIf="!!user.searchCountry; else noCountry">
+    <span class="fi fi-{{user.searchCountry.code.toLocaleLowerCase() }} fis"></span>
+    <span class="text-muted">{{ user.searchCountry.name }}</span>
+  </ng-container>
+  <ng-template #noCountry>
+    <span class="text-muted">-</span>
+  </ng-template>
+</td>
+
+<td>
+  <app-user-geo-location-view
+    [user]="user"
+  ></app-user-geo-location-view>
+</td>
+
+<td>
+  <ng-container *ngIf="user.interests.length > 0; else noInterests">
+    <span class="badge badge-pill badge-primary mr-1 mb-1" *ngFor="let interest of user.interests">{{ interest.name }}</span>
+  </ng-container>
+  <ng-template #noInterests>
+    <span class="text-muted"> - </span>
+  </ng-template>
+</td>
+
+<td>
+
+  <ng-container *ngIf="user.socialMediaType === 0">
+    <a href="https://vk.com/id{{user.socialMediaUserId}}">
+      <img src="../../../../../../assets/picture/vk-icon.png" style="width: 40px" />
+    </a>
+  </ng-container>
+  <ng-container *ngIf="user.email !== null">
+    <span class="text-primary">{{ user.email }}</span>
+  </ng-container>
+
+</td>
+
+<td>
+  <span class="badge text-light" app-user-activity-status [user]="user">
+    <span app-date-time [value]="user.lastActivity"></span>
+  </span>
+</td>
+
+<td>
+  <span *ngIf="user.isActivated; else notActivated">
+    <i class="ik ik-check-square"></i>
+  </span>
+  <ng-template #notActivated>
+    <span>
+      <i class="ik ik-square"></i>
+    </span>
+  </ng-template>
+</td>
+
+<td>
+  <span *ngIf="user.isBlocked; else notBlocked">
+    <i class="ik ik-check-square" [ngbTooltip]="user.blockingReason"></i>
+  </span>
+  <ng-template #notBlocked>
+    <span>
+      <i class="ik ik-square"></i>
+    </span>
+  </ng-template>
+</td>
+
+<td>
+  <span *ngIf="user.deleted; else notDeleted">
+    <i class="ik ik-check-square"></i>
+  </span>
+  <ng-template #notDeleted>
+    <span>
+      <i class="ik ik-square"></i>
+    </span>
+  </ng-template>
+</td>
+
+<td>
+  <span app-date-time [value]="user.createdAt"></span>
+</td>
+
+<td>
+
+  <ng-container *ngIf="!user.deleted; else deletedTemplate">
+
+    <span
+      *ngIf="!user.isBlocked"
+      class="btn btn-warning mr-1 mb-1"
+      [title]="'BLOCK_USER' | translate"
+      (click)="onBlockUserClickHandler($event)"
+    >
+      <i class="ik ik-slash m-0"></i>
+    </span>
+
+      <span
+        *ngIf="user.isBlocked"
+        class="btn btn-light mr-1 mb-1"
+        [title]="'UNBLOCK_USER' | translate"
+        (click)="onUnBlockUserClickHandler($event)"
+      >
+        <i class="ik ik-slash m-0"></i>
+      </span>
+
+    <span
+      class="btn btn-danger mr-1 mb-1"
+      [title]="'DELETE_USER' | translate"
+      (click)="onDeleteUserClickHandler($event)"
+    >
+      <i class="ik ik-delete m-0"></i>
+    </span>
+
+  </ng-container>
+  <ng-template #deletedTemplate>
+    <span class="text-muted">(deleted)</span>
+  </ng-template>
+
+
+</td>

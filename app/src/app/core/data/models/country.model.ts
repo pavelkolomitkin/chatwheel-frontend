@@ -6,5 +6,7 @@ export interface Country
 
   name: string;
 
+  code: string;
+
   region: Region;
 }

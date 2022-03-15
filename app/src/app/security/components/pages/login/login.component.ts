@@ -6,7 +6,7 @@ import {NgForm} from "@angular/forms";
 import {LoginCredentials} from "../../../data/models/login-credentials.model";
 import {UserLoginStart} from "../../../data/actions";
 import {Observable, Subscription} from "rxjs";
-import {filter} from "rxjs/operators";
+import {filter, map} from "rxjs/operators";
 import {environment} from "../../../../../environments/environment";
 
 @Component({
@@ -16,7 +16,7 @@ import {environment} from "../../../../../environments/environment";
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
-  errors: Observable<Object>;
+  error: Observable<string>;
 
   authorizedUserSubscription: Subscription = null;
 
@@ -35,12 +35,20 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.router.navigateByUrl('/');
     });
 
-    this.errors = this.store.pipe(
+
+    this.error = this.store.pipe(
       select(state => state.security.loginErrors),
       filter(result => {
         return Object.keys(result).length > 0;
       })
+    ).pipe(
+      map(data => {
+        // @ts-ignore
+        return data.message || 'LOGIN_ERROR';
+      })
     );
+
+
   }
 
   ngOnDestroy(): void {

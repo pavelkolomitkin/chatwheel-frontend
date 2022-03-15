@@ -75,3 +75,14 @@ body
 {
   pointer-events: none !important;
 }
+
+.popover-body
+{
+  max-width: 400px !important;
+  max-height: 400px !important;
+}
+
+.popover
+{
+  max-width: 400px !important;
+}

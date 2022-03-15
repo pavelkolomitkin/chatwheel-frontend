@@ -22,7 +22,7 @@
         </div>
 
 
-        <div class="nav-item" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
+        <div class="nav-item" [routerLinkActive]="'active'">
           <a [routerLink]="'./users'"><i class="ik ik-users"></i><span>{{ 'USERS' | translate }}</span> <span class="badge badge-secondary">{{ totalUserNumber | async }}</span></a>
         </div>
 

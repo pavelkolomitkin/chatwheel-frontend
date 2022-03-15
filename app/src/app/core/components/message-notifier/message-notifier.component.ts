@@ -3,6 +3,7 @@ import {select, Store} from "@ngrx/store";
 import {State} from "../../../app.state";
 import {filter} from "rxjs/operators";
 import {Notification, NotificationType} from "../../data/models/notification.model";
+import {TranslateService} from "@ngx-translate/core";
 
 declare var $: any;
 
@@ -42,24 +43,29 @@ export class MessageNotifierComponent implements OnInit {
   };
 
   constructor(
-    private store: Store<State>
+    private store: Store<State>,
+    private translate: TranslateService
   ) { }
 
   ngOnInit(): void {
     this.store.pipe(select(state => state.core.lastNotification),
       filter(notification => !!notification)
-    ).subscribe((notification: Notification) => {
-      this.showNotification(notification);
+    ).subscribe(async (notification: Notification) => {
+      await this.showNotification(notification);
     });
   }
 
-  showNotification(notification: Notification)
+  async showNotification(notification: Notification)
   {
+    const message: string = await this.translate.get(notification.message).toPromise();
+    const head: string = await this.translate.get(notification.title).toPromise();
+
+
     const config =
       {
         ...this.messageConfigs[notification.type],
-        text: notification.message,
-        heading: notification.title
+        text: message,
+        heading: head
       }
     ;
 

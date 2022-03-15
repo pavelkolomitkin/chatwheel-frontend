@@ -1,5 +1,6 @@
 import * as actions from './actions';
-import {AuthUserTypes} from "./model/user-types.enum";
+import {AuthUserTypes} from "./model/auth-user-types.enum";
+import {User} from "../../security/data/models/user.model";
 
 
 export interface State
@@ -9,6 +10,18 @@ export interface State
   clientVkUserNumber: number,
 
   newAbuseReportNumber: number,
+
+  lastBlockingUser: User,
+  lastBlockedUser: User,
+  lastBlockedUserError: {},
+
+  lastUnBlockingUser: User,
+  lastUnBlockedUser: User;
+  lastUnBlockedUserError: {},
+
+  lastDeletingUser: User,
+  lastDeletedUser: User,
+  lastDeletedUserError: {},
 }
 
 export const initialState: State = {
@@ -16,7 +29,20 @@ export const initialState: State = {
   clientEmailUserNumber: 0,
   clientVkUserNumber: 0,
 
-  newAbuseReportNumber: 0
+  newAbuseReportNumber: 0,
+
+  lastBlockingUser: null,
+  lastBlockedUser: null,
+  lastBlockedUserError: {},
+
+  lastUnBlockingUser: null,
+  lastUnBlockedUser: null,
+  lastUnBlockedUserError: {},
+
+  lastDeletingUser: null,
+  lastDeletedUser: null,
+  lastDeletedUserError: {},
+
 }
 
 export function reducer(state: State = initialState, action: actions.AdminUserActions): State
@@ -68,6 +94,69 @@ export function reducer(state: State = initialState, action: actions.AdminUserAc
       return {
         ...state,
         newAbuseReportNumber: 0
+      };
+
+    case actions.ADMIN_BLOCK_USER_INIT:
+
+      return {
+        ...state,
+        lastBlockingUser: action.user
+      };
+
+    case actions.ADMIN_BLOCK_USER_SUCCESS:
+
+      return {
+        ...state,
+        lastBlockedUser: action.user
+      };
+
+    case actions.ADMIN_BLOCK_USER_ERROR:
+
+      return {
+        ...state,
+        lastBlockedUserError: action.errors
+      };
+
+    case actions.ADMIN_UNBLOCK_USER_INIT:
+
+      return {
+        ...state,
+        lastUnBlockingUser: action.user
+      };
+
+    case actions.ADMIN_UNBLOCK_USER_SUCCESS:
+
+      return {
+        ...state,
+        lastUnBlockedUser: action.user,
+      };
+
+    case actions.ADMIN_UNBLOCK_USER_ERROR:
+
+      return {
+        ...state,
+        lastUnBlockedUserError: action.errors
+      };
+
+    case actions.ADMIN_DELETE_USER_INIT:
+
+      return {
+        ...state,
+        lastDeletingUser: action.user
+      };
+
+    case actions.ADMIN_DELETE_USER_SUCCESS:
+
+      return {
+        ...state,
+        lastDeletedUser: action.user
+      };
+
+    case actions.ADMIN_DELETE_USER_ERROR:
+
+      return {
+        ...state,
+        lastDeletedUserError: action.errors
       };
 
     default:

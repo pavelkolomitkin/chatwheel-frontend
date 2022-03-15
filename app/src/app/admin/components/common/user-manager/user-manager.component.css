@@ -1,0 +1,15 @@
+.window-user-item {
+  position: relative;
+}
+
+.window-user-item .avatar-container {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+}
+
+.window-user-item .info-block {
+  position: relative;
+  margin-left: 80px;
+  padding-top: 10px;
+}

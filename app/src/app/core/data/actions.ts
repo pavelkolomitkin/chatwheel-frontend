@@ -11,6 +11,7 @@ export const GLOBAL_PROGRESS_HIDE = 'GLOBAL_PROGRESS_HIDE';
 export const GLOBAL_NOTIFICATION = 'GLOBAL_NOTIFICATION';
 
 export const COUNTRY_LIST_LOADED = 'COUNTRY_LIST_LOADED';
+export const COUNTRY_LIST_LOAD_ERROR = 'COUNTRY_LIST_LOAD_ERROR';
 
 export const UPLOAD_USER_AVATAR_START = 'UPLOAD_USER_AVATAR_START';
 export const UPLOAD_USER_AVATAR_COMPLETE = 'UPLOAD_USER_AVATAR_COMPLETE';
@@ -47,6 +48,13 @@ export class CountryListLoaded implements Action
   readonly type = COUNTRY_LIST_LOADED;
 
   constructor(public list: Country[]) {}
+}
+
+export class CountryListLoadError implements Action
+{
+  readonly type = COUNTRY_LIST_LOAD_ERROR;
+
+  constructor(public errors: any) {}
 }
 
 export class UploadUserAvatarStart implements Action
@@ -86,6 +94,7 @@ export type CoreActions = GlobalStoreEffectInit
   | GlobalNotification
 
   | CountryListLoaded
+  | CountryListLoadError
 
   | UploadUserAvatarStart
   | UploadUserAvatarComplete

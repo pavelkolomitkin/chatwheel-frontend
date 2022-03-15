@@ -22,6 +22,8 @@ import {DateTimeViewComponent} from "./components/date-time-view/date-time-view.
 import { AlertWindowComponent } from './components/alert-window/alert-window.component';
 import { MapPinGroupComponent } from './components/geo/map-pin-group/map-pin-group.component';
 import {ImageUrlPipe} from "./pipes/image-url.pipe";
+import {MapLocationViewComponent} from "./components/geo/map-location-view/map-location-view.component";
+import {PaginatorComponent} from "./components/paginator/paginator.component";
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import {ImageUrlPipe} from "./pipes/image-url.pipe";
     TextTrimPipe,
     ImageUrlPipe,
     AlertWindowComponent,
-    MapPinGroupComponent
+    MapPinGroupComponent,
+    MapLocationViewComponent,
+    PaginatorComponent
   ],
   imports: [
     CommonModule,
@@ -68,12 +72,14 @@ import {ImageUrlPipe} from "./pipes/image-url.pipe";
     MapComponent,
     DateTimeViewComponent,
     AlertWindowComponent,
+    MapLocationViewComponent,
+    PaginatorComponent,
 
     UserActivityStatusDirective,
     MultiLinePipe,
     TextTrimPipe,
     ImageUrlPipe,
-    MomentModule
+    MomentModule,
   ],
 
   entryComponents: [

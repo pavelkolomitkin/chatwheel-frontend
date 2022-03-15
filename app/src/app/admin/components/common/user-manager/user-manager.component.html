@@ -1,0 +1,121 @@
+<app-alert-window
+  [title]="'BLOCK_USER_QUESTION' | translate"
+  [(isShown)]="isBlockUserWindowShown"
+  (onClose)="onBlockUserWindowCloseHandler($event)"
+>
+  <div content>
+
+    <div class="window-user-item" *ngIf="!!blockingUser">
+
+      <div class="avatar-container">
+        <app-user-avatar
+          [size]="'mediumSmall'"
+          [user]="blockingUser"
+        ></app-user-avatar>
+      </div>
+      <div class="info-block">
+        <h4>{{ blockingUser.fullName }}</h4>
+        <div>
+          <form #form="ngForm">
+            <div class="form-group">
+              <textarea
+                class="form-control"
+                [(ngModel)]="blockingReason"
+                name="blockingReason"
+                placeholder="{{ 'BLOCKING_REASON' | translate }}..."
+              ></textarea>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div footer>
+    <button
+      type="button"
+      class="btn btn-outline-danger"
+      (click)="onBlockButtonClickHandler($event)"
+
+    >{{ 'BLOCK' | translate }}</button>
+  </div>
+
+</app-alert-window>
+
+<app-alert-window
+  [title]="'UNBLOCK_USER_QUESTION' | translate"
+  [(isShown)]="isUnBlockUserWindowShown"
+  (onClose)="onUnBlockUserWindowCloseHandler($event)">
+
+  <div content>
+
+    <div class="window-user-item" *ngIf="!!unBlockingUser">
+
+      <div class="avatar-container">
+        <app-user-avatar
+          [size]="'mediumSmall'"
+          [user]="unBlockingUser"
+        ></app-user-avatar>
+      </div>
+      <div class="info-block">
+        <h4>{{ unBlockingUser.fullName }}</h4>
+        <div>
+          <span class="text-muted">{{ 'ARE_YOU_SURE_YOU_WANNA_UNBLOCK_THIS_USER_QUESTION' | translate }}</span>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div footer>
+    <button
+      type="button"
+      class="btn btn-outline-danger"
+      (click)="onUnBlockButtonClickHandler($event)"
+
+    >{{ 'UNBLOCK' | translate }}</button>
+  </div>
+
+</app-alert-window>
+
+<app-alert-window
+  [title]="'DELETE_USER_QUESTION' | translate"
+  [(isShown)]="isDeletingUserWindowShown"
+  (onClose)="onDeleteUserWindowCloseHandler($event)"
+
+>
+
+  <div content>
+
+    <div class="window-user-item" *ngIf="!!deletingUser">
+
+      <div class="avatar-container">
+        <app-user-avatar
+          [size]="'mediumSmall'"
+          [user]="deletingUser"
+        ></app-user-avatar>
+      </div>
+      <div class="info-block">
+        <h4>{{ deletingUser.fullName }}</h4>
+        <div>
+          <span class="text-muted">{{ 'ARE_YOU_SURE_YOU_WANNA_DELETE_THIS_USER_QUESTION' | translate }}</span>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div footer>
+    <button
+      type="button"
+      class="btn btn-outline-danger"
+      (click)="onDeleteButtonClickHandler($event)"
+
+    >{{ 'DELETE' | translate }}</button>
+  </div>
+
+</app-alert-window>

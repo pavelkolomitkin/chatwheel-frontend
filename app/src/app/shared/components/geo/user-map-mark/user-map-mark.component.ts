@@ -11,6 +11,8 @@ export class UserMapMarkComponent extends MapComponentBaseComponent implements O
 
   @Input() user: User;
 
+  @Input() url: string = null;
+
   constructor() {
     super()
   }

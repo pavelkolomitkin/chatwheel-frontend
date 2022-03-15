@@ -9,6 +9,7 @@ export interface State
   globalProgressLoaders: number;
   lastNotification: Notification;
   countries: Country[];
+  countriesLoadError: {},
 
   uploadingUserPicture: UploadFile;
   uploadedUserPicture: UploadFile;
@@ -21,6 +22,7 @@ export const initialState: State = {
   lastNotification: null,
 
   countries: [],
+  countriesLoadError: {},
 
   uploadingUserPicture: null,
   uploadedUserPicture: null,
@@ -70,6 +72,13 @@ export function reducer(state: State = initialState, action: actions.CoreActions
       return {
         ...state,
         countries: action.list
+      };
+
+    case actions.COUNTRY_LIST_LOAD_ERROR:
+
+      return {
+        ...state,
+        countriesLoadError: action.errors
       };
 
     case actions.UPLOAD_USER_AVATAR_COMPLETE:

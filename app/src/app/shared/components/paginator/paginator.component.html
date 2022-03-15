@@ -1,0 +1,48 @@
+<ng-container *ngIf="numberOfPages > 1">
+
+  <div class="dataTables_wrapper">
+    <div class="dataTables_paginate paging_simple_numbers">
+
+      <ul class="pagination">
+        <li class="paginate_button page-item previous" [ngClass]="page == 1 ? 'disabled': ''">
+          <ng-container *ngIf="page !== 1; else firstCurrentPage">
+            <a
+              class="page-link"
+              [routerLink]="locationPath"
+              [queryParams]="getQueryParameters(page - 1)"
+            >{{ 'PREVIOUS' | translate }}</a>
+          </ng-container>
+          <ng-template #firstCurrentPage>
+            <span class="page-link">{{ 'PREVIOUS' | translate }}</span>
+          </ng-template>
+        </li>
+
+        <li
+          class="paginate_button page-item"
+          *ngFor="let item of [].constructor(numberOfPages); let i = index"
+          [ngClass]="page == (i + 1) ? 'disabled' : 'active'"
+        >
+          <ng-container *ngIf="page !== (i + 1); else currentPageItem">
+            <a [routerLink]="locationPath" [queryParams]="getQueryParameters(i + 1)" class="page-link">{{ i + 1 }}</a>
+          </ng-container>
+          <ng-template #currentPageItem>
+            <span class="page-link">{{ i + 1 }}</span>
+          </ng-template>
+
+        </li>
+
+        <li class="paginate_button page-item next" [ngClass]="page == numberOfPages ? 'disabled' : ''">
+          <ng-container *ngIf="page !== numberOfPages; else lastCurrentPage">
+            <a class="page-link" [routerLink]="locationPath" [queryParams]="getQueryParameters(+page + 1)">{{ 'NEXT' | translate }}</a>
+          </ng-container>
+          <ng-template #lastCurrentPage>
+            <span class="page-link">{{ 'NEXT' | translate }}</span>
+          </ng-template>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+
+</ng-container>
