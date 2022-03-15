@@ -10,8 +10,9 @@
           name="authType"
           class="form-control"
         >
-          <option [value]="0">{{ 'EMAIL' | translate }}</option>
-          <option [value]="1">{{ 'VK' | translate }}</option>
+          <option [value]="''">{{ 'ALL_TYPES' | translate }}</option>
+          <option [value]="'email'">{{ 'EMAIL' | translate }}</option>
+          <option [value]="'vk'">{{ 'VK' | translate }}</option>
         </select>
       </div>
     </div>
@@ -27,6 +28,7 @@
           id="residence-country"
           class="form-control"
         >
+          <option [ngValue]="null">-</option>
           <option *ngFor="let currentCountry of countries" [ngValue]="currentCountry">{{ currentCountry.name }}</option>
         </select>
       </div>
@@ -44,6 +46,7 @@
           id="search-country"
           class="form-control"
         >
+          <option [ngValue]="null">-</option>
           <option *ngFor="let currentCountry of countries" [ngValue]="currentCountry">{{ currentCountry.name }}</option>
         </select>
       </div>
@@ -56,11 +59,11 @@
         <input
           id="is-activated"
           type="checkbox"
-          name="isActivated"
-          [(ngModel)]="isActivated"
+          name="isNotActivated"
+          [(ngModel)]="isNotActivated"
         >
         <label for="is-activated">
-          {{ 'IS_ACTIVATED' | translate }}
+          {{ 'NOT_ACTIVATED' | translate }}
         </label>
       </div>
 

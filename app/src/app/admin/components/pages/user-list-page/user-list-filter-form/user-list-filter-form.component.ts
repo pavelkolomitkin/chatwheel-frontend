@@ -33,7 +33,7 @@ export class UserListFilterFormComponent implements OnInit {
   @Input() residenceCountry: Country;
   @Input() searchCountry: Country;
 
-  @Input() isActivated: boolean;
+  @Input() isNotActivated: boolean;
   @Input() isBlocked: boolean;
   @Input() isDeleted: boolean;
 

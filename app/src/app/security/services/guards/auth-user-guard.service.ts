@@ -38,10 +38,20 @@ export class AuthUserGuardService implements CanActivate {
               const permissions = this.permissionService.getPermissions();
               const roles = Object.keys(permissions);
               // @ts-ignore
-              if ((urlPrefix === 'admin') && (roles.includes(AuthUserGuardService.ADMIN_ROLE)))
+              if (urlPrefix === 'admin')
               {
-                resolve(true);
-                return;
+                if (roles.includes(AuthUserGuardService.ADMIN_ROLE))
+                {
+                  resolve(true);
+                  return;
+                }
+                else
+                {
+                  await this.router.navigateByUrl('/');
+
+                  resolve(false);
+                  return;
+                }
               }
               // @ts-ignore
               if (roles.includes(AuthUserGuardService.CLIENT_ROLE)) {

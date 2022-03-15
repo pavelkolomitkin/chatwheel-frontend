@@ -1,6 +1,6 @@
 
 export enum AuthUserTypes {
-  EMAIL,
-  VK
+  EMAIL = 'email',
+  VK = 'vk'
 }
 

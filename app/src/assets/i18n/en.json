@@ -144,7 +144,8 @@
   "DELETE_USER_QUESTION": "Delete User?",
   "ARE_YOU_SURE_YOU_WANNA_DELETE_THIS_USER_QUESTION": "Are you sure you wanna delete this user?",
   "PREVIOUS": "Previous",
-  "IS_ACTIVATED": "Activated",
+  "NOT_ACTIVATED": "Not Activated",
   "IS_BLOCKED": "Blocked",
-  "IS_DELETED": "Deleted"
+  "IS_DELETED": "Deleted",
+  "ALL_TYPES": "All"
 }

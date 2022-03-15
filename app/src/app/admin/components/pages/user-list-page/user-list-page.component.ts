@@ -40,7 +40,7 @@ export class UserListPageComponent implements OnInit, OnDestroy {
 
   currentFilter: ClientUserListFilter = {
     authType: null,
-    isActivated: null,
+    isNotActivated: null,
     isBlocked: null,
     residenceCountry: null,
     searchCountry: null,
@@ -132,21 +132,36 @@ export class UserListPageComponent implements OnInit, OnDestroy {
     }
   }
 
-  userModifiedHandler = (user: User) => {
+  userModifiedHandler = async (user: User) => {
 
-    const index = this.list.findIndex(item => item.id === user.id);
+    await this.loadUsers();
+    /*const index = this.list.findIndex(item => item.id === user.id);
     if (index !== -1)
     {
       this.list[index] = user;
     }
 
+    const params = {
+      ...this.getCurrentFilter(),
+      page: this.getCurrentListPage()
+    }
+
+    await this.router.navigate(
+      [],
+        {
+          relativeTo: this.route,
+          queryParams: params,
+          queryParamsHandling: "merge",
+        }
+      );
+    */
   }
 
   getCurrentFilter(): ClientUserListFilter
   {
     let {
       authType,
-      isActivated,
+      isNotActivated,
       isBlocked,
       residenceCountry,
       searchCountry,
@@ -164,8 +179,8 @@ export class UserListPageComponent implements OnInit, OnDestroy {
     sortType = !sortType ? this.defaultSortType : sortType;
 
     return {
-      authType: !!authType ? JSON.parse(authType) : null,
-      isActivated: !!isActivated ? JSON.parse(isActivated) : null,
+      authType: authType,
+      isNotActivated: !!isNotActivated ? JSON.parse(isNotActivated) : null,
       isBlocked: !!isBlocked ? JSON.parse(isBlocked) : null,
       residenceCountry: !!residenceCountry ? this.countries.find(country => country.id === residenceCountry) : null,
       searchCountry: !!searchCountry ? this.countries.find(country => country.id === searchCountry) : null,

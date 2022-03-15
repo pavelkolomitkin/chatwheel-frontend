@@ -7,7 +7,7 @@ export interface ClientUserListFilter
   sortField?: string;
   sortType?: SortingType;
   authType?: AuthUserTypes;
-  isActivated?: boolean;
+  isNotActivated?: boolean;
   isBlocked?: boolean;
   residenceCountry?: Country;
   searchCountry?: Country;

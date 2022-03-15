@@ -2,7 +2,7 @@
 
   <div class="card-header">
 
-    <h3>Users</h3>
+    <h3>Users <span class="text-muted small" *ngIf="!!totalNumber">({{ totalNumber }})</span></h3>
 
   </div>
 
@@ -12,7 +12,7 @@
       <app-user-list-filter-form
         [countries]="countries"
         [authType]="currentFilter.authType"
-        [isActivated]="currentFilter.isActivated"
+        [isNotActivated]="currentFilter.isNotActivated"
         [isBlocked]="currentFilter.isBlocked"
         [isDeleted]="currentFilter.isDeleted"
         [residenceCountry]="currentFilter.residenceCountry"
