@@ -19,5 +19,9 @@ export class UserMapMarkComponent extends MapComponentBaseComponent implements O
 
   ngOnInit(): void {
 
+    if (!this.url)
+    {
+      this.url = '/profile/' + this.user.id
+    }
   }
 }
