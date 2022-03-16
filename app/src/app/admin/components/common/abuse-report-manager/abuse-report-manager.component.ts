@@ -3,7 +3,13 @@ import {select, Store} from "@ngrx/store";
 import {State} from "../../../../app.state";
 import {AbuseReport} from "../../../../core/data/models/abuse-report.model";
 import {Subscription} from "rxjs";
-import {AbuseReportOpen, AbuseReportRead} from "../../../data/actions";
+import {
+  AbuseReportOpen,
+  AbuseReportRead,
+  GetNewAbuseReportNumberStart,
+  GetTotalNumberClientUsersStart
+} from "../../../data/actions";
+import {filter} from "rxjs/operators";
 
 @Component({
   selector: 'app-abuse-report-manager',
@@ -16,6 +22,7 @@ export class AbuseReportManagerComponent implements OnInit, OnDestroy {
   isAbuseReportWindowShown:boolean = false;
 
   lastAbuseReportOpenSubscription: Subscription;
+  reportReadSubscription: Subscription;
 
 
   constructor(
@@ -27,14 +34,27 @@ export class AbuseReportManagerComponent implements OnInit, OnDestroy {
     this.lastAbuseReportOpenSubscription = this
       .store
       .pipe(select(state => state.admin.lastOpenedAbuseReport))
-      .subscribe(this.onLastAbuseReportOpenHandler)
+      .subscribe(this.onLastAbuseReportOpenHandler);
+
+    this.reportReadSubscription = this.store.pipe(
+      select(state => state.admin.lastReadAbuseReport),
+      filter(report => !!report)
+    ).subscribe(this.reportReadHandler);
+
+    this.store.dispatch(new GetNewAbuseReportNumberStart());
 
   }
 
   ngOnDestroy(): void {
 
     this.lastAbuseReportOpenSubscription.unsubscribe();
+    this.reportReadSubscription.unsubscribe();
 
+  }
+
+  reportReadHandler = (report: AbuseReport) => {
+
+    this.store.dispatch(new GetNewAbuseReportNumberStart());
   }
 
   onLastAbuseReportOpenHandler = (report: AbuseReport) => {
