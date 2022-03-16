@@ -77,6 +77,7 @@
   "YOUR_NAME": "Your Name",
   "NO_INTERESTS_MESSAGE": "Describe your interests so that people know you better!",
   "YOUR_INTERESTS": "Interests",
+  "USER_INTERESTS": "Interests",
   "RESIDENCE_COUNTRY": "Residence Country",
   "NOT_SELECTED": "Not Selected",
   "SEARCH_COUNTRY": "Search Country",
@@ -154,5 +155,13 @@
   "ABOUT_USER": "About User",
   "ABOUT_ME": "About me",
   "REPORTS": "report(s)",
-  "USER_HAS_NO_REPORTS": "The user has no reports"
+  "USER_HAS_NO_REPORTS": "The user has no reports",
+  "CREATE_ADMIN_ACCOUNT": "Create Admin Account",
+  "PHOTO": "Photo",
+  "GEO_LOCATION": "Geo Location",
+  "LAST_ACTIVITY": "Last Activity",
+  "ACTIVATED": "Activated",
+  "CREATED_AT": "Created",
+  "ACTIONS": "Actions"
+
 }

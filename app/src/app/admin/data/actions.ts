@@ -32,7 +32,18 @@ export const ADMIN_ABUSE_REPORT_READ = 'ADMIN_ABUSE_REPORT_READ';
 export const ADMIN_ABUSE_REPORT_READ_SUCCESS = 'ADMIN_ABUSE_REPORT_READ_SUCCESS';
 export const ADMIN_ABUSE_REPORT_READ_ERROR = 'ADMIN_ABUSE_REPORT_READ_ERROR';
 
+export const ADMIN_GET_TOTAL_NUMBER_ADMIN_USERS = 'ADMIN_GET_TOTAL_NUMBER_ADMIN_USERS';
+export const ADMIN_GET_TOTAL_NUMBER_ADMIN_USERS_SUCCESS = 'ADMIN_GET_TOTAL_NUMBER_ADMIN_USERS_SUCCESS';
+export const ADMIN_GET_TOTAL_NUMBER_ADMIN_USERS_ERROR = 'ADMIN_GET_TOTAL_NUMBER_ADMIN_USERS_ERROR';
 
+export const ADMIN_CREATE_ADMIN_USER_INIT = 'ADMIN_CREATE_ADMIN_USER_INIT';
+export const ADMIN_ADMIN_USER_CREATED = 'ADMIN_ADMIN_USER_CREATED';
+
+export const ADMIN_EDIT_ADMIN_USER_INIT = 'ADMIN_EDIT_ADMIN_USER_INIT';
+export const ADMIN_ADMIN_USER_EDITED = 'ADMIN_ADMIN_USER_EDITED';
+
+export const ADMIN_RESET_PASSWORD_ADMIN_USER_INIT = 'ADMIN_RESET_PASSWORD_ADMIN_USER_INIT';
+export const ADMIN_ADMIN_USER_PASSWORD_RESET = 'ADMIN_ADMIN_USER_PASSWORD_RESET';
 
 export class GetTotalNumberClientUsersStart implements Action
 {
@@ -194,6 +205,72 @@ export class AbuseReportReadError implements Action
 }
 
 
+export class GetTotalNumberAdminUsers implements Action
+{
+  readonly type = ADMIN_GET_TOTAL_NUMBER_ADMIN_USERS;
+
+  constructor() { }
+}
+
+export class GetTotalNumberAdminUsersSuccess implements Action
+{
+  readonly type = ADMIN_GET_TOTAL_NUMBER_ADMIN_USERS_SUCCESS;
+
+  constructor(public totalNumber: number) {  }
+}
+
+export class GetTotalNumberAdminUsersError implements Action
+{
+  readonly type = ADMIN_GET_TOTAL_NUMBER_ADMIN_USERS_ERROR;
+
+  constructor(public errors: any) { }
+}
+
+
+export class CreateAdminUserInit implements Action
+{
+  readonly type = ADMIN_CREATE_ADMIN_USER_INIT;
+
+  constructor(public init: boolean) {}
+}
+
+export class AdminUserCreated implements Action
+{
+  readonly type = ADMIN_ADMIN_USER_CREATED;
+
+  constructor(public admin: User) {  }
+}
+
+
+export class EditAdminUserInit implements Action
+{
+  readonly type = ADMIN_EDIT_ADMIN_USER_INIT;
+
+  constructor(public admin: User) {  }
+}
+
+export class AdminUserEdited implements Action
+{
+  readonly type = ADMIN_ADMIN_USER_EDITED;
+
+  constructor(public admin: User) {  }
+}
+
+
+export class ResetPasswordAdminUserInit implements Action
+{
+  readonly type = ADMIN_RESET_PASSWORD_ADMIN_USER_INIT;
+
+  constructor(public admin: User) {  }
+}
+
+export class AdminUserPasswordReset implements Action
+{
+  readonly type = ADMIN_ADMIN_USER_PASSWORD_RESET;
+
+  constructor(public admin: User) {  }
+}
+
 export type AdminUserActions =
   GetTotalNumberClientUsersStart
   | GetTotalNumberClientUsersSuccess
@@ -223,4 +300,17 @@ export type AdminUserActions =
   | AbuseReportRead
   | AbuseReportReadSuccess
   | AbuseReportReadError
+
+  | GetTotalNumberAdminUsers
+  | GetTotalNumberAdminUsersSuccess
+  | GetTotalNumberAdminUsersError
+
+  | CreateAdminUserInit
+  | AdminUserCreated
+
+  | EditAdminUserInit
+  | AdminUserEdited
+
+  | ResetPasswordAdminUserInit
+  | AdminUserPasswordReset
   ;

@@ -9,6 +9,7 @@ export interface State
   clientUserTotalNumber: number,
   clientEmailUserNumber: number,
   clientVkUserNumber: number,
+  adminTotalNumber: number,
 
   newAbuseReportNumber: number,
 
@@ -27,12 +28,18 @@ export interface State
   lastOpenedAbuseReport: AbuseReport,
   lastReadAbuseReport: AbuseReport,
   lastReadAbuseReportError: {},
+
+  createAdminInit: boolean,
+  lastCreatedAdminUser: User,
+  lastEditedAdminUser: User,
+  lastPasswordResetAdminUser: User
 }
 
 export const initialState: State = {
   clientUserTotalNumber: 0,
   clientEmailUserNumber: 0,
   clientVkUserNumber: 0,
+  adminTotalNumber: 0,
 
   newAbuseReportNumber: 0,
 
@@ -51,6 +58,11 @@ export const initialState: State = {
   lastOpenedAbuseReport: null,
   lastReadAbuseReport: null,
   lastReadAbuseReportError: {},
+
+  createAdminInit: false,
+  lastCreatedAdminUser: null,
+  lastEditedAdminUser: null,
+  lastPasswordResetAdminUser: null
 
 }
 
@@ -186,6 +198,42 @@ export function reducer(state: State = initialState, action: actions.AdminUserAc
 
       return {
         ...state,
+        lastReadAbuseReportError: action.errors
+      };
+
+    case actions.ADMIN_GET_TOTAL_NUMBER_ADMIN_USERS_SUCCESS:
+
+      return {
+        ...state,
+        adminTotalNumber: action.totalNumber
+      };
+
+    case actions.ADMIN_CREATE_ADMIN_USER_INIT:
+
+      return {
+        ...state,
+        createAdminInit: action.init
+      };
+
+    case actions.ADMIN_ADMIN_USER_CREATED:
+
+      return {
+        ...state,
+        lastCreatedAdminUser: action.admin
+      };
+
+    case actions.ADMIN_ADMIN_USER_EDITED:
+
+      return {
+        ...state,
+        lastEditedAdminUser: action.admin
+      };
+
+    case actions.ADMIN_ADMIN_USER_PASSWORD_RESET:
+
+      return {
+        ...state,
+        lastPasswordResetAdminUser: action.admin
       };
 
     default:

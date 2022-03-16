@@ -21,13 +21,14 @@
           <a [routerLink]="'./dashboard'"><i class="ik ik-bar-chart-2"></i><span>{{ 'DASHBOARD' | translate }}</span></a>
         </div>
 
+        <div class="nav-item" [routerLinkActive]="'active'">
+          <a [routerLink]="'./admins'"><i class="ik ik-user-plus"></i><span>{{ 'ADMINS' | translate }}</span>
+            <span class="badge badge-primary">{{ totalAdminNumber | async }}</span>
+          </a>
+        </div>
 
         <div class="nav-item" [routerLinkActive]="'active'">
           <a [routerLink]="'./users'"><i class="ik ik-users"></i><span>{{ 'USERS' | translate }}</span> <span class="badge badge-secondary">{{ totalUserNumber | async }}</span></a>
-        </div>
-
-        <div class="nav-item" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
-          <a [routerLink]="'./admins'"><i class="ik ik-user-plus"></i><span>{{ 'ADMINS' | translate }}</span></a>
         </div>
 
         <div class="nav-item" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">

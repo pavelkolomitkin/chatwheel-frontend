@@ -1,1 +1,51 @@
-<p>admin-list-page works!</p>
+<div class="card table-card">
+
+  <div class="card-header">
+    <h3>{{ 'ADMINS' | translate }} <span class="text-muted small">({{ totalNumber | async }})</span></h3>
+  </div>
+
+  <div class="card-block card-body">
+
+    <div class="pl-4 pr-4 pt-2">
+      <span
+        *ngxPermissionsOnly="['ROLE_SUPER_ADMIN_USER']"
+        class="btn btn-success" (click)="onCreateAccountClickHandler($event)">
+        <i class="ik ik-plus"></i> {{ 'CREATE_ACCOUNT' | translate }}
+      </span>
+    </div>
+
+    <div class="mr-4">
+      <app-paginator
+        [totalItems]="totalNumber"
+        [itemsOnPage]="10"
+      ></app-paginator>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table dataTable table-hover mb-0">
+        <thead>
+          <tr>
+            <th>{{ 'PHOTO' | translate }}</th>
+            <th>{{ 'EMAIL' | translate }}</th>
+            <th>{{ 'FULL_NAME' | translate }}</th>
+            <th>{{ 'LAST_ACTIVITY' | translate }}</th>
+            <th>{{ 'IS_BLOCKED' | translate }}</th>
+            <th>{{ 'IS_DELETED' | translate }}</th>
+            <th>{{ 'CREATED_AT' | translate }}</th>
+            <th>{{ 'ACTIONS' | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr
+            app-admin-list-item
+
+          ></tr>
+
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+</div>

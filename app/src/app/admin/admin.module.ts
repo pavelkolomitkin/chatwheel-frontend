@@ -31,6 +31,11 @@ import { ClientAbuseReportListPageComponent } from './components/pages/client-us
 import { ClientReportAbuseItemComponent } from './components/pages/client-user-profile-page/client-abuse-report-list-page/client-report-abuse-item/client-report-abuse-item.component';
 import { AbuseReportTypeComponent } from './components/common/abuse-report-type/abuse-report-type.component';
 import { AbuseReportManagerComponent } from './components/common/abuse-report-manager/abuse-report-manager.component';
+import {AdminUserEffects} from "./data/effects/admin-user.effects";
+import { AdminManagerComponent } from './components/common/admin-manager/admin-manager.component';
+import {AdminUserService} from "./services/admin-user.service";
+import {NgxPermissionsModule} from "ngx-permissions";
+import { AdminListItemComponent } from './components/pages/admin-list-page/admin-list-item/admin-list-item.component';
 
 
 @NgModule({
@@ -56,6 +61,8 @@ import { AbuseReportManagerComponent } from './components/common/abuse-report-ma
     ClientReportAbuseItemComponent,
     AbuseReportTypeComponent,
     AbuseReportManagerComponent,
+    AdminManagerComponent,
+    AdminListItemComponent,
   ],
   imports: [
     CommonModule,
@@ -64,17 +71,20 @@ import { AbuseReportManagerComponent } from './components/common/abuse-report-ma
     StoreModule.forFeature('admin', reducer),
     EffectsModule.forFeature([
       ClientUserEffects,
-      AbuseReportEffects
+      AbuseReportEffects,
+      AdminUserEffects
     ]),
     NgbTooltipModule,
-    NgbPopoverModule
+    NgbPopoverModule,
+    NgxPermissionsModule,
   ],
   exports: [
     EffectsModule
   ],
   providers: [
     ClientUserService,
-    AbuseReportService
+    AbuseReportService,
+    AdminUserService
   ]
 })
 export class AdminModule { }
