@@ -125,6 +125,7 @@
   "DASHBOARD": "Dashboard",
   "USERS": "Users",
   "ABUSE_REPORTS": "Abuse Reports",
+  "ABUSE_REPORT":  "Abuse Report",
   "ADMINS": "Admins",
 
 
@@ -151,5 +152,7 @@
   "ALL_TYPES": "All",
   "NO_USER_FOUND": "No user found",
   "ABOUT_USER": "About User",
-  "ABOUT_ME": "About me"
+  "ABOUT_ME": "About me",
+  "REPORTS": "report(s)",
+  "USER_HAS_NO_REPORTS": "The user has no reports"
 }

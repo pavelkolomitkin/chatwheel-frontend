@@ -1,0 +1,25 @@
+<div class="abuse-report-item p-2" *ngIf="!!report" [ngClass]="report.new ? 'new' : ''">
+  <div class="applicant-avatar">
+    <app-user-avatar
+      [size]="'mediumSmall'"
+      [user]="report.applicant"
+      [isActivityVisible]="true"
+    ></app-user-avatar>
+  </div>
+
+  <div class="report-details">
+    <h6>{{ report.applicant.fullName }}</h6>
+    <div class="pb-2">
+      <app-abuse-report-type [type]="report.type"></app-abuse-report-type>
+    </div>
+    <div *ngIf="!!report.description" class="pb-2">
+      <span class="text-muted">{{ report.description | textTrim:50 }}</span>
+    </div>
+    <div class="small">
+      <span class="text-muted mr-2" *ngIf="reportNumber > 0" [ngbTooltip]="reportNumber + ('REPORTS' | translate)">
+        <i class="ik ik-alert-circle"></i> {{reportNumber}}
+      </span>
+      <span app-date-time [value]="report.createdAt"></span>
+    </div>
+  </div>
+</div>

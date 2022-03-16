@@ -3,6 +3,8 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {ClientUserService} from "../../../../services/client-user.service";
 import {User} from "../../../../../security/data/models/user.model";
 import {Subscription} from "rxjs";
+import {AbuseReportService} from "../../../../services/abuse-report.service";
+import {AbuseReport} from "../../../../../core/data/models/abuse-report.model";
 
 @Component({
   selector: 'app-client-profile-page',
@@ -16,10 +18,11 @@ export class ClientProfilePageComponent implements OnInit, OnDestroy {
 
   user: User;
 
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private service: ClientUserService
+    private service: ClientUserService,
   ) { }
 
   ngOnInit(): void {
@@ -44,8 +47,13 @@ export class ClientProfilePageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
 
-    this.routeParamSubscription.unsubscribe();
+    if (!!this.routeParamSubscription)
+    {
+      this.routeParamSubscription.unsubscribe();
+    }
 
   }
+
+
 
 }

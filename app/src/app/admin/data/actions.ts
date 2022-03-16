@@ -1,6 +1,7 @@
 import { Action } from '@ngrx/store';
 import {AuthUserTypes} from "./model/auth-user-types.enum";
 import {User} from "../../security/data/models/user.model";
+import {AbuseReport} from "../../core/data/models/abuse-report.model";
 
 export const ADMIN_GET_TOTAL_NUMBER_CLIENT_USERS_START = 'ADMIN_GET_TOTAL_NUMBER_CLIENT_USERS_START'
 export const ADMIN_GET_TOTAL_NUMBER_CLIENT_USERS_SUCCESS = 'ADMIN_GET_TOTAL_NUMBER_CLIENT_USERS_SUCCESS'
@@ -24,6 +25,12 @@ export const ADMIN_DELETE_USER_INIT = 'ADMIN_DELETE_USER_INIT';
 export const ADMIN_DELETE_USER_START = 'ADMIN_DELETE_USER_START';
 export const ADMIN_DELETE_USER_SUCCESS = 'ADMIN_DELETE_USER_SUCCESS';
 export const ADMIN_DELETE_USER_ERROR = 'ADMIN_DELETE_USER_ERROR';
+
+export const ADMIN_ABUSE_REPORT_OPEN = 'ADMIN_ABUSE_REPORT_OPEN';
+
+export const ADMIN_ABUSE_REPORT_READ = 'ADMIN_ABUSE_REPORT_READ';
+export const ADMIN_ABUSE_REPORT_READ_SUCCESS = 'ADMIN_ABUSE_REPORT_READ_SUCCESS';
+export const ADMIN_ABUSE_REPORT_READ_ERROR = 'ADMIN_ABUSE_REPORT_READ_ERROR';
 
 
 
@@ -157,6 +164,36 @@ export class DeleteUserError implements Action
 }
 
 
+export class AbuseReportOpen implements Action
+{
+  readonly type = ADMIN_ABUSE_REPORT_OPEN;
+
+  constructor(public report: AbuseReport) {}
+}
+
+
+export class AbuseReportRead implements Action
+{
+  readonly type = ADMIN_ABUSE_REPORT_READ;
+
+  constructor(public report: AbuseReport) {  }
+}
+
+export class AbuseReportReadSuccess implements Action
+{
+  readonly type = ADMIN_ABUSE_REPORT_READ_SUCCESS;
+
+  constructor(public report: AbuseReport) {  }
+}
+
+export class AbuseReportReadError implements Action
+{
+  readonly type = ADMIN_ABUSE_REPORT_READ_ERROR;
+
+  constructor(public errors: any) { }
+}
+
+
 export type AdminUserActions =
   GetTotalNumberClientUsersStart
   | GetTotalNumberClientUsersSuccess
@@ -181,4 +218,9 @@ export type AdminUserActions =
   | DeleteUserSuccess
   | DeleteUserError
 
+  | AbuseReportOpen
+
+  | AbuseReportRead
+  | AbuseReportReadSuccess
+  | AbuseReportReadError
   ;

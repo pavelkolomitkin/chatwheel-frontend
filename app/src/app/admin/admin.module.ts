@@ -28,6 +28,9 @@ import { NotFoundPageComponent } from './components/pages/not-found-page/not-fou
 import { ActionMenuComponent } from './components/pages/client-user-profile-page/action-menu/action-menu.component';
 import { ClientProfilePageComponent } from './components/pages/client-user-profile-page/client-profile-page/client-profile-page.component';
 import { ClientAbuseReportListPageComponent } from './components/pages/client-user-profile-page/client-abuse-report-list-page/client-abuse-report-list-page.component';
+import { ClientReportAbuseItemComponent } from './components/pages/client-user-profile-page/client-abuse-report-list-page/client-report-abuse-item/client-report-abuse-item.component';
+import { AbuseReportTypeComponent } from './components/common/abuse-report-type/abuse-report-type.component';
+import { AbuseReportManagerComponent } from './components/common/abuse-report-manager/abuse-report-manager.component';
 
 
 @NgModule({
@@ -50,6 +53,9 @@ import { ClientAbuseReportListPageComponent } from './components/pages/client-us
     ActionMenuComponent,
     ClientProfilePageComponent,
     ClientAbuseReportListPageComponent,
+    ClientReportAbuseItemComponent,
+    AbuseReportTypeComponent,
+    AbuseReportManagerComponent,
   ],
   imports: [
     CommonModule,

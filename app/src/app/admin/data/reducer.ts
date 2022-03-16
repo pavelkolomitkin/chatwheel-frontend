@@ -1,6 +1,7 @@
 import * as actions from './actions';
 import {AuthUserTypes} from "./model/auth-user-types.enum";
 import {User} from "../../security/data/models/user.model";
+import {AbuseReport} from "../../core/data/models/abuse-report.model";
 
 
 export interface State
@@ -22,6 +23,10 @@ export interface State
   lastDeletingUser: User,
   lastDeletedUser: User,
   lastDeletedUserError: {},
+
+  lastOpenedAbuseReport: AbuseReport,
+  lastReadAbuseReport: AbuseReport,
+  lastReadAbuseReportError: {},
 }
 
 export const initialState: State = {
@@ -42,6 +47,10 @@ export const initialState: State = {
   lastDeletingUser: null,
   lastDeletedUser: null,
   lastDeletedUserError: {},
+
+  lastOpenedAbuseReport: null,
+  lastReadAbuseReport: null,
+  lastReadAbuseReportError: {},
 
 }
 
@@ -157,6 +166,26 @@ export function reducer(state: State = initialState, action: actions.AdminUserAc
       return {
         ...state,
         lastDeletedUserError: action.errors
+      };
+
+    case actions.ADMIN_ABUSE_REPORT_OPEN:
+
+      return {
+        ...state,
+        lastOpenedAbuseReport: action.report
+      };
+
+    case actions.ADMIN_ABUSE_REPORT_READ_SUCCESS:
+
+      return {
+        ...state,
+        lastReadAbuseReport: action.report
+      };
+
+    case actions.ADMIN_ABUSE_REPORT_READ_ERROR:
+
+      return {
+        ...state,
       };
 
     default:

@@ -48,6 +48,9 @@
             <li class="nav-item">
               <a [routerLink]="'./abuse-reports'" routerLinkActive="active" class="nav-link show" data-toggle="pill" role="tab">
                 <i class="ik ik-alert-circle"></i> {{ 'ABUSE_REPORTS' | translate }}
+                <span *ngIf="peopleApplied > 0" class="ml-1 mr-1">
+                  <i class="ik ik-users"></i> {{ peopleApplied }}
+                </span>
                 <span class="badge badge-pill badge-danger mb-1 menu-badge" *ngIf="newReportNumber > 0">{{ newReportNumber }}</span>
               </a>
             </li>

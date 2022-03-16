@@ -1,0 +1,67 @@
+<app-alert-window
+  [title]="'ABUSE_REPORT' | translate"
+  [(isShown)]="isAbuseReportWindowShown"
+  (onClose)="onAbuseReportWindowCloseHandler($event)"
+  (onOpen)="onAbuseReportWindowOpenHandler($event)"
+>
+
+  <div head-additional class="p-2">
+    <ng-container *ngIf="!!report">
+      <app-abuse-report-type [type]="report.type"></app-abuse-report-type>
+
+    </ng-container>
+  </div>
+
+  <div content>
+    <div class="abuse-report-window-item" *ngIf="!!report">
+
+      <div class="users row">
+
+        <div class="col-1"></div>
+
+        <div class="col-4 text-right">
+          <a [routerLink]="'/admin/users/' + report.applicant.id"
+          (click)="onAbuseReportWindowCloseHandler($event)">
+            <app-user-avatar
+              [size]="'mediumMedium'"
+              [user]="report.applicant"
+              [isActivityVisible]="true"
+              [additionalStyles]="{ cursor: 'pointer' }"
+            ></app-user-avatar>
+          </a>
+        </div>
+
+        <div class="col-2">
+          <div class="text-center pt-20 text-muted">
+            <h3>
+              <i class="ik ik-arrow-right"></i>
+            </h3>
+          </div>
+        </div>
+
+        <div class="col-4 text-left">
+          <a [routerLink]="'/admin/users/' + report.respondent.id"
+          (click)="onAbuseReportWindowCloseHandler($event)">
+            <app-user-avatar
+              [size]="'mediumMedium'"
+              [user]="report.respondent"
+              [isActivityVisible]="true"
+              [additionalStyles]="{ cursor: 'pointer' }"
+            ></app-user-avatar>
+          </a>
+        </div>
+
+      </div>
+
+      <div>
+        <ng-container *ngIf="!!report.description">
+          <br>
+          <span class="text-muted">{{report.description}}</span>
+        </ng-container>
+        <br />
+        <span class="text-muted small" app-date-time [value]="report.createdAt"></span>
+      </div>
+
+    </div>
+  </div>
+</app-alert-window>

@@ -1,6 +1,9 @@
 <ng-template #confirmationWindow let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">{{ title }}</h4>
+    <div class="d-inline-block">
+      <ng-content select="[head-additional]"></ng-content>
+    </div>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
       <span aria-hidden="true">&times;</span>
     </button>
