@@ -24,6 +24,10 @@ import { UserGeoLocationViewComponent } from './components/pages/user-list-page/
 import { UserManagerComponent } from './components/common/user-manager/user-manager.component';
 import { ClientUserProfilePageComponent } from './components/pages/client-user-profile-page/client-user-profile-page.component';
 import { UserListFilterFormComponent } from './components/pages/user-list-page/user-list-filter-form/user-list-filter-form.component';
+import { NotFoundPageComponent } from './components/pages/not-found-page/not-found-page.component';
+import { ActionMenuComponent } from './components/pages/client-user-profile-page/action-menu/action-menu.component';
+import { ClientProfilePageComponent } from './components/pages/client-user-profile-page/client-profile-page/client-profile-page.component';
+import { ClientAbuseReportListPageComponent } from './components/pages/client-user-profile-page/client-abuse-report-list-page/client-abuse-report-list-page.component';
 
 
 @NgModule({
@@ -42,6 +46,10 @@ import { UserListFilterFormComponent } from './components/pages/user-list-page/u
     UserManagerComponent,
     ClientUserProfilePageComponent,
     UserListFilterFormComponent,
+    NotFoundPageComponent,
+    ActionMenuComponent,
+    ClientProfilePageComponent,
+    ClientAbuseReportListPageComponent,
   ],
   imports: [
     CommonModule,

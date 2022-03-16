@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {User} from "../../../../../../security/data/models/user.model";
+import {User} from "../../../../security/data/models/user.model";
 
 @Component({
   selector: 'app-user-interests-view',

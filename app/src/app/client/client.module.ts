@@ -20,7 +20,6 @@ import { EditUserPickComponent } from './components/pages/my-profile/components/
 import { EditInterestsComponent } from './components/pages/my-profile/components/edit-interests/edit-interests.component';
 import {EffectsModule} from "@ngrx/effects";
 import {GeolocationEffects} from "./data/effects/geolocation.effects";
-import { TextLocationViewComponent } from './components/pages/profile/components/geo-location/text-location-view/text-location-view.component';
 import { TextLocationViewComponent as TextMyLocationViewComponent } from './components/pages/my-profile/components/geo-location/text-location-view/text-location-view.component';
 import {StoreModule} from "@ngrx/store";
 import { reducer } from './data/reducer';
@@ -31,8 +30,6 @@ import { CameraProfilePictureGrabberComponent } from './components/common/camera
 import { SettingsComponent } from './components/pages/my-profile/settings/settings.component';
 import {ProfileEffects} from "./data/effects/profile.effects";
 import {UserProfileService} from "./services/user-profile.service";
-import { UserInterestsViewComponent } from './components/pages/profile/components/user-interests-view/user-interests-view.component';
-import { SelectedCountryViewComponent } from './components/pages/profile/components/selected-country-view/selected-country-view.component';
 import { EditMapLocationComponent } from './components/pages/my-profile/components/geo-location/edit-map-location/edit-map-location.component';
 import { ConversationComponent } from './components/pages/my-profile/messages/conversation/conversation.component';
 import { MessageListItemComponent } from './components/pages/my-profile/messages/conversation/components/message-list-item/message-list-item.component';
@@ -97,13 +94,10 @@ import { CallListItemComponent } from './components/pages/my-profile/call-list-p
         EditSearchCountryComponent,
         EditUserPickComponent,
         EditInterestsComponent,
-        TextLocationViewComponent,
         TextMyLocationViewComponent,
         CameraProfilePictureGrabberWindowComponent,
         CameraProfilePictureGrabberComponent,
         SettingsComponent,
-        UserInterestsViewComponent,
-        SelectedCountryViewComponent,
         EditMapLocationComponent,
         ConversationComponent,
         MessageListItemComponent,

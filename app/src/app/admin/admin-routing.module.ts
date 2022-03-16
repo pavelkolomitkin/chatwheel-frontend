@@ -10,17 +10,30 @@ import {DashboardComponent} from "./components/pages/dashboard/dashboard.compone
 import {
   ClientUserProfilePageComponent
 } from "./components/pages/client-user-profile-page/client-user-profile-page.component";
+import {NotFoundPageComponent} from "./components/pages/not-found-page/not-found-page.component";
+import {
+  ClientAbuseReportListPageComponent
+} from "./components/pages/client-user-profile-page/client-abuse-report-list-page/client-abuse-report-list-page.component";
+import {
+  ClientProfilePageComponent
+} from "./components/pages/client-user-profile-page/client-profile-page/client-profile-page.component";
 
 const routes: Routes = [
   { path: '', component: LayoutComponent, children: [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'profile', component: ProfileComponent },
-      { path: 'users/:id', component: ClientUserProfilePageComponent },
+      { path: 'users/:id', component: ClientUserProfilePageComponent, children: [
+          { path: 'profile', component: ClientProfilePageComponent },
+          { path: 'abuse-reports', component: ClientAbuseReportListPageComponent },
+          { path: '', redirectTo: 'profile', pathMatch: 'full' }
+        ] },
       { path: 'users', component: UserListPageComponent },
       { path: 'admins', component: AdminListPageComponent },
       { path: 'abuse-reports', component: AbuseReportListPageComponent },
       { path: 'calls', component: CallListPageComponent },
+      { path: '404', component: NotFoundPageComponent },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: '**', redirectTo: '404', pathMatch: 'full' }
     ] }
 ];
 

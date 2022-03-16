@@ -29,6 +29,15 @@ export class ClientUserService extends BaseService
     );
   }
 
+  getUser(id: string)
+  {
+    return this.http.get<{ user: User }>('/admin/client-user/user/' + id).pipe(
+      map(({ user }) => {
+        return User.createFromRawData(user);
+      })
+    );
+  }
+
   getNumber(authType: AuthUserTypes = null): Observable<number>
   {
     const data = {};

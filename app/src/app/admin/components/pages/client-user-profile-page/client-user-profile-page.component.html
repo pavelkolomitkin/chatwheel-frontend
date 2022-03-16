@@ -1,1 +1,79 @@
+<ng-container *ngIf="!!user">
 
+  <div class="container-fluid">
+    <div class="row profile-page left-column">
+      <div class="col-lg-4 col-md-5">
+        <div class="card">
+          <div class="card-body">
+            <div class="text-center">
+              <div class="avatar-wrapper">
+                <app-user-avatar
+                  [size]="'medium'"
+                  [user]="user"
+                  [isLightBox]="true">
+                </app-user-avatar>
+              </div>
+              <h4 class="card-title mt-10">{{ user.fullName }}&nbsp;
+                <span *ngIf="user.deleted" class="text-muted small">({{ 'DELETED' | translate }})</span>
+              </h4>
+            </div>
+          </div>
+
+          <app-action-menu [user]="user"></app-action-menu>
+
+          <hr class="mb-0">
+          <div class="card-body">
+            <ng-container *ngIf="!!user.geoLocation">
+              <app-map-location-view
+                [user]="user"
+                [userUrl]="'/admin/users/' + user.id"
+              ></app-map-location-view>
+            </ng-container>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="col-lg-8 col-md-7">
+
+        <div class="card">
+
+          <ul class="nav nav-pills custom-pills" id="pills-tab" role="tablist">
+
+            <li class="nav-item">
+              <a [routerLink]="'./profile'" routerLinkActive="active" class="nav-link show" data-toggle="pill" role="tab">
+                <i class="ik ik-user"></i> {{ 'PROFILE' | translate }}</a>
+            </li>
+
+            <li class="nav-item">
+              <a [routerLink]="'./abuse-reports'" routerLinkActive="active" class="nav-link show" data-toggle="pill" role="tab">
+                <i class="ik ik-alert-circle"></i> {{ 'ABUSE_REPORTS' | translate }}
+                <span class="badge badge-pill badge-danger mb-1 menu-badge" *ngIf="newReportNumber > 0">{{ newReportNumber }}</span>
+              </a>
+            </li>
+
+          </ul>
+
+
+          <div class="tab-content" id="pills-tabContent">
+
+            <div class="tab-pane fade active show" id="current-month" role="tabpanel" aria-labelledby="pills-timeline-tab">
+              <div class="card-body p0">
+                <router-outlet></router-outlet>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+  </div>
+
+
+
+</ng-container>

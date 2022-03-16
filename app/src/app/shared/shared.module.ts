@@ -24,6 +24,9 @@ import { MapPinGroupComponent } from './components/geo/map-pin-group/map-pin-gro
 import {ImageUrlPipe} from "./pipes/image-url.pipe";
 import {MapLocationViewComponent} from "./components/geo/map-location-view/map-location-view.component";
 import {PaginatorComponent} from "./components/paginator/paginator.component";
+import {TextLocationViewComponent} from "./components/geo/text-location-view/text-location-view.component";
+import {UserInterestsViewComponent} from "./components/profile/user-interests-view/user-interests-view.component";
+import {SelectedCountryViewComponent} from "./components/profile/selected-country-view/selected-country-view.component";
 
 @NgModule({
   declarations: [
@@ -42,7 +45,10 @@ import {PaginatorComponent} from "./components/paginator/paginator.component";
     AlertWindowComponent,
     MapPinGroupComponent,
     MapLocationViewComponent,
-    PaginatorComponent
+    PaginatorComponent,
+    TextLocationViewComponent,
+    UserInterestsViewComponent,
+    SelectedCountryViewComponent
   ],
   imports: [
     CommonModule,
@@ -74,6 +80,9 @@ import {PaginatorComponent} from "./components/paginator/paginator.component";
     AlertWindowComponent,
     MapLocationViewComponent,
     PaginatorComponent,
+    TextLocationViewComponent,
+    UserInterestsViewComponent,
+    SelectedCountryViewComponent,
 
     UserActivityStatusDirective,
     MultiLinePipe,
