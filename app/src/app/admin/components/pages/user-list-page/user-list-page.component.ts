@@ -172,14 +172,8 @@ export class UserListPageComponent implements OnInit, OnDestroy {
 
   getCurrentListPage()
   {
-    let param = this.route.snapshot.queryParams['page'];
-    if (typeof param === 'undefined')
-    {
-      return 1;
-    }
-
-    const result = parseInt(param);
-    return (result > 0) ? result : 1;
+    let param = !!this.route.snapshot.queryParams['page'] ? parseInt(this.route.snapshot.queryParams['page']) : 1;
+    return (param > 0) ? param : 1;
   }
 
   async loadUsers()

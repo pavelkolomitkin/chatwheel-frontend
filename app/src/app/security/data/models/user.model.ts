@@ -72,6 +72,8 @@ export class User
 
   socialMediaPhotos?: {};
 
+  isSuperAdmin?: boolean;
+
   isSocialMediaUser()
   {
     return !!this.socialMediaUserId;

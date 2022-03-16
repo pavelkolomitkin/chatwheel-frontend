@@ -14,7 +14,7 @@
           class="form-control"
           type="email"
           autocomplete="off"
-          ngModel
+          [(ngModel)]="createAccountFields.email"
           name="email"
           required
           [ngClass]="!!createAccountErrors.email ? 'is-invalid' : ''"
@@ -30,7 +30,7 @@
           type="text"
           autocomplete="off"
           name="fullName"
-          ngModel
+          [(ngModel)]="createAccountFields.fullName"
           required
           [ngClass]="!!createAccountErrors.fullName ? 'is-invalid' : ''"
         />
@@ -45,7 +45,7 @@
           autocomplete="off"
           type="password"
           name="password"
-          ngModel
+          [(ngModel)]="createAccountFields.password"
           required
           [ngClass]="!!createAccountErrors.password ? 'is-invalid' : ''"
         />
@@ -60,7 +60,7 @@
           autocomplete="off"
           type="password"
           name="passwordRepeat"
-          ngModel
+          [(ngModel)]="createAccountFields.passwordRepeat"
           required
           [ngClass]="!!createAccountErrors.passwordRepeat ? 'is-invalid' : ''"
         />

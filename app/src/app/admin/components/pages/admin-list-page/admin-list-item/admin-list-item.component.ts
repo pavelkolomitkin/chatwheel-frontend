@@ -8,6 +8,8 @@ import {User} from "../../../../../security/data/models/user.model";
 })
 export class AdminListItemComponent implements OnInit {
 
+  @Input() authorizedUser: User;
+
   @Input() user: User;
 
   constructor() { }

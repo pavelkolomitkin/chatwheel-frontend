@@ -16,12 +16,13 @@
 
     <div class="mr-4">
       <app-paginator
-        [totalItems]="totalNumber"
+        [totalItems]="totalNumber | async"
         [itemsOnPage]="10"
       ></app-paginator>
     </div>
 
-    <div class="table-responsive">
+    <div class="table-responsive" *ngIf="list !== null">
+
       <table class="table dataTable table-hover mb-0">
         <thead>
           <tr>
@@ -39,11 +40,25 @@
 
           <tr
             app-admin-list-item
-
+            *ngFor="let admin of list"
+            [user]="admin"
+            [authorizedUser]="authorizedUser"
           ></tr>
 
         </tbody>
       </table>
+
+      <p *ngIf="list.length === 0" class="alert alert-info">
+        {{ 'NO_USER_FOUND' | translate }}
+      </p>
+
+      <div class="mr-4">
+        <app-paginator
+          [itemsOnPage]="10"
+          [totalItems]="totalNumber | async"
+
+        ></app-paginator>
+      </div>
     </div>
 
   </div>

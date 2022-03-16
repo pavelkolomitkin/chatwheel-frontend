@@ -85,6 +85,7 @@
   "UPDATE": "Update",
   "LATEST_GEO_LOCATION": "latest",
   "EDITED": "edited",
+  "EDIT":  "Edit",
   "DELETE_MESSAGE_QUESTION": "Delete Message?",
   "ALSO_DELETE_FROM_OTHERS": "Also delete from others",
   "UNBLOCK": "Unblock",
@@ -162,6 +163,6 @@
   "LAST_ACTIVITY": "Last Activity",
   "ACTIVATED": "Activated",
   "CREATED_AT": "Created",
-  "ACTIONS": "Actions"
-
+  "ACTIONS": "Actions",
+  "SUPER_ADMIN": "Super"
 }

@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {select, Store} from "@ngrx/store";
 import {State} from "../../../../app.state";
 import {AdminUserCreated, CreateAdminUserInit, GetTotalNumberAdminUsers} from "../../../data/actions";
@@ -19,6 +19,12 @@ export class AdminManagerComponent implements OnInit, OnDestroy {
   isCreateAdminWindowShown: boolean = false;
   isSubmitting: boolean = false;
   createAccountErrors: any = {};
+  createAccountFields = {
+    fullName: '',
+    email: '',
+    password: '',
+    passwordRepeat: ''
+  }
 
 
   createAdminInitSubscription: Subscription;
@@ -53,6 +59,8 @@ export class AdminManagerComponent implements OnInit, OnDestroy {
 
   createAdminInitHandler = (isInit: boolean) => {
 
+    // @ts-ignore
+    this.createAccountFields = {};
     this.isCreateAdminWindowShown = isInit;
   }
 

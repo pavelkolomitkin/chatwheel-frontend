@@ -89,7 +89,6 @@ export class AlertWindowComponent implements OnInit, OnDestroy {
     {
       this.window.close();
       this.window = null;
-      //this.closeEmitter.emit();
     }
     this._isShown = false
     this.isShownChange.emit(this._isShown);

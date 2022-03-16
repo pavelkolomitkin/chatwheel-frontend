@@ -1,0 +1,91 @@
+<td>
+  <app-user-avatar
+    [size]="'small'"
+    [user]="user"
+    [isActivityVisible]="true"
+    [additionalStyles]="{ cursor: 'pointer' }"
+  ></app-user-avatar>
+</td>
+
+<td>
+  <span class="text-primary">{{ user.email }}</span>
+  <span *ngIf="user.isSuperAdmin"
+    class="badge badge-primary ml-2"
+  >{{ 'SUPER_ADMIN' | translate }}</span>
+</td>
+
+<td>
+  {{ user.fullName }}
+</td>
+
+<td>
+  <span class="badge text-light" app-user-activity-status [user]="user">
+    <span app-date-time [value]="user.lastActivity"></span>
+  </span>
+</td>
+
+<td>
+  <span *ngIf="user.isBlocked; else notBlocked">
+    <i class="ik ik-check-square" [ngbTooltip]="user.blockingReason"></i>
+  </span>
+  <ng-template #notBlocked>
+    <span>
+      <i class="ik ik-square"></i>
+    </span>
+  </ng-template>
+</td>
+
+<td>
+  <span *ngIf="user.deleted; else notDeleted">
+    <i class="ik ik-check-square"></i>
+  </span>
+  <ng-template #notDeleted>
+    <span>
+      <i class="ik ik-square"></i>
+    </span>
+  </ng-template>
+</td>
+
+<td>
+  <span app-date-time [value]="user.createdAt"></span>
+</td>
+
+<td>
+
+  <ng-container *ngIf="!user.deleted">
+
+    <span
+      *ngIf="authorizedUser.isSuperAdmin || (authorizedUser.id === user.id)"
+      class="btn btn-primary mr-1" [title]="'CHANGE_PASSWORD' | translate"
+    >
+      <i class="ik ik-sliders"></i>
+    </span>
+
+    <span
+      *ngIf="authorizedUser.isSuperAdmin || (authorizedUser.id === user.id)"
+      class="btn btn-info mr-1" [title]="'EDIT' | translate">
+      <i class="ik ik-edit"></i>
+    </span>
+
+    <span
+      *ngIf="authorizedUser.isSuperAdmin && !user.isBlocked"
+      class="btn btn-warning mr-1" [title]="'BLOCK' | translate">
+      <i class="ik ik-slash"></i>
+    </span>
+
+    <span
+      *ngIf="authorizedUser.isSuperAdmin && user.isBlocked"
+      class="btn btn-light mr-1" [title]="'UNBLOCK' | translate">
+      <i class="ik ik-slash"></i>
+    </span>
+
+    <span
+      *ngIf="authorizedUser.isSuperAdmin"
+      class="btn btn-danger mr-1" [title]="'DELETE' | translate">
+      <i class="ik ik-delete"></i>
+    </span>
+
+  </ng-container>
+
+</td>
+
