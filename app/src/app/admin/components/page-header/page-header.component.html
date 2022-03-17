@@ -77,6 +77,9 @@
 
 <!--        <button type="button" class="nav-link ml-10" id="apps_modal_btn" data-toggle="modal" data-target="#appsModal"><i class="ik ik-grid"></i></button>-->
         <div class="dropdown">
+          <ng-container *ngxPermissionsOnly="['ROLE_SUPER_ADMIN_USER']">
+            <span class="badge badge-primary">{{ 'SUPER_ADMIN' | translate }}</span>&nbsp;
+          </ng-container>
           <a class="dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <div class="avatar avatar-wrapper">
               <app-user-avatar [size]="'extraSmall'" [user]="(user | async)" [additionalStyles]="{ width: '100%' }"></app-user-avatar>

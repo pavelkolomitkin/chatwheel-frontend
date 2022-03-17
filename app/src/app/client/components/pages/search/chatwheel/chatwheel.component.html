@@ -39,6 +39,15 @@
         </span>
       </div>
 
+
+      <ng-container *ngIf="uiState === 'chat_stopped'">
+        <div class="loader-container">
+          <div class="d-inline-block">
+            <img src="../../../../../../assets/picture/logo-192x192.png" style="width: 100px;" />
+          </div>
+        </div>
+      </ng-container>
+
       <ng-container *ngIf="uiState === 'chat_searching'">
         <div class="loader-container">
 
@@ -64,6 +73,8 @@
 
 
         <div class="loader-container">
+
+
 
           <ng-container *ngIf="(uiState === 'chat_offer_made')">
             <div class="spinner-border text-primary" role="status">
