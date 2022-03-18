@@ -6,6 +6,7 @@ import {map} from "rxjs/operators";
 import {Observable} from "rxjs";
 import {ClientUserListFilter} from "../data/model/client-user-list.filter";
 import {User} from "../../security/data/models/user.model";
+import {BlockUser} from "../data/model/block-user.model";
 
 @Injectable()
 export class ClientUserService extends BaseService
@@ -55,11 +56,11 @@ export class ClientUserService extends BaseService
     );
   }
 
-  blockUser(user: User, reason: string = null)
+  blockUser(user: User, data: BlockUser)
   {
     return this.http.put<{ user: User }>('/admin/client-user/block', {
       user: user.id,
-      reason: reason
+      reason: data.reason
     }).pipe(
       map(({ user }) => {
         return User.createFromRawData(user);

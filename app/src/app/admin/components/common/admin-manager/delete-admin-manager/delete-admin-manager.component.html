@@ -1,0 +1,34 @@
+<app-alert-window
+  [title]="'DELETE_ADMIN_ACCOUNT' | translate"
+  [isShown]="!!admin"
+  (onClose)="onWindowCloseHandler($event)"
+>
+  <div content>
+
+    <div class="admin-user-window-item p-2 mb-2" *ngIf="!!admin">
+      <div class="avatar-container">
+        <app-user-avatar
+          [size]="'mediumSmall'"
+          [user]="admin"
+          [isActivityVisible]="true"
+        ></app-user-avatar>
+      </div>
+      <div class="admin-user-window-info">
+        <h4>{{ admin.fullName }}</h4>
+        <span class="badge badge-light text-muted">{{ admin.email }}</span>
+        <h6 class="mt-2">{{ 'ARE_YOU_SURE_YOU_WANNA_DELETE_THIS_USER_QUESTION' | translate }}</h6>
+      </div>
+    </div>
+
+  </div>
+
+  <div footer>
+    <button
+      [disabled]="isSubmitting"
+      type="button"
+      class="btn btn-outline-danger"
+      (click)="onDeleteClickHandler($event)"
+
+    >{{ 'DELETE' | translate }}</button>
+  </div>
+</app-alert-window>

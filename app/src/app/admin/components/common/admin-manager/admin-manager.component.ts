@@ -1,13 +1,12 @@
-import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {select, Store} from "@ngrx/store";
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Store} from "@ngrx/store";
 import {State} from "../../../../app.state";
-import {AdminUserCreated, CreateAdminUserInit, GetTotalNumberAdminUsers} from "../../../data/actions";
-import {NgForm} from "@angular/forms";
-import {CreateAdminUser} from "../../../data/model/create-admin-user.model";
-import {AdminUserService} from "../../../services/admin-user.service";
-import {User} from "../../../../security/data/models/user.model";
+import {GetTotalNumberAdminUsers} from "../../../data/actions";
+import {AdminUserStateSocketService} from "../../../services/sockets/admin-user-state-socket.service";
 import {Subscription} from "rxjs";
-import {filter} from "rxjs/operators";
+import {UserLogout} from "../../../../security/data/actions";
+import {GlobalNotification} from "../../../../core/data/actions";
+import {Notification, NotificationType} from "../../../../core/data/models/notification.model";
 
 @Component({
   selector: 'app-admin-manager',
@@ -16,92 +15,43 @@ import {filter} from "rxjs/operators";
 })
 export class AdminManagerComponent implements OnInit, OnDestroy {
 
-  isCreateAdminWindowShown: boolean = false;
-  isSubmitting: boolean = false;
-  createAccountErrors: any = {};
-  createAccountFields = {
-    fullName: '',
-    email: '',
-    password: '',
-    passwordRepeat: ''
-  }
-
-
-  createAdminInitSubscription: Subscription;
-  adminCreatedSubscription: Subscription;
+  myAccountBlockedSubscription: Subscription;
+  myAccountDeletedSubscription: Subscription;
 
   constructor(
     private store: Store<State>,
-    private service: AdminUserService
+    private accountStateSocket: AdminUserStateSocketService
   ) { }
 
   ngOnInit(): void {
 
     this.store.dispatch(new GetTotalNumberAdminUsers());
 
-    this.createAdminInitSubscription = this.store.pipe(
-      select(state => state.admin.createAdminInit)
-    ).subscribe(this.createAdminInitHandler);
-
-    this.adminCreatedSubscription = this.store.pipe(
-      select(state => state.admin.lastCreatedAdminUser),
-      filter(result => !!result)
-    ).subscribe(this.adminCreatedHandler);
+    this.myAccountBlockedSubscription = this.accountStateSocket.getMyAccountBlocked().subscribe(this.myAccountBlockedHandler);
+    this.myAccountDeletedSubscription = this.accountStateSocket.getMyAccountDeleted().subscribe(this.myAccountDeletedHandler);
 
   }
 
   ngOnDestroy(): void {
 
-    this.createAdminInitSubscription.unsubscribe();
-    this.adminCreatedSubscription.unsubscribe();
+    this.myAccountBlockedSubscription.unsubscribe();
+    this.myAccountDeletedSubscription.unsubscribe();
   }
 
+  myAccountBlockedHandler = () => {
 
-  createAdminInitHandler = (isInit: boolean) => {
+    this.store.dispatch(new GlobalNotification(
+      new Notification(NotificationType.ERROR, 'YOUR_ACCOUNT_HAS_BEEN_BLOCKED', 'ERROR')
+    ));
 
-    // @ts-ignore
-    this.createAccountFields = {};
-    this.isCreateAdminWindowShown = isInit;
+    this.store.dispatch(new UserLogout());
   }
+  myAccountDeletedHandler = () => {
 
-  adminCreatedHandler = (admin: User) => {
+    this.store.dispatch(new GlobalNotification(
+      new Notification(NotificationType.ERROR, 'YOUR_ACCOUNT_HAS_BEEN_DELETED', 'ERROR')
+    ));
 
-    this.isCreateAdminWindowShown = false;
-    this.createAccountErrors = {};
-
-    this.store.dispatch(new GetTotalNumberAdminUsers());
-  }
-
-  onCreateAdminWindowCloseHandler(event)
-  {
-    this.store.dispatch(new CreateAdminUserInit(false));
-  }
-
-  async onCreateAdminClickHandler(event, form: NgForm)
-  {
-
-    this.isSubmitting = true;
-
-    const { fullName, email, password, passwordRepeat } = form.value;
-
-    const data: CreateAdminUser = {
-      fullName,
-      email,
-      password,
-      passwordRepeat
-    };
-
-    try {
-      const admin: User = await this.service.create(data).toPromise();
-      this.createAccountErrors = {};
-
-      this.store.dispatch(new AdminUserCreated(admin));
-    }
-    catch (error)
-    {
-      this.createAccountErrors = error.error.errors || error.message;
-    }
-
-    this.isSubmitting = false;
+    this.store.dispatch(new UserLogout());
   }
 }

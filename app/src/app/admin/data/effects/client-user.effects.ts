@@ -48,7 +48,7 @@ export class ClientUserEffects
       ofType(ADMIN_BLOCK_USER_START),
       mergeMap(({ user, reason }: BlockUserStart) => {
 
-        return this.service.blockUser(user, reason).pipe(
+        return this.service.blockUser(user, { reason }).pipe(
           map((user: User) => {
             return new BlockUserSuccess(user);
           }),

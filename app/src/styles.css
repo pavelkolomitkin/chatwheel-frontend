@@ -92,3 +92,32 @@ body
 {
   font-size: .8rem !important;
 }
+
+/*
+=================================== ADMIN INTERFACE ========================================
+*/
+
+
+.admin-user-window-item {
+  position: relative;
+}
+
+.admin-user-window-item .avatar-container {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+}
+
+.admin-user-window-item .admin-user-window-info {
+  position: relative;
+  margin-left: 80px;
+  padding-top: 10px;
+}
+
+.admin-user-window-item .form-container {
+
+}
+
+/*
+//=================================== ADMIN INTERFACE ========================================
+*/

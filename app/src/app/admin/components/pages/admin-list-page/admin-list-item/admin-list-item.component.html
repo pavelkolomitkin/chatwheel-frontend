@@ -57,31 +57,40 @@
     <span
       *ngIf="authorizedUser.isSuperAdmin || (authorizedUser.id === user.id)"
       class="btn btn-primary mr-1" [title]="'CHANGE_PASSWORD' | translate"
+      (click)="onChangePasswordClickHandler($event)"
     >
       <i class="ik ik-sliders"></i>
     </span>
 
     <span
       *ngIf="authorizedUser.isSuperAdmin || (authorizedUser.id === user.id)"
-      class="btn btn-info mr-1" [title]="'EDIT' | translate">
+      class="btn btn-info mr-1" [title]="'EDIT' | translate"
+      (click)="onEditClickHandler($event)"
+    >
       <i class="ik ik-edit"></i>
     </span>
 
     <span
-      *ngIf="authorizedUser.isSuperAdmin && !user.isBlocked"
-      class="btn btn-warning mr-1" [title]="'BLOCK' | translate">
+      *ngIf="(user.id !== authorizedUser.id) && authorizedUser.isSuperAdmin && !user.isBlocked"
+      class="btn btn-warning mr-1" [title]="'BLOCK' | translate"
+      (click)="onBlockClickHandler($event)"
+    >
       <i class="ik ik-slash"></i>
     </span>
 
     <span
-      *ngIf="authorizedUser.isSuperAdmin && user.isBlocked"
-      class="btn btn-light mr-1" [title]="'UNBLOCK' | translate">
+      *ngIf="(user.id !== authorizedUser.id) && authorizedUser.isSuperAdmin && user.isBlocked"
+      class="btn btn-light mr-1" [title]="'UNBLOCK' | translate"
+      (click)="onUnBlockClickHandler($event)"
+    >
       <i class="ik ik-slash"></i>
     </span>
 
     <span
-      *ngIf="authorizedUser.isSuperAdmin"
-      class="btn btn-danger mr-1" [title]="'DELETE' | translate">
+      *ngIf="(user.id !== authorizedUser.id) && authorizedUser.isSuperAdmin"
+      class="btn btn-danger mr-1" [title]="'DELETE' | translate"
+      (click)="onDeleteClickHandler($event)"
+    >
       <i class="ik ik-delete"></i>
     </span>
 

@@ -1,0 +1,68 @@
+<app-alert-window
+  [title]="'EDIT_ADMIN_ACCOUNT' | translate"
+  [isShown]="!!admin"
+  (onClose)="onWindowCloseHandler($event)"
+>
+
+  <div content>
+
+    <div class="admin-user-window-item p-2 mb-4" *ngIf="!!admin">
+      <div class="avatar-container">
+        <app-user-avatar
+          [size]="'mediumSmall'"
+          [user]="admin"
+          [isActivityVisible]="true"
+        ></app-user-avatar>
+      </div>
+      <div class="admin-user-window-info">
+        <h4>{{ admin.fullName }}</h4>
+      </div>
+    </div>
+
+    <div class="form-container p-2">
+      <form #form="ngForm">
+        <div class="form-group">
+          <label for="email">{{ 'EMAIL' | translate }}</label>
+          <input
+            id="email"
+            class="form-control"
+            type="email"
+            autocomplete="off"
+            [(ngModel)]="data.email"
+            name="email"
+            required
+            [ngClass]="!!errors.email ? 'is-invalid' : ''"
+          />
+          <app-form-field-error-list [field]="'email'" [errors]="errors"></app-form-field-error-list>
+        </div>
+
+        <div class="form-group">
+          <label for="fullName">{{ 'FULL_NAME' | translate }}</label>
+          <input
+            id="fullName"
+            class="form-control"
+            type="text"
+            autocomplete="off"
+            name="fullName"
+            [(ngModel)]="data.fullName"
+            required
+            [ngClass]="!!errors.fullName ? 'is-invalid' : ''"
+          />
+          <app-form-field-error-list [field]="'fullName'" [errors]="errors"></app-form-field-error-list>
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+
+  <div footer>
+    <button
+      [disabled]="!form.valid || isSubmitting"
+      type="button"
+      class="btn btn-outline-success"
+      (click)="onSubmitHandler($event)"
+    >{{ 'SAVE' | translate }}</button>
+  </div>
+
+</app-alert-window>

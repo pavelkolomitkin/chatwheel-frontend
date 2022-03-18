@@ -36,6 +36,12 @@ import { AdminManagerComponent } from './components/common/admin-manager/admin-m
 import {AdminUserService} from "./services/admin-user.service";
 import {NgxPermissionsModule} from "ngx-permissions";
 import { AdminListItemComponent } from './components/pages/admin-list-page/admin-list-item/admin-list-item.component';
+import { CreateAdminManagerComponent } from './components/common/admin-manager/create-admin-manager/create-admin-manager.component';
+import { ResetAdminPasswordManagerComponent } from './components/common/admin-manager/reset-admin-password-manager/reset-admin-password-manager.component';
+import { BlockAdminManagerComponent } from './components/common/admin-manager/block-admin-manager/block-admin-manager.component';
+import { DeleteAdminManagerComponent } from './components/common/admin-manager/delete-admin-manager/delete-admin-manager.component';
+import { EditAdminManagerComponent } from './components/common/admin-manager/edit-admin-manager/edit-admin-manager.component';
+import {AdminUserStateSocketService} from "./services/sockets/admin-user-state-socket.service";
 
 
 @NgModule({
@@ -63,6 +69,11 @@ import { AdminListItemComponent } from './components/pages/admin-list-page/admin
     AbuseReportManagerComponent,
     AdminManagerComponent,
     AdminListItemComponent,
+    CreateAdminManagerComponent,
+    ResetAdminPasswordManagerComponent,
+    BlockAdminManagerComponent,
+    DeleteAdminManagerComponent,
+    EditAdminManagerComponent,
   ],
   imports: [
     CommonModule,
@@ -84,7 +95,9 @@ import { AdminListItemComponent } from './components/pages/admin-list-page/admin
   providers: [
     ClientUserService,
     AbuseReportService,
-    AdminUserService
+    AdminUserService,
+
+    AdminUserStateSocketService
   ]
 })
 export class AdminModule { }

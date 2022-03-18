@@ -1,5 +1,5 @@
 
-export class ResetPasswordAdminUser
+export interface ResetPasswordAdminUser
 {
   password: string;
 

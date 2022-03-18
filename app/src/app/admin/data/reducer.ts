@@ -31,8 +31,21 @@ export interface State
 
   createAdminInit: boolean,
   lastCreatedAdminUser: User,
+
+  editingAdmin: User,
   lastEditedAdminUser: User,
-  lastPasswordResetAdminUser: User
+
+  resettingPasswordAdmin: User,
+  lastPasswordResetAdminUser: User,
+
+  blockingAdmin: User,
+  lastBlockedAdmin: User,
+
+  unBlockingAdmin: User,
+  lastUnBlockedAdmin: User,
+
+  deletingAdmin: User,
+  lastDeletedAdmin: User,
 }
 
 export const initialState: State = {
@@ -61,8 +74,21 @@ export const initialState: State = {
 
   createAdminInit: false,
   lastCreatedAdminUser: null,
+
+  editingAdmin: null,
   lastEditedAdminUser: null,
-  lastPasswordResetAdminUser: null
+
+  resettingPasswordAdmin: null,
+  lastPasswordResetAdminUser: null,
+
+  blockingAdmin: null,
+  lastBlockedAdmin: null,
+
+  unBlockingAdmin: null,
+  lastUnBlockedAdmin: null,
+
+  deletingAdmin: null,
+  lastDeletedAdmin: null
 
 }
 
@@ -222,6 +248,13 @@ export function reducer(state: State = initialState, action: actions.AdminUserAc
         lastCreatedAdminUser: action.admin
       };
 
+    case actions.ADMIN_EDIT_ADMIN_USER_INIT:
+
+      return {
+        ...state,
+        editingAdmin: action.admin
+      };
+
     case actions.ADMIN_ADMIN_USER_EDITED:
 
       return {
@@ -229,11 +262,61 @@ export function reducer(state: State = initialState, action: actions.AdminUserAc
         lastEditedAdminUser: action.admin
       };
 
+    case actions.ADMIN_RESET_PASSWORD_ADMIN_USER_INIT:
+
+      return {
+        ...state,
+        resettingPasswordAdmin: action.admin
+      };
+
     case actions.ADMIN_ADMIN_USER_PASSWORD_RESET:
 
       return {
         ...state,
         lastPasswordResetAdminUser: action.admin
+      };
+
+    case actions.ADMIN_BLOCK_ADMIN_USER_INIT:
+
+      return {
+        ...state,
+        blockingAdmin: action.admin
+      };
+
+    case actions.ADMIN_ADMIN_USER_BLOCKED:
+
+      return {
+        ...state,
+        lastBlockedAdmin: action.admin
+      };
+
+    case actions.ADMIN_UNBLOCK_ADMIN_USER_INIT:
+
+      return {
+        ...state,
+        unBlockingAdmin: action.admin
+      };
+
+
+    case actions.ADMIN_ADMIN_USER_UNBLOCKED:
+
+      return {
+        ...state,
+        lastUnBlockedAdmin: action.admin
+      };
+
+    case actions.ADMIN_DELETE_ADMIN_USER_INIT:
+
+      return {
+        ...state,
+        deletingAdmin: action.admin
+      }
+
+    case actions.ADMIN_ADMIN_USER_DELETED:
+
+      return {
+        ...state,
+        lastDeletedAdmin: action.admin
       };
 
     default:

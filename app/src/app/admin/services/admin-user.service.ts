@@ -6,6 +6,7 @@ import {map} from "rxjs/operators";
 import {CreateAdminUser} from "../data/model/create-admin-user.model";
 import {EditAdminUser} from "../data/model/edit-admin-user.model";
 import {ResetPasswordAdminUser} from "../data/model/reset-password-admin-user.model";
+import {BlockUser} from "../data/model/block-user.model";
 
 @Injectable()
 export class AdminUserService  extends BaseService
@@ -66,6 +67,28 @@ export class AdminUserService  extends BaseService
     return this.http.put<{admin: User}>('/admin/admin-user/reset-password/' + admin.id, {
       ...data
     })
+      .pipe(
+        map(({admin}) => {
+          return User.createFromRawData(admin);
+        })
+      );
+  }
+
+  block(admin: User, data: BlockUser)
+  {
+    return this.http.put<{admin: User}>('/admin/admin-user/block/' + admin.id, {
+      reason: data.reason
+    })
+      .pipe(
+        map(({admin}) => {
+          return User.createFromRawData(admin);
+        })
+      );
+  }
+
+  unBlock(admin: User)
+  {
+    return this.http.put<{admin: User}>('/admin/admin-user/un-block/' + admin.id, {})
       .pipe(
         map(({admin}) => {
           return User.createFromRawData(admin);

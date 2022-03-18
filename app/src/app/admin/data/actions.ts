@@ -45,6 +45,15 @@ export const ADMIN_ADMIN_USER_EDITED = 'ADMIN_ADMIN_USER_EDITED';
 export const ADMIN_RESET_PASSWORD_ADMIN_USER_INIT = 'ADMIN_RESET_PASSWORD_ADMIN_USER_INIT';
 export const ADMIN_ADMIN_USER_PASSWORD_RESET = 'ADMIN_ADMIN_USER_PASSWORD_RESET';
 
+export const ADMIN_BLOCK_ADMIN_USER_INIT = 'ADMIN_BLOCK_ADMIN_USER_INIT';
+export const ADMIN_ADMIN_USER_BLOCKED = 'ADMIN_ADMIN_USER_BLOCKED';
+
+export const ADMIN_UNBLOCK_ADMIN_USER_INIT = 'ADMIN_UNBLOCK_ADMIN_USER_INIT';
+export const ADMIN_ADMIN_USER_UNBLOCKED = 'ADMIN_ADMIN_USER_UNBLOCKED';
+
+export const ADMIN_DELETE_ADMIN_USER_INIT = 'ADMIN_DELETE_ADMIN_USER_INIT';
+export const ADMIN_ADMIN_USER_DELETED = 'ADMIN_ADMIN_USER_DELETED';
+
 export class GetTotalNumberClientUsersStart implements Action
 {
   readonly type = ADMIN_GET_TOTAL_NUMBER_CLIENT_USERS_START;
@@ -271,6 +280,49 @@ export class AdminUserPasswordReset implements Action
   constructor(public admin: User) {  }
 }
 
+
+export class BlockAdminUserInit implements Action
+{
+  readonly type = ADMIN_BLOCK_ADMIN_USER_INIT;
+
+  constructor(public admin: User) { }
+}
+
+export class AdminUserBlocked implements Action
+{
+  readonly type = ADMIN_ADMIN_USER_BLOCKED;
+
+  constructor(public admin: User) { }
+}
+
+export class UnBlockAdminUserInit implements Action
+{
+  readonly type = ADMIN_UNBLOCK_ADMIN_USER_INIT;
+
+  constructor(public admin: User) { }
+}
+
+export class AdminUserUnBlocked implements Action
+{
+  readonly type = ADMIN_ADMIN_USER_UNBLOCKED;
+
+  constructor(public admin: User) { }
+}
+
+export class DeleteAdminUserInit implements Action
+{
+  readonly type = ADMIN_DELETE_ADMIN_USER_INIT;
+
+  constructor(public admin: User) { }
+}
+
+export class AdminUserDeleted implements Action
+{
+  readonly type = ADMIN_ADMIN_USER_DELETED;
+
+  constructor(public admin: User) { }
+}
+
 export type AdminUserActions =
   GetTotalNumberClientUsersStart
   | GetTotalNumberClientUsersSuccess
@@ -313,4 +365,11 @@ export type AdminUserActions =
 
   | ResetPasswordAdminUserInit
   | AdminUserPasswordReset
+
+  | BlockAdminUserInit
+  | AdminUserBlocked
+  | UnBlockAdminUserInit
+  | AdminUserUnBlocked
+  | DeleteAdminUserInit
+  | AdminUserDeleted
   ;

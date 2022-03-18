@@ -43,6 +43,11 @@
             *ngFor="let admin of list"
             [user]="admin"
             [authorizedUser]="authorizedUser"
+            (onChangePassword)="onChangePasswordHandler($event)"
+            (onEdit)="onEditHandler($event)"
+            (onBlock)="onBlockHandler($event)"
+            (onUnblock)="onUnBlockHandler($event)"
+            (onDelete)="onDeleteHandler($event)"
           ></tr>
 
         </tbody>
