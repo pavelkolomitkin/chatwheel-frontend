@@ -2,6 +2,11 @@ import { Action } from '@ngrx/store';
 import {AuthUserTypes} from "./model/auth-user-types.enum";
 import {User} from "../../security/data/models/user.model";
 import {AbuseReport} from "../../core/data/models/abuse-report.model";
+import {AbuseReportType} from "../../core/data/models/abuse-report-type.model";
+
+export const ADMIN_GET_ABUSE_REPORT_TYPES_START = 'ADMIN_GET_ABUSE_REPORT_TYPES_START';
+export const ADMIN_GET_ABUSE_REPORT_TYPES_SUCCESS = 'ADMIN_GET_ABUSE_REPORT_TYPES_SUCCESS';
+export const ADMIN_GET_ABUSE_REPORT_TYPES_ERROR = 'ADMIN_GET_ABUSE_REPORT_TYPES_ERROR';
 
 export const ADMIN_GET_TOTAL_NUMBER_CLIENT_USERS_START = 'ADMIN_GET_TOTAL_NUMBER_CLIENT_USERS_START'
 export const ADMIN_GET_TOTAL_NUMBER_CLIENT_USERS_SUCCESS = 'ADMIN_GET_TOTAL_NUMBER_CLIENT_USERS_SUCCESS'
@@ -53,6 +58,25 @@ export const ADMIN_ADMIN_USER_UNBLOCKED = 'ADMIN_ADMIN_USER_UNBLOCKED';
 
 export const ADMIN_DELETE_ADMIN_USER_INIT = 'ADMIN_DELETE_ADMIN_USER_INIT';
 export const ADMIN_ADMIN_USER_DELETED = 'ADMIN_ADMIN_USER_DELETED';
+
+export class GetAbuseReportTypesStart implements Action
+{
+  readonly type = ADMIN_GET_ABUSE_REPORT_TYPES_START;
+}
+
+export class GetAbuseReportTypesSuccess implements Action
+{
+  readonly type = ADMIN_GET_ABUSE_REPORT_TYPES_SUCCESS;
+
+  constructor(public types: AbuseReportType[]) {}
+}
+
+export class GetAbuseReportTypesError implements Action
+{
+  readonly type = ADMIN_GET_ABUSE_REPORT_TYPES_ERROR;
+
+  constructor(public errors: any) { }
+}
 
 export class GetTotalNumberClientUsersStart implements Action
 {
@@ -372,4 +396,8 @@ export type AdminUserActions =
   | AdminUserUnBlocked
   | DeleteAdminUserInit
   | AdminUserDeleted
+
+  | GetAbuseReportTypesStart
+  | GetAbuseReportTypesSuccess
+  | GetAbuseReportTypesError
   ;

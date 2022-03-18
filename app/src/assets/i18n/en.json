@@ -151,6 +151,7 @@
   "NOT_ACTIVATED": "Not Activated",
   "IS_BLOCKED": "Blocked",
   "IS_DELETED": "Deleted",
+  "IS_NEW": "New",
   "DELETED": "deleted",
   "ALL_TYPES": "All",
   "NO_USER_FOUND": "No user found",
@@ -172,5 +173,12 @@
   "UNBLOCK_ADMIN_ACCOUNT": "Unblock Admin Account",
   "EDIT_ADMIN_ACCOUNT": "Edit Admin Account",
   "DELETE_ADMIN_ACCOUNT": "Delete Admin Account",
-  "UNKNOWN": "Unknown"
+  "UNKNOWN": "Unknown",
+  "CANNOT_LOAD_LIST": "Cannot load the list",
+  "APPLICANT": "Applicant",
+  "ADDRESSEE": "Addressee",
+  "ABUSE_REPORT_TYPE": "Type",
+  "ABUSE_REPORT_COMMENT": "Comment",
+  "NO_ABUSE_REPORT_FOUND": "No abuse report found"
+
 }

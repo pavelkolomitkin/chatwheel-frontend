@@ -2,10 +2,13 @@ import * as actions from './actions';
 import {AuthUserTypes} from "./model/auth-user-types.enum";
 import {User} from "../../security/data/models/user.model";
 import {AbuseReport} from "../../core/data/models/abuse-report.model";
+import {AbuseReportType} from "../../core/data/models/abuse-report-type.model";
 
 
 export interface State
 {
+  abuseReportTypes: AbuseReportType[],
+
   clientUserTotalNumber: number,
   clientEmailUserNumber: number,
   clientVkUserNumber: number,
@@ -49,6 +52,9 @@ export interface State
 }
 
 export const initialState: State = {
+
+  abuseReportTypes: [],
+
   clientUserTotalNumber: 0,
   clientEmailUserNumber: 0,
   clientVkUserNumber: 0,
@@ -96,6 +102,13 @@ export function reducer(state: State = initialState, action: actions.AdminUserAc
 {
   switch (action.type)
   {
+    case actions.ADMIN_GET_ABUSE_REPORT_TYPES_SUCCESS:
+
+      return {
+        ...state,
+        abuseReportTypes: action.types
+      };
+
     case actions.ADMIN_GET_TOTAL_NUMBER_CLIENT_USERS_SUCCESS:
 
       let property: string = '';

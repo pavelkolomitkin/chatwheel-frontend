@@ -1,13 +1,40 @@
-import {BaseService} from "../../core/services/base.service";
-import {Injectable} from "@angular/core";
-import {map} from "rxjs/operators";
-import {User} from "../../security/data/models/user.model";
-import {HttpParams} from "@angular/common/http";
-import {AbuseReport} from "../../core/data/models/abuse-report.model";
+import {BaseService} from '../../core/services/base.service';
+import {Injectable} from '@angular/core';
+import {map} from 'rxjs/operators';
+import {User} from '../../security/data/models/user.model';
+import {HttpParams} from '@angular/common/http';
+import {AbuseReport} from '../../core/data/models/abuse-report.model';
+import {AbuseReportListFilter} from '../data/model/abuse-report-list.filter';
 
 @Injectable()
 export class AbuseReportService extends BaseService
 {
+  getList(filter: AbuseReportListFilter, page: number = 1)
+  {
+    const data: any = {
+      ...filter,
+      page
+    };
+
+    if (data.type)
+    {
+      data.type = data.type.id;
+    }
+
+    const params: HttpParams = this.getHttpParamsFromObject(data);
+
+    return this.http.get<{ list: AbuseReport[], foundReportNumber: number, newReportNumber: number }>('/admin/abuse-report/list', { params })
+      .pipe(
+        map(({ list, foundReportNumber, newReportNumber}) => {
+          return {
+            list: list.map(item => AbuseReport.createFromRawData(item)),
+            foundNumber: foundReportNumber,
+            newNumber: newReportNumber
+          } ;
+        })
+      );
+  }
+
   getNewNumber()
   {
     return this.http.get<{ number: number }>('/admin/abuse-report/new-number').pipe(
