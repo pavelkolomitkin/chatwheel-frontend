@@ -55,7 +55,7 @@
 
 <td>
 
-  <ng-container *ngIf="!user.deleted">
+  <ng-container *ngIf="!user.deleted; else deletedTemplate">
 
     <span
       *ngIf="authorizedUser.isSuperAdmin || (authorizedUser.id === user.id)"
@@ -98,6 +98,9 @@
     </span>
 
   </ng-container>
+  <ng-template #deletedTemplate>
+    <span class="text-muted">({{ 'DELETED' | translate }})</span>
+  </ng-template>
 
 </td>
 
