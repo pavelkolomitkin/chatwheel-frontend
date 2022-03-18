@@ -27,6 +27,12 @@ import {PaginatorComponent} from "./components/paginator/paginator.component";
 import {TextLocationViewComponent} from "./components/geo/text-location-view/text-location-view.component";
 import {UserInterestsViewComponent} from "./components/profile/user-interests-view/user-interests-view.component";
 import {SelectedCountryViewComponent} from "./components/profile/selected-country-view/selected-country-view.component";
+import {
+  CameraProfilePictureGrabberWindowComponent
+} from "./components/pictures/camera-profile-picture-grabber-window/camera-profile-picture-grabber-window.component";
+import {
+  CameraProfilePictureGrabberComponent
+} from "./components/pictures/camera-profile-picture-grabber/camera-profile-picture-grabber.component";
 
 @NgModule({
   declarations: [
@@ -48,7 +54,9 @@ import {SelectedCountryViewComponent} from "./components/profile/selected-countr
     PaginatorComponent,
     TextLocationViewComponent,
     UserInterestsViewComponent,
-    SelectedCountryViewComponent
+    SelectedCountryViewComponent,
+    CameraProfilePictureGrabberWindowComponent,
+    CameraProfilePictureGrabberComponent
   ],
   imports: [
     CommonModule,
@@ -83,6 +91,8 @@ import {SelectedCountryViewComponent} from "./components/profile/selected-countr
     TextLocationViewComponent,
     UserInterestsViewComponent,
     SelectedCountryViewComponent,
+    CameraProfilePictureGrabberWindowComponent,
+    CameraProfilePictureGrabberComponent,
 
     UserActivityStatusDirective,
     MultiLinePipe,

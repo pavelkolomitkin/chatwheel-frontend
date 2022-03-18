@@ -24,9 +24,7 @@ import { TextLocationViewComponent as TextMyLocationViewComponent } from './comp
 import {StoreModule} from "@ngrx/store";
 import { reducer } from './data/reducer';
 import { reducer as callsReducer } from './data/calls/reducer';
-import { CameraProfilePictureGrabberWindowComponent } from './components/common/camera-profile-picture-grabber-window/camera-profile-picture-grabber-window.component'
 import {NgbModalModule} from "@ng-bootstrap/ng-bootstrap";
-import { CameraProfilePictureGrabberComponent } from './components/common/camera-profile-picture-grabber/camera-profile-picture-grabber.component';
 import { SettingsComponent } from './components/pages/my-profile/settings/settings.component';
 import {ProfileEffects} from "./data/effects/profile.effects";
 import {UserProfileService} from "./services/user-profile.service";
@@ -95,8 +93,6 @@ import { CallListItemComponent } from './components/pages/my-profile/call-list-p
         EditUserPickComponent,
         EditInterestsComponent,
         TextMyLocationViewComponent,
-        CameraProfilePictureGrabberWindowComponent,
-        CameraProfilePictureGrabberComponent,
         SettingsComponent,
         EditMapLocationComponent,
         ConversationComponent,

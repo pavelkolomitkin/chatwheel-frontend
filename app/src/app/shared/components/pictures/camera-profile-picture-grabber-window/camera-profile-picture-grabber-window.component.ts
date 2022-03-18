@@ -3,7 +3,7 @@ import {select, Store} from "@ngrx/store";
 import {State} from "../../../../app.state";
 import {Subscription} from "rxjs";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
-import {UserGrabPictureFromCameraWindow} from "../../../data/actions";
+import {UserGrabPictureFromCameraWindow} from "../../../../core/data/actions";
 
 @Component({
   selector: 'app-camera-profile-picture-grabber-window',
@@ -24,7 +24,7 @@ export class CameraProfilePictureGrabberWindowComponent implements OnInit, OnDes
 
     this.grabbingPictureWindowStateSubscription = this
       .store
-      .pipe(select(state => state.client.isGrabbingPictureCameraWindowOpen))
+      .pipe(select(state => state.core.isGrabbingPictureCameraWindowOpen))
       .subscribe((isOpen: boolean) => {
 
         if (isOpen)

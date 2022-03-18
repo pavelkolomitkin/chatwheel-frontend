@@ -80,7 +80,7 @@ export class UserAvatarComponent implements OnInit {
 
   onImageClickHandler(event)
   {
-    if (!this.isLightBox || this._user.deleted)
+    if (!this.isLightBox || this._user.deleted || !this._user.hasPicture())
     {
       return;
     }

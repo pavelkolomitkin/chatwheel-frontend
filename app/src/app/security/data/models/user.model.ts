@@ -113,6 +113,11 @@ export class User
     return null;
   }
 
+  hasPicture()
+  {
+    return !!this.avatar;
+  }
+
   getAvatarPicture(size: string)
   {
     if (this.deleted)
