@@ -40,7 +40,7 @@
   </ng-template>
 </td>
 
-<td>
+<td class="text-center">
   <app-user-geo-location-view
     [user]="user"
   ></app-user-geo-location-view>
@@ -69,9 +69,12 @@
 </td>
 
 <td>
-  <span class="badge text-light" app-user-activity-status [user]="user">
+  <span *ngIf="!!user.lastActivity; else noActivity" class="badge text-light" app-user-activity-status [user]="user">
     <span app-date-time [value]="user.lastActivity"></span>
   </span>
+  <ng-template #noActivity>
+    <span class="badge badge-secondary">{{ 'UNKNOWN' | translate }}</span>
+  </ng-template>
 </td>
 
 <td>

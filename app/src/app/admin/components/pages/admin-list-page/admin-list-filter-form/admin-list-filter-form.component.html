@@ -1,0 +1,53 @@
+<form #form="ngForm" (change)="onFormChangeHandler(form)">
+
+  <div class="row">
+
+    <div class="col-md-2">
+      <div class="form-group">
+        <label>{{ 'EMAIL' | translate }}</label>
+        <input
+          type="email"
+          [(ngModel)]="email"
+          name="email"
+          class="form-control"
+        />
+      </div>
+    </div>
+
+
+    <div class="col-md-2 pl-4">
+
+      <div class="checkbox-color checkbox-primary">
+        <input
+          id="is-blocked"
+          type="checkbox"
+          name="isBlocked"
+          [(ngModel)]="isBlocked"
+        >
+        <label for="is-blocked">
+          {{ 'IS_BLOCKED' | translate }}
+        </label>
+      </div>
+
+      <br/>
+
+      <div class="checkbox-color checkbox-primary">
+        <input
+          id="is-deleted"
+          type="checkbox"
+          name="isDeleted"
+          [(ngModel)]="isDeleted"
+        >
+        <label for="is-deleted">
+          {{ 'IS_DELETED' | translate }}
+        </label>
+      </div>
+
+    </div>
+
+    <div class="col-md-8">
+    </div>
+
+  </div>
+
+</form>

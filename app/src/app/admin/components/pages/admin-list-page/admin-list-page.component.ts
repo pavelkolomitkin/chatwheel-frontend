@@ -7,7 +7,6 @@ import {
   AdminUserBlocked,
   AdminUserCreated, AdminUserDeleted, AdminUserEdited, AdminUserPasswordReset, AdminUserUnBlocked, BlockAdminUserInit,
   CreateAdminUserInit, DeleteAdminUserInit, EditAdminUserInit,
-  GetTotalNumberAdminUsersSuccess,
   ResetPasswordAdminUserInit, UnBlockAdminUserInit
 } from "../../../data/actions";
 import {User} from "../../../../security/data/models/user.model";
@@ -15,7 +14,9 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {GlobalNotification} from "../../../../core/data/actions";
 import {Notification, NotificationType} from "../../../../core/data/models/notification.model";
 import {filter, first} from "rxjs/operators";
-import {serializationCheckMetaReducer} from "@ngrx/store/src/meta-reducers";
+import {AdminUserListFilter} from "../../../data/model/admin-user-list.filter";
+import {AdminUserFormFilter} from "../../../data/model/admin-user-form.filter";
+import {SortingType} from "../../../../core/data/models/sorting-type.enum";
 
 @Component({
   selector: 'app-admin-list-page',
@@ -25,11 +26,21 @@ import {serializationCheckMetaReducer} from "@ngrx/store/src/meta-reducers";
 })
 export class AdminListPageComponent implements OnInit, OnDestroy {
 
+  static AVAILABLE_SORT_FIELD = {
+    email: 'email',
+    lastActivity: 'lastActivity',
+    fullName: 'fullName',
+    signUp: 'signUp'
+  };
+
+  defaultSortField: string = AdminListPageComponent.AVAILABLE_SORT_FIELD.lastActivity;
+  defaultSortType: SortingType = SortingType.DESC;
+
   authorizedUser: User;
 
   list: User[] = null;
 
-  totalNumber: Observable<number>;
+  totalNumber: number;
 
   queryParamSubscription: Subscription;
 
@@ -39,6 +50,15 @@ export class AdminListPageComponent implements OnInit, OnDestroy {
   adminBlockedSubscription: Subscription;
   adminUnBlockedSubscription: Subscription;
   adminDeletedSubscription: Subscription;
+
+  searchFilter: AdminUserListFilter = {
+    sortField: null,
+    sortType: null,
+
+    isBlocked: false,
+    email: '',
+    isDeleted: false
+  }
 
 
   constructor(
@@ -51,8 +71,6 @@ export class AdminListPageComponent implements OnInit, OnDestroy {
   async ngOnInit() {
 
     this.authorizedUser = await this.store.pipe(select(state => state.security.user), first()).toPromise();
-
-    this.totalNumber = this.store.pipe(select(state => state.admin.adminTotalNumber));
 
     this.adminCreatedSubscription = this.store.pipe(
       select(state => state.admin.lastCreatedAdminUser),
@@ -91,6 +109,8 @@ export class AdminListPageComponent implements OnInit, OnDestroy {
       .subscribe(this.adminModifiedHandler);
 
     this.queryParamSubscription = this.route.queryParams.subscribe(async (params) => {
+
+      this.searchFilter = this.getCurrentFilter();
 
       this.list = null;
 
@@ -157,19 +177,92 @@ export class AdminListPageComponent implements OnInit, OnDestroy {
     this.store.dispatch(new CreateAdminUserInit(true));
   }
 
+  getCurrentFilter(): AdminUserListFilter
+  {
+    let {
+      email,
+      isBlocked,
+      sortType,
+      sortField,
+      isDeleted,
+    } = this.route.snapshot.queryParams;
+
+    sortField =
+      AdminListPageComponent.AVAILABLE_SORT_FIELD[sortField] ?
+        AdminListPageComponent.AVAILABLE_SORT_FIELD[sortField] :
+        this.defaultSortField
+    ;
+
+    sortType = !sortType ? this.defaultSortType : sortType;
+
+    return {
+      email: email,
+      isBlocked: !!isBlocked ? JSON.parse(isBlocked) : null,
+      isDeleted: !!isDeleted ? JSON.parse(isDeleted) : null,
+      sortType: sortType,
+      sortField: sortField,
+    };
+  }
+
   getCurrentListPage()
   {
     let param = !!this.route.snapshot.queryParams['page'] ? parseInt(this.route.snapshot.queryParams['page']) : 1;
     return (param > 0) ? param : 1;
   }
 
+  async onSearchFilterChangeHandler(filter: AdminUserFormFilter)
+  {
+    const params = {
+      ...filter,
+      page: 1
+    };
+
+    await this.router.navigate(
+      [],
+      {
+        relativeTo: this.route,
+        queryParams: params,
+        queryParamsHandling: "merge"
+      }
+    );
+  }
+
+  async onSortingFieldClickHandler(event, fieldName: string)
+  {
+    if (this.searchFilter.sortField !== fieldName)
+    {
+      this.searchFilter.sortField = fieldName;
+      this.searchFilter.sortType = SortingType.DESC;
+    }
+    else
+    {
+      this.searchFilter.sortType = (this.searchFilter.sortType === SortingType.ASC) ? SortingType.DESC : SortingType.ASC;
+    }
+
+    const { sortField, sortType } = this.searchFilter;
+
+    await this.router.navigate(
+      [],
+      {
+        relativeTo: this.route,
+        queryParams: {
+          sortType: sortType,
+          sortField: sortField
+        },
+        queryParamsHandling: "merge"
+      }
+    )
+  }
+
   async loadList()
   {
     try {
 
+      const filter: AdminUserListFilter = this.getCurrentFilter();
       const page: number = this.getCurrentListPage();
 
-      const { list, totalNumber } = await this.service.getList(page).toPromise();
+      const { list, totalNumber } = await this.service.getList(filter, page).toPromise();
+      this.totalNumber = totalNumber;
 
       if (!this.list)
       {
@@ -180,8 +273,6 @@ export class AdminListPageComponent implements OnInit, OnDestroy {
       {
         this.list = this.list.concat(list);
       }
-
-      this.store.dispatch(new GetTotalNumberAdminUsersSuccess(totalNumber));
     }
     catch (error)
     {

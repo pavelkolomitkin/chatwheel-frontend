@@ -7,6 +7,7 @@ import {CreateAdminUser} from "../data/model/create-admin-user.model";
 import {EditAdminUser} from "../data/model/edit-admin-user.model";
 import {ResetPasswordAdminUser} from "../data/model/reset-password-admin-user.model";
 import {BlockUser} from "../data/model/block-user.model";
+import {AdminUserListFilter} from "../data/model/admin-user-list.filter";
 
 @Injectable()
 export class AdminUserService  extends BaseService
@@ -21,9 +22,12 @@ export class AdminUserService  extends BaseService
   }
 
 
-  getList(page: number = 1)
+  getList(filter: AdminUserListFilter, page: number = 1)
   {
-    const params: HttpParams = this.getHttpParamsFromObject({ page });
+    const params: HttpParams = this.getHttpParamsFromObject({
+      ...filter,
+      page
+    });
 
     return this.http.get<{ list: User[], totalNumber: number }>('/admin/admin-user/list', { params })
       .pipe(

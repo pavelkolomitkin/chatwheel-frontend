@@ -19,9 +19,12 @@
 </td>
 
 <td>
-  <span class="badge text-light" app-user-activity-status [user]="user">
+  <span *ngIf="!!user.lastActivity; else noActivity" class="badge text-light" app-user-activity-status [user]="user">
     <span app-date-time [value]="user.lastActivity"></span>
   </span>
+  <ng-template #noActivity>
+    <span class="badge badge-secondary">{{ 'UNKNOWN' | translate }}</span>
+  </ng-template>
 </td>
 
 <td>

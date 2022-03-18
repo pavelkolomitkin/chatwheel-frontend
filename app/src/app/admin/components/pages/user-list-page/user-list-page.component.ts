@@ -12,7 +12,7 @@ import {BlockUserInit, DeleteUserInit, UnBlockUserInit} from "../../../data/acti
 import {filter, first} from "rxjs/operators";
 import {SortingType} from "../../../../core/data/models/sorting-type.enum";
 import {Country} from "../../../../core/data/models/country.model";
-import {FormFilterData} from "./user-list-filter-form/user-list-filter-form.component";
+import {ClientUserFormFilter} from "../../../data/model/client-user-form.filter";
 
 @Component({
   selector: 'app-user-list-page',
@@ -236,7 +236,7 @@ export class UserListPageComponent implements OnInit, OnDestroy {
     )
   }
 
-  async onFilterFormChangeHandler(data: FormFilterData)
+  async onFilterFormChangeHandler(data: ClientUserFormFilter)
   {
     const params: any = {
       ...data,

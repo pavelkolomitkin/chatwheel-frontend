@@ -42,6 +42,7 @@ import { BlockAdminManagerComponent } from './components/common/admin-manager/bl
 import { DeleteAdminManagerComponent } from './components/common/admin-manager/delete-admin-manager/delete-admin-manager.component';
 import { EditAdminManagerComponent } from './components/common/admin-manager/edit-admin-manager/edit-admin-manager.component';
 import {AdminUserStateSocketService} from "./services/sockets/admin-user-state-socket.service";
+import { AdminListFilterFormComponent } from './components/pages/admin-list-page/admin-list-filter-form/admin-list-filter-form.component';
 
 
 @NgModule({
@@ -74,6 +75,7 @@ import {AdminUserStateSocketService} from "./services/sockets/admin-user-state-s
     BlockAdminManagerComponent,
     DeleteAdminManagerComponent,
     EditAdminManagerComponent,
+    AdminListFilterFormComponent,
   ],
   imports: [
     CommonModule,

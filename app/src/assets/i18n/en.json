@@ -171,5 +171,6 @@
   "BLOCK_ADMIN_ACCOUNT": "Block Admin Account",
   "UNBLOCK_ADMIN_ACCOUNT": "Unblock Admin Account",
   "EDIT_ADMIN_ACCOUNT": "Edit Admin Account",
-  "DELETE_ADMIN_ACCOUNT": "Delete Admin Account"
+  "DELETE_ADMIN_ACCOUNT": "Delete Admin Account",
+  "UNKNOWN": "Unknown"
 }

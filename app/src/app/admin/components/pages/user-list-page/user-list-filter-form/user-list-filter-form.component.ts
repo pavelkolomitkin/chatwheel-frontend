@@ -2,21 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {AuthUserTypes} from '../../../../data/model/auth-user-types.enum';
 import {Country} from '../../../../../core/data/models/country.model';
-
-export interface FormFilterData {
-
-  authType?: AuthUserTypes,
-
-  residenceCountry?: Country,
-
-  searchCountry?: Country,
-
-  isActivated?: boolean,
-
-  isBlocked?: boolean,
-
-  isDeleted?: boolean
-}
+import {ClientUserFormFilter} from "../../../../data/model/client-user-form.filter";
 
 @Component({
   selector: 'app-user-list-filter-form',
@@ -25,7 +11,7 @@ export interface FormFilterData {
 })
 export class UserListFilterFormComponent implements OnInit {
 
-  @Output('onChange') changeEmitter: EventEmitter<FormFilterData> = new EventEmitter<FormFilterData>();
+  @Output('onChange') changeEmitter: EventEmitter<ClientUserFormFilter> = new EventEmitter<ClientUserFormFilter>();
 
   @Input() countries: Country[];
 
@@ -46,7 +32,7 @@ export class UserListFilterFormComponent implements OnInit {
 
   onFormChangeHandler(form: NgForm)
   {
-    const data: FormFilterData = form.value;
+    const data: ClientUserFormFilter = form.value;
 
     this.changeEmitter.emit(data);
   }
