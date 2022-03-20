@@ -41,6 +41,7 @@
   "CALL_AGAIN": "Call Again",
   "HANG_UP": "Hang Up",
   "REPORT_ABUSE": "Report Abuse",
+  "CALL_INITIATED": "Call Initiated",
   "CALL_STARTED": "Call Started",
   "CALL_ENDED": "Call Ended",
   "CALL_REJECTED": "Call Rejected",
@@ -179,6 +180,14 @@
   "ADDRESSEE": "Addressee",
   "ABUSE_REPORT_TYPE": "Type",
   "ABUSE_REPORT_COMMENT": "Comment",
-  "NO_ABUSE_REPORT_FOUND": "No abuse report found"
+  "NO_ABUSE_REPORT_FOUND": "No abuse report found",
+  "DIRECT_CALLS": "Direct Calls",
+  "FROM_DATE": "From Date",
+  "TO_DATE": "To Date",
+  "CALLS_NOT_FOUND": "Calls not found",
+  "MEMBERS": "Members",
+  "START_TIME": "Start Time",
+  "END_TIME": "End Time",
+  "DURATION": "Duration"
 
 }

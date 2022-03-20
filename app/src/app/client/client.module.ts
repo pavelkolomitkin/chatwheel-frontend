@@ -24,7 +24,6 @@ import { TextLocationViewComponent as TextMyLocationViewComponent } from './comp
 import {StoreModule} from "@ngrx/store";
 import { reducer } from './data/reducer';
 import { reducer as callsReducer } from './data/calls/reducer';
-import {NgbModalModule} from "@ng-bootstrap/ng-bootstrap";
 import { SettingsComponent } from './components/pages/my-profile/settings/settings.component';
 import {ProfileEffects} from "./data/effects/profile.effects";
 import {UserProfileService} from "./services/user-profile.service";
@@ -152,13 +151,13 @@ import { CallListItemComponent } from './components/pages/my-profile/call-list-p
       ReportAbuseEffects,
       UserProfileEffects
     ]),
-    NgbModalModule,
   ],
 
-  exports: [
-    EffectsModule,
-    PageHeaderComponent,
-  ],
+    exports: [
+        EffectsModule,
+        PageHeaderComponent,
+        CallListItemComponent,
+    ],
 
   entryComponents: [
     IncomingMessageComponent,

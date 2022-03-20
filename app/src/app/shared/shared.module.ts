@@ -33,6 +33,8 @@ import {
 import {
   CameraProfilePictureGrabberComponent
 } from "./components/pictures/camera-profile-picture-grabber/camera-profile-picture-grabber.component";
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import { TimeDurationComponent } from './components/time-duration/time-duration.component';
 
 @NgModule({
   declarations: [
@@ -56,11 +58,13 @@ import {
     UserInterestsViewComponent,
     SelectedCountryViewComponent,
     CameraProfilePictureGrabberWindowComponent,
-    CameraProfilePictureGrabberComponent
+    CameraProfilePictureGrabberComponent,
+    TimeDurationComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
+    NgbModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -73,33 +77,35 @@ import {
     InfiniteScrollModule,
     MomentModule
   ],
-  exports: [
-    TranslateModule,
-    FormsModule,
-    LightboxModule,
-    InfiniteScrollModule,
+    exports: [
+        NgbModule,
+        TranslateModule,
+        FormsModule,
+        LightboxModule,
+        InfiniteScrollModule,
 
-    FooterComponent,
-    UserAvatarComponent,
-    EditableUserAvatarComponent,
-    FormFieldErrorListComponent,
-    MapComponent,
-    DateTimeViewComponent,
-    AlertWindowComponent,
-    MapLocationViewComponent,
-    PaginatorComponent,
-    TextLocationViewComponent,
-    UserInterestsViewComponent,
-    SelectedCountryViewComponent,
-    CameraProfilePictureGrabberWindowComponent,
-    CameraProfilePictureGrabberComponent,
+        FooterComponent,
+        UserAvatarComponent,
+        EditableUserAvatarComponent,
+        FormFieldErrorListComponent,
+        MapComponent,
+        DateTimeViewComponent,
+        AlertWindowComponent,
+        MapLocationViewComponent,
+        PaginatorComponent,
+        TextLocationViewComponent,
+        UserInterestsViewComponent,
+        SelectedCountryViewComponent,
+        CameraProfilePictureGrabberWindowComponent,
+        CameraProfilePictureGrabberComponent,
 
-    UserActivityStatusDirective,
-    MultiLinePipe,
-    TextTrimPipe,
-    ImageUrlPipe,
-    MomentModule,
-  ],
+        UserActivityStatusDirective,
+        MultiLinePipe,
+        TextTrimPipe,
+        ImageUrlPipe,
+        MomentModule,
+        TimeDurationComponent,
+    ],
 
   entryComponents: [
     MapPinGroupComponent

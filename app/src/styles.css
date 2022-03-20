@@ -143,3 +143,19 @@ body
 /*
 //=================================== ADMIN INTERFACE ========================================
 */
+
+/**
+===================================== DATEPICKER FIX =========================================
+ */
+[ngbdatepicker] + .dropdown-menu.show
+{
+  width: unset !important;
+}
+
+.ngb-dp-day.disabled, .ngb-dp-day.hidden
+{
+  display: block !important;
+}
+/**
+//=================================== DATEPICKER FIX =========================================
+ */

@@ -4,7 +4,7 @@ import {ProfileComponent} from "./components/pages/profile/profile.component";
 import {LayoutComponent} from "./components/layout/layout.component";
 import {UserListPageComponent} from "./components/pages/user-list-page/user-list-page.component";
 import {AdminListPageComponent} from "./components/pages/admin-list-page/admin-list-page.component";
-import {CallListPageComponent} from "./components/pages/call-list-page/call-list-page.component";
+import {CallListPageComponent} from "./components/pages/calls-page/call-list-page/call-list-page.component";
 import {AbuseReportListPageComponent} from "./components/pages/abuse-report-list-page/abuse-report-list-page.component";
 import {DashboardComponent} from "./components/pages/dashboard/dashboard.component";
 import {
@@ -17,6 +17,7 @@ import {
 import {
   ClientProfilePageComponent
 } from "./components/pages/client-user-profile-page/client-profile-page/client-profile-page.component";
+import {CallsPageComponent} from "./components/pages/calls-page/calls-page.component";
 
 const routes: Routes = [
   { path: '', component: LayoutComponent, children: [
@@ -30,7 +31,11 @@ const routes: Routes = [
       { path: 'users', component: UserListPageComponent },
       { path: 'admins', component: AdminListPageComponent },
       { path: 'abuse-reports', component: AbuseReportListPageComponent },
-      { path: 'calls', component: CallListPageComponent },
+      { path: 'calls', component: CallsPageComponent, children: [
+          { path: 'chat-wheel', component: CallListPageComponent, data: { isDirect: false } },
+          { path: 'direct', component: CallListPageComponent, data: { isDirect: true } },
+          { path: '', redirectTo: 'chat-wheel', pathMatch: 'full' }
+        ] },
       { path: '404', component: NotFoundPageComponent },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: '**', redirectTo: '404', pathMatch: 'full' }

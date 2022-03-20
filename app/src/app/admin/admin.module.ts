@@ -9,7 +9,7 @@ import {SharedModule} from "../shared/shared.module";
 import { UserListPageComponent } from './components/pages/user-list-page/user-list-page.component';
 import { AdminListPageComponent } from './components/pages/admin-list-page/admin-list-page.component';
 import { AbuseReportListPageComponent } from './components/pages/abuse-report-list-page/abuse-report-list-page.component';
-import { CallListPageComponent } from './components/pages/call-list-page/call-list-page.component';
+import { CallListPageComponent } from './components/pages/calls-page/call-list-page/call-list-page.component';
 import { DashboardComponent } from './components/pages/dashboard/dashboard.component';
 import {StoreModule} from "@ngrx/store";
 import {reducer} from "./data/reducer";
@@ -19,7 +19,6 @@ import {ClientUserService} from "./services/client-user.service";
 import {AbuseReportService} from "./services/abuse-report.service";
 import {AbuseReportEffects} from "./data/effects/abuse-report.effects";
 import { UserListItemComponent } from './components/pages/user-list-page/user-list-item/user-list-item.component';
-import {NgbPopoverModule, NgbTooltipModule} from "@ng-bootstrap/ng-bootstrap";
 import { UserGeoLocationViewComponent } from './components/pages/user-list-page/user-geo-location-view/user-geo-location-view.component';
 import { UserManagerComponent } from './components/common/user-manager/user-manager.component';
 import { ClientUserProfilePageComponent } from './components/pages/client-user-profile-page/client-user-profile-page.component';
@@ -46,6 +45,10 @@ import { AdminListFilterFormComponent } from './components/pages/admin-list-page
 import { AbuseReportListFilterFormComponent } from './components/pages/abuse-report-list-page/abuse-report-list-filter-form/abuse-report-list-filter-form.component';
 import { AbuseReportListItemComponent } from './components/pages/abuse-report-list-page/abuse-report-list-item/abuse-report-list-item.component';
 import {AbuseReportTypeEffects} from "./data/effects/abuse-report-type.effects";
+import {CallService} from "./services/call.service";
+import { CallsPageComponent } from './components/pages/calls-page/calls-page.component';
+import { CallListFilterFormComponent } from './components/pages/calls-page/call-list-filter-form/call-list-filter-form.component';
+import { CallListItemComponent } from './components/pages/calls-page/call-list-page/call-list-item/call-list-item.component';
 
 
 @NgModule({
@@ -81,6 +84,9 @@ import {AbuseReportTypeEffects} from "./data/effects/abuse-report-type.effects";
     AdminListFilterFormComponent,
     AbuseReportListFilterFormComponent,
     AbuseReportListItemComponent,
+    CallsPageComponent,
+    CallListFilterFormComponent,
+    CallListItemComponent,
   ],
   imports: [
     CommonModule,
@@ -93,8 +99,6 @@ import {AbuseReportTypeEffects} from "./data/effects/abuse-report-type.effects";
       AbuseReportEffects,
       AdminUserEffects
     ]),
-    NgbTooltipModule,
-    NgbPopoverModule,
     NgxPermissionsModule,
   ],
   exports: [
@@ -104,6 +108,7 @@ import {AbuseReportTypeEffects} from "./data/effects/abuse-report-type.effects";
     ClientUserService,
     AbuseReportService,
     AdminUserService,
+    CallService,
 
     AdminUserStateSocketService
   ]

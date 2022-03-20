@@ -94,7 +94,7 @@
 
       </ng-container>
 
-      <div class="remote-video-container">
+      <div class="remote-video-container" [ngClass]="(uiState === 'chat_stopped') ? 'hidden' : ''">
         <video
           #remoteVideo
           [autoplay]="true"

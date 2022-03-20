@@ -1,0 +1,86 @@
+<td class="text-center">
+
+  <div class="row">
+
+    <div class="col-md-4">
+      <div class="d-inline">
+        <a [routerLink]="'/admin/users/' + call.members[0].user.id">
+          <app-user-avatar
+            [size]="'small'"
+            [additionalStyles]="{ cursor: 'pointer' }"
+            [user]="call.members[0].user"
+            [isActivityVisible]="true"
+          ></app-user-avatar>
+        </a>
+      </div>
+      <ng-container *ngIf="call.members[0].user.residenceCountry">
+        <div class="d-inline">
+          <span
+            [title]="call.members[0].user.residenceCountry.name"
+            class="fi fi-{{call.members[0].user.residenceCountry.code.toLocaleLowerCase() }} country-flag mt-2 mb-2"></span>
+        </div>
+      </ng-container>
+    </div>
+    <div class="col-md-2">
+      <div class="phone-container">
+        <div class="h6 pt-3">
+          <i
+            *ngIf="call.status === 0"
+            class="ik ik-phone-call text-warning"
+            [title]="'CALL_INITIATED' | translate"
+          ></i>
+          <i
+            *ngIf="call.status === 1"
+            class="ik ik-phone-call text-success"
+            [title]="'CALL_STARTED' | translate"
+          ></i>
+          <i
+            *ngIf="call.status === 2"
+            class="ik ik-phone-off text-muted"
+            [title]="'CALL_ENDED' | translate"
+          ></i>
+          <i
+            *ngIf="call.status === 3"
+            class="ik ik-phone-off text-danger"
+            [title]="'CALL_REJECTED' | translate"
+          ></i>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="d-inline">
+        <a [routerLink]="'/admin/users/' + call.members[1].user.id">
+          <app-user-avatar
+            [size]="'small'"
+            [additionalStyles]="{ cursor: 'pointer' }"
+            [user]="call.members[1].user"
+            [isActivityVisible]="true"
+          ></app-user-avatar>
+        </a>
+      </div>
+      <ng-container *ngIf="call.members[1].user.residenceCountry">
+        <div class="d-inline">
+          <span
+            [title]="call.members[1].user.residenceCountry.name"
+            class="fi fi-{{call.members[1].user.residenceCountry.code.toLocaleLowerCase() }} country-flag mt-2 mb-2"></span>
+        </div>
+      </ng-container>
+    </div>
+
+  </div>
+
+</td>
+
+<td>
+  <span class="text-muted" app-date-time [value]="call.createdAt"></span>
+</td>
+<td>
+  <ng-container *ngIf="!!call.endTime">
+    <span class="text-muted" app-date-time [value]="call.endTime"></span>
+  </ng-container>
+</td>
+<td>
+  <ng-container *ngIf="!!call.endTime">
+    <span class="text-muted" app-time-duration [interval]="{startTime: call.createdAt, endTime: call.endTime}"></span>
+  </ng-container>
+</td>
