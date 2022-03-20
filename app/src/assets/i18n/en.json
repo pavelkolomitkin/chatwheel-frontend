@@ -188,6 +188,26 @@
   "MEMBERS": "Members",
   "START_TIME": "Start Time",
   "END_TIME": "End Time",
-  "DURATION": "Duration"
+  "DURATION": "Duration",
+  "TOTAL_USERS": "Users",
+  "EMAIL_USERS": "Email Users",
+  "VK_USERS": "Vk Users",
+  "TOTAL": "total",
+  "STATISTICS": "Statistics",
+  "USER_FRACTIONS": "User Account Fractions",
+  "USER_SIGN_UP_DYNAMIC": "User Signing Up",
+
+  "JANUARY": "January",
+  "FEBRUARY": "February",
+  "MARCH": "March",
+  "APRIL": "April",
+  "MAY": "May",
+  "JUNE": "June",
+  "JULY": "July",
+  "AUGUST": "August",
+  "SEPTEMBER": "September",
+  "OCTOBER": "October",
+  "NOVEMBER": "November",
+  "DECEMBER": "December"
 
 }

@@ -1,5 +1,4 @@
 import * as actions from './actions';
-import {AuthUserTypes} from "./model/auth-user-types.enum";
 import {User} from "../../security/data/models/user.model";
 import {AbuseReport} from "../../core/data/models/abuse-report.model";
 import {AbuseReportType} from "../../core/data/models/abuse-report-type.model";
@@ -7,11 +6,12 @@ import {AbuseReportType} from "../../core/data/models/abuse-report-type.model";
 
 export interface State
 {
+  totalClientUserNumber: number,
+  emailClientUserNumber: number,
+  vkUserNumber: number,
+
   abuseReportTypes: AbuseReportType[],
 
-  clientUserTotalNumber: number,
-  clientEmailUserNumber: number,
-  clientVkUserNumber: number,
   adminTotalNumber: number,
 
   newAbuseReportNumber: number,
@@ -53,11 +53,12 @@ export interface State
 
 export const initialState: State = {
 
+  totalClientUserNumber: null,
+  emailClientUserNumber: null,
+  vkUserNumber: null,
+
   abuseReportTypes: [],
 
-  clientUserTotalNumber: 0,
-  clientEmailUserNumber: 0,
-  clientVkUserNumber: 0,
   adminTotalNumber: 0,
 
   newAbuseReportNumber: 0,
@@ -108,39 +109,6 @@ export function reducer(state: State = initialState, action: actions.AdminUserAc
         ...state,
         abuseReportTypes: action.types
       };
-
-    case actions.ADMIN_GET_TOTAL_NUMBER_CLIENT_USERS_SUCCESS:
-
-      let property: string = '';
-
-      switch (action.authType)
-      {
-        case AuthUserTypes.EMAIL:
-          property = 'clientEmailUserNumber';
-          break;
-
-        case AuthUserTypes.VK:
-          property = 'clientVkUserNumber';
-          break;
-
-        default:
-          property = 'clientUserTotalNumber';
-      }
-
-      return {
-        ...state,
-        [property]: action.value
-      }
-
-    case actions.ADMIN_GET_TOTAL_NUMBER_CLIENT_USERS_ERROR:
-
-      return {
-        ...state,
-        clientEmailUserNumber: 0,
-        clientVkUserNumber: 0,
-        clientUserTotalNumber: 0
-      };
-
 
     case actions.ADMIN_GET_NEW_ABUSE_REPORT_NUMBER_SUCCESS:
 
@@ -330,6 +298,15 @@ export function reducer(state: State = initialState, action: actions.AdminUserAc
       return {
         ...state,
         lastDeletedAdmin: action.admin
+      };
+
+    case actions.ADMIN_GET_USER_NUMBER_SUCCESS:
+
+      return {
+        ...state,
+        totalClientUserNumber: action.total,
+        emailClientUserNumber: action.emailNumber,
+        vkUserNumber: action.vkNumber
       };
 
     default:

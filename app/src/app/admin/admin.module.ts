@@ -49,6 +49,12 @@ import {CallService} from "./services/call.service";
 import { CallsPageComponent } from './components/pages/calls-page/calls-page.component';
 import { CallListFilterFormComponent } from './components/pages/calls-page/call-list-filter-form/call-list-filter-form.component';
 import { CallListItemComponent } from './components/pages/calls-page/call-list-page/call-list-item/call-list-item.component';
+import { MainContentHeaderComponent } from './components/layout/main-content-header/main-content-header.component';
+import {ClientUserStatisticsService} from "./services/statistics/client-user-statistics.service";
+import {StatisticsEffects} from "./data/effects/statistics.effects";
+import { ClientUserFractionsChartComponent } from './components/pages/dashboard/client-user-fractions-chart/client-user-fractions-chart.component';
+import { ClientUserDynamicStatisticsChartComponent } from './components/pages/dashboard/client-user-dynamic-statistics-chart/client-user-dynamic-statistics-chart.component';
+
 
 
 @NgModule({
@@ -87,6 +93,9 @@ import { CallListItemComponent } from './components/pages/calls-page/call-list-p
     CallsPageComponent,
     CallListFilterFormComponent,
     CallListItemComponent,
+    MainContentHeaderComponent,
+    ClientUserFractionsChartComponent,
+    ClientUserDynamicStatisticsChartComponent,
   ],
   imports: [
     CommonModule,
@@ -97,7 +106,8 @@ import { CallListItemComponent } from './components/pages/calls-page/call-list-p
       AbuseReportTypeEffects,
       ClientUserEffects,
       AbuseReportEffects,
-      AdminUserEffects
+      AdminUserEffects,
+      StatisticsEffects
     ]),
     NgxPermissionsModule,
   ],
@@ -109,6 +119,7 @@ import { CallListItemComponent } from './components/pages/calls-page/call-list-p
     AbuseReportService,
     AdminUserService,
     CallService,
+    ClientUserStatisticsService,
 
     AdminUserStateSocketService
   ]

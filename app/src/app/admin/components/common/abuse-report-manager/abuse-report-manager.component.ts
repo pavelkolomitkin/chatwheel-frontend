@@ -7,7 +7,6 @@ import {
   AbuseReportOpen,
   AbuseReportRead,
   GetNewAbuseReportNumberStart,
-  GetTotalNumberClientUsersStart
 } from "../../../data/actions";
 import {filter} from "rxjs/operators";
 

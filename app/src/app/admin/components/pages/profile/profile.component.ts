@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {User} from "../../../../security/data/models/user.model";
 import {select, Store} from "@ngrx/store";
 import {State} from "../../../../app.state";
-import {first} from "rxjs/operators";
 import {Observable} from "rxjs";
 
 @Component({

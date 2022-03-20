@@ -4,15 +4,18 @@ import {Action, Store} from "@ngrx/store";
 import {State} from "../../../app.state";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
 import {
-  ADMIN_BLOCK_USER_START, ADMIN_DELETE_USER_START,
-  ADMIN_GET_TOTAL_NUMBER_CLIENT_USERS_START,
+  ADMIN_BLOCK_USER_START,
+  ADMIN_DELETE_USER_START,
+  ADMIN_GET_USER_NUMBER,
   ADMIN_UNBLOCK_USER_START,
   BlockUserError,
   BlockUserStart,
-  BlockUserSuccess, DeleteUserError, DeleteUserStart, DeleteUserSuccess,
-  GetTotalNumberClientUsersError,
-  GetTotalNumberClientUsersStart,
-  GetTotalNumberClientUsersSuccess,
+  BlockUserSuccess,
+  DeleteUserError,
+  DeleteUserStart,
+  DeleteUserSuccess,
+  GetClientUserNumber,
+  GetClientUserNumberSuccess,
   UnBlockUserError,
   UnBlockUserStart,
   UnBlockUserSuccess
@@ -24,25 +27,6 @@ import {User} from "../../../security/data/models/user.model";
 @Injectable()
 export class ClientUserEffects
 {
-  getNumberStart: Observable<Action> = createEffect(() => {
-    return this.actions.pipe(
-      ofType(ADMIN_GET_TOTAL_NUMBER_CLIENT_USERS_START),
-      mergeMap((action: GetTotalNumberClientUsersStart) => {
-
-        const { authType } = action;
-
-        return this.service.getNumber(authType).pipe(
-          map((number: number) => {
-            return new GetTotalNumberClientUsersSuccess(number, authType)
-          }),
-          catchError((errors) => {
-            return of(new GetTotalNumberClientUsersError(errors));
-          })
-        );
-      }),
-    )
-  });
-
   blockStart: Observable<Action> = createEffect(() => {
     return this.actions.pipe(
       ofType(ADMIN_BLOCK_USER_START),
@@ -90,6 +74,7 @@ export class ClientUserEffects
             return of(new DeleteUserError(user, error));
           })
         );
+
       })
     )
   })

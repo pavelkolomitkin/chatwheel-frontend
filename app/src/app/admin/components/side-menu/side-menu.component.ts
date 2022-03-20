@@ -22,7 +22,7 @@ export class SideMenuComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.totalUserNumber = this.store.pipe(select(state => state.admin.clientUserTotalNumber));
+    this.totalUserNumber = this.store.pipe(select(state => state.admin.totalClientUserNumber));
 
     this.totalAdminNumber = this.store.pipe(select(state => state.admin.adminTotalNumber));
 

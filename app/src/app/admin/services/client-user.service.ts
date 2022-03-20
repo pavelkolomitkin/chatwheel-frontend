@@ -1,5 +1,4 @@
 import {Injectable} from "@angular/core";
-import {AuthUserTypes} from "../data/model/auth-user-types.enum";
 import {BaseService} from "../../core/services/base.service";
 import {HttpParams} from "@angular/common/http";
 import {map} from "rxjs/operators";
@@ -36,23 +35,6 @@ export class ClientUserService extends BaseService
       map(({ user }) => {
         return User.createFromRawData(user);
       })
-    );
-  }
-
-  getNumber(authType: AuthUserTypes = null): Observable<number>
-  {
-    const data = {};
-
-    if (authType !== null)
-    {
-      // @ts-ignore
-      data.type = authType
-    }
-
-    const params: HttpParams = this.getHttpParamsFromObject(data);
-
-    return this.http.get<{ number: number }>('/admin/client-user/number', { params }).pipe(
-      map(data => data.number)
     );
   }
 
