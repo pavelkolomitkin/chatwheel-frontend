@@ -1,0 +1,69 @@
+<div class="p20">
+  <ng-container *ngIf="user">
+    <div class="row">
+      <div class="col-md-3 col-6"> <strong>{{ 'FULL_NAME' | translate }}</strong>
+        <br>
+        <p class="text-muted">
+          {{ user.fullName }}
+        </p>
+      </div>
+
+      <div class="col-md-3 col-6" *ngIf="user.isSocialMediaUser()">
+        <strong>{{ 'AUTH' | translate }}</strong>
+        <br>
+        <a target="_blank" href="https://vk.com/id{{ user.socialMediaUserId }}">
+          <img *ngIf="user.isVkUser()"
+               src="../../../../../../assets/picture/vk-icon.png"
+               style="width: 30px;"
+          />
+        </a>
+      </div>
+
+      <div class="col-md-3 col-6" *ngIf="!user.isSocialMediaUser()">
+        <strong>{{ 'EMAIL'| translate }}</strong>
+        <br>
+        <p class="text-muted">{{ user.email ? user.email : 'none' }}</p>
+      </div>
+
+      <div class="col-md-3 col-6"> <strong>{{ 'LOCATION' | translate }}</strong>
+        <br>
+        <app-text-location-view [user]="user"></app-text-location-view>
+
+      </div>
+    </div>
+
+
+    <hr />
+    <h5>{{ 'ABOUT_USER' | translate }}</h5>
+    <ng-container *ngIf="!!user.about; else noAbout">
+      <p class="mt-30" [innerHTML]="user.about | multiLine"></p>
+    </ng-container>
+    <ng-template #noAbout>
+      <p class="text-muted">{{ 'NOT_POINTED_OUT_YET' | translate }}...</p>
+    </ng-template>
+
+    <hr />
+      <app-user-interests-view [user]="user" [noInterestsMessage]="('USER_HAS_NOT_DESCRIBED_THEIR_INTERESTS' | translate) + '...'"></app-user-interests-view>
+    <hr />
+
+
+    <app-selected-country-view
+      [country]="user.residenceCountry"
+      [noSelectedMessage]="('NOT_POINTED_OUT_YET' | translate) + '...'"
+      [label]="'RESIDENCE_COUNTRY' | translate"
+    ></app-selected-country-view>
+
+    <hr />
+
+    <app-selected-country-view
+      [country]="user.searchCountry"
+      [noSelectedMessage]="('NOT_POINTED_OUT_YET' | translate) + '...'"
+      [label]="'SEARCH_COUNTRY' | translate"
+    ></app-selected-country-view>
+
+  </ng-container>
+</div>
+
+
+
+

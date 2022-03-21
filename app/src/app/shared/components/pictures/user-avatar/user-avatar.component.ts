@@ -45,8 +45,11 @@ export class UserAvatarComponent implements OnInit {
   {
     this._user = user;
 
-    this._avatarUrl = this._user.getAvatarPicture(this.size);
-    this.title = this.getPictureTitle();
+    if (this._user)
+    {
+      this._avatarUrl = this._user.getAvatarPicture(this.size);
+      this.title = this.getPictureTitle();
+    }
 
     this.changeDetector.markForCheck();
   }
@@ -77,7 +80,7 @@ export class UserAvatarComponent implements OnInit {
 
   onImageClickHandler(event)
   {
-    if (!this.isLightBox)
+    if (!this.isLightBox || this._user.deleted || !this._user.hasPicture())
     {
       return;
     }

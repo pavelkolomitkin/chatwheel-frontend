@@ -71,13 +71,6 @@ export function reducer(state: State = initialState, action: actions.ClientUserA
         isGeolocationTurnedOn: action.isAllowed
       };
 
-    case actions.USER_GRAB_PICTURE_FROM_CAMERA_WINDOW:
-
-      return {
-        ...state,
-        isGrabbingPictureCameraWindowOpen: action.isOpen
-      };
-
     case actions.USER_UPDATE_NEW_MESSAGE_NUMBER_SUCCESS:
 
       return {

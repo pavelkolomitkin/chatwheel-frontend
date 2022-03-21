@@ -1,0 +1,90 @@
+<app-alert-window
+  [title]="'BLOCK_ADMIN_ACCOUNT' | translate"
+  [isShown]="!!blockingAdmin"
+  (onClose)="onBlockAdminWindowCloseHandler($event)"
+>
+
+  <div content>
+
+    <div class="admin-user-window-item p-2 mb-2" *ngIf="!!blockingAdmin">
+      <div class="avatar-container">
+        <app-user-avatar
+          [size]="'mediumSmall'"
+          [user]="blockingAdmin"
+          [isActivityVisible]="true"
+        ></app-user-avatar>
+      </div>
+      <div class="admin-user-window-info">
+        <h4>{{ blockingAdmin.fullName }}</h4>
+        <span class="badge badge-light text-muted">{{ blockingAdmin.email }}</span>
+      </div>
+    </div>
+
+    <div class="form-container">
+      <form #form="ngForm">
+        <div class="form-group">
+          <textarea
+            class="form-control"
+            [placeholder]="('BLOCKING_REASON' | translate) + '...'"
+            name="blockingReason"
+            [(ngModel)]="blockingReason"
+            [ngClass]="!!blockingReasonErrors.reason ? 'is-invalid' : ''"
+          ></textarea>
+
+          <app-form-field-error-list [field]="'email'" [errors]="blockingReasonErrors"></app-form-field-error-list>
+        </div>
+      </form>
+    </div>
+
+  </div>
+
+  <div footer>
+
+    <button
+      [disabled]="isSubmitting"
+      type="button"
+      class="btn btn-outline-warning"
+      (click)="onBlockClickHandler($event)"
+
+    >{{ 'BLOCK' | translate }}</button>
+  </div>
+
+</app-alert-window>
+
+
+<app-alert-window
+  [title]="'UNBLOCK_ADMIN_ACCOUNT' | translate"
+  [isShown]="!!unBlockingAdmin"
+  (onClose)="onUnBlockAdminWindowCloseHandler($event)"
+>
+  <div content>
+
+    <div class="admin-user-window-item p-2 mb-2" *ngIf="!!unBlockingAdmin">
+      <div class="avatar-container">
+        <app-user-avatar
+          [size]="'mediumSmall'"
+          [user]="unBlockingAdmin"
+          [isActivityVisible]="true"
+        ></app-user-avatar>
+      </div>
+      <div class="admin-user-window-info">
+        <h4>{{ unBlockingAdmin.fullName }}</h4>
+        <span class="badge badge-light text-muted">{{ unBlockingAdmin.email }}</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div footer>
+
+    <button
+      [disabled]="isSubmitting"
+      type="button"
+      class="btn btn-outline-warning"
+      (click)="onUnBlockClickHandler($event)"
+
+    >{{ 'UNBLOCK' | translate }}</button>
+
+  </div>
+
+</app-alert-window>

@@ -1,0 +1,11 @@
+
+.abuse-report-item .applicant-avatar {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+}
+
+.abuse-report-item .report-details {
+  position: relative;
+  margin-left: 70px;
+}

@@ -1,0 +1,37 @@
+<ng-container *ngIf="(user | async)">
+  <header class="header-top" header-theme="light">
+    <div class="container-fluid">
+      <div class="d-flex justify-content-between">
+
+        <div class="top-menu d-flex align-items-center">
+        </div>
+        <div class="top-menu d-flex align-items-center">
+
+          <div class="dropdown">
+            <ng-container *ngxPermissionsOnly="['ROLE_SUPER_ADMIN_USER']">
+              <span class="badge badge-primary">{{ (user | async).email }}</span>&nbsp;
+            </ng-container>
+            <ng-container *ngxPermissionsExcept="['ROLE_SUPER_ADMIN_USER']">
+              <span class="badge badge-light">{{ (user | async).email }}</span>&nbsp;
+            </ng-container>
+            <a class="dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <div class="avatar avatar-wrapper">
+                <app-user-avatar [size]="'extraSmall'" [user]="(user | async)" [additionalStyles]="{ width: '100%' }"></app-user-avatar>
+              </div>
+            </a>
+
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-140px, 29px, 0px);">
+              <a class="dropdown-item" [routerLink]="'./profile'"><i class="ik ik-user dropdown-icon"></i> {{ 'PROFILE' | translate }}</a>
+              <a class="dropdown-item" role="button" (click)="onLogoutClickHandler($event)"><i class="ik ik-power dropdown-icon"></i> {{ 'LOGOUT' | translate }}</a>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+</ng-container>
+
+

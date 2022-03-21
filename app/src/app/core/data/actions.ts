@@ -11,6 +11,7 @@ export const GLOBAL_PROGRESS_HIDE = 'GLOBAL_PROGRESS_HIDE';
 export const GLOBAL_NOTIFICATION = 'GLOBAL_NOTIFICATION';
 
 export const COUNTRY_LIST_LOADED = 'COUNTRY_LIST_LOADED';
+export const COUNTRY_LIST_LOAD_ERROR = 'COUNTRY_LIST_LOAD_ERROR';
 
 export const UPLOAD_USER_AVATAR_START = 'UPLOAD_USER_AVATAR_START';
 export const UPLOAD_USER_AVATAR_COMPLETE = 'UPLOAD_USER_AVATAR_COMPLETE';
@@ -18,6 +19,8 @@ export const UPLOAD_USER_AVATAR_ERROR = 'UPLOAD_USER_AVATAR_ERROR';
 
 export const REMOVE_USER_AVATAR_START = 'REMOVE_USER_AVATAR_START';
 export const REMOVE_USER_AVATAR_ERROR = 'REMOVE_USER_AVATAR_ERROR';
+
+export const USER_GRAB_PICTURE_FROM_CAMERA_WINDOW = 'USER_GRAB_PICTURE_FROM_CAMERA_WINDOW';
 
 
 export class GlobalStoreEffectInit implements Action
@@ -47,6 +50,13 @@ export class CountryListLoaded implements Action
   readonly type = COUNTRY_LIST_LOADED;
 
   constructor(public list: Country[]) {}
+}
+
+export class CountryListLoadError implements Action
+{
+  readonly type = COUNTRY_LIST_LOAD_ERROR;
+
+  constructor(public errors: any) {}
 }
 
 export class UploadUserAvatarStart implements Action
@@ -80,12 +90,21 @@ export class RemoveUserAvatarError implements Action
   readonly type = REMOVE_USER_AVATAR_ERROR;
 }
 
+export class UserGrabPictureFromCameraWindow implements Action
+{
+  readonly type = USER_GRAB_PICTURE_FROM_CAMERA_WINDOW;
+
+  constructor(public isOpen: boolean) {}
+}
+
+
 export type CoreActions = GlobalStoreEffectInit
   | GlobalProgressShow
   | GlobalProgressHide
   | GlobalNotification
 
   | CountryListLoaded
+  | CountryListLoadError
 
   | UploadUserAvatarStart
   | UploadUserAvatarComplete
@@ -93,4 +112,6 @@ export type CoreActions = GlobalStoreEffectInit
 
   | RemoveUserAvatarStart
   | RemoveUserAvatarError
+
+  | UserGrabPictureFromCameraWindow
   ;

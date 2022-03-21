@@ -9,10 +9,13 @@ export interface State
   globalProgressLoaders: number;
   lastNotification: Notification;
   countries: Country[];
+  countriesLoadError: {},
 
   uploadingUserPicture: UploadFile;
   uploadedUserPicture: UploadFile;
   uploadingUserPictureErrors: {};
+
+  isGrabbingPictureCameraWindowOpen: boolean;
 }
 
 export const initialState: State = {
@@ -21,10 +24,12 @@ export const initialState: State = {
   lastNotification: null,
 
   countries: [],
+  countriesLoadError: {},
 
   uploadingUserPicture: null,
   uploadedUserPicture: null,
   uploadingUserPictureErrors: null,
+  isGrabbingPictureCameraWindowOpen: false,
 }
 
 export function reducer(state: State = initialState, action: actions.CoreActions): State
@@ -72,6 +77,13 @@ export function reducer(state: State = initialState, action: actions.CoreActions
         countries: action.list
       };
 
+    case actions.COUNTRY_LIST_LOAD_ERROR:
+
+      return {
+        ...state,
+        countriesLoadError: action.errors
+      };
+
     case actions.UPLOAD_USER_AVATAR_COMPLETE:
 
       return {
@@ -84,6 +96,13 @@ export function reducer(state: State = initialState, action: actions.CoreActions
       return {
         ...state,
         uploadingUserPictureErrors: action.errors
+      };
+
+    case actions.USER_GRAB_PICTURE_FROM_CAMERA_WINDOW:
+
+      return {
+        ...state,
+        isGrabbingPictureCameraWindowOpen: action.isOpen
       };
 
     default:

@@ -3,7 +3,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {select, Store} from '@ngrx/store';
 import {State} from '../../../../app.state';
 import {Subscription} from 'rxjs';
-import {VkAuthService} from '../../../services/vk-auth.service';
 import {UserSocialNetLoginStart} from '../../../data/actions';
 import {SocialNetLoginCredentials} from '../../../data/models/social-net-login-credentials.model';
 import {SocialMediaType, User} from '../../../data/models/user.model';

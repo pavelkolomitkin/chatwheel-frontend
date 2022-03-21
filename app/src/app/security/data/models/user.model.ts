@@ -42,7 +42,9 @@ export class User
 
   lastActivity: string
 
-  isBlocked: boolean;
+  isBlocked?: boolean;
+
+  blockingReason?: string
 
   geoLocation?: Geolocation;
 
@@ -56,6 +58,8 @@ export class User
 
   interests?: UserInterest[];
 
+  isActivated?: boolean;
+
   amIBanned?: boolean;
 
   isBanned?: boolean
@@ -67,6 +71,8 @@ export class User
   socialMediaUserId?: string;
 
   socialMediaPhotos?: {};
+
+  isSuperAdmin?: boolean;
 
   isSocialMediaUser()
   {
@@ -105,6 +111,11 @@ export class User
     }
 
     return null;
+  }
+
+  hasPicture()
+  {
+    return !!this.avatar;
   }
 
   getAvatarPicture(size: string)

@@ -1,0 +1,88 @@
+<app-main-content-header
+  [header]="'ABUSE_REPORTS'"
+  [icon]="'alert-circle'"
+></app-main-content-header>
+
+<div class="card table-card">
+
+  <div class="card-header">
+    <h3>{{ 'ABUSE_REPORTS' | translate }}
+      <span class="text-muted small">({{ totalNumber }})</span>
+      <span class="badge badge-pill badge-danger ml-1" *ngIf="(newNumber | async) > 0">{{ (newNumber | async) }}</span>
+    </h3>
+  </div>
+
+  <div class="card-block card-body">
+
+    <div class="pl-4 pr-4 pt-2">
+      <app-abuse-report-list-filter-form
+        [isNew]="filter.new"
+        [type]="filter.type"
+        (onChange)="onFilterFormChangeHandler($event)"
+      ></app-abuse-report-list-filter-form>
+    </div>
+
+    <div class="mr-4">
+      <app-paginator
+        [totalItems]="totalNumber"
+        [itemsOnPage]="20"
+      ></app-paginator>
+    </div>
+
+    <div class="table-responsive" *ngIf="list !== null">
+
+      <table class="table dataTable table-hover mb-0">
+
+        <thead>
+          <tr>
+            <th style="width: 10%">
+              {{ 'APPLICANT' | translate }}
+            </th>
+            <th style="width: 10%">
+              {{ 'ADDRESSEE' | translate }}
+            </th>
+            <th style="width: 15%">
+              {{ 'ABUSE_REPORT_TYPE' | translate }}
+            </th>
+            <th>
+              {{ 'ABUSE_REPORT_COMMENT' | translate }}
+            </th>
+            <th style="width: 10%">
+              {{ 'CREATED_AT' | translate }}
+            </th>
+
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <tr
+            app-abuse-report-list-item
+            *ngFor="let report of list"
+            [report]="report"
+            class="abuse-report-item"
+            [ngClass]="report.new ? 'new' : ''"
+            (click)="onReportClickHandler(report)"
+          ></tr>
+
+
+        </tbody>
+
+      </table>
+
+      <p class="alert alert-info m-4" *ngIf="list.length === 0">
+        {{ 'NO_ABUSE_REPORT_FOUND' | translate }}
+      </p>
+
+    </div>
+
+    <div class="mr-4">
+      <app-paginator
+        [totalItems]="totalNumber"
+        [itemsOnPage]="20"
+      ></app-paginator>
+    </div>
+
+  </div>
+
+</div>

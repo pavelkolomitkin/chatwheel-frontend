@@ -1,1 +1,74 @@
-<p>profile works!</p>
+<ng-container *ngIf="!!( user | async )">
+
+  <div class="container">
+
+    <div class="row profile-page left-column">
+      <div class="col-lg-4 col-md-5">
+        <div class="card">
+          <div class="card-body">
+            <div class="text-center">
+              <div class="avatar-wrapper">
+                <app-editable-user-avatar [size]="'medium'" [user]="( user | async )" ></app-editable-user-avatar>
+              </div>
+              <h4 class="card-title mt-10">{{ ( user | async ).fullName }}</h4>
+            </div>
+          </div>
+          <hr class="mb-0">
+
+        </div>
+      </div>
+
+      <div class="col-lg-8 col-md-7">
+
+        <div class="card">
+
+          <ul class="nav nav-pills custom-pills" id="pills-tab" role="tablist">
+            <li class="nav-item">
+              <span class="nav-link show active" data-toggle="pill" role="tab">{{ 'PROFILE' | translate }}</span>
+            </li>
+          </ul>
+
+          <div class="tab-content" id="pills-tabContent">
+
+            <div class="tab-pane fade active show" id="current-month" role="tabpanel" aria-labelledby="pills-timeline-tab">
+              <div class="card-body">
+
+                <div class="p20">
+
+                  <ng-container *ngIf="( user | async )">
+                    <div class="row">
+                      <div class="col-md-3 col-6"> <strong>{{ 'FULL_NAME' | translate }}</strong>
+                        <br>
+                        <p class="text-muted">{{ ( user | async ).fullName }}</p>
+                      </div>
+
+
+                      <div class="col-md-3 col-6" >
+                        <strong>{{ 'EMAIL'| translate }}</strong>
+                        <br>
+                        <p class="text-muted">{{ ( user | async ).email ? ( user | async ).email : 'none' }}</p>
+                      </div>
+
+                    </div>
+
+                  </ng-container>
+
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+
+    </div>
+
+  </div>
+
+
+
+
+</ng-container>

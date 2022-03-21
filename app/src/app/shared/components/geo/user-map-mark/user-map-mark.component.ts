@@ -11,11 +11,17 @@ export class UserMapMarkComponent extends MapComponentBaseComponent implements O
 
   @Input() user: User;
 
+  @Input() url: string = null;
+
   constructor() {
     super()
   }
 
   ngOnInit(): void {
 
+    if (!this.url)
+    {
+      this.url = '/profile/' + this.user.id
+    }
   }
 }

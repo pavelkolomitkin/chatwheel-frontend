@@ -1,0 +1,88 @@
+<div class="table-card" *ngIf="filter.isDirect !== null">
+
+  <div class="card-header">
+    <h3>
+      <ng-container *ngIf="!filter.isDirect">
+        {{ 'CHAT_WHEEL' | translate }}
+      </ng-container>
+      <ng-container *ngIf="filter.isDirect">
+        {{ 'DIRECT_CALLS' | translate }}
+      </ng-container>
+      <span class="text-muted small">({{ totalNumber }})</span></h3>
+  </div>
+
+  <div class="card-block card-body">
+
+    <div class="pl-4 pr-4 pt-2">
+      <app-call-list-filter-form
+        [endDate]="filter.endDate"
+        [startDate]="filter.startDate"
+        (onChange)="onDateChangeHandler($event)"
+      ></app-call-list-filter-form>
+    </div>
+
+    <div class="mr-4">
+      <app-paginator
+        [totalItems]="totalNumber"
+        [itemsOnPage]="20"
+      ></app-paginator>
+    </div>
+
+    <div class="table-responsive" *ngIf="list !== null">
+
+      <table class="table dataTable table-hover mb-0">
+
+        <thead>
+
+          <tr>
+
+            <td style="width: 25%">
+              {{ 'MEMBERS' | translate }}
+            </td>
+
+            <td>
+              {{ 'START_TIME' | translate }}
+            </td>
+
+            <td>
+              {{ 'END_TIME' | translate }}
+            </td>
+
+            <td>
+              {{ 'DURATION' | translate }}
+            </td>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          <tr
+            app-call-list-item
+            *ngFor="let call of list"
+            [call]="call"
+          ></tr>
+
+        </tbody>
+
+
+      </table>
+
+      <p class="alert alert-info m-4" *ngIf="list.length === 0">
+        {{ 'CALLS_NOT_FOUND' | translate }}
+      </p>
+
+    </div>
+
+
+    <div class="mr-4">
+      <app-paginator
+        [totalItems]="totalNumber"
+        [itemsOnPage]="20"
+      ></app-paginator>
+    </div>
+
+  </div>
+
+</div>

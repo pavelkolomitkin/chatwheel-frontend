@@ -17,8 +17,11 @@
             required
           >
           <i class="ik ik-mail"></i>
-          <ng-container *ngIf="(errors | async )">
-            <app-form-field-error-list [field]="'email'" [errors]="{ email: ('LOGIN_ERROR' | translate) }"></app-form-field-error-list>
+          <ng-container *ngIf="(error | async )">
+            <app-form-field-error-list
+              [field]="'email'"
+              [errors]="{ email: ( (error | async) | translate) }"
+            ></app-form-field-error-list>
           </ng-container>
         </div>
         <div class="form-group">

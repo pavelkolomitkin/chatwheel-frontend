@@ -64,6 +64,7 @@ body
 
 .modal-content {
   border-radius: unset !important;
+  border: unset !important;
 }
 
 
@@ -75,3 +76,86 @@ body
 {
   pointer-events: none !important;
 }
+
+.popover-body
+{
+  max-width: 400px !important;
+  max-height: 400px !important;
+}
+
+.popover
+{
+  max-width: 400px !important;
+}
+
+.form-group label
+{
+  font-size: .8rem !important;
+}
+
+/*
+=================================== ADMIN INTERFACE ========================================
+*/
+
+
+.admin-user-window-item {
+  position: relative;
+}
+
+.admin-user-window-item .avatar-container {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+}
+
+.admin-user-window-item .admin-user-window-info {
+  position: relative;
+  margin-left: 80px;
+  padding-top: 10px;
+}
+
+.admin-user-window-item .form-container {
+
+}
+
+.country-flag
+{
+  width: 50px;
+  height: 25px;
+}
+
+.abuse-report-item {
+  cursor: pointer;
+  position: relative;
+  border-bottom: 1px solid #cccccc57;
+}
+
+.abuse-report-item.new
+{
+  background-color: #e9e9e9;
+}
+
+.abuse-report-item:hover {
+  background: rgba(0,0,0,.075);
+}
+
+
+/*
+//=================================== ADMIN INTERFACE ========================================
+*/
+
+/**
+===================================== DATEPICKER FIX =========================================
+ */
+[ngbdatepicker] + .dropdown-menu.show
+{
+  width: unset !important;
+}
+
+.ngb-dp-day.disabled, .ngb-dp-day.hidden
+{
+  display: block !important;
+}
+/**
+//=================================== DATEPICKER FIX =========================================
+ */

@@ -22,6 +22,19 @@ import {DateTimeViewComponent} from "./components/date-time-view/date-time-view.
 import { AlertWindowComponent } from './components/alert-window/alert-window.component';
 import { MapPinGroupComponent } from './components/geo/map-pin-group/map-pin-group.component';
 import {ImageUrlPipe} from "./pipes/image-url.pipe";
+import {MapLocationViewComponent} from "./components/geo/map-location-view/map-location-view.component";
+import {PaginatorComponent} from "./components/paginator/paginator.component";
+import {TextLocationViewComponent} from "./components/geo/text-location-view/text-location-view.component";
+import {UserInterestsViewComponent} from "./components/profile/user-interests-view/user-interests-view.component";
+import {SelectedCountryViewComponent} from "./components/profile/selected-country-view/selected-country-view.component";
+import {
+  CameraProfilePictureGrabberWindowComponent
+} from "./components/pictures/camera-profile-picture-grabber-window/camera-profile-picture-grabber-window.component";
+import {
+  CameraProfilePictureGrabberComponent
+} from "./components/pictures/camera-profile-picture-grabber/camera-profile-picture-grabber.component";
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import { TimeDurationComponent } from './components/time-duration/time-duration.component';
 
 @NgModule({
   declarations: [
@@ -38,11 +51,20 @@ import {ImageUrlPipe} from "./pipes/image-url.pipe";
     TextTrimPipe,
     ImageUrlPipe,
     AlertWindowComponent,
-    MapPinGroupComponent
+    MapPinGroupComponent,
+    MapLocationViewComponent,
+    PaginatorComponent,
+    TextLocationViewComponent,
+    UserInterestsViewComponent,
+    SelectedCountryViewComponent,
+    CameraProfilePictureGrabberWindowComponent,
+    CameraProfilePictureGrabberComponent,
+    TimeDurationComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
+    NgbModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -55,26 +77,35 @@ import {ImageUrlPipe} from "./pipes/image-url.pipe";
     InfiniteScrollModule,
     MomentModule
   ],
-  exports: [
-    TranslateModule,
-    FormsModule,
-    LightboxModule,
-    InfiniteScrollModule,
+    exports: [
+        NgbModule,
+        TranslateModule,
+        FormsModule,
+        LightboxModule,
+        InfiniteScrollModule,
 
-    FooterComponent,
-    UserAvatarComponent,
-    EditableUserAvatarComponent,
-    FormFieldErrorListComponent,
-    MapComponent,
-    DateTimeViewComponent,
-    AlertWindowComponent,
+        FooterComponent,
+        UserAvatarComponent,
+        EditableUserAvatarComponent,
+        FormFieldErrorListComponent,
+        MapComponent,
+        DateTimeViewComponent,
+        AlertWindowComponent,
+        MapLocationViewComponent,
+        PaginatorComponent,
+        TextLocationViewComponent,
+        UserInterestsViewComponent,
+        SelectedCountryViewComponent,
+        CameraProfilePictureGrabberWindowComponent,
+        CameraProfilePictureGrabberComponent,
 
-    UserActivityStatusDirective,
-    MultiLinePipe,
-    TextTrimPipe,
-    ImageUrlPipe,
-    MomentModule
-  ],
+        UserActivityStatusDirective,
+        MultiLinePipe,
+        TextTrimPipe,
+        ImageUrlPipe,
+        MomentModule,
+        TimeDurationComponent,
+    ],
 
   entryComponents: [
     MapPinGroupComponent

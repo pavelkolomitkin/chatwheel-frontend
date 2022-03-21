@@ -3,10 +3,14 @@ import {User} from "../../../../security/data/models/user.model";
 import {environment} from "../../../../../environments/environment";
 import {Store} from "@ngrx/store";
 import {State} from "../../../../app.state";
-import {GlobalNotification, RemoveUserAvatarStart, UploadUserAvatarStart} from "../../../../core/data/actions";
+import {
+  GlobalNotification,
+  RemoveUserAvatarStart,
+  UploadUserAvatarStart,
+  UserGrabPictureFromCameraWindow
+} from "../../../../core/data/actions";
 import {Notification, NotificationType} from "../../../../core/data/models/notification.model";
 import {UploadFile} from "../../../../core/data/models/upload-file.model";
-import {UserGrabPictureFromCameraWindow} from "../../../../client/data/actions";
 
 @Component({
   selector: 'app-editable-user-avatar',

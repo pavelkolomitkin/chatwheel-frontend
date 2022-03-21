@@ -1,0 +1,50 @@
+<td>
+  <div>
+    <app-user-avatar
+      [size]="'small'"
+      [user]="report.applicant"
+      [isActivityVisible]="true"
+    ></app-user-avatar>
+  </div>
+  <div>
+    {{ report.applicant.fullName }}
+  </div>
+  <div *ngIf="!!report.applicant.residenceCountry">
+    <span class="fi fi-{{report.applicant.residenceCountry.code.toLocaleLowerCase() }} country-flag mb-2"></span>
+  </div>
+</td>
+
+<td>
+  <div>
+    <app-user-avatar
+      [size]="'small'"
+      [user]="report.respondent"
+      [isActivityVisible]="true"
+    ></app-user-avatar>
+  </div>
+  <div>
+    {{ report.respondent.fullName }}
+  </div>
+  <div *ngIf="!!report.respondent.residenceCountry">
+    <span class="fi fi-{{report.respondent.residenceCountry.code.toLocaleLowerCase() }} country-flag mb-2"></span>
+  </div>
+</td>
+
+<td>
+  <app-abuse-report-type
+    [type]="report.type"
+  ></app-abuse-report-type>
+</td>
+
+<td>
+  <span
+    *ngIf="!!report.description"
+    class="text-muted">{{ report.description }}</span>
+  <ng-template #noComment>
+    <span class="text-muted">-</span>
+  </ng-template>
+</td>
+
+<td>
+  <span app-date-time [value]="report.createdAt"></span>
+</td>

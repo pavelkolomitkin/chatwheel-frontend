@@ -14,7 +14,10 @@
         <hr class="mb-0">
         <div class="card-body">
           <ng-container *ngIf="!!user.geoLocation">
-            <app-map-location-view [user]="user"></app-map-location-view>
+            <app-map-location-view
+              [user]="user"
+              [userUrl]="'/profile/' + user.id"
+            ></app-map-location-view>
           </ng-container>
         </div>
 
@@ -51,7 +54,8 @@
 
               <hr />
               <ng-container *ngIf="!!user.about">
-                <p class="mt-30" [innerHTML]="user.about | multiLine"></p>
+                <h5>{{ 'ABOUT_ME' | translate }}</h5>
+                <p [innerHTML]="user.about | multiLine"></p>
                 <hr />
               </ng-container>
 

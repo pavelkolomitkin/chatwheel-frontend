@@ -1,0 +1,18 @@
+<ng-container *ngIf="!!user.geoLocation; else noGeoLocation">
+  <ng-template #userLocation>
+    <div style="width: 300px; height: 300px">
+      <app-map-location-view
+        [user]="user"
+        [userUrl]="'/admin/users/' + user.id"
+      ></app-map-location-view>
+    </div>
+  </ng-template>
+  <span class="btn" [ngbPopover]="userLocation">
+    <i class="ik ik-map-pin"></i>
+  </span>
+</ng-container>
+<ng-template #noGeoLocation>
+  <span>
+    <i class="ik ik-map-pin text-muted"></i>
+  </span>
+</ng-template>

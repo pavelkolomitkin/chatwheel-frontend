@@ -1,1 +1,30 @@
-<router-outlet></router-outlet>
+<div class="wrapper nav-collapsed menu-collapsed">
+  <app-page-header></app-page-header>
+
+  <div class="page-wrap">
+
+    <app-side-menu></app-side-menu>
+
+    <div class="main-content">
+
+      <div class="container-fluid">
+
+        <router-outlet></router-outlet>
+
+      </div>
+
+    </div>
+
+    <app-footer></app-footer>
+
+  </div>
+</div>
+<app-user-manager></app-user-manager>
+<app-admin-manager></app-admin-manager>
+<app-abuse-report-manager></app-abuse-report-manager>
+<app-camera-profile-picture-grabber-window></app-camera-profile-picture-grabber-window>
+
+
+
+
+

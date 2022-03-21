@@ -1,0 +1,37 @@
+<form #form="ngForm" (change)="onFormChangeHandler(form)">
+
+  <div class="row">
+    <div class="col-md-2">
+      <div class="form-group">
+        <label for="abuse-type">{{ 'ABUSE_REPORT_TYPE' | translate }}</label>
+        <select
+          [(ngModel)]="type"
+          [compareWith]="compareEntity"
+          [required]="false"
+          name="type"
+          id="abuse-type"
+          class="form-control"
+        >
+          <option [ngValue]="null">{{ 'ALL' | translate }}</option>
+
+          <option *ngFor="let abuseType of (types | async)" [ngValue]="abuseType" >{{ abuseType.title }}</option>
+
+        </select>
+      </div>
+
+      <div class="ml-2 checkbox-color checkbox-primary">
+        <input
+          id="is-new"
+          type="checkbox"
+          name="isNew"
+          [(ngModel)]="isNew"
+        >
+        <label for="is-new">
+          {{ 'IS_NEW' | translate }}
+        </label>
+      </div>
+    </div>
+  </div>
+
+
+</form>

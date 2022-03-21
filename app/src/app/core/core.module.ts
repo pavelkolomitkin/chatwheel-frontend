@@ -36,6 +36,8 @@ import {ToastrModule} from "ngx-toastr";
 import {metaReducers} from "./data/meta-reducer";
 import {SocialNetAuthEffects} from "../security/data/effects/social-net-auth.effects";
 import {VkAuthService} from "../security/services/vk-auth.service";
+import {CountryEffects} from "./data/effects/country.effects";
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 const httpInterceptorProviders = [
   { provide: HTTP_INTERCEPTORS, useClass: BaseApiUrlInterceptor, multi: true },
@@ -68,7 +70,8 @@ const httpInterceptorProviders = [
       SocialNetAuthEffects,
       RegisterEffects,
       AppInitEffect,
-      UploadUserPictureEffects
+      UploadUserPictureEffects,
+      CountryEffects
     ]),
     RouterModule,
     ToastrModule.forRoot({

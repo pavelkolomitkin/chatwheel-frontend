@@ -7,7 +7,6 @@ import {Subject} from 'rxjs';
 import {Call} from '../../data/model/calls/call.model';
 import {CallError} from './errors/call.error';
 import {MediaError} from './errors/media.error';
-import {CallConnectionInitiator} from './call-connection.initiator';
 
 
 export class CallConnection
@@ -263,7 +262,7 @@ export class CallConnection
   {
     this.peer.on('error', (error) => {
       this.releaseEstablishConnectionTimeout();
-      this.errorSubject.next(new CallError(CallConnectionInitiator.CONNECTION_ESTABLISHING_ERROR_MESSAGE));
+      this.errorSubject.next(new CallError(CallConnection.CONNECTION_ESTABLISHING_ERROR_MESSAGE));
     });
   }
 

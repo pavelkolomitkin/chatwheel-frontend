@@ -1,0 +1,30 @@
+<div>
+
+
+  <ng-container *ngIf="list !== null">
+
+    <div class="abuse-report-list"
+         infiniteScroll
+         [infiniteScrollDistance]="2"
+         [infiniteScrollThrottle]="50"
+         [infiniteScrollDisabled]="infiniteScrollDisabled"
+         (scrolled)="onScroll()"
+
+    >
+
+      <app-client-report-abuse-item
+        *ngFor="let item of list"
+        [report]="item.report"
+        [reportNumber]="item.reportNumber"
+        (click)="onReportClickHandler($event, item.report)"
+      ></app-client-report-abuse-item>
+
+    </div>
+
+    <p *ngIf="list.length === 0" class="alert alert-info m-4">
+      {{ 'USER_HAS_NO_REPORTS' | translate }}
+    </p>
+
+  </ng-container>
+
+</div>

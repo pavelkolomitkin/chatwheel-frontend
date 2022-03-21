@@ -11,5 +11,8 @@
   </div>
 </ng-container>
 <ng-container *ngIf="!!user.geoLocation">
-  <app-map-location-view [user]="user"></app-map-location-view>
+  <app-map-location-view
+    [user]="user"
+    [userUrl]="'/profile/me'"
+  ></app-map-location-view>
 </ng-container>

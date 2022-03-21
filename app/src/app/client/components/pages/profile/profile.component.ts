@@ -8,7 +8,6 @@ import {filter, first} from "rxjs/operators";
 import {UserProfileService} from "../../../services/user-profile.service";
 import {GlobalProgressHide, GlobalProgressShow} from "../../../../core/data/actions";
 import {PAGE_NOT_FOUND_ROUTE} from "../../../client-routing.module";
-import {UserBlockToggleStart, UserReportAbuseInit} from "../../../data/actions";
 
 @Component({
   selector: 'app-profile',

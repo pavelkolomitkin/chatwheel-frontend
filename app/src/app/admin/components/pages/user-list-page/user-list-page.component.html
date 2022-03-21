@@ -1,0 +1,97 @@
+<app-main-content-header
+  [header]="'USERS'"
+  [icon]="'users'"
+></app-main-content-header>
+<div class="card table-card">
+
+  <div class="card-header">
+
+    <h3>{{ 'USERS' | translate }} <span class="text-muted small" *ngIf="!!totalNumber">({{ totalNumber }})</span></h3>
+
+  </div>
+
+  <div class="card-block card-body">
+
+    <div class="pl-4 pr-4 pt-2">
+      <app-user-list-filter-form
+        [countries]="countries"
+        [authType]="currentFilter.authType"
+        [isNotActivated]="currentFilter.isNotActivated"
+        [isBlocked]="currentFilter.isBlocked"
+        [isDeleted]="currentFilter.isDeleted"
+        [residenceCountry]="currentFilter.residenceCountry"
+        [searchCountry]="currentFilter.searchCountry"
+        (onChange)="onFilterFormChangeHandler($event)"
+      ></app-user-list-filter-form>
+    </div>
+
+    <div class="mr-4">
+      <app-paginator
+        [itemsOnPage]="10"
+        [totalItems]="totalNumber"
+
+      ></app-paginator>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table dataTable table-hover mb-0">
+        <thead>
+          <tr>
+            <th>{{ 'PHOTO' | translate }}</th>
+            <th
+              [ngClass]="(currentFilter.sortField === 'fullName') ? (currentFilter.sortType === 'asc' ? 'sorting_asc' : 'sorting_desc') : ''"
+              class="sorting"
+              (click)="onSortingFieldClickHandler($event, 'fullName')"
+              style="width: 10%"
+            >{{ 'FULL_NAME' | translate }}</th>
+            <th style="width: 10%">{{ 'RESIDENCE_COUNTRY' | translate }}</th>
+            <th style="width: 10%">{{ 'SEARCH_COUNTRY' | translate }}</th>
+            <th>{{ 'GEO_LOCATION' | translate }}</th>
+            <th style="width: 15%">{{ 'USER_INTERESTS' | translate }}</th>
+            <th>{{ 'AUTH' | translate }}</th>
+            <th
+              [ngClass]="(currentFilter.sortField === 'lastActivity') ? (currentFilter.sortType === 'asc' ? 'sorting_asc' : 'sorting_desc') : ''"
+              class="sorting"
+              (click)="onSortingFieldClickHandler($event, 'lastActivity')"
+            >{{ 'LAST_ACTIVITY' | translate }}</th>
+            <th>{{ 'ACTIVATED' | translate }}</th>
+            <th>{{ 'IS_BLOCKED' | translate }}</th>
+            <th>{{ 'IS_DELETED' | translate }}</th>
+            <th
+              [ngClass]="(currentFilter.sortField === 'signUp') ? (currentFilter.sortType === 'asc' ? 'sorting_asc' : 'sorting_desc') : ''"
+              class="sorting"
+              (click)="onSortingFieldClickHandler($event, 'signUp')">{{ 'CREATED_AT' | translate }}</th>
+            <th>{{ 'ACTIONS' | translate }}</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="list !== null">
+
+          <tr
+            app-user-list-item
+            *ngFor="let user of list"
+            [user]="user"
+            (blockUserEmitter)="onBlockUserHandler($event)"
+            (unBlockUserEmitter)="onUnBlockUserHandler($event)"
+            (deleteUserEmitter)="onDeleteUserHandler($event)"
+          >
+
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    <div *ngIf="list !== null">
+      <p class="alert alert-info m-4" *ngIf="list.length === 0">{{ 'NO_USER_FOUND' | translate }}</p>
+    </div>
+
+    <div class="mr-4">
+      <app-paginator
+        [itemsOnPage]="10"
+        [totalItems]="totalNumber"
+
+      ></app-paginator>
+    </div>
+  </div>
+
+</div>

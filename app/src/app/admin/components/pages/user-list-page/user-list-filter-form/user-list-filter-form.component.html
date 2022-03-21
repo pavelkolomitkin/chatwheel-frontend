@@ -1,0 +1,103 @@
+<form #form="ngForm" (change)="onFormChangeHandler(form)">
+
+  <div class="row">
+
+    <div class="col-md-2">
+      <div class="form-group">
+        <label>{{ 'AUTH' | translate }}</label>
+        <select
+          [(ngModel)]="authType"
+          name="authType"
+          class="form-control"
+        >
+          <option [value]="''">{{ 'ALL_TYPES' | translate }}</option>
+          <option [value]="'email'">{{ 'EMAIL' | translate }}</option>
+          <option [value]="'vk'">{{ 'VK' | translate }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="col-md-2">
+      <div class="form-group" *ngIf="!!countries">
+        <label for="residence-country">{{ 'RESIDENCE_COUNTRY' | translate }}</label>
+        <select
+          [(ngModel)]="residenceCountry"
+          [compareWith]="compareEntity"
+          [required]="false"
+          name="residenceCountry"
+          id="residence-country"
+          class="form-control"
+        >
+          <option [ngValue]="null">-</option>
+          <option *ngFor="let currentCountry of countries" [ngValue]="currentCountry">{{ currentCountry.name }}</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div class="col-md-2">
+      <div class="form-group" *ngIf="!!countries">
+        <label for="search-country">{{ 'SEARCH_COUNTRY' | translate }}</label>
+        <select
+          [(ngModel)]="searchCountry"
+          [compareWith]="compareEntity"
+          [required]="false"
+          name="searchCountry"
+          id="search-country"
+          class="form-control"
+        >
+          <option [ngValue]="null">-</option>
+          <option *ngFor="let currentCountry of countries" [ngValue]="currentCountry">{{ currentCountry.name }}</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div class="col-md-2">
+
+      <div class="checkbox-color checkbox-primary">
+        <input
+          id="is-activated"
+          type="checkbox"
+          name="isNotActivated"
+          [(ngModel)]="isNotActivated"
+        >
+        <label for="is-activated">
+          {{ 'NOT_ACTIVATED' | translate }}
+        </label>
+      </div>
+
+      <div class="checkbox-color checkbox-primary">
+        <input
+          id="is-blocked"
+          type="checkbox"
+          name="isBlocked"
+          [(ngModel)]="isBlocked"
+        >
+        <label for="is-blocked">
+          {{ 'IS_BLOCKED' | translate }}
+        </label>
+      </div>
+
+      <div class="checkbox-color checkbox-primary">
+        <input
+          id="is-deleted"
+          type="checkbox"
+          name="isDeleted"
+          [(ngModel)]="isDeleted"
+        >
+        <label for="is-deleted">
+          {{ 'IS_DELETED' | translate }}
+        </label>
+      </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+
+    </div>
+
+  </div>
+
+</form>

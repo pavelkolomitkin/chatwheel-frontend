@@ -1,15 +1,17 @@
-<app-page-header></app-page-header>
+<div class="wrapper">
+  <app-page-header></app-page-header>
 
-<div class="page-wrap">
-  <div class="main-content">
-    <div class="container-fluid">
+  <div class="page-wrap">
+    <div class="main-content">
+      <div class="container-fluid">
 
-      <router-outlet></router-outlet>
+        <router-outlet></router-outlet>
+
+      </div>
 
     </div>
-
+    <app-footer></app-footer>
   </div>
-  <app-footer></app-footer>
 </div>
 <app-camera-profile-picture-grabber-window></app-camera-profile-picture-grabber-window>
 <app-report-abuse-listener></app-report-abuse-listener>
