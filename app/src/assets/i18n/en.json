@@ -158,7 +158,7 @@
   "NO_USER_FOUND": "No user found",
   "ABOUT_USER": "About User",
   "ABOUT_ME": "About me",
-  "REPORTS": "report(s)",
+  "REPORT(S)": "report(s)",
   "USER_HAS_NO_REPORTS": "The user has no reports",
   "CREATE_ADMIN_ACCOUNT": "Create Admin Account",
   "PHOTO": "Photo",
@@ -196,6 +196,7 @@
   "STATISTICS": "Statistics",
   "USER_FRACTIONS": "User Account Fractions",
   "USER_SIGN_UP_DYNAMIC": "User Signing Up",
+  "REPORTS": "reports",
 
   "JANUARY": "January",
   "FEBRUARY": "February",

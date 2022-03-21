@@ -12,9 +12,10 @@ export interface State
 
   abuseReportTypes: AbuseReportType[],
 
-  adminTotalNumber: number,
-
+  totalAbuseReportNumber: number,
   newAbuseReportNumber: number,
+
+  adminTotalNumber: number,
 
   lastBlockingUser: User,
   lastBlockedUser: User,
@@ -59,9 +60,10 @@ export const initialState: State = {
 
   abuseReportTypes: [],
 
-  adminTotalNumber: 0,
+  totalAbuseReportNumber: null,
+  newAbuseReportNumber: null,
 
-  newAbuseReportNumber: 0,
+  adminTotalNumber: 0,
 
   lastBlockingUser: null,
   lastBlockedUser: null,
@@ -103,25 +105,19 @@ export function reducer(state: State = initialState, action: actions.AdminUserAc
 {
   switch (action.type)
   {
+    case actions.ADMIN_GET_ABUSE_REPORT_NUMBERS_SUCCESS:
+
+      return {
+        ...state,
+        totalAbuseReportNumber: action.totalNumber,
+        newAbuseReportNumber: action.newNumber
+      };
+
     case actions.ADMIN_GET_ABUSE_REPORT_TYPES_SUCCESS:
 
       return {
         ...state,
         abuseReportTypes: action.types
-      };
-
-    case actions.ADMIN_GET_NEW_ABUSE_REPORT_NUMBER_SUCCESS:
-
-      return {
-        ...state,
-        newAbuseReportNumber: action.value
-      };
-
-    case actions.ADMIN_GET_NEW_ABUSE_REPORT_NUMBER_ERROR:
-
-      return {
-        ...state,
-        newAbuseReportNumber: 0
       };
 
     case actions.ADMIN_BLOCK_USER_INIT:

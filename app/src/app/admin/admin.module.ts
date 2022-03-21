@@ -54,6 +54,10 @@ import {ClientUserStatisticsService} from "./services/statistics/client-user-sta
 import {StatisticsEffects} from "./data/effects/statistics.effects";
 import { ClientUserFractionsChartComponent } from './components/pages/dashboard/client-user-fractions-chart/client-user-fractions-chart.component';
 import { ClientUserDynamicStatisticsChartComponent } from './components/pages/dashboard/client-user-dynamic-statistics-chart/client-user-dynamic-statistics-chart.component';
+import {AbuseReportStatisticsService} from "./services/statistics/abuse-report-statistics.service";
+import { AbuseReportTypeStatisticComponent } from './components/pages/dashboard/abuse-report-type-statistic/abuse-report-type-statistic.component';
+import { AbuseReportDynamicStatisticChartComponent } from './components/pages/dashboard/abuse-report-dynamic-statistic-chart/abuse-report-dynamic-statistic-chart.component';
+import {ChartUtilitiesService} from "./data/model/statistics/chart-utilities.service";
 
 
 
@@ -96,6 +100,8 @@ import { ClientUserDynamicStatisticsChartComponent } from './components/pages/da
     MainContentHeaderComponent,
     ClientUserFractionsChartComponent,
     ClientUserDynamicStatisticsChartComponent,
+    AbuseReportTypeStatisticComponent,
+    AbuseReportDynamicStatisticChartComponent,
   ],
   imports: [
     CommonModule,
@@ -115,11 +121,13 @@ import { ClientUserDynamicStatisticsChartComponent } from './components/pages/da
     EffectsModule
   ],
   providers: [
+    ChartUtilitiesService,
     ClientUserService,
     AbuseReportService,
     AdminUserService,
     CallService,
     ClientUserStatisticsService,
+    AbuseReportStatisticsService,
 
     AdminUserStateSocketService
   ]

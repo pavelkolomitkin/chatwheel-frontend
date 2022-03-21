@@ -20,11 +20,11 @@ export class ClientUserStatisticsService extends BaseService
       }));
   }
 
-  getMonthsStatistics(startMonth: Date = null, endMonth: Date = null)
+  getMonthsStatistics(startMonth: Date, endMonth: Date)
   {
     const data = {
-      startMonth: !!startMonth ? startMonth.toISOString().split('T')[0] : null,
-      endMonth: !!endMonth ? endMonth.toISOString().split('T')[0] : null,
+      startMonth: startMonth.toISOString().split('T')[0],
+      endMonth: endMonth.toISOString().split('T')[0],
     }
 
     const params: HttpParams = this.getHttpParamsFromObject(data);

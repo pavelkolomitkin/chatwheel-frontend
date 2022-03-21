@@ -9,6 +9,8 @@ import {
 } from '@angular/core';
 import {TranslateService} from "@ngx-translate/core";
 import * as c3 from 'c3';
+import {MonthAxisItem} from "../../../../data/model/statistics/month-axis-item.model";
+import {ChartUtilitiesService} from "../../../../data/model/statistics/chart-utilities.service";
 
 export interface ClientUserDynamic
 {
@@ -23,13 +25,6 @@ export interface ClientUserDynamic
   }]
 }
 
-export interface MonthAxisItem
-{
-  year: number,
-  month: number,
-  monthName: string
-}
-
 @Component({
   selector: 'app-client-user-dynamic-statistics-chart',
   templateUrl: './client-user-dynamic-statistics-chart.component.html',
@@ -37,21 +32,6 @@ export interface MonthAxisItem
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ClientUserDynamicStatisticsChartComponent implements OnInit, AfterViewInit {
-
-  static MONTH_NAMES = {
-    0: 'JANUARY',
-    1: 'FEBRUARY',
-    2: 'MARCH',
-    3: 'APRIL',
-    4: 'MAY',
-    5: 'JUNE',
-    6: 'JULY',
-    7: 'AUGUST',
-    8: 'SEPTEMBER',
-    9: 'OCTOBER',
-    10: 'NOVEMBER',
-    11: 'DECEMBER'
-  };
 
   @ViewChild('chart') chartElement: ElementRef;
 
@@ -78,12 +58,13 @@ export class ClientUserDynamicStatisticsChartComponent implements OnInit, AfterV
 
   constructor(
     private changeDetector: ChangeDetectorRef,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private utilities: ChartUtilitiesService
   ) { }
 
   async prepareData(value: ClientUserDynamic[])
   {
-    this.monthAxis = await this.getXAxis();
+    this.monthAxis = await this.utilities.getMonthsAxis(this.startMonth, this.endMonth);
 
     const columns = [];
 
@@ -119,52 +100,6 @@ export class ClientUserDynamicStatisticsChartComponent implements OnInit, AfterV
     }
 
     return result;
-  }
-
-  async getXAxis()
-  {
-    const result: any[] = [];
-
-    let currentYear: number = this.startMonth.getFullYear();
-    let currentMonth: number = this.startMonth.getMonth();
-
-    const lastYear: number = this.endMonth.getFullYear();
-    const lastMonth: number = this.endMonth.getMonth();
-
-    while (currentYear <= lastYear)
-    {
-      while (currentMonth < 12)
-      {
-        const axisItem = await this.getAxisItem(currentYear, currentMonth);
-        result.push(axisItem);
-
-        if (currentMonth === lastMonth)
-        {
-          break;
-        }
-
-        currentMonth++;
-      }
-
-      currentMonth = 0;
-
-      currentYear++;
-    }
-
-    return result;
-  }
-
-
-  async getAxisItem(year: number, month: number)
-  {
-    const monthName = ClientUserDynamicStatisticsChartComponent.MONTH_NAMES[month];
-    const i18nMonthName = await this.translate.get(monthName).toPromise();
-
-    return {
-      year,
-      month: month + 1,
-      monthName: i18nMonthName
-    };
   }
 
   ngOnInit(): void {

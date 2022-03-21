@@ -1,5 +1,4 @@
 import { Action } from '@ngrx/store';
-import {AuthUserTypes} from "./model/auth-user-types.enum";
 import {User} from "../../security/data/models/user.model";
 import {AbuseReport} from "../../core/data/models/abuse-report.model";
 import {AbuseReportType} from "../../core/data/models/abuse-report-type.model";
@@ -8,9 +7,8 @@ export const ADMIN_GET_ABUSE_REPORT_TYPES_START = 'ADMIN_GET_ABUSE_REPORT_TYPES_
 export const ADMIN_GET_ABUSE_REPORT_TYPES_SUCCESS = 'ADMIN_GET_ABUSE_REPORT_TYPES_SUCCESS';
 export const ADMIN_GET_ABUSE_REPORT_TYPES_ERROR = 'ADMIN_GET_ABUSE_REPORT_TYPES_ERROR';
 
-export const ADMIN_GET_NEW_ABUSE_REPORT_NUMBER_START = 'ADMIN_GET_NEW_ABUSE_REPORT_NUMBER_START';
-export const ADMIN_GET_NEW_ABUSE_REPORT_NUMBER_SUCCESS = 'ADMIN_GET_NEW_ABUSE_REPORT_NUMBER_SUCCESS';
-export const ADMIN_GET_NEW_ABUSE_REPORT_NUMBER_ERROR = 'ADMIN_GET_NEW_ABUSE_REPORT_NUMBER_ERROR';
+export const ADMIN_GET_ABUSE_REPORT_NUMBERS = 'ADMIN_GET_ABUSE_REPORT_NUMBERS';
+export const ADMIN_GET_ABUSE_REPORT_NUMBERS_SUCCESS = 'ADMIN_GET_ABUSE_REPORT_NUMBERS_SUCCESS';
 
 export const ADMIN_BLOCK_USER_INIT = 'ADMIN_BLOCK_USER_INIT';
 export const ADMIN_BLOCK_USER_START = 'ADMIN_BLOCK_USER_START';
@@ -76,26 +74,6 @@ export class GetAbuseReportTypesError implements Action
 
   constructor(public errors: any) { }
 }
-
-export class GetNewAbuseReportNumberStart implements Action
-{
-  readonly type = ADMIN_GET_NEW_ABUSE_REPORT_NUMBER_START;
-}
-
-export class GetNewAbuseReportNumberSuccess implements Action
-{
-  readonly type = ADMIN_GET_NEW_ABUSE_REPORT_NUMBER_SUCCESS;
-
-  constructor(public value: number) {}
-}
-
-export class GetNewAbuseReportNumberError implements Action
-{
-  readonly type = ADMIN_GET_NEW_ABUSE_REPORT_NUMBER_ERROR;
-
-  constructor(public errors: any) {}
-}
-
 
 export class BlockUserInit implements Action
 {
@@ -341,11 +319,22 @@ export class GetClientUserNumberSuccess implements Action
   }
 }
 
-export type AdminUserActions =
-   GetNewAbuseReportNumberStart
-  | GetNewAbuseReportNumberSuccess
-  | GetNewAbuseReportNumberError
 
+export class GetAbuseReportNumbers implements Action
+{
+  readonly type = ADMIN_GET_ABUSE_REPORT_NUMBERS;
+}
+
+export class GetAbuseReportNumbersSuccess implements Action
+{
+  readonly type = ADMIN_GET_ABUSE_REPORT_NUMBERS_SUCCESS;
+
+  constructor(public totalNumber: number, public newNumber: number) { }
+}
+
+export type AdminUserActions =
+  GetAbuseReportNumbers
+  | GetAbuseReportNumbersSuccess
   | BlockUserInit
   | BlockUserStart
   | BlockUserSuccess

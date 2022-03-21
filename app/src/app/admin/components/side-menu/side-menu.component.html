@@ -32,6 +32,7 @@
 
         <div class="nav-item" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
           <a [routerLink]="'./abuse-reports'"><i class="ik ik-alert-circle"></i><span>{{ 'ABUSE_REPORTS' | translate }}</span>
+
             <span class="badge badge-danger" *ngIf="(newAbuseReportNumber | async) > 0">{{ newAbuseReportNumber | async }}</span>
           </a>
         </div>

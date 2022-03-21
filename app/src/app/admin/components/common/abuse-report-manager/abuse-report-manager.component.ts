@@ -5,8 +5,7 @@ import {AbuseReport} from "../../../../core/data/models/abuse-report.model";
 import {Subscription} from "rxjs";
 import {
   AbuseReportOpen,
-  AbuseReportRead,
-  GetNewAbuseReportNumberStart,
+  AbuseReportRead, GetAbuseReportNumbers,
 } from "../../../data/actions";
 import {filter} from "rxjs/operators";
 
@@ -40,7 +39,7 @@ export class AbuseReportManagerComponent implements OnInit, OnDestroy {
       filter(report => !!report)
     ).subscribe(this.reportReadHandler);
 
-    this.store.dispatch(new GetNewAbuseReportNumberStart());
+    this.store.dispatch(new GetAbuseReportNumbers());
 
   }
 
@@ -53,7 +52,7 @@ export class AbuseReportManagerComponent implements OnInit, OnDestroy {
 
   reportReadHandler = (report: AbuseReport) => {
 
-    this.store.dispatch(new GetNewAbuseReportNumberStart());
+    this.store.dispatch(new GetAbuseReportNumbers());
   }
 
   onLastAbuseReportOpenHandler = (report: AbuseReport) => {

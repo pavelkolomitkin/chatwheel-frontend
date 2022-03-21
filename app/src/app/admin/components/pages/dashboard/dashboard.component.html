@@ -41,6 +41,7 @@
         </div>
       </div>
     </div>
+
     <div class="col-lg-3 col-md-6 col-sm-12">
       <div class="widget bg-primary">
         <div class="widget-body">
@@ -58,6 +59,28 @@
         </div>
       </div>
     </div>
+
+    <div class="col-lg-3 col-md-6 col-sm-12">
+      <div class="widget bg-warning pb-3">
+        <div class="widget-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="state">
+              <h6>{{ 'ABUSE_REPORTS' | translate }}</h6>
+              <h2>
+                {{ abuseReportTotalNumber | async }}
+                <ng-container *ngIf="(abuseReportNewNumber | async) > 0">
+                  / {{ (abuseReportNewNumber | async) }}
+                </ng-container>
+              </h2>
+            </div>
+            <div class="icon">
+              <i class="ik ik-clipboard"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <div class="row">
@@ -83,6 +106,33 @@
       </ng-container>
 
     </div>
+  </div>
+
+  <div class="row">
+
+    <ng-container *ngIf="!!abuseReportTypeNumbers">
+
+      <div class="col-md-3" *ngFor="let item of abuseReportTypeNumbers">
+        <app-abuse-report-type-statistic
+          [statistic]="item"
+          [total]="abuseReportTotalNumber | async"
+        ></app-abuse-report-type-statistic>
+      </div>
+
+    </ng-container>
+
+  </div>
+
+  <div class="row">
+
+    <div class="col-md-12">
+      <app-abuse-report-dynamic-statistic-chart
+        [startMonth]="dynamicStartMonth"
+        [endMonth]="dynamicEndMonth"
+        [statistics]="abuseReportDynamicStatistics"
+      ></app-abuse-report-dynamic-statistic-chart>
+    </div>
+
   </div>
 
 </div>

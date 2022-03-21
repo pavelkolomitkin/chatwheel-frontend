@@ -6,9 +6,6 @@ import {Observable, of} from "rxjs";
 import {
   AbuseReportRead, AbuseReportReadError, AbuseReportReadSuccess,
   ADMIN_ABUSE_REPORT_READ,
-  ADMIN_GET_NEW_ABUSE_REPORT_NUMBER_START, GetNewAbuseReportNumberError,
-  GetNewAbuseReportNumberStart,
-  GetNewAbuseReportNumberSuccess
 } from "../actions";
 import {catchError, map, mergeMap} from "rxjs/operators";
 import {AbuseReportService} from "../../services/abuse-report.service";
@@ -19,22 +16,6 @@ import {AbuseReport} from "../../../core/data/models/abuse-report.model";
 @Injectable()
 export class AbuseReportEffects
 {
-  getNewNumberStart: Observable<Action> = createEffect(() => {
-    return this.actions.pipe(
-      ofType(ADMIN_GET_NEW_ABUSE_REPORT_NUMBER_START),
-      mergeMap((action: GetNewAbuseReportNumberStart) => {
-        return this.service.getNewNumber().pipe(
-          map((number) => {
-            return new GetNewAbuseReportNumberSuccess(number);
-          }),
-          catchError(errors => {
-            return of(new GetNewAbuseReportNumberError(errors));
-          })
-        )
-      })
-    )
-  });
-
   readStart: Observable<Action> = createEffect(() => {
 
     return this.actions.pipe(

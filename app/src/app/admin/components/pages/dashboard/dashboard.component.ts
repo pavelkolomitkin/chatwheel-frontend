@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import {Observable} from "rxjs";
 import {select, Store} from "@ngrx/store";
 import {State} from "../../../../app.state";
-import {GetClientUserNumber} from "../../../data/actions";
+import {GetAbuseReportNumbers, GetClientUserNumber} from "../../../data/actions";
 import {map, mergeMap} from "rxjs/operators";
 import {ClientUserStatisticsService} from "../../../services/statistics/client-user-statistics.service";
 import {ClientUserDynamic} from "./client-user-dynamic-statistics-chart/client-user-dynamic-statistics-chart.component";
+import {AbuseReportStatisticsService} from "../../../services/statistics/abuse-report-statistics.service";
+import {AbuseReportTypeStatistic} from "../../../data/model/statistics/abuse-report-type-statistic.model";
 
 @Component({
   selector: 'app-dashboard',
@@ -29,21 +31,48 @@ export class DashboardComponent implements OnInit {
   dynamicStartMonth: Date;
   dynamicEndMonth: Date;
 
+
+  abuseReportTotalNumber: Observable<number>;
+  abuseReportNewNumber: Observable<number>;
+  abuseReportTypeNumbers: AbuseReportTypeStatistic[] = null;
+  abuseReportDynamicStatistics: any = null;
+
   constructor(
     private store: Store<State>,
-    private userStatistic: ClientUserStatisticsService
+    private userStatistic: ClientUserStatisticsService,
+    private abuseReportStatistics: AbuseReportStatisticsService
   ) { }
 
   async ngOnInit() {
 
-    this.store.dispatch(new GetClientUserNumber());
 
-    this.getTotalUserNumbers();
+    this.abuseReportTotalNumber = this.store.pipe(select(state => state.admin.totalAbuseReportNumber));
+    this.abuseReportNewNumber = this.store.pipe(select(state => state.admin.newAbuseReportNumber));
 
 
     this.getDynamicDates();
-    await this.getUserDynamics();
+    const userStatistics = this.getUserDynamics();
+    const abuseReportStatistics = this.getAbuseReportStatistics();
+    const abuseReportDynamicStatistics = this.getAbuseReportDynamicStatistics();
 
+    await userStatistics;
+    await abuseReportStatistics;
+    await abuseReportDynamicStatistics;
+  }
+
+  async getAbuseReportDynamicStatistics()
+  {
+    this.abuseReportDynamicStatistics = await this
+      .abuseReportStatistics
+      .getMonthStatistics(this.dynamicStartMonth, this.dynamicEndMonth)
+      .toPromise();
+  }
+
+  async getAbuseReportStatistics()
+  {
+    this.store.dispatch(new GetAbuseReportNumbers());
+
+    this.abuseReportTypeNumbers = await this.abuseReportStatistics.getTypeNumbers().toPromise();
   }
 
   getDynamicDates()
@@ -56,6 +85,10 @@ export class DashboardComponent implements OnInit {
 
   async getUserDynamics()
   {
+    this.store.dispatch(new GetClientUserNumber());
+
+    this.getTotalUserNumbers();
+
     await this.getUserDynamicStatistics();
   }
 
@@ -67,7 +100,7 @@ export class DashboardComponent implements OnInit {
     this.emailUserNumberPercentage = this.emailUserNumber.pipe(
       mergeMap(emailNumber => {
         return this.totalUserNumber.pipe(
-          map(total => this.getPercentages(total, emailNumber))
+          map(total => this.getUserPercentages(total, emailNumber))
         )
       })
     )
@@ -76,14 +109,13 @@ export class DashboardComponent implements OnInit {
     this.vkUserNumberPercentage = this.vkUserNumber.pipe(
       mergeMap(vkNumber => {
         return this.totalUserNumber.pipe(
-          map(total => this.getPercentages(total, vkNumber))
+          map(total => this.getUserPercentages(total, vkNumber))
         )
       })
     );
-
   }
 
-  getPercentages(total: number, value: number)
+  getUserPercentages(total: number, value: number)
   {
     let result: string = null;
     if (!!total)

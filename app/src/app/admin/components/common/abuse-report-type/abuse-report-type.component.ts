@@ -1,5 +1,7 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {AbuseReportType} from "../../../../core/data/models/abuse-report-type.model";
+import {TYPE_STYLES} from "../../../data/model/abuse-report-type.styles";
+
 
 @Component({
   selector: 'app-abuse-report-type',
@@ -8,14 +10,6 @@ import {AbuseReportType} from "../../../../core/data/models/abuse-report-type.mo
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AbuseReportTypeComponent implements OnInit {
-
-  static TYPE_STYLES = {
-    cyberstalking: 'primary',
-    trolling: 'secondary',
-    creeping: 'danger',
-    sexual: 'warning',
-    other: 'info'
-  };
 
   _type: AbuseReportType;
 
@@ -33,7 +27,7 @@ export class AbuseReportTypeComponent implements OnInit {
       return;
     }
 
-    return AbuseReportTypeComponent.TYPE_STYLES[this._type.code];
+    return TYPE_STYLES[this._type.code];
   }
 
   constructor(

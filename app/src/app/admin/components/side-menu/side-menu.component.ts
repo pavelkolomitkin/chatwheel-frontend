@@ -14,6 +14,7 @@ export class SideMenuComponent implements OnInit {
 
   totalAdminNumber: Observable<number>;
 
+  totalAbuseReportNumber: Observable<number>;
   newAbuseReportNumber: Observable<number>;
 
   constructor(
@@ -26,8 +27,8 @@ export class SideMenuComponent implements OnInit {
 
     this.totalAdminNumber = this.store.pipe(select(state => state.admin.adminTotalNumber));
 
+    this.totalAbuseReportNumber = this.store.pipe(select(state => state.admin.totalAbuseReportNumber));
     this.newAbuseReportNumber = this.store.pipe(select(state => state.admin.newAbuseReportNumber));
-
 
   }
 

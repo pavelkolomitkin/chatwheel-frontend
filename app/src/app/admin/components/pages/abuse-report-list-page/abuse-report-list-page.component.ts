@@ -7,7 +7,7 @@ import {Observable, Subscription} from "rxjs";
 import {AbuseReportListFilter} from "../../../data/model/abuse-report-list.filter";
 import {SortingType} from "../../../../core/data/models/sorting-type.enum";
 import {AbuseReport} from "../../../../core/data/models/abuse-report.model";
-import {AbuseReportOpen, GetNewAbuseReportNumberStart, GetNewAbuseReportNumberSuccess} from "../../../data/actions";
+import {AbuseReportOpen, GetAbuseReportNumbers} from "../../../data/actions";
 import {GlobalNotification} from "../../../../core/data/actions";
 import {Notification, NotificationType} from "../../../../core/data/models/notification.model";
 import {AbuseReportFormFilter} from "../../../data/model/abuse-report-form.filter";
@@ -56,6 +56,7 @@ export class AbuseReportListPageComponent implements OnInit, OnDestroy {
 
     this.newNumber = this.store.pipe(select(state => state.admin.newAbuseReportNumber));
 
+    debugger;
     this.abuseTypes = await this.store.pipe(
       select(state => state.admin.abuseReportTypes),
       filter(list => list.length > 0),
@@ -69,7 +70,7 @@ export class AbuseReportListPageComponent implements OnInit, OnDestroy {
 
     this.queryParamSubscription = this.route.queryParams.subscribe( async (params) => {
 
-      this.store.dispatch(new GetNewAbuseReportNumberStart());
+      this.store.dispatch(new GetAbuseReportNumbers());
 
       this.filter = this.getCurrentFilter();
 
