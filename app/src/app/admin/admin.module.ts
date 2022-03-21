@@ -58,6 +58,8 @@ import {AbuseReportStatisticsService} from "./services/statistics/abuse-report-s
 import { AbuseReportTypeStatisticComponent } from './components/pages/dashboard/abuse-report-type-statistic/abuse-report-type-statistic.component';
 import { AbuseReportDynamicStatisticChartComponent } from './components/pages/dashboard/abuse-report-dynamic-statistic-chart/abuse-report-dynamic-statistic-chart.component';
 import {ChartUtilitiesService} from "./data/model/statistics/chart-utilities.service";
+import {CallStatisticsService} from "./services/statistics/call-statistics.service";
+import { CallDynamicStatisticsChartComponent } from './components/pages/dashboard/call-dynamic-statistics-chart/call-dynamic-statistics-chart.component';
 
 
 
@@ -102,6 +104,7 @@ import {ChartUtilitiesService} from "./data/model/statistics/chart-utilities.ser
     ClientUserDynamicStatisticsChartComponent,
     AbuseReportTypeStatisticComponent,
     AbuseReportDynamicStatisticChartComponent,
+    CallDynamicStatisticsChartComponent,
   ],
   imports: [
     CommonModule,
@@ -128,6 +131,7 @@ import {ChartUtilitiesService} from "./data/model/statistics/chart-utilities.ser
     CallService,
     ClientUserStatisticsService,
     AbuseReportStatisticsService,
+    CallStatisticsService,
 
     AdminUserStateSocketService
   ]

@@ -5,9 +5,9 @@ import {State} from "../../../../app.state";
 import {GetAbuseReportNumbers, GetClientUserNumber} from "../../../data/actions";
 import {map, mergeMap} from "rxjs/operators";
 import {ClientUserStatisticsService} from "../../../services/statistics/client-user-statistics.service";
-import {ClientUserDynamic} from "./client-user-dynamic-statistics-chart/client-user-dynamic-statistics-chart.component";
 import {AbuseReportStatisticsService} from "../../../services/statistics/abuse-report-statistics.service";
 import {AbuseReportTypeStatistic} from "../../../data/model/statistics/abuse-report-type-statistic.model";
+import {CallStatisticsService} from "../../../services/statistics/call-statistics.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -24,10 +24,6 @@ export class DashboardComponent implements OnInit {
   vkUserNumber: Observable<number>;
   vkUserNumberPercentage: Observable<string>;
 
-  allUserDynamicStatistic: ClientUserDynamic;
-  emailUserDynamicStatistics: ClientUserDynamic;
-  vkUserDynamicStatistics: ClientUserDynamic;
-
   dynamicStartMonth: Date;
   dynamicEndMonth: Date;
 
@@ -35,16 +31,19 @@ export class DashboardComponent implements OnInit {
   abuseReportTotalNumber: Observable<number>;
   abuseReportNewNumber: Observable<number>;
   abuseReportTypeNumbers: AbuseReportTypeStatistic[] = null;
-  abuseReportDynamicStatistics: any = null;
+
+  totalCallNumber: number = null;
+  totalChatWheelCallNumber: number = null;
+  totalDirectCallNumber: number = null;
 
   constructor(
     private store: Store<State>,
     private userStatistic: ClientUserStatisticsService,
-    private abuseReportStatistics: AbuseReportStatisticsService
+    private abuseReportStatistics: AbuseReportStatisticsService,
+    private callStatistics: CallStatisticsService
   ) { }
 
   async ngOnInit() {
-
 
     this.abuseReportTotalNumber = this.store.pipe(select(state => state.admin.totalAbuseReportNumber));
     this.abuseReportNewNumber = this.store.pipe(select(state => state.admin.newAbuseReportNumber));
@@ -53,19 +52,20 @@ export class DashboardComponent implements OnInit {
     this.getDynamicDates();
     const userStatistics = this.getUserDynamics();
     const abuseReportStatistics = this.getAbuseReportStatistics();
-    const abuseReportDynamicStatistics = this.getAbuseReportDynamicStatistics();
+    const callStatistics = this.getCallStatistics();
 
     await userStatistics;
     await abuseReportStatistics;
-    await abuseReportDynamicStatistics;
+    await callStatistics;
   }
 
-  async getAbuseReportDynamicStatistics()
+  async getCallStatistics()
   {
-    this.abuseReportDynamicStatistics = await this
-      .abuseReportStatistics
-      .getMonthStatistics(this.dynamicStartMonth, this.dynamicEndMonth)
-      .toPromise();
+    const { total, chatWheelNumber, directCallNumber } = await this.callStatistics.getNumbers().toPromise();
+
+    this.totalCallNumber = total;
+    this.totalChatWheelCallNumber = chatWheelNumber;
+    this.totalDirectCallNumber = directCallNumber;
   }
 
   async getAbuseReportStatistics()
@@ -88,8 +88,6 @@ export class DashboardComponent implements OnInit {
     this.store.dispatch(new GetClientUserNumber());
 
     this.getTotalUserNumbers();
-
-    await this.getUserDynamicStatistics();
   }
 
   getTotalUserNumbers()
@@ -133,35 +131,6 @@ export class DashboardComponent implements OnInit {
     }
 
     return result;
-  }
-
-  async getUserDynamicStatistics()
-  {
-     const { all, email, vk } = await this.userStatistic.getMonthsStatistics(
-       this.dynamicStartMonth,
-       this.dynamicEndMonth
-     ).toPromise();
-
-     this.allUserDynamicStatistic = {
-       label: 'ALL_TYPES',
-       // @ts-ignore
-       data: all,
-       color: '#6c757d'
-     };
-
-     this.emailUserDynamicStatistics = {
-       label: 'EMAIL_USERS',
-       // @ts-ignore
-       data: email,
-       color: '#2dce89'
-     };
-
-     this.vkUserDynamicStatistics = {
-       label: 'VK_USERS',
-       // @ts-ignore
-       data: vk,
-       color: '#007bff'
-     };
   }
 
 }

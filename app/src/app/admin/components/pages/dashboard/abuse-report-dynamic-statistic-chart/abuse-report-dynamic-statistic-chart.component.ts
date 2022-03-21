@@ -6,6 +6,7 @@ import {AbuseReportType} from "../../../../../core/data/models/abuse-report-type
 import {ChartUtilitiesService} from "../../../../data/model/statistics/chart-utilities.service";
 import {MonthAxisItem} from "../../../../data/model/statistics/month-axis-item.model";
 import * as c3 from 'c3';
+import {AbuseReportStatisticsService} from "../../../../services/statistics/abuse-report-statistics.service";
 
 @Component({
   selector: 'app-abuse-report-dynamic-statistic-chart',
@@ -21,14 +22,6 @@ export class AbuseReportDynamicStatisticChartComponent implements OnInit, AfterV
 
   _statistics: any = null;
 
-  @Input() set statistics(value: any)
-  {
-    this._statistics = value;
-    (async () => {
-      await this.updateChart();
-    })();
-  }
-
   abuseTypes: AbuseReportType[];
 
   monthAxis: MonthAxisItem[];
@@ -37,7 +30,8 @@ export class AbuseReportDynamicStatisticChartComponent implements OnInit, AfterV
 
   constructor(
     private store: Store<State>,
-    private utilities: ChartUtilitiesService
+    private utilities: ChartUtilitiesService,
+    private abuseReportStatistics: AbuseReportStatisticsService,
   ) { }
 
   async ngOnInit() {
@@ -51,7 +45,17 @@ export class AbuseReportDynamicStatisticChartComponent implements OnInit, AfterV
         first()).
       toPromise();
 
+    await this.getData();
+
     await this.updateChart();
+  }
+
+  async getData()
+  {
+    this._statistics = await this
+      .abuseReportStatistics
+      .getMonthStatistics(this.startMonth, this.endMonth)
+      .toPromise();
   }
 
   async updateChart()

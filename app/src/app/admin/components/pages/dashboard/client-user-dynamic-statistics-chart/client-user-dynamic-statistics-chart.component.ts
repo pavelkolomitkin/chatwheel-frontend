@@ -11,6 +11,7 @@ import {TranslateService} from "@ngx-translate/core";
 import * as c3 from 'c3';
 import {MonthAxisItem} from "../../../../data/model/statistics/month-axis-item.model";
 import {ChartUtilitiesService} from "../../../../data/model/statistics/chart-utilities.service";
+import {ClientUserStatisticsService} from "../../../../services/statistics/client-user-statistics.service";
 
 export interface ClientUserDynamic
 {
@@ -45,30 +46,61 @@ export class ClientUserDynamicStatisticsChartComponent implements OnInit, AfterV
 
   chart: any;
 
-  @Input() set data(value: ClientUserDynamic[])
-  {
-    this._data = value;
-
-    (async () => {
-
-      await this.prepareData(value);
-      this.updateChart();
-    })();
-  }
-
   constructor(
     private changeDetector: ChangeDetectorRef,
     private translate: TranslateService,
-    private utilities: ChartUtilitiesService
+    private utilities: ChartUtilitiesService,
+    private userStatistic: ClientUserStatisticsService,
   ) { }
 
-  async prepareData(value: ClientUserDynamic[])
+  async ngOnInit() {
+
+    await this.getData();
+
+    await this.updateChart();
+  }
+
+  async getData()
   {
+    const { all, email, vk } = await this.userStatistic.getMonthsStatistics(
+      this.startMonth,
+      this.endMonth
+    ).toPromise();
+
+    this._data = [
+      {
+        label: 'ALL_TYPES',
+        // @ts-ignore
+        data: all,
+        color: '#6c757d'
+      },
+      {
+        label: 'EMAIL_USERS',
+        // @ts-ignore
+        data: email,
+        color: '#2dce89'
+      },
+      {
+        label: 'VK_USERS',
+        // @ts-ignore
+        data: vk,
+        color: '#007bff'
+      }
+    ];
+  }
+
+  async prepareData()
+  {
+    if (!this._data)
+    {
+      return;
+    }
+
     this.monthAxis = await this.utilities.getMonthsAxis(this.startMonth, this.endMonth);
 
     const columns = [];
 
-    for (let item of value)
+    for (let item of this._data)
     {
       const columnData = this.getColumn(item, this.monthAxis);
 
@@ -102,11 +134,10 @@ export class ClientUserDynamicStatisticsChartComponent implements OnInit, AfterV
     return result;
   }
 
-  ngOnInit(): void {
-  }
-
-  updateChart()
+  async updateChart()
   {
+    await this.prepareData();
+
     if (!this.chartElement || !this.columns)
     {
       return;
@@ -137,9 +168,9 @@ export class ClientUserDynamicStatisticsChartComponent implements OnInit, AfterV
     });
   }
 
-  ngAfterViewInit(): void {
+  async ngAfterViewInit() {
 
-    this.updateChart();
+    await this.updateChart();
   }
 
 }

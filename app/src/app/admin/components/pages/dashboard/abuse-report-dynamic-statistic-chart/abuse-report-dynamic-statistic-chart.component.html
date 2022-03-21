@@ -1,6 +1,10 @@
 <div class="card">
   <div class="card-header">
-    <h3>{{ 'ABUSE_REPORTS' | translate }}</h3>
+    <h3 class="d-inline">{{ 'ABUSE_REPORTS' | translate }}</h3>
+    <div class="d-inline ml-2">
+      <span class="text-muted">{{ startMonth | amDateFormat: 'MMMM YYYY' }}</span> &ndash;
+      <span class="text-muted">{{ endMonth | amDateFormat: 'MMMM YYYY' }}</span>
+    </div>
   </div>
   <div class="card-body">
     <div #chart id="chart-abuse-report-dynamics"></div>

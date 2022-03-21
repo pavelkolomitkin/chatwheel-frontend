@@ -56,7 +56,6 @@ export class AbuseReportListPageComponent implements OnInit, OnDestroy {
 
     this.newNumber = this.store.pipe(select(state => state.admin.newAbuseReportNumber));
 
-    debugger;
     this.abuseTypes = await this.store.pipe(
       select(state => state.admin.abuseReportTypes),
       filter(list => list.length > 0),
@@ -159,7 +158,7 @@ export class AbuseReportListPageComponent implements OnInit, OnDestroy {
 
     try {
 
-      const { list, foundNumber, newNumber } = await this.service.getList(filter, page).toPromise();
+      const { list, foundNumber } = await this.service.getList(filter, page).toPromise();
 
       this.list = list;
       this.totalNumber = foundNumber;
