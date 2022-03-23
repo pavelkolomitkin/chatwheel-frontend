@@ -1,0 +1,6 @@
+<span
+  *ngIf="!!country"
+  class="fi fi-{{country.code.toLocaleLowerCase() }}
+   country-flag"
+  [title]="country.name"
+></span>
