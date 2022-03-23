@@ -35,6 +35,7 @@ import {
 } from "./components/pictures/camera-profile-picture-grabber/camera-profile-picture-grabber.component";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import { TimeDurationComponent } from './components/time-duration/time-duration.component';
+import { CountryFlagComponent } from './components/geo/country-flag/country-flag.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { TimeDurationComponent } from './components/time-duration/time-duration.
     SelectedCountryViewComponent,
     CameraProfilePictureGrabberWindowComponent,
     CameraProfilePictureGrabberComponent,
-    TimeDurationComponent
+    TimeDurationComponent,
+    CountryFlagComponent
   ],
   imports: [
     CommonModule,
@@ -105,6 +107,7 @@ import { TimeDurationComponent } from './components/time-duration/time-duration.
         ImageUrlPipe,
         MomentModule,
         TimeDurationComponent,
+        CountryFlagComponent,
     ],
 
   entryComponents: [

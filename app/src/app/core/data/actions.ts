@@ -22,6 +22,9 @@ export const REMOVE_USER_AVATAR_ERROR = 'REMOVE_USER_AVATAR_ERROR';
 
 export const USER_GRAB_PICTURE_FROM_CAMERA_WINDOW = 'USER_GRAB_PICTURE_FROM_CAMERA_WINDOW';
 
+export const GLOBAL_WINDOW_FOCUS_CHANGE = 'GLOBAL_WINDOW_FOCUS_CHANGE';
+export const GLOBAL_SET_WINDOW_TITLE_MESSAGE = 'GLOBAL_SET_WINDOW_TITLE_MESSAGE';
+
 
 export class GlobalStoreEffectInit implements Action
 {
@@ -97,6 +100,20 @@ export class UserGrabPictureFromCameraWindow implements Action
   constructor(public isOpen: boolean) {}
 }
 
+export class GlobalWindowFocusChange implements Action
+{
+  readonly type = GLOBAL_WINDOW_FOCUS_CHANGE;
+
+  constructor(public isFocused: boolean) {  }
+}
+
+
+export class GlobalSetWindowTitleMessage implements Action
+{
+  readonly type = GLOBAL_SET_WINDOW_TITLE_MESSAGE;
+
+  constructor(public message: string) {  }
+}
 
 export type CoreActions = GlobalStoreEffectInit
   | GlobalProgressShow
@@ -114,4 +131,7 @@ export type CoreActions = GlobalStoreEffectInit
   | RemoveUserAvatarError
 
   | UserGrabPictureFromCameraWindow
+
+  | GlobalWindowFocusChange
+  | GlobalSetWindowTitleMessage
   ;

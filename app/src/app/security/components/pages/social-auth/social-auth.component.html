@@ -1,13 +1,14 @@
 <div>
   <p class="alert alert-info" *ngIf="errorMessage === null; else errorTemplate;">
-    <img src="../../../../../assets/picture/vk-icon.png" style="width: 50px;" class="mr-2">
+    <img *ngIf="authorizationType === 'vk'" src="../../../../../assets/picture/vk-icon.png" style="width: 50px;" class="mr-2">
+    <img *ngIf="authorizationType === 'fb'" src="../../../../../assets/picture/facebook-icon50x50.png" style="width: 50px;" class="mr-2">
     {{ 'AUTHORIZING' | translate }}...
   </p>
   <ng-template #errorTemplate>
-    <p class="alert alert-danger">{{ errorMessage }}</p>
+    <p class="alert alert-danger">{{ errorMessage | translate }}</p>
     <div class="text-center">
-      <a class="btn btn-primary mr-2">{{ 'SIGN_IN_VIA_EMAIL' | translate }}</a>
-      <a class="btn btn-danger">{{ 'CREATE_ACCOUNT' | translate }}</a>
+      <a [routerLink]="'/security/login'" class="btn btn-primary mr-2">{{ 'SIGN_IN_VIA_EMAIL' | translate }}</a>
+      <a [routerLink]="'/security/register'" class="btn btn-danger">{{ 'CREATE_ACCOUNT' | translate }}</a>
     </div>
   </ng-template>
 </div>

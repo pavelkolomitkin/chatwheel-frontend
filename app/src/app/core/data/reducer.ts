@@ -2,6 +2,7 @@ import * as actions from './actions';
 import {Notification} from "./models/notification.model";
 import {Country} from "./models/country.model";
 import {UploadFile} from "./models/upload-file.model";
+import {GLOBAL_WINDOW_FOCUS_CHANGE} from "./actions";
 
 export interface State
 {
@@ -16,6 +17,9 @@ export interface State
   uploadingUserPictureErrors: {};
 
   isGrabbingPictureCameraWindowOpen: boolean;
+
+  isWindowFocused: boolean;
+  windowTitleFlashMessage: string;
 }
 
 export const initialState: State = {
@@ -30,6 +34,9 @@ export const initialState: State = {
   uploadedUserPicture: null,
   uploadingUserPictureErrors: null,
   isGrabbingPictureCameraWindowOpen: false,
+
+  isWindowFocused: true,
+  windowTitleFlashMessage: null
 }
 
 export function reducer(state: State = initialState, action: actions.CoreActions): State
@@ -103,6 +110,21 @@ export function reducer(state: State = initialState, action: actions.CoreActions
       return {
         ...state,
         isGrabbingPictureCameraWindowOpen: action.isOpen
+      };
+
+
+    case actions.GLOBAL_WINDOW_FOCUS_CHANGE:
+
+      return {
+        ...state,
+        isWindowFocused: action.isFocused
+      };
+
+    case actions.GLOBAL_SET_WINDOW_TITLE_MESSAGE:
+
+      return {
+        ...state,
+        windowTitleFlashMessage: action.message
       };
 
     default:

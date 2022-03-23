@@ -73,6 +73,7 @@ import {ChatRouletteService} from "./services/search/chat-roulette.service";
 import {ChatRouletteSocketService} from "./services/sockets/chat-roulette-socket.service";
 import { CallListPageComponent } from './components/pages/my-profile/call-list-page/call-list-page.component';
 import { CallListItemComponent } from './components/pages/my-profile/call-list-page/call-list-item/call-list-item.component';
+import { FlashMessageNotifierComponent } from './components/common/flash-message-notifier/flash-message-notifier.component';
 
 @NgModule({
     declarations: [
@@ -120,7 +121,8 @@ import { CallListItemComponent } from './components/pages/my-profile/call-list-p
         SearchMapPageComponent,
         SearchListItemComponent,
         CallListPageComponent,
-        CallListItemComponent
+        CallListItemComponent,
+        FlashMessageNotifierComponent,
     ],
   providers: [
     ProfileService,

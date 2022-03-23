@@ -11,6 +11,7 @@
   "PASSWORD": "Password",
 
   "LOGIN_ERROR": "Bad credentials",
+  "AUTHORIZATION_ERROR": "Authorization error",
 
   "REGISTER_FORM_HEADER": "Create Account",
   "REGISTER_FORM_SUBTITLE": "Welcome to ChatWheel!",
@@ -61,6 +62,7 @@
   "LOGOUT": "Logout",
   "MESSAGES": "Messages",
   "WHEEL_HISTORY": "Wheel History",
+  "MESSAGE(S)": "message(s)",
 
   "YOU_HAVE_BANNED_THIS_USER": "You've banned this user",
   "YOU_HAVE_BEEN_BANNED_BY_THIS_USER": "You've been banned by this user",
@@ -197,6 +199,7 @@
   "USER_FRACTIONS": "User Account Fractions",
   "USER_SIGN_UP_DYNAMIC": "User Signing Up",
   "REPORTS": "reports",
+  "CALLING": "Calling",
 
   "JANUARY": "January",
   "FEBRUARY": "February",

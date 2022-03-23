@@ -3,7 +3,6 @@ import * as actions from './actions';
 import {User} from "../../../security/data/models/user.model";
 import {CallMemberLink} from "../model/calls/call-member-link.model";
 import {Call} from "../model/calls/call.model";
-import {CALL_INCOMING_CALL_RECEIVED} from "./actions";
 
 export interface State
 {
@@ -11,6 +10,7 @@ export interface State
 
   lastInitiatedDirectCallAddressee: User;
   lastDirectedIncomingCall: Call,
+  incomingCallNumber: number,
 
   lastMemberConnectingLink: CallMemberLink;
   lastMemberConnectedLink: CallMemberLink;
@@ -24,6 +24,7 @@ export const initialState: State = {
 
   lastInitiatedDirectCallAddressee: null,
   lastDirectedIncomingCall: null,
+  incomingCallNumber: 0,
 
   lastMemberConnectingLink: null,
   lastMemberConnectedLink: null,
@@ -86,6 +87,27 @@ export function reducer(state: State = initialState, action: actions.ClientCallA
       return {
         ...state,
         lastDirectedIncomingCall: action.call
+      };
+
+
+    case actions.CALL_INCOMING_CALL_INCREASE_NUMBER:
+
+      let incomingCallNumber = state.incomingCallNumber + action.value;
+      if (incomingCallNumber < 0)
+      {
+        incomingCallNumber = 0;
+      }
+
+      return {
+        ...state,
+        incomingCallNumber: incomingCallNumber
+      };
+
+    case actions.CALL_INCOMING_CALL_SET_NUMBER:
+
+      return {
+        ...state,
+        incomingCallNumber: action.value
       };
 
     default:

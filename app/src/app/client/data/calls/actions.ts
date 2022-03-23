@@ -13,6 +13,9 @@ export const CALL_MEMBER_IS_CONNECTED = 'CALL_MEMBER_IS_CONNECTED';
 export const CALL_MEMBER_REJECTED = 'CALL_MEMBER_REJECTED';
 export const CALL_MEMBER_HUNG_UP = 'CALL_MEMBER_HUNG_UP';
 
+export const CALL_INCOMING_CALL_INCREASE_NUMBER = 'CALL_INCOMING_CALL_INCREASE_NUMBER';
+export const CALL_INCOMING_CALL_SET_NUMBER = 'CALL_INCOMING_CALL_SET_NUMBER';
+
 export class SetCallWindowId implements Action
 {
   readonly type = SET_CALL_WINDOW_ID;
@@ -62,6 +65,20 @@ export class CallMemberHungUp implements Action
   constructor(public link: CallMemberLink) { }
 }
 
+export class IncomingCallIncreaseNumber implements Action
+{
+  readonly type = CALL_INCOMING_CALL_INCREASE_NUMBER;
+
+  constructor(public value: number) { }
+}
+
+export class IncomingCallSetNumber implements Action
+{
+  readonly type = CALL_INCOMING_CALL_SET_NUMBER;
+
+  constructor(public value: number) { }
+}
+
 export type ClientCallActions =
   SetCallWindowId
   | UserInitiateDirectCall
@@ -70,5 +87,8 @@ export type ClientCallActions =
   | CallMemberConnected
   | CallMemberRejected
   | CallMemberHungUp
+
+  | IncomingCallIncreaseNumber
+  | IncomingCallSetNumber
 
   ;

@@ -17,7 +17,13 @@
         </div>
         <div class="header">
           <div class="h4">
-            <a [routerLink]="'/profile/' + currentOffer.addressee.id">{{ currentOffer.addressee.fullName}}</a>
+            <a [routerLink]="'/profile/' + currentOffer.addressee.id">
+              {{ currentOffer.addressee.fullName}}&nbsp;
+              <app-country-flag
+                *ngIf="currentOffer.addressee.residenceCountry"
+                [country]="currentOffer.addressee.residenceCountry"
+              ></app-country-flag>
+            </a>
           </div>
         </div>
       </div>
