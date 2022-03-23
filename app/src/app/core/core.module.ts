@@ -38,6 +38,8 @@ import {SocialNetAuthEffects} from "../security/data/effects/social-net-auth.eff
 import {VkAuthService} from "../security/services/vk-auth.service";
 import {CountryEffects} from "./data/effects/country.effects";
 import {FbAuthService} from "../security/services/fb-auth.service";
+import { WindowFocusStateWatcherComponent } from './components/window-focus-state-watcher/window-focus-state-watcher.component';
+import {WindowTitleNotifierComponent} from "./components/window-title-notifier/window-title-notifier.component";
 
 const httpInterceptorProviders = [
   { provide: HTTP_INTERCEPTORS, useClass: BaseApiUrlInterceptor, multi: true },
@@ -52,6 +54,9 @@ const httpInterceptorProviders = [
     LayoutComponent,
     NotFoundPageComponent,
     MessageNotifierComponent,
+    WindowFocusStateWatcherComponent,
+    WindowTitleNotifierComponent,
+    WindowFocusStateWatcherComponent
   ],
   imports: [
     CommonModule,
@@ -112,7 +117,9 @@ const httpInterceptorProviders = [
     LayoutComponent,
     NotFoundPageComponent,
     MessageNotifierComponent,
-    ToastrModule
+    ToastrModule,
+    WindowTitleNotifierComponent,
+    WindowFocusStateWatcherComponent
   ],
 })
 export class CoreModule {}

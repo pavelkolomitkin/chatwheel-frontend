@@ -4,7 +4,7 @@ import {State} from '../../../../app.state';
 import {CallSocketService} from '../../../services/sockets/call-socket.service';
 import {
   CallMemberConnected,
-  CallMemberConnecting, CallMemberHungUp, CallMemberRejected,
+  CallMemberConnecting, CallMemberHungUp, CallMemberRejected, IncomingCallIncreaseNumber,
   IncomingCallReceived,
   SetCallWindowId
 } from '../../../data/calls/actions';
@@ -97,6 +97,8 @@ export class CallsObserverComponent implements OnInit, OnDestroy {
       const toast = this.toasts[link.call]
       this.toastService.remove(toast.toastId);
       delete this.toasts[link.call];
+
+      this.store.dispatch(new IncomingCallIncreaseNumber(-1));
     }
 
   }
@@ -137,10 +139,14 @@ export class CallsObserverComponent implements OnInit, OnDestroy {
 
         try {
           await this.service.reject(call).toPromise();
+
+          this.store.dispatch(new IncomingCallReceived(null));
+          this.store.dispatch(new IncomingCallIncreaseNumber(-1));
+
         }
         catch (error)
         {
-          console.log(error);
+          //console.log(error);
         }
       });
 
@@ -149,6 +155,7 @@ export class CallsObserverComponent implements OnInit, OnDestroy {
 
   incomingCallHandler = (call: Call) => {
     this.store.dispatch(new IncomingCallReceived(call));
+    this.store.dispatch(new IncomingCallIncreaseNumber(1));
   }
 
   connectingMemberHandler = (link: CallMemberLink) => {

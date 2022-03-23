@@ -59,7 +59,7 @@ export class EditableFieldComponent implements OnInit {
       return;
     }
 
-    //console.log('CLICK ON THE DOCUMENT!');
+
     if (this.isEditing)
     {
       this.isEditing = false;
@@ -69,7 +69,6 @@ export class EditableFieldComponent implements OnInit {
 
   onEditClickHandler(event)
   {
-    //console.log('CLICK ON THE BUTTON!');
     event.stopPropagation();
 
     this.isEditing = true;

@@ -48,7 +48,6 @@ export class UserMediaService
     {
       setTimeout(() => {
         stream.getTracks().forEach(track => track.stop());
-        console.log('MEDIA HAS BEEN DISPOSED');
       }, 1);
     }
   }

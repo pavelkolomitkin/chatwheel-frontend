@@ -257,7 +257,7 @@ export class DirectCallComponent implements OnInit, OnDestroy {
     }
     catch (error)
     {
-      console.error(error);
+      //console.error(error);
     }
   }
 
