@@ -6,5 +6,7 @@ export class SocialNetLoginCredentials
 
   accessToken: string;
 
-  userId: string;
+  userId?: string;
+
+  code?: string;
 }

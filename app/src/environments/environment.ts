@@ -23,7 +23,10 @@ export const environment = {
 
   awaitingCallConnectionTimeout: 15000,
 
-  vkAuthorizationLink: 'https://oauth.vk.com/authorize?client_id=8097405&redirect_uri=http://localhost:4200/security/social-auth/vk&scope=offline,photos&display=page&response_type=token',
+  fbAuthrizationLink:
+    'https://www.facebook.com/v13.0/dialog/oauth?client_id=1011395893066866&redirect_uri=http://localhost:4200/security/social-auth/fb&state=fbChatWheel&response_type=code%20token&scope=public_profile',
+  vkAuthorizationLink:
+    'https://oauth.vk.com/authorize?client_id=8097405&redirect_uri=http://localhost:4200/security/social-auth/vk&scope=offline,photos&display=page&response_type=token',
 
   defaultAvatar: 'assets/picture/default_avatar.png',
 

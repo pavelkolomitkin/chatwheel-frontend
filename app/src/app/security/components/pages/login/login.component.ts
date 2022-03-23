@@ -4,7 +4,7 @@ import {State} from "../../../../app.state";
 import {Router} from "@angular/router";
 import {NgForm} from "@angular/forms";
 import {LoginCredentials} from "../../../data/models/login-credentials.model";
-import {UserLoginStart} from "../../../data/actions";
+import {UserLoginError, UserLoginStart} from "../../../data/actions";
 import {Observable, Subscription} from "rxjs";
 import {filter, map} from "rxjs/operators";
 import {environment} from "../../../../../environments/environment";
@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   authorizedUserSubscription: Subscription = null;
 
+  fbAuthorizationLink: string = environment.fbAuthrizationLink;
   vkAuthorizationLink: string = environment.vkAuthorizationLink;
 
   constructor(
@@ -27,6 +28,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+
+    this.store.dispatch(new UserLoginError({}));
 
     this.authorizedUserSubscription = this.store.pipe(
       select(state => state.security.user),

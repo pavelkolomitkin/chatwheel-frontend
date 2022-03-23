@@ -5,10 +5,11 @@ import {environment} from "../../../../environments/environment";
 
 export enum SocialMediaType {
   VK = 0,
-  GOOGLE = 1
+  FB = 1,
+  GOOGLE = 2,
 }
 
-const VkUserAvatarPictures = {
+const SocialNetUserAvatarPictures = {
   extraSmall: 'photo_50',
   small: 'photo_50',
   mediumSmall: 'photo_50',
@@ -98,19 +99,14 @@ export class User
 
   getSocialMediaAvatar(size)
   {
-    if (this.socialMediaType === SocialMediaType.VK)
+    const pictures = this.socialMediaPhotos;
+    if (!pictures)
     {
-      const pictures = this.socialMediaPhotos;
-      if (!pictures)
-      {
-        return null;
-      }
-
-      const vkSize = VkUserAvatarPictures[size];
-      return pictures[vkSize];
+      return null;
     }
 
-    return null;
+    const socialNetPictureSize = SocialNetUserAvatarPictures[size];
+    return pictures[socialNetPictureSize];
   }
 
   hasPicture()

@@ -3,15 +3,12 @@ import {Actions, createEffect, ofType} from "@ngrx/effects";
 import {Action, Store} from "@ngrx/store";
 import {State} from "../reducer";
 import {Observable, of} from "rxjs";
-import {
-  USER_SOCIAL_NET_LOGIN_START, UserLoginError,
-  UserLoginSuccess,
-  UserSocialNetLoginStart
-} from "../actions";
+import {USER_SOCIAL_NET_LOGIN_START, UserLoginError, UserLoginSuccess, UserSocialNetLoginStart} from "../actions";
 import {catchError, map, mergeMap, tap} from "rxjs/operators";
 import {VkAuthService} from "../../services/vk-auth.service";
 import {SocialMediaType} from "../models/user.model";
 import {GlobalProgressHide, GlobalProgressShow} from "../../../core/data/actions";
+import {FbAuthService} from "../../services/fb-auth.service";
 
 @Injectable()
 export class SocialNetAuthEffects
@@ -40,6 +37,19 @@ export class SocialNetAuthEffects
             })
           );
         }
+        else if (credentials.mediaType === SocialMediaType.FB)
+        {
+          const { credentials: { accessToken, code } } = action;
+
+          return this.fbAuthService.auth(accessToken, code).pipe(
+            map((token: string) => {
+              return new UserLoginSuccess(token, true);
+            }),
+            catchError((errors) => {
+              return of(new UserLoginError(errors));
+            })
+          );
+        }
         else
         {
           throw new Error('You should implement this authorization method!');
@@ -55,6 +65,7 @@ export class SocialNetAuthEffects
   constructor(
     private actions: Actions,
     private vkAuthService: VkAuthService,
+    private fbAuthService: FbAuthService,
     private store: Store<State>,
   ) {
   }

@@ -59,15 +59,17 @@ export class TextConversationComponent implements OnInit, OnDestroy {
 
     this.resetLastMessageActions();
 
+    let messageList = null;
+
     try {
-      this.messageList = await this.conversationService.getIndividual(this.addressee).toPromise();
+      messageList = await this.conversationService.getIndividual(this.addressee).toPromise();
     }
     catch (error)
     {}
 
-    if (!!this.messageList)
+    if (!!messageList)
     {
-      this.store.dispatch(new ConversationOpen(this.messageList));
+      this.initMessageList(messageList);
     }
 
     await this.scrollDownList();
@@ -85,6 +87,8 @@ export class TextConversationComponent implements OnInit, OnDestroy {
     this.disposeReceivedMessageHandler();
     this.disposeRemovedMessageHandler();
     this.disposeEditedMessageHandler();
+
+    this.store.dispatch(new ConversationOpen(null));
   }
 
   initReceivedMessageHandler()
@@ -103,7 +107,7 @@ export class TextConversationComponent implements OnInit, OnDestroy {
         && !this.messageList
       )
       {
-        this.messageList = messageList;
+        this.initMessageList(messageList);
       }
 
       if (!!this.myAddedMessages[message.message.id])
@@ -125,6 +129,12 @@ export class TextConversationComponent implements OnInit, OnDestroy {
 
       this.messageReceivedEmitter.emit(message.message);
     });
+  }
+
+  initMessageList(messageList: ConversationMessageList)
+  {
+    this.messageList = messageList;
+    this.store.dispatch(new ConversationOpen(this.messageList));
   }
 
   disposeReceivedMessageHandler()
@@ -286,7 +296,8 @@ export class TextConversationComponent implements OnInit, OnDestroy {
 
         const result = await this.messageService.sendToUser(this.addressee, text).toPromise();
 
-        this.messageList = result.conversation;
+        this.initMessageList(result.conversation);
+
         message = result.message;
       }
       else

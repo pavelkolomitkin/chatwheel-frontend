@@ -11,6 +11,7 @@
   "PASSWORD": "Password",
 
   "LOGIN_ERROR": "Bad credentials",
+  "AUTHORIZATION_ERROR": "Authorization error",
 
   "REGISTER_FORM_HEADER": "Create Account",
   "REGISTER_FORM_SUBTITLE": "Welcome to ChatWheel!",

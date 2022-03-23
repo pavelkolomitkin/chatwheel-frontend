@@ -50,7 +50,6 @@ export class ChatwheelComponent implements OnInit, OnDestroy {
   @ViewChild('localVideo') localVideo: ElementRef;
   @ViewChild('takePictureArea') takePictureArea: ElementRef;
 
-  addressee: User = null;
   authorizedUser: Observable<User>;
 
   localMediaStream: MediaStream = null;
