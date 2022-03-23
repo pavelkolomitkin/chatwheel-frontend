@@ -33,7 +33,7 @@ export class SocialNetAuthEffects
               return new UserLoginSuccess(token, true);
             }),
             catchError((errors) => {
-              return of(new UserLoginError(errors));
+              return of(new UserLoginError(errors.error.errors));
             })
           );
         }

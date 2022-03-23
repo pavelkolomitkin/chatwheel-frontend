@@ -43,7 +43,8 @@ export class SocialAuthComponent implements OnInit, OnDestroy {
       select(state => state.security.loginErrors),
       filter(result => Object.keys(result).length > 0)
     ).subscribe(result => {
-      this.errorMessage = 'AUTHORIZATION_ERROR';
+
+      this.errorMessage = Object.values(result).join(' ');
     });
 
     this.routeParamsSubscription = this.route.params.subscribe(async (params) => {
