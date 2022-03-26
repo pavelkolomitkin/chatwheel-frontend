@@ -1,5 +1,5 @@
 {
-  "name": "app",
+  "name": "chatwheel",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",

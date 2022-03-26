@@ -23,7 +23,7 @@ export const environment = {
 
   awaitingCallConnectionTimeout: 15000,
 
-  fbAuthrizationLink:
+  fbAuthorizationLink:
     'https://www.facebook.com/v13.0/dialog/oauth?client_id=1011395893066866&redirect_uri=http://localhost:4200/security/social-auth/fb&state=fbChatWheel&response_type=code%20token&scope=public_profile',
   vkAuthorizationLink:
     'https://oauth.vk.com/authorize?client_id=8097405&redirect_uri=http://localhost:4200/security/social-auth/vk&scope=offline,photos&display=page&response_type=token',
@@ -328,12 +328,3 @@ export const environment = {
     {url: "stun:stun4.l.google.com:19302"},
   ]
 };
-
-/*
- * For easier debugging in development mode, you can import the following file
- * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
- *
- * This import should be commented out in production mode because it will have a negative impact
- * on performance if an error is thrown.
- */
-// import 'zone.js/dist/zone-error';  // Included with Angular CLI.

@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   authorizedUserSubscription: Subscription = null;
 
-  fbAuthorizationLink: string = environment.fbAuthrizationLink;
+  fbAuthorizationLink: string = environment.fbAuthorizationLink;
   vkAuthorizationLink: string = environment.vkAuthorizationLink;
 
   constructor(
