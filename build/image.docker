@@ -1,6 +1,6 @@
 FROM node:16.13.2-stretch
 
-RUN npm install -g typescript \
-    && npm install -g @angular/cli
+RUN npm install -g typescript@4.1.6 \
+    && npm install -g @angular/cli@11.2.18
 
 CMD [ "node" ]
