@@ -80,7 +80,6 @@ export class DirectCallWindowComponent implements OnInit, OnDestroy {
 
   updateOrientationWindowView()
   {
-
     const info: DeviceInfo = this.deviceService.getDeviceInfo();
 
     if (info.deviceType !== 'mobile')
@@ -92,10 +91,7 @@ export class DirectCallWindowComponent implements OnInit, OnDestroy {
     {
       return;
     }
-    // const isPortraitOrientation: boolean = window.matchMedia('(orientation: portrait)').matches;
-    // const isLandscapeOrientation: boolean = window.matchMedia('(orientation: landscape)').matches;
 
-    console.log(info.orientation);
     if (info.orientation === 'portrait')
     {
       this.exitFullScreen();

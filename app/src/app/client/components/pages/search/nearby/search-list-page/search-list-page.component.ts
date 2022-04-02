@@ -71,13 +71,13 @@ export class SearchListPageComponent implements OnInit, OnDestroy {
       const users: User[] = await this.service.getUsersNearBy(this.userListPage).toPromise();
       this.userListPage++;
 
+      if (!this.list)
+      {
+        this.list = [];
+      }
+
       if (users.length > 0)
       {
-        if (!this.list)
-        {
-          this.list = [];
-        }
-
         this.list = this.list.concat(users);
         this.infiniteScrollDisabled = false;
       }
