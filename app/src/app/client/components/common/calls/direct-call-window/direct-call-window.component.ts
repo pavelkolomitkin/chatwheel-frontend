@@ -73,10 +73,10 @@ export class DirectCallWindowComponent implements OnInit, OnDestroy {
   ) {
   }
 
-  @HostListener('window:orientationchange', ['$event'])
-  onOrientationChange(event) {
-    this.updateOrientationWindowView();
-  }
+  // @HostListener('window:orientationchange', ['$event'])
+  // onOrientationChange(event) {
+  //   this.updateOrientationWindowView();
+  // }
 
   updateOrientationWindowView()
   {
@@ -144,9 +144,9 @@ export class DirectCallWindowComponent implements OnInit, OnDestroy {
         this.cleanUpState();
       });
 
-    this.window.shown.subscribe(() => {
-      this.updateOrientationWindowView();
-    });
+    // this.window.shown.subscribe(() => {
+    //   this.updateOrientationWindowView();
+    // });
   }
 
   closeWindow()
