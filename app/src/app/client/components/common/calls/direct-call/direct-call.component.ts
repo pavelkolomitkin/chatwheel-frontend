@@ -35,6 +35,8 @@ export class DirectCallComponent implements OnInit, OnDestroy {
 
   uiState: string;
 
+  @Input('isFullScreen') isFullScreen: boolean = false;
+
   _initiatedToAddressee: User = null;
   _receivingCall: Call = null;
   _rejectedMember: CallMemberLink = null;

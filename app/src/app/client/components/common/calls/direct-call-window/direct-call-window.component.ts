@@ -1,5 +1,5 @@
 import {
-  Component,
+  Component, HostListener,
   Input,
   OnDestroy,
   OnInit,
@@ -20,6 +20,7 @@ import {GlobalNotification} from "../../../../../core/data/actions";
 import {Notification, NotificationType} from "../../../../../core/data/models/notification.model";
 import screenfull from "screenfull";
 import {UserReportAbuseInit} from "../../../../data/actions";
+import {DeviceDetectorService, DeviceInfo} from 'ngx-device-detector';
 
 @Component({
   selector: 'app-direct-call-window',
@@ -31,7 +32,6 @@ export class DirectCallWindowComponent implements OnInit, OnDestroy {
 
   static WINDOW_SIZE_FULLSCREEN = 'window_size_fullscreen';
   static WINDOW_SIZE_NORMAL = 'window_size_normal';
-  static WINDOW_SIZE_MINIMIZED = 'window_size_minimized';
   windowSize: string = DirectCallWindowComponent.WINDOW_SIZE_NORMAL;
 
   initiatedCallSubscription: Subscription;
@@ -49,6 +49,7 @@ export class DirectCallWindowComponent implements OnInit, OnDestroy {
 
   //@ts-ignore
   fullScreenEnabled: boolean = screenfull.enabled;
+  isFullScreen: boolean = false;
 
   authorizedUser: User = null;
 
@@ -68,7 +69,42 @@ export class DirectCallWindowComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<State>,
     private modal: NgbModal,
+    private deviceService: DeviceDetectorService
   ) {
+  }
+
+  @HostListener('window:orientationchange', ['$event'])
+  onOrientationChange(event) {
+    this.updateOrientationWindowView();
+  }
+
+  updateOrientationWindowView()
+  {
+
+    const info: DeviceInfo = this.deviceService.getDeviceInfo();
+
+    if (info.deviceType !== 'mobile')
+    {
+      return;
+    }
+
+    if (!this.window)
+    {
+      return;
+    }
+    // const isPortraitOrientation: boolean = window.matchMedia('(orientation: portrait)').matches;
+    // const isLandscapeOrientation: boolean = window.matchMedia('(orientation: landscape)').matches;
+
+    console.log(info.orientation);
+    if (info.orientation === 'portrait')
+    {
+      this.exitFullScreen();
+    }
+
+    if (info.orientation === 'landscape')
+    {
+      this.setFullScreen();
+    }
   }
 
   initializeFullScreen()
@@ -81,6 +117,7 @@ export class DirectCallWindowComponent implements OnInit, OnDestroy {
         if (!screenfull.isFullscreen && (this.windowSize === DirectCallWindowComponent.WINDOW_SIZE_FULLSCREEN))
         {
           this.windowSize = DirectCallWindowComponent.WINDOW_SIZE_NORMAL;
+          this.isFullScreen = false;
         }
 
       });
@@ -105,12 +142,15 @@ export class DirectCallWindowComponent implements OnInit, OnDestroy {
     });
     this.window.result
       .then(() => {
-
         this.cleanUpState();
       })
       .catch(() => {
         this.cleanUpState();
       });
+
+    this.window.shown.subscribe(() => {
+      this.updateOrientationWindowView();
+    });
   }
 
   closeWindow()
@@ -259,18 +299,6 @@ export class DirectCallWindowComponent implements OnInit, OnDestroy {
     return null;
   }
 
-
-  onMinimizeClickHandler(event)
-  {
-    this.windowSize = DirectCallWindowComponent.WINDOW_SIZE_MINIMIZED;
-    // @ts-ignore
-    if (screenfull.isFullscreen)
-    {
-      // @ts-ignore
-      screenfull.exit()
-    }
-  }
-
   isWindowInFullscreenMode()
   {
     return this.windowSize === DirectCallWindowComponent.WINDOW_SIZE_FULLSCREEN;
@@ -278,25 +306,44 @@ export class DirectCallWindowComponent implements OnInit, OnDestroy {
 
   fullScreenToggle()
   {
+    if (!this.isWindowInFullscreenMode())
+    {
+      this.setFullScreen();
+    }
+    else
+    {
+
+      this.exitFullScreen();
+    }
+  }
+
+  setFullScreen()
+  {
     if (!this.fullScreenEnabled)
     {
       return;
     }
 
-    if (!this.isWindowInFullscreenMode())
-    {
-      this.windowSize = DirectCallWindowComponent.WINDOW_SIZE_FULLSCREEN;
+    this.windowSize = DirectCallWindowComponent.WINDOW_SIZE_FULLSCREEN;
+    // @ts-ignore
+    const element = this.window._contentRef.viewRef.rootNodes[0];
+    // @ts-ignore
+    screenfull.request(element);
 
-      // @ts-ignore
-      const element = this.window._contentRef.viewRef.rootNodes[0];
-      // @ts-ignore
-      screenfull.request(element);
-    }
-    else
+    this.isFullScreen = true;
+  }
+
+  exitFullScreen()
+  {
+    if (!this.fullScreenEnabled)
     {
-      // @ts-ignore
-      screenfull.exit();
+      return;
     }
+
+    this.windowSize = DirectCallWindowComponent.WINDOW_SIZE_NORMAL;
+    // @ts-ignore
+    screenfull.exit();
+    this.isFullScreen = false;
   }
 
   onToggleFullScreenHandler(event)
@@ -315,8 +362,7 @@ export class DirectCallWindowComponent implements OnInit, OnDestroy {
     // @ts-ignore
     if (screenfull.isFullscreen)
     {
-      // @ts-ignore
-      screenfull.exit();
+      this.exitFullScreen();
     }
   }
 
@@ -329,8 +375,7 @@ export class DirectCallWindowComponent implements OnInit, OnDestroy {
   {
     if (this.isWindowInFullscreenMode())
     {
-      // @ts-ignore
-      screenfull.exit();
+      this.exitFullScreen();
     }
 
     this.store.dispatch(new UserReportAbuseInit(user));

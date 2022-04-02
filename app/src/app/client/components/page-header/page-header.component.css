@@ -30,3 +30,14 @@
   /*width: 30px;*/
   /*height: 30px;*/
 }
+
+.menu-item-label
+{
+  display: inline;
+}
+
+@media screen and (max-width: 600px) {
+  .menu-item-label {
+    display: none;
+  }
+}

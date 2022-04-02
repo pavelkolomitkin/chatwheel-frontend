@@ -1,7 +1,7 @@
 <div class="call-window">
 
 
-  <div class="window-container">
+  <div class="window-container" [ngClass]="isFullScreen ? 'full-screen' : ''">
 
     <div class="addressee-block" *ngIf="!!_addressee">
       <div class="addressee">

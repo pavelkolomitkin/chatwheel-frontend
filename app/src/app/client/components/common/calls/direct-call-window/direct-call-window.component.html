@@ -48,6 +48,7 @@
         (onHangUp)="onHangUpHandler($event)"
         (onDoubleClickRemote)="onToggleFullScreenHandler($event)"
         (onReportAbuse)="onReportAbuseHandler($event)"
+        [isFullScreen]="isFullScreen"
       ></app-direct-call>
     </ng-container>
 
@@ -60,11 +61,10 @@
         (onHangUp)="onHangUpHandler($event)"
         (onDoubleClickRemote)="onToggleFullScreenHandler($event)"
         (onReportAbuse)="onReportAbuseHandler($event)"
+        [isFullScreen]="isFullScreen"
       ></app-direct-call>
     </ng-container>
 
-
   </div>
-
 
 </ng-template>

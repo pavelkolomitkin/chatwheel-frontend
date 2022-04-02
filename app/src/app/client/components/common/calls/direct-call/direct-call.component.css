@@ -4,6 +4,11 @@
   height: 100%;
 }
 
+.call-window .window-container.full-screen
+{
+  position: unset;
+}
+
 .call-window .text-conversation-container
 {
   position: absolute;

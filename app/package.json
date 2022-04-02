@@ -31,6 +31,7 @@
     "getusermedia": "^2.0.1",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
+    "ngx-device-detector": "^2.0.5",
     "ngx-infinite-scroll": "^10.0.1",
     "ngx-lightbox": "^2.5.2",
     "ngx-moment": "^5.0.0",

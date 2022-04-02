@@ -5,13 +5,24 @@
       <div class="d-flex justify-content-between header-menu">
         <div class="top-menu d-flex align-items-center">
 
-          <a routerLink="./chatwheel" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }" class="left-menu-item nav-link">
+          <a
+            routerLink="./chatwheel"
+            [routerLinkActive]="'active'"
+            [routerLinkActiveOptions]="{ exact: true }"
+            class="left-menu-item nav-link"
+            [title]="'CHAT_WHEEL' | translate"
+          >
             <i class="ik ik-message-circle"></i>
-            {{ 'CHAT_WHEEL' | translate }}
+            <span class="menu-item-label">{{ 'CHAT_WHEEL' | translate }}</span>
           </a>
-          <a routerLink="nearby" [routerLinkActive]="'active'" class="left-menu-item nav-link">
+          <a
+            routerLink="nearby"
+            [routerLinkActive]="'active'"
+            class="left-menu-item nav-link"
+            [title]="'NEAR_BY' | translate"
+          >
             <i class="ik ik-map-pin"></i>
-            {{ 'NEAR_BY' | translate }}
+            <span class="menu-item-label">{{ 'NEAR_BY' | translate }}</span>
           </a>
 
         </div>
