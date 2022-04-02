@@ -18,6 +18,8 @@ export class MyProfileComponent implements OnInit, OnDestroy {
   newMessageNumberSubscription: Subscription = null;
   newMessageNumberTimeout: any = null;
 
+  isLocationShown: boolean
+
   constructor(
     private store: Store<State>,
   ) { }
@@ -45,6 +47,11 @@ export class MyProfileComponent implements OnInit, OnDestroy {
       this.newMessageNumberTimeout = null;
     }
 
+  }
+
+  onToggleDisplayLocationHandler(event)
+  {
+    this.isLocationShown = !this.isLocationShown;
   }
 
   updateMessageNumber(value: number)

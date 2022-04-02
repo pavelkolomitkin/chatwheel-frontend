@@ -12,16 +12,7 @@
             </app-edit-full-name>
           </div>
         </div>
-        <hr class="mb-0">
-        <div class="card-body">
-          <ng-container *ngIf="!!(user | async).email">
-            <small class="text-muted d-block">{{ 'EMAIL' | translate }} </small>
-            <h6>{{ ( user | async ).email ? (user | async).email : '-' }}</h6>
-          </ng-container>
-          <ng-container *ngIf="!!(user | async).isVkUser()">
-            <small class="text-muted d-block">{{ 'AUTH' | translate }}</small>
-            <img src="../../../../../assets/picture/vk-icon.png" style="width: 40px;" class="m-2 ml-0" />
-          </ng-container>
+        <div class="card-body profile-map-location-container">
           <app-edit-map-location [user]="(user | async)"></app-edit-map-location>
         </div>
       </div>

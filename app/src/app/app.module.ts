@@ -7,6 +7,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {StoreDevtoolsModule} from "@ngrx/store-devtools";
 import {environment} from "../environments/environment";
 import {SharedModule} from "./shared/shared.module";
+import {RouterModule} from "@angular/router";
 
 @NgModule({
   declarations: [
@@ -23,7 +24,7 @@ import {SharedModule} from "./shared/shared.module";
         maxAge: 25,
         logOnly: !environment.production
       }
-    )
+    ),
   ],
   providers: [],
   bootstrap: [AppComponent]
