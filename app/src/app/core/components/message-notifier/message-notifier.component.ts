@@ -57,8 +57,8 @@ export class MessageNotifierComponent implements OnInit {
 
   async showNotification(notification: Notification)
   {
-    const message: string = await this.translate.get(notification.message).toPromise();
-    const head: string = await this.translate.get(notification.title).toPromise();
+    const message: string = !!notification.message ? await this.translate.get(notification.message).toPromise() : notification.message;
+    const head: string = !!notification.title ? await this.translate.get(notification.title).toPromise() : notification.title;
 
 
     const config =
