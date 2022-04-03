@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {select, Store} from '@ngrx/store';
-import {Observable, Subscription} from 'rxjs';
+import {Observable, Subject, Subscription} from 'rxjs';
 import {SocketService} from './socket.service';
 import {State} from "../../app.state";
 
@@ -12,6 +12,8 @@ export class BaseSocketService
     private tokenSubscription: Subscription;
 
     public socket: SocketService;
+
+    private socketReadySubject: Subject<any> = new Subject<any>();
 
     constructor(public store: Store<State>) {
 
@@ -25,6 +27,8 @@ export class BaseSocketService
               }
 
                 this.socket = new SocketService(this.getNamespace(), token, this.getConnectionOptions());
+
+                this.flushEventSubscribers();
                 this.flushUnprocessedEmits();
             });
     }
@@ -36,6 +40,11 @@ export class BaseSocketService
             const data = this.unProcessedEmits[event];
             this.socket.emit(event, data);
         }
+    }
+
+    flushEventSubscribers()
+    {
+      this.socketReadySubject.next();
     }
 
     getNamespace(): string
@@ -61,7 +70,25 @@ export class BaseSocketService
 
     fromEvent(event: string): Observable<any>
     {
-      return this.socket.fromEvent(event);
+      return new Observable<any>((subscriber) => {
+
+        if (!this.socket)
+        {
+          this.socketReadySubject.subscribe((observer) => {
+
+            this.socket.fromEvent(event).subscribe((data: any) => {
+              subscriber.next(data);
+            });
+          });
+
+          return;
+        }
+
+        this.socket.fromEvent(event).subscribe((data: any) => {
+          subscriber.next(data);
+        });
+
+      });
     }
 
     emit(event: string, data: any)

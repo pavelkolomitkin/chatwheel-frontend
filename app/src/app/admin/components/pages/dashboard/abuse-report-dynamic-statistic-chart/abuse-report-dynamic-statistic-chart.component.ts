@@ -113,9 +113,12 @@ export class AbuseReportDynamicStatisticChartComponent implements OnInit, AfterV
 
       let value: number = 0;
 
-      if (!!typeStatistics[item.year] && !!typeStatistics[item.year][item.month])
+      if (!!typeStatistics)
       {
-        value = typeStatistics[item.year][item.month];
+        if (!!typeStatistics[item.year] && !!typeStatistics[item.year][item.month])
+        {
+          value = typeStatistics[item.year][item.month];
+        }
       }
 
       result.push(value);
