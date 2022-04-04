@@ -114,8 +114,13 @@
       </div>
 
       <div class="media-error-controls" *ngIf="uiState === 'media_initialize_error'">
-        <div>
-          <span class="text-muted"><i class="ik ik-alert-triangle"></i>{{ 'CHECK_YOUR_CAMERA_AND_MICROPHONE' | translate }}!</span>
+        <div class="h2 mb-0">
+          <span class="text-muted">
+            <i class="ik ik-alert-triangle"></i>
+          </span>
+        </div>
+        <div class="h4">
+          <span class="text-muted">{{ 'CHECK_YOUR_CAMERA_AND_MICROPHONE' | translate }}!</span>
         </div>
         <span class="btn btn-secondary" (click)="onTryAgainMediaClickHandler($event)">
           <i class="ik ik-sliders"></i>{{ 'TRY_AGAIN' | translate }}

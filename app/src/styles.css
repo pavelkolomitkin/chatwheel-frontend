@@ -93,6 +93,16 @@ body
   font-size: .8rem !important;
 }
 
+/**
+=================================== SECURITY INTERFACE =====================================
+ */
+
+
+.card-form-security
+{
+  background: #4444447a !important;
+}
+
 /*
 =================================== ADMIN INTERFACE ========================================
 */
