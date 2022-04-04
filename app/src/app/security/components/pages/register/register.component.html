@@ -1,10 +1,10 @@
 <div class="authentication-form mx-auto">
-  <div class="card">
+  <div class="card card-form-security">
     <div class="card-header">
-      <h3 class="m0 m-auto">{{ 'REGISTER_FORM_HEADER' | translate }}</h3>
+      <h3 class="m0 m-auto text-white">{{ 'REGISTER_FORM_HEADER' | translate }}</h3>
     </div>
     <div class="card-body">
-      <p>{{ 'REGISTER_FORM_SUBTITLE' | translate }}</p>
+      <p class="text-white">{{ 'REGISTER_FORM_SUBTITLE' | translate }}</p>
       <form (ngSubmit)="onSubmit(form)" #form="ngForm">
         <div class="form-group">
           <input
@@ -71,7 +71,7 @@
         </div>
       </form>
       <div class="register">
-        <p>{{ 'ALREADY_HAVE_AN_ACCOUNT' | translate }} <a routerLink="/security/login">{{ 'SIGN_IN' | translate }}</a></p>
+        <p class="text-white">{{ 'ALREADY_HAVE_AN_ACCOUNT' | translate }} <a routerLink="/security/login" class="text-white">{{ 'SIGN_IN' | translate }}</a></p>
       </div>
     </div>
   </div>

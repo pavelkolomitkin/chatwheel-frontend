@@ -3,3 +3,49 @@
   padding-left: 0 !important;
   padding-right: 0 !important;
 }
+
+.video-noise-background
+{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+  height: 100%;
+  background-image: url("src/assets/picture/video-noise.gif");
+}
+
+.video-container
+{
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  top: 140px;
+}
+
+.video-container video
+{
+  margin: 0 auto;
+  max-width: 100%;
+}
+
+.video-container .loader-container
+{
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.wrapper-security
+{
+  position: relative;
+  z-index: 10;
+  background: transparent !important;
+}
+
+.main-content-security
+{
+  background: transparent !important;
+}

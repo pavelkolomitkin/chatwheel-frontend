@@ -28,8 +28,10 @@
 {
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(-50%) translateX(-50%);
   text-align: center;
+  z-index: 50;
+  left: 50%;
 }
 
 .page-container .video-area .addressee-header .avatar-container {

@@ -1,8 +1,25 @@
-<div class="wrapper">
-  <div class="page-wrap">
-    <div class="main-content">
-      <div class="container-fluid">
+<div class="video-noise-background"></div>
+<div class="video-container">
+  <video
+    #videoElement
+    [autoplay]="true"
+    [muted]="true"
+  ></video>
 
+<!--  <div *ngIf="initializationError">-->
+<!--    <i class="ik ik-alert-triangle"></i>-->
+<!--  </div>-->
+
+  <div class="loader-container">
+    <div class="spinner-border text-primary" role="status" *ngIf="isRequestingMedia">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+</div>
+<div class="wrapper wrapper-security">
+  <div class="page-wrap">
+    <div class="main-content main-content-security">
+      <div class="container-fluid">
         <div class="container">
 
           <div class="row">

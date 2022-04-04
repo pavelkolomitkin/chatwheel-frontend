@@ -1,10 +1,10 @@
 <div class="authentication-form mx-auto">
-  <div class="card">
+  <div class="card card-form-security">
     <div class="card-header">
-      <h3 class="m0 m-auto">{{ 'LOGIN_FORM_HEADER' | translate }}</h3>
+      <h3 class="m0 m-auto text-white">{{ 'LOGIN_FORM_HEADER' | translate }}</h3>
     </div>
     <div class="card-body">
-      <p>{{ 'LOGIN_FORM_SUBTITLE' | translate }}</p>
+      <p class="text-white">{{ 'LOGIN_FORM_SUBTITLE' | translate }}</p>
       <form (ngSubmit)="onSubmit(form)" #form="ngForm">
         <div class="form-group">
           <input
@@ -45,11 +45,11 @@
                      ngModel
                      name="rememberMe"
               >
-              <span class="custom-control-label">&nbsp;{{ 'LOGIN_FORM_REMEMBER_ME' | translate }}</span>
+              <span class="custom-control-label text-white">&nbsp;{{ 'LOGIN_FORM_REMEMBER_ME' | translate }}</span>
             </label>
           </div>
           <div class="col text-right">
-            <a routerLink="/security/restore-password-request">{{ 'FORGOT_PASSWORD' | translate }}</a>
+            <a routerLink="/security/restore-password-request" class="text-white">{{ 'FORGOT_PASSWORD' | translate }}</a>
           </div>
         </div>
         <div class="sign-btn text-center">
