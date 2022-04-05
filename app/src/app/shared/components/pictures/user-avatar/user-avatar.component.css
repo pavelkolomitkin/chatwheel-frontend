@@ -2,6 +2,8 @@
 {
   position: relative;
   margin: 0 !important;
+  left: 1px;
+  top: 1px;
 }
 
 .image-container .user-avatar
