@@ -97,6 +97,9 @@ export class CameraProfilePictureGrabberComponent implements OnInit, OnDestroy {
 
     const canvasContext = canvasElement.getContext('2d');
 
+    canvasContext.translate(videoElement.videoWidth, 0);
+    canvasContext.scale(-1, 1);
+
     canvasContext.drawImage(videoElement, 0,0, videoElement.videoWidth, videoElement.videoHeight);
 
     this.isPictureTaken = true;

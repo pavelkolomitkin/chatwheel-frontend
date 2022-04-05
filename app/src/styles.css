@@ -93,6 +93,11 @@ body
   font-size: .8rem !important;
 }
 
+video {
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+
 /**
 =================================== SECURITY INTERFACE =====================================
  */

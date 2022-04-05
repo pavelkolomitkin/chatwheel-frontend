@@ -637,6 +637,8 @@ export class ChatwheelComponent implements OnInit, OnDestroy {
     canvas.height = localVideoElement.videoHeight;
 
     const canvasContext = canvas.getContext('2d');
+    canvasContext.translate(localVideoElement.videoWidth, 0);
+    canvasContext.scale(-1, 1);
 
     canvasContext.drawImage(localVideoElement, 0,0, localVideoElement.videoWidth, localVideoElement.videoHeight);
 
@@ -685,6 +687,7 @@ export class ChatwheelComponent implements OnInit, OnDestroy {
   {
     this.uiState = ChatwheelComponent.UI_STATE_CHAT_STOPPED;
 
+    this.currentOffer = null;
     await this.releaseConnectionResources();
 
     await this.searchService.turnOff().toPromise();
