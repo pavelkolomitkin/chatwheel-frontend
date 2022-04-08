@@ -21,8 +21,6 @@ export class LayoutComponent implements OnInit, AfterContentInit, OnDestroy {
   ) { }
 
   async ngOnInit() {
-
-
   }
 
   async initUserMedia()

@@ -10,6 +10,7 @@ import {SharedModule} from "../shared/shared.module";
 import {LayoutComponent} from "./components/layout/layout.component";
 import { RegisterSuccessComponent } from './components/pages/register-success/register-success.component';
 import { SocialAuthComponent } from './components/pages/social-auth/social-auth.component';
+import { OnlineUserNumberDynamicComponent } from './components/online-user-number-dynamic/online-user-number-dynamic.component';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { SocialAuthComponent } from './components/pages/social-auth/social-auth.
     RegisterConfirmComponent,
     RegisterSuccessComponent,
     SocialAuthComponent,
+    OnlineUserNumberDynamicComponent,
 
   ],
   providers: [
