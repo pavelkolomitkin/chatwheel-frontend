@@ -730,4 +730,13 @@ export class ChatwheelComponent implements OnInit, OnDestroy {
     this.isTextChatVisible = false;
   }
 
+  onPreviewPictureErrorHandler(event)
+  {
+    const { currentTarget } = event;
+
+    currentTarget.src = '../../../../../assets/picture/default_avatar.png';
+
+    event.stopPropagation();
+    event.preventDefault();
+  }
 }

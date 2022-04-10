@@ -74,7 +74,10 @@
       || (uiState === 'chat_addressee_connecting')
 ">
         <div class="offer-preview" *ngIf="currentOffer !== null">
-          <img [src]="'/client/search/chat-roulette-picture/' + currentOffer.addressee.id | imageUrl" />
+          <img
+            [src]="'/client/search/chat-roulette-picture/' + currentOffer.addressee.id | imageUrl"
+            (error)="onPreviewPictureErrorHandler($event)"
+          />
         </div>
 
 
