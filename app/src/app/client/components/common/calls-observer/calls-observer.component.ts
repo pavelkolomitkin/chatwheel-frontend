@@ -154,8 +154,11 @@ export class CallsObserverComponent implements OnInit, OnDestroy {
   }
 
   incomingCallHandler = (call: Call) => {
-    this.store.dispatch(new IncomingCallReceived(call));
-    this.store.dispatch(new IncomingCallIncreaseNumber(1));
+    if (call.isDirect)
+    {
+      this.store.dispatch(new IncomingCallReceived(call));
+      this.store.dispatch(new IncomingCallIncreaseNumber(1));
+    }
   }
 
   connectingMemberHandler = (link: CallMemberLink) => {
