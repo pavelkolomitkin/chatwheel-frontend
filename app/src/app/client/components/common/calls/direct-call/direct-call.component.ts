@@ -216,13 +216,15 @@ export class DirectCallComponent implements OnInit, OnDestroy {
     }
   }
 
+  onRemoteVideoPlayHandler = (event) => {
+    this.uiState = DirectCallComponent.UI_STATE_CALL_IN_PROGRESS;
+  }
+
   remoteStreamReadyHandler = (stream: MediaStream) => {
 
     this.remoteStream = stream;
 
     this.remoteVideoElement.nativeElement.srcObject = stream;
-
-    this.uiState = DirectCallComponent.UI_STATE_CALL_IN_PROGRESS;
   }
 
   connectionErrorHandler = (error) => {

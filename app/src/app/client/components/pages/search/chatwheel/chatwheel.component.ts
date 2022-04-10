@@ -580,14 +580,16 @@ export class ChatwheelComponent implements OnInit, OnDestroy {
     this.remoteMediaStream = stream;
 
     this.remoteVideo.nativeElement.srcObject = stream;
-
-    this.uiState = ChatwheelComponent.UI_STATE_CHAT_CALLING;
   }
 
   connectionErrorHandler = async (error) => {
 
     await this.searchPartner();
 
+  }
+
+  onRemoteVideoPlayHandler = (event) => {
+    this.uiState = ChatwheelComponent.UI_STATE_CHAT_CALLING;
   }
 
   //==================================// MAKING AND RECEIVING CALLS ==============================

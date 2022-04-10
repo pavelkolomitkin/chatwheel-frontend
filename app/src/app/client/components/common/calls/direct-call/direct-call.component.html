@@ -95,6 +95,7 @@
       <video
         #remoteVideo
         [autoplay]="true"
+        (play)="onRemoteVideoPlayHandler($event)"
       ></video>
 
     </div>
