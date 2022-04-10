@@ -1,4 +1,12 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import {User} from "../../../../security/data/models/user.model";
 import {Lightbox} from "ngx-lightbox";
 
@@ -9,6 +17,8 @@ import {Lightbox} from "ngx-lightbox";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserAvatarComponent implements OnInit {
+
+  @ViewChild('imageElement') image: ElementRef;
 
   _avatarUrl: string = null;
 
@@ -121,5 +131,13 @@ export class UserAvatarComponent implements OnInit {
     }
 
     return result;
+  }
+
+  onLoadImageErrorHandler(event)
+  {
+    this.image.nativeElement.src = this._user.getDefaultAvatar();
+
+    event.stopPropagation();
+    event.preventDefault();
   }
 }

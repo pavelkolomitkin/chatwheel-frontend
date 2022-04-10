@@ -1,10 +1,12 @@
 <figure class="image-container d-inline-block" [ngClass]="isActivityVisible && !_user.deleted && !_user.isBlocked ? getActivityClass() : ''">
   <img
+    #imageElement
     class="user-avatar rounded-circle align-top"
     [src]="_avatarUrl"
     [ngStyle]="getStyles()"
     title="{{ title }}"
     (click)="onImageClickHandler($event)"
     [ngClass]="size"
+    (error)="onLoadImageErrorHandler($event)"
   >
 </figure>

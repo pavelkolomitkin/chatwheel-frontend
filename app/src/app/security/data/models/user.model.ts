@@ -114,11 +114,16 @@ export class User
     return !!this.avatar;
   }
 
+  getDefaultAvatar()
+  {
+    return environment.defaultAvatar;
+  }
+
   getAvatarPicture(size: string)
   {
     if (this.deleted)
     {
-      return environment.defaultAvatar;
+      return this.getDefaultAvatar();
     }
 
     let result = this.getThumbAvatar(size);
@@ -129,7 +134,7 @@ export class User
 
     if (!result)
     {
-      result = environment.defaultAvatar;
+      result = this.getDefaultAvatar();
     }
 
     return result;
